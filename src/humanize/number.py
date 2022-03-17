@@ -211,6 +211,75 @@ def intword(value, format="%.1f"):
     return str(value)
 
 
+suffix_powers = [10**x for x in (3, 6, 9, 12, 15, 18, 21, 24, 27)]
+suffix_human_powers = (
+    NS_("k", "k"),
+    NS_("M", "M"),
+    NS_("G", "G"),
+    NS_("T", "T"),
+    NS_("P", "P"),
+    NS_("E", "E"),
+    NS_("Z", "Z"),
+    NS_("Y", "Y"),
+)
+
+
+def intsuffix(value, format="%.1f"):
+    """Converts a large integer to a friendly text representation with only suffix.
+
+    Works best for numbers over 1 million. For example, 1_000_000 becomes "1.0 M",
+    1200000 becomes "1.2 M" and "1_200_000_000" becomes "1.2 T". Supports up
+    to decillion (33 digits) and googol (100 digits).
+
+    Examples:
+        ```pycon
+        >>> intsuffix("100")
+        '100'
+        >>> intsuffix("12400")
+        '12.4 k'
+        >>> intsuffix("1000000")
+        '1.0 M'
+        >>> intsuffix(1_200_000_000)
+        '1.2 G'
+        >>> intsuffix(None) is None
+        True
+        >>> intsuffix("1234000", "%0.3f")
+        '1.234 M'
+
+        ```
+    Args:
+        value (int, float, str): Integer to convert.
+        format (str): To change the number of decimal or general format of the number
+            portion.
+
+    Returns:
+        str: Friendly text representation as a string, unless the value passed could not
+        be coaxed into an `int`.
+    """
+    try:
+        value = int(value)
+    except (TypeError, ValueError):
+        return value
+
+    if value < suffix_powers[0]:
+        return str(value)
+    for ordinal, power in enumerate(suffix_powers[1:], 1):
+        if value < power:
+            chopped = value / float(suffix_powers[ordinal - 1])
+            if float(format % chopped) == float(10**3):
+                chopped = value / float(suffix_powers[ordinal])
+                singular, plural = suffix_human_powers[ordinal]
+                return (
+                    " ".join([format, _ngettext(singular, plural, math.ceil(chopped))])
+                ) % chopped
+            else:
+                singular, plural = suffix_human_powers[ordinal - 1]
+                return (
+                    " ".join([format, _ngettext(singular, plural, math.ceil(chopped))])
+                ) % chopped
+    return str(value)
+
+
 def apnumber(value):
     """Converts an integer to Associated Press style.
 

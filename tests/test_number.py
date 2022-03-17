@@ -96,6 +96,42 @@ def test_intword(test_args, expected):
     assert humanize.intword(*test_args) == expected
 
 
+def test_intsuffix_powers():
+    # make sure that suffix_powers & suffix_human_powers have the same number of items
+    assert len(number.powers) == len(number.human_powers)
+
+
+@pytest.mark.parametrize(
+    "test_args, expected",
+    [
+        (["100"], "100"),
+        (["1000"], "1.0 k"),
+        (["12400"], "12.4 k"),
+        (["12490"], "12.5 k"),
+        (["1000000"], "1.0 M"),
+        (["1200000"], "1.2 M"),
+        (["1290000"], "1.3 M"),
+        (["999999999"], "1.0 G"),
+        (["1000000000"], "1.0 G"),
+        (["2000000000"], "2.0 G"),
+        (["999999999999"], "1.0 T"),
+        (["1000000000000"], "1.0 T"),
+        (["6000000000000"], "6.0 T"),
+        (["999999999999999"], "1.0 P"),
+        (["1000000000000000"], "1.0 P"),
+        (["1300000000000000"], "1.3 P"),
+        (["1400000000000000000"], "1.4 E"),
+        (["3500000000000000000000"], "3.5 Z"),
+        (["3600000000000000000000000"], "3.6 Y"),
+        ([None], None),
+        (["1230000", "%0.2f"], "1.23 M"),
+        ([10**101], "1" + "0" * 101),
+    ],
+)
+def test_intsuffix(test_args, expected):
+    assert humanize.intsuffix(*test_args) == expected
+
+
 @pytest.mark.parametrize(
     "test_input, expected",
     [

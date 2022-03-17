@@ -8,6 +8,7 @@ from humanize.number import (
     fractional,
     intcomma,
     intword,
+    intsuffix,
     ordinal,
     scientific,
 )
@@ -37,6 +38,7 @@ __all__ = [
     "deactivate",
     "fractional",
     "intcomma",
+    "intsuffix",
     "intword",
     "naturaldate",
     "naturalday",
