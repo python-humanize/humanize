@@ -49,6 +49,9 @@
   name: "changelog: skip"
 
 # Other labels
+- color: 0366d6
+  description: "For dependencies"
+  name: dependencies
 - color: 0075ca
   description: "Improvements or additions to documentation"
   name: documentation
@@ -63,6 +66,9 @@
   name: hacktoberfest-accepted
 - color: e29673
   name: "needs tests"
+- color: d65e88
+  description: "Deploy and release"
+  name: release
 - color: fbca04
   description: "Unit tests, linting, CI, etc."
   name: testing
