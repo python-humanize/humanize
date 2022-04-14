@@ -1,16 +1,16 @@
 # Release Checklist
 
 - [ ] Get master to the appropriate code release state.
-      [GitHub Actions](https://github.com/jmoiron/humanize/actions) should be running
+      [GitHub Actions](https://github.com/python-humanize/humanize/actions) should be running
       cleanly for all merges to master.
-      [![GitHub Actions status](https://github.com/jmoiron/humanize/workflows/Test/badge.svg)](https://github.com/jmoiron/humanize/actions)
+      [![GitHub Actions status](https://github.com/python-humanize/humanize/workflows/Test/badge.svg)](https://github.com/python-humanize/humanize/actions)
 
 * [ ] Start from a freshly cloned repo:
 
 ```bash
 cd /tmp
 rm -rf humanize
-git clone https://github.com/jmoiron/humanize
+git clone https://github.com/python-humanize/humanize
 cd humanize
 # Generate translation binaries
 scripts/generate-translation-binaries.sh
@@ -61,7 +61,7 @@ python3 -c "import humanize; print(humanize.__version__)"
 git push --tags
 ```
 
-* [ ] Edit release draft, adjust text if needed: https://github.com/jmoiron/humanize/releases
+* [ ] Edit release draft, adjust text if needed: https://github.com/python-humanize/humanize/releases
 
 * [ ] Check next tag is correct, amend if needed
 

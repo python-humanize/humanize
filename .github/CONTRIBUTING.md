@@ -18,4 +18,4 @@ for docstrings.
 
 ## Localization
 
-See [README](https://github.com/jmoiron/humanize#localization).
+See [README](https://github.com/python-humanize/humanize#localization).

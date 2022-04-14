@@ -1,6 +1,6 @@
 site_name: humanize
 site_url: https://python-humanize.readthedocs.io
-repo_url: https://github.com/jmoiron/humanize
+repo_url: https://github.com/python-humanize/humanize
 theme:
   name: material
   palette:
