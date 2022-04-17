@@ -7,8 +7,8 @@ from humanize.number import (
     clamp,
     fractional,
     intcomma,
-    intword,
     intsuffix,
+    intword,
     ordinal,
     scientific,
 )
