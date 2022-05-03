@@ -85,7 +85,7 @@ def _date_and_delta(value, *, now=None):
 def naturaldelta(
     value,
     months: bool = True,
-    minimum_unit="seconds",
+    minimum_unit: str = "seconds",
 ) -> str:
     """Return a natural representation of a timedelta or number of seconds.
 
@@ -206,7 +206,7 @@ def naturaltime(
     value,
     future: bool = False,
     months: bool = True,
-    minimum_unit="seconds",
+    minimum_unit: str = "seconds",
     when=None,
 ) -> str:
     """Return a natural representation of a time in a resolution that makes sense.
@@ -244,7 +244,7 @@ def naturaltime(
     return ago % delta
 
 
-def naturalday(value, format="%b %d") -> str:
+def naturalday(value, format: str = "%b %d") -> str:
     """Return a natural day.
 
     For date values that are tomorrow, today or yesterday compared to
@@ -396,7 +396,9 @@ def _suppress_lower_units(min_unit, suppress):
     return suppress
 
 
-def precisedelta(value, minimum_unit="seconds", suppress=(), format="%0.2f") -> str:
+def precisedelta(
+    value, minimum_unit: str = "seconds", suppress=(), format: str = "%0.2f"
+) -> str:
     """Return a precise representation of a timedelta.
 
     ```pycon

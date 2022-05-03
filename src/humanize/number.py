@@ -13,7 +13,7 @@ from .i18n import _pgettext as P_
 from .i18n import thousands_separator
 
 
-def ordinal(value, gender="male"):
+def ordinal(value, gender: str = "male"):
     """Converts an integer to its ordinal as a string.
 
     For example, 1 is "1st", 2 is "2nd", 3 is "3rd", etc. Works for any integer or
@@ -153,7 +153,7 @@ human_powers = (
 )
 
 
-def intword(value, format="%.1f"):
+def intword(value, format: str = "%.1f"):
     """Converts a large integer to a friendly text representation.
 
     Works best for numbers over 1 million. For example, 1_000_000 becomes "1.0 million",
@@ -312,7 +312,7 @@ def fractional(value):
         return f"{whole_number:.0f} {numerator:.0f}/{denominator:.0f}"
 
 
-def scientific(value, precision=2):
+def scientific(value, precision: int = 2):
     """Return number in string scientific notation z.wq x 10ⁿ.
 
     Examples:
@@ -391,7 +391,14 @@ def scientific(value, precision=2):
     return final_str
 
 
-def clamp(value, format="{:}", floor=None, ceil=None, floor_token="<", ceil_token=">"):
+def clamp(
+    value,
+    format: str = "{:}",
+    floor=None,
+    ceil=None,
+    floor_token: str = "<",
+    ceil_token: str = ">",
+):
     """Returns number with the specified format, clamped between floor and ceil.
 
     If the number is larger than ceil or smaller than floor, then the respective limit

@@ -9,7 +9,7 @@ suffixes = {
 }
 
 
-def naturalsize(value, binary: bool = False, gnu: bool = False, format="%.1f"):
+def naturalsize(value, binary: bool = False, gnu: bool = False, format: str = "%.1f"):
     """Format a number of bytes like a human readable filesize (e.g. 10 kB).
 
     By default, decimal suffixes (kB, MB) are used.
