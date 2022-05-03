@@ -84,7 +84,7 @@ def _date_and_delta(value, *, now=None):
 
 def naturaldelta(
     value,
-    months=True,
+    months: bool = True,
     minimum_unit="seconds",
 ) -> str:
     """Return a natural representation of a timedelta or number of seconds.
@@ -204,8 +204,8 @@ def naturaldelta(
 
 def naturaltime(
     value,
-    future=False,
-    months=True,
+    future: bool = False,
+    months: bool = True,
     minimum_unit="seconds",
     when=None,
 ) -> str:
