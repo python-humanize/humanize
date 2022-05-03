@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 """Tests for filesize humanizing."""
+from __future__ import annotations
 
 import pytest
 
@@ -32,7 +33,7 @@ import humanize
         ([10**26 * 30, True, False, "%.3f"], "2481.542 YiB"),
     ],
 )
-def test_naturalsize(test_args, expected) -> None:
+def test_naturalsize(test_args: list[int] | list[int | bool], expected: str) -> None:
     assert humanize.naturalsize(*test_args) == expected
 
     args_with_negative = test_args

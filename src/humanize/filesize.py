@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 """Bits and bytes related humanization."""
+from __future__ import annotations
 
 suffixes = {
     "decimal": ("kB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"),
@@ -9,7 +10,12 @@ suffixes = {
 }
 
 
-def naturalsize(value, binary: bool = False, gnu: bool = False, format: str = "%.1f"):
+def naturalsize(
+    value: int | float | str,
+    binary: bool = False,
+    gnu: bool = False,
+    format: str = "%.1f",
+) -> str:
     """Format a number of bytes like a human readable filesize (e.g. 10 kB).
 
     By default, decimal suffixes (kB, MB) are used.

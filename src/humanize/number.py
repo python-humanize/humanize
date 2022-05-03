@@ -1,10 +1,13 @@
 #!/usr/bin/env python
 
 """Humanizing functions for numbers."""
+from __future__ import annotations
 
 import math
 import re
+import sys
 from fractions import Fraction
+from typing import TYPE_CHECKING
 
 from .i18n import _gettext as _
 from .i18n import _ngettext
@@ -12,13 +15,23 @@ from .i18n import _ngettext_noop as NS_
 from .i18n import _pgettext as P_
 from .i18n import thousands_separator
 
+if TYPE_CHECKING:
+    if sys.version_info >= (3, 10):
+        from typing import TypeAlias
+    else:
+        from typing_extensions import TypeAlias
 
-def ordinal(value, gender: str = "male"):
+# This type can be better defined by typing.SupportsInt, typing.SupportsFloat
+# but that's a Python 3.8 only typing option.
+NumberOrString: TypeAlias = "int | float | str"
+
+
+def ordinal(value: NumberOrString, gender: str = "male") -> str:
     """Converts an integer to its ordinal as a string.
 
     For example, 1 is "1st", 2 is "2nd", 3 is "3rd", etc. Works for any integer or
-    anything `int()` will turn into an integer. Anything other value will have nothing
-    done to it.
+    anything `int()` will turn into an integer. Anything else will return the output
+    of str(value).
 
     Examples:
         ```pycon
@@ -38,7 +51,7 @@ def ordinal(value, gender: str = "male"):
         '111th'
         >>> ordinal("something else")
         'something else'
-        >>> ordinal(None) is None
+        >>> ordinal([1, 2, 3]) == "[1, 2, 3]"
         True
 
         ```
@@ -52,7 +65,7 @@ def ordinal(value, gender: str = "male"):
     try:
         value = int(value)
     except (TypeError, ValueError):
-        return value
+        return str(value)
     if gender == "male":
         t = (
             P_("0 (male)", "th"),
@@ -84,7 +97,7 @@ def ordinal(value, gender: str = "male"):
     return f"{value}{t[value % 10]}"
 
 
-def intcomma(value, ndigits=None):
+def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
     """Converts an integer to a string containing commas every three digits.
 
     For example, 3000 becomes "3,000" and 45000 becomes "45,000". To maintain some
@@ -104,8 +117,8 @@ def intcomma(value, ndigits=None):
         '1,234.55'
         >>> intcomma(14308.40, 1)
         '14,308.4'
-        >>> intcomma(None) is None
-        True
+        >>> intcomma(None)
+        'None'
 
         ```
     Args:
@@ -122,7 +135,7 @@ def intcomma(value, ndigits=None):
         else:
             float(value)
     except (TypeError, ValueError):
-        return value
+        return str(value)
 
     if ndigits:
         orig = "{0:.{1}f}".format(value, ndigits)
@@ -153,7 +166,7 @@ human_powers = (
 )
 
 
-def intword(value, format: str = "%.1f"):
+def intword(value: NumberOrString, format: str = "%.1f") -> str:
     """Converts a large integer to a friendly text representation.
 
     Works best for numbers over 1 million. For example, 1_000_000 becomes "1.0 million",
@@ -172,8 +185,8 @@ def intword(value, format: str = "%.1f"):
         '1.2 billion'
         >>> intword(8100000000000000000000000000000000)
         '8.1 decillion'
-        >>> intword(None) is None
-        True
+        >>> intword(None)
+        'None'
         >>> intword("1234000", "%0.3f")
         '1.234 million'
 
@@ -190,7 +203,7 @@ def intword(value, format: str = "%.1f"):
     try:
         value = int(value)
     except (TypeError, ValueError):
-        return value
+        return str(value)
 
     if value < powers[0]:
         return str(value)
@@ -211,7 +224,7 @@ def intword(value, format: str = "%.1f"):
     return str(value)
 
 
-def apnumber(value):
+def apnumber(value: NumberOrString) -> str:
     """Converts an integer to Associated Press style.
 
     Examples:
@@ -226,8 +239,8 @@ def apnumber(value):
       'seven'
       >>> apnumber("foo")
       'foo'
-      >>> apnumber(None) is None
-      True
+      >>> apnumber(None)
+      'None'
 
       ```
     Args:
@@ -235,12 +248,13 @@ def apnumber(value):
 
     Returns:
         str: For numbers 0-9, the number spelled out. Otherwise, the number. This always
-        returns a string unless the value was not `int`-able, unlike the Django filter.
+        returns a string unless the value was not `int`-able, then `str(value)`
+        is returned.
     """
     try:
         value = int(value)
     except (TypeError, ValueError):
-        return value
+        return str(value)
     if not 0 <= value < 10:
         return str(value)
     return (
@@ -257,7 +271,7 @@ def apnumber(value):
     )[value]
 
 
-def fractional(value):
+def fractional(value: NumberOrString) -> str:
     """Convert to fractional number.
 
     There will be some cases where one might not want to show ugly decimal places for
@@ -271,6 +285,7 @@ def fractional(value):
     * a string representation of a fraction
     * or a whole number
     * or a mixed fraction
+    * or the str output of the value, if it could not be converted
 
     Examples:
         ```pycon
@@ -284,8 +299,8 @@ def fractional(value):
         '1'
         >>> fractional("ten")
         'ten'
-        >>> fractional(None) is None
-        True
+        >>> fractional(None)
+        'None'
 
         ```
     Args:
@@ -297,11 +312,11 @@ def fractional(value):
     try:
         number = float(value)
     except (TypeError, ValueError):
-        return value
+        return str(value)
     whole_number = int(number)
     frac = Fraction(number - whole_number).limit_denominator(1000)
-    numerator = frac._numerator
-    denominator = frac._denominator
+    numerator = frac.numerator
+    denominator = frac.denominator
     if whole_number and not numerator and denominator == 1:
         # this means that an integer was passed in
         # (or variants of that integer like 1.0000)
@@ -312,7 +327,7 @@ def fractional(value):
         return f"{whole_number:.0f} {numerator:.0f}/{denominator:.0f}"
 
 
-def scientific(value, precision: int = 2):
+def scientific(value: NumberOrString, precision: int = 2) -> str:
     """Return number in string scientific notation z.wq x 10ⁿ.
 
     Examples:
@@ -331,8 +346,8 @@ def scientific(value, precision: int = 2):
         '9.90 x 10¹'
         >>> scientific("foo")
         'foo'
-        >>> scientific(None) is None
-        True
+        >>> scientific(None)
+        'None'
 
         ```
 
@@ -370,7 +385,7 @@ def scientific(value, precision: int = 2):
         n = fmt.format(value)
 
     except (ValueError, TypeError):
-        return value
+        return str(value)
 
     part1, part2 = n.split("e")
     if "-0" in part2:
@@ -392,13 +407,13 @@ def scientific(value, precision: int = 2):
 
 
 def clamp(
-    value,
+    value: int | float,
     format: str = "{:}",
-    floor=None,
-    ceil=None,
+    floor: int | float | None = None,
+    ceil: int | float | None = None,
     floor_token: str = "<",
     ceil_token: str = ">",
-):
+) -> str:
     """Returns number with the specified format, clamped between floor and ceil.
 
     If the number is larger than ceil or smaller than floor, then the respective limit
@@ -434,7 +449,7 @@ def clamp(
 
     Returns:
         str: Formatted number. The output is clamped between the indicated floor and
-        ceil. If the number if larger than ceil or smaller than floor, the output will
+        ceil. If the number is larger than ceil or smaller than floor, the output will
         be prepended with a token indicating as such.
 
     """

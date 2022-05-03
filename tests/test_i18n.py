@@ -3,12 +3,17 @@ import datetime as dt
 import importlib
 
 import pytest
+from freezegun import freeze_time
 
 import humanize
 
+with freeze_time("2020-02-02"):
+    NOW = dt.datetime.now()
 
+
+@freeze_time("2020-02-02")
 def test_i18n() -> None:
-    three_seconds = dt.timedelta(seconds=3)
+    three_seconds = NOW - dt.timedelta(seconds=3)
     one_min_three_seconds = dt.timedelta(milliseconds=67_000)
 
     assert humanize.naturaltime(three_seconds) == "3 seconds ago"
@@ -59,7 +64,7 @@ def test_intcomma() -> None:
         ("es_ES", 6700000000000, "6.7 trillones"),
     ),
 )
-def test_intword_plurals(locale, number, expected_result) -> None:
+def test_intword_plurals(locale: str, number: int, expected_result: str) -> None:
     try:
         humanize.i18n.activate(locale)
     except FileNotFoundError:
@@ -82,7 +87,9 @@ def test_intword_plurals(locale, number, expected_result) -> None:
         ("it_IT", 8, "female", "8ª"),
     ),
 )
-def test_ordinal_genders(locale, number, gender, expected_result) -> None:
+def test_ordinal_genders(
+    locale: str, number: int, gender: str, expected_result: str
+) -> None:
     try:
         humanize.i18n.activate(locale)
     except FileNotFoundError:
