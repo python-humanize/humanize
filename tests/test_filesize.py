@@ -32,7 +32,7 @@ import humanize
         ([10**26 * 30, True, False, "%.3f"], "2481.542 YiB"),
     ],
 )
-def test_naturalsize(test_args, expected):
+def test_naturalsize(test_args, expected) -> None:
     assert humanize.naturalsize(*test_args) == expected
 
     args_with_negative = test_args

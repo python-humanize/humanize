@@ -24,7 +24,7 @@ from humanize import number
         (None, None),
     ],
 )
-def test_ordinal(test_input, expected):
+def test_ordinal(test_input, expected) -> None:
     assert humanize.ordinal(test_input) == expected
 
 
@@ -57,11 +57,11 @@ def test_ordinal(test_input, expected):
         ([1234.5454545, 10], "1,234.5454545000"),
     ],
 )
-def test_intcomma(test_args, expected):
+def test_intcomma(test_args, expected) -> None:
     assert humanize.intcomma(*test_args) == expected
 
 
-def test_intword_powers():
+def test_intword_powers() -> None:
     # make sure that powers & human_powers have the same number of items
     assert len(number.powers) == len(number.human_powers)
 
@@ -92,7 +92,7 @@ def test_intword_powers():
         ([10**101], "1" + "0" * 101),
     ],
 )
-def test_intword(test_args, expected):
+def test_intword(test_args, expected) -> None:
     assert humanize.intword(*test_args) == expected
 
 
@@ -110,7 +110,7 @@ def test_intword(test_args, expected):
         (None, None),
     ],
 )
-def test_apnumber(test_input, expected):
+def test_apnumber(test_input, expected) -> None:
     assert humanize.apnumber(test_input) == expected
 
 
@@ -131,7 +131,7 @@ def test_apnumber(test_input, expected):
         (0.333, "333/1000"),
     ],
 )
-def test_fractional(test_input, expected):
+def test_fractional(test_input, expected) -> None:
     assert humanize.fractional(test_input) == expected
 
 
@@ -153,7 +153,7 @@ def test_fractional(test_input, expected):
         ([float(0.3), 0], "3 x 10⁻¹"),
     ],
 )
-def test_scientific(test_args, expected):
+def test_scientific(test_args, expected) -> None:
     assert humanize.scientific(*test_args) == expected
 
 
@@ -170,5 +170,5 @@ def test_scientific(test_args, expected):
         ([1, humanize.intword, 1e6, None, "under "], "under 1.0 million"),
     ],
 )
-def test_clamp(test_args, expected):
+def test_clamp(test_args, expected) -> None:
     assert humanize.clamp(*test_args) == expected

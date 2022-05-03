@@ -61,7 +61,7 @@ def activate(locale, path=None):
     return _TRANSLATIONS[locale]
 
 
-def deactivate():
+def deactivate() -> None:
     """Deactivate internationalisation."""
     _CURRENT.locale = None
 
