@@ -636,4 +636,4 @@ def test_time_unit() -> None:
     assert minutes == minutes
 
     with pytest.raises(TypeError):
-        assert years < "foo"
+        _ = years < "foo"
