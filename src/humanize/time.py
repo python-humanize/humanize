@@ -6,6 +6,7 @@ These are largely borrowed from Django's `contrib.humanize`.
 """
 from __future__ import annotations
 
+import collections.abc
 import datetime as dt
 import math
 import typing
@@ -295,7 +296,7 @@ def _quotient_and_remainder(
     divisor: int | float,
     unit: Unit,
     minimum_unit: Unit,
-    suppress: typing.Iterable[Unit],
+    suppress: collections.abc.Iterable[Unit],
 ) -> tuple[float, float]:
     """Divide `value` by `divisor` returning the quotient and remainder.
 
