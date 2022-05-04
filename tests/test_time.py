@@ -286,7 +286,7 @@ def test_naturaldate(test_input: dt.date, expected: str) -> None:
         (ONE_YEAR + FOUR_MICROSECONDS, "a year"),
     ],
 )
-def test_naturaldelta_minimum_unit_default(seconds: int | float, expected: str) -> None:
+def test_naturaldelta_minimum_unit_default(seconds: float, expected: str) -> None:
     # Arrange
     delta = dt.timedelta(seconds=seconds)
 
@@ -330,7 +330,7 @@ def test_naturaldelta_minimum_unit_default(seconds: int | float, expected: str) 
     ],
 )
 def test_naturaldelta_minimum_unit_explicit(
-    minimum_unit: str, seconds: int | float, expected: str
+    minimum_unit: str, seconds: float, expected: str
 ) -> None:
     # Arrange
     delta = dt.timedelta(seconds=seconds)
@@ -354,7 +354,7 @@ def test_naturaldelta_minimum_unit_explicit(
         (ONE_YEAR + FOUR_MICROSECONDS, "a year ago"),
     ],
 )
-def test_naturaltime_minimum_unit_default(seconds: int | float, expected: str) -> None:
+def test_naturaltime_minimum_unit_default(seconds: float, expected: str) -> None:
     # Arrange
     datetime = NOW - dt.timedelta(seconds=seconds)
 
@@ -399,7 +399,7 @@ def test_naturaltime_minimum_unit_default(seconds: int | float, expected: str) -
     ],
 )
 def test_naturaltime_minimum_unit_explicit(
-    minimum_unit: str, seconds: int | float, expected: str
+    minimum_unit: str, seconds: float, expected: str
 ) -> None:
     # Arrange
     datetime = NOW - dt.timedelta(seconds=seconds)

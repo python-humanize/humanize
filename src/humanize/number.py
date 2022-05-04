@@ -23,7 +23,7 @@ if TYPE_CHECKING:
 
 # This type can be better defined by typing.SupportsInt, typing.SupportsFloat
 # but that's a Python 3.8 only typing option.
-NumberOrString: TypeAlias = "int | float | str"
+NumberOrString: TypeAlias = "float | str"
 
 
 def ordinal(value: NumberOrString, gender: str = "male") -> str:
@@ -407,10 +407,10 @@ def scientific(value: NumberOrString, precision: int = 2) -> str:
 
 
 def clamp(
-    value: int | float,
+    value: float,
     format: str = "{:}",
-    floor: int | float | None = None,
-    ceil: int | float | None = None,
+    floor: float | None = None,
+    ceil: float | None = None,
     floor_token: str = "<",
     ceil_token: str = ">",
 ) -> str:

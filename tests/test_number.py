@@ -136,7 +136,7 @@ def test_apnumber(test_input: int | str, expected: str) -> None:
         (0.333, "333/1000"),
     ],
 )
-def test_fractional(test_input: int | float | str, expected: str) -> None:
+def test_fractional(test_input: float | str, expected: str) -> None:
     assert humanize.fractional(test_input) == expected
 
 

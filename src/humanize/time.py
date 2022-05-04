@@ -292,8 +292,8 @@ def naturaldate(value: dt.date | dt.datetime) -> str:
 
 
 def _quotient_and_remainder(
-    value: int | float,
-    divisor: int | float,
+    value: float,
+    divisor: float,
     unit: Unit,
     minimum_unit: Unit,
     suppress: collections.abc.Iterable[Unit],
@@ -331,9 +331,9 @@ def _quotient_and_remainder(
 
 
 def _carry(
-    value1: int | float,
-    value2: int | float,
-    ratio: int | float,
+    value1: float,
+    value2: float,
+    ratio: float,
     unit: Unit,
     min_unit: Unit,
     suppress: typing.Iterable[Unit],
