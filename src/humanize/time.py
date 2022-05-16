@@ -503,12 +503,8 @@ def precisedelta(value, minimum_unit="seconds", suppress=(), format="%0.2f") -> 
     years, days = _quotient_and_remainder(days, 365, YEARS, min_unit, suppress)
     months, days = _quotient_and_remainder(days, 30.5, MONTHS, min_unit, suppress)
 
-    # If DAYS is not in suppress, we can represent the days but
-    # if it is a suppressed unit, we need to carry it to a lower unit,
-    # seconds in this case.
-    #
-    # The same applies for secs and usecs below
-    days, secs = _carry(days, secs, 24 * 3600, DAYS, min_unit, suppress)
+    secs = days * 24 * 3600 + secs
+    days, secs = _quotient_and_remainder(secs, 24 * 3600, DAYS, min_unit, suppress)
 
     hours, secs = _quotient_and_remainder(secs, 3600, HOURS, min_unit, suppress)
     minutes, secs = _quotient_and_remainder(secs, 60, MINUTES, min_unit, suppress)
