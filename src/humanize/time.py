@@ -39,6 +39,20 @@ class Unit(Enum):
             return self.value < other.value
         return NotImplemented
 
+    def succ(self):
+        if self == Unit.YEARS:
+            raise IndexError()
+
+        v = self.value + 1
+        return Unit(v)
+
+    def pred(self):
+        if self == Unit.MICROSECONDS:
+            raise IndexError()
+
+        v = self.value - 1
+        return Unit(v)
+
 
 def _now():
     return dt.datetime.now()
@@ -396,7 +410,7 @@ def _suppress_lower_units(min_unit, suppress):
     return suppress
 
 
-def precisedelta(value, minimum_unit="seconds", suppress=(), format="%0.2f") -> str:
+def precisedelta(value, minimum_unit="seconds", suppress=(), format="%0.2f", truncate=False) -> str:
     """Return a precise representation of a timedelta.
 
     ```pycon
@@ -528,6 +542,14 @@ def precisedelta(value, minimum_unit="seconds", suppress=(), format="%0.2f") -> 
         ("%d millisecond", "%d milliseconds", msecs),
         ("%d microsecond", "%d microseconds", usecs),
     ]
+
+    if truncate:
+        for unit, fmt in reversed(list(zip(reversed(Unit), fmts))):
+            _x, _x, value = fmt
+            if unit == min_unit:
+                value = int(value)
+                if value == 0 and min_unit < YEARS:
+                    min_unit = min_unit.succ()
 
     texts = []
     for unit, fmt in zip(reversed(Unit), fmts):
