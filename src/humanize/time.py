@@ -410,7 +410,9 @@ def _suppress_lower_units(min_unit, suppress):
     return suppress
 
 
-def precisedelta(value, minimum_unit="seconds", suppress=(), format="%0.2f", truncate=False) -> str:
+def precisedelta(
+    value, minimum_unit="seconds", suppress=(), format="%0.2f", truncate=False
+) -> str:
     """Return a precise representation of a timedelta.
 
     ```pycon
