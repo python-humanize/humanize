@@ -13,8 +13,8 @@ jobs:
         uses: actions/setup-python@v3
         with:
           python-version: "3.x"
-          pip: cache
-          pip-dependency-path: tox.ini
+          cache: pip
+          cache-dependency-path: tox.ini
 
       - name: Install dependencies
         run: |
