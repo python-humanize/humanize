@@ -101,8 +101,6 @@ def naturaldelta(
         months (bool): If `True`, then a number of months (based on 30.5 days) will be
             used for fuzziness between years.
         minimum_unit (str): The lowest unit that can be used.
-        when (datetime.datetime): Removed in version 4.0; If you need to
-            construct a timedelta, do it inline as the first argument.
 
     Returns:
         str (str or `value`): A natural representation of the amount of time
