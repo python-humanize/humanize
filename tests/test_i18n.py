@@ -3,12 +3,17 @@ import datetime as dt
 import importlib
 
 import pytest
+from freezegun import freeze_time
 
 import humanize
 
+with freeze_time("2020-02-02"):
+    NOW = dt.datetime.now()
 
-def test_i18n():
-    three_seconds = dt.timedelta(seconds=3)
+
+@freeze_time("2020-02-02")
+def test_i18n() -> None:
+    three_seconds = NOW - dt.timedelta(seconds=3)
     one_min_three_seconds = dt.timedelta(milliseconds=67_000)
 
     assert humanize.naturaltime(three_seconds) == "3 seconds ago"
@@ -31,7 +36,7 @@ def test_i18n():
         assert humanize.precisedelta(one_min_three_seconds) == "1 minute and 7 seconds"
 
 
-def test_intcomma():
+def test_intcomma() -> None:
     number = 10_000_000
 
     assert humanize.intcomma(number) == "10,000,000"
@@ -59,7 +64,7 @@ def test_intcomma():
         ("es_ES", 6700000000000, "6.7 trillones"),
     ),
 )
-def test_intword_plurals(locale, number, expected_result):
+def test_intword_plurals(locale: str, number: int, expected_result: str) -> None:
     try:
         humanize.i18n.activate(locale)
     except FileNotFoundError:
@@ -82,7 +87,9 @@ def test_intword_plurals(locale, number, expected_result):
         ("it_IT", 8, "female", "8ª"),
     ),
 )
-def test_ordinal_genders(locale, number, gender, expected_result):
+def test_ordinal_genders(
+    locale: str, number: int, gender: str, expected_result: str
+) -> None:
     try:
         humanize.i18n.activate(locale)
     except FileNotFoundError:
@@ -93,18 +100,18 @@ def test_ordinal_genders(locale, number, gender, expected_result):
         humanize.i18n.deactivate()
 
 
-def test_default_locale_path_defined__file__():
+def test_default_locale_path_defined__file__() -> None:
     i18n = importlib.import_module("humanize.i18n")
     assert i18n._get_default_locale_path() is not None
 
 
-def test_default_locale_path_null__file__():
+def test_default_locale_path_null__file__() -> None:
     i18n = importlib.import_module("humanize.i18n")
     i18n.__file__ = None
     assert i18n._get_default_locale_path() is None
 
 
-def test_default_locale_path_undefined__file__():
+def test_default_locale_path_undefined__file__() -> None:
     i18n = importlib.import_module("humanize.i18n")
     del i18n.__file__
     i18n._get_default_locale_path() is None
@@ -116,7 +123,7 @@ class TestActivate:
         " 'locale' folder. You need to pass the path explicitly."
     )
 
-    def test_default_locale_path_null__file__(self):
+    def test_default_locale_path_null__file__(self) -> None:
         i18n = importlib.import_module("humanize.i18n")
         i18n.__file__ = None
 
@@ -124,7 +131,7 @@ class TestActivate:
             i18n.activate("ru_RU")
         assert str(excinfo.value) == self.expected_msg
 
-    def test_default_locale_path_undefined__file__(self):
+    def test_default_locale_path_undefined__file__(self) -> None:
         i18n = importlib.import_module("humanize.i18n")
         del i18n.__file__
 

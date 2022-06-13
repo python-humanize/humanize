@@ -1,6 +1,8 @@
 """Tests for time humanizing."""
+from __future__ import annotations
 
 import datetime as dt
+import typing
 
 import pytest
 from freezegun import freeze_time
@@ -31,7 +33,7 @@ with freeze_time("2020-02-02"):
 
 
 class FakeDate:
-    def __init__(self, year, month, day):
+    def __init__(self, year: int, month: int, day: int) -> None:
         self.year, self.month, self.day = year, month, day
 
 
@@ -39,11 +41,11 @@ VALUE_ERROR_TEST = FakeDate(290149024, 2, 2)
 OVERFLOW_ERROR_TEST = FakeDate(120390192341, 2, 2)
 
 
-def assertEqualDatetime(dt1, dt2):
+def assert_equal_datetime(dt1: dt.datetime, dt2: dt.datetime) -> None:
     assert (dt1 - dt2).seconds == 0
 
 
-def assertEqualTimedelta(td1, td2):
+def assert_equal_timedelta(td1: dt.timedelta, td2: dt.timedelta) -> None:
     assert td1.days == td2.days
     assert td1.seconds == td2.seconds
 
@@ -51,7 +53,7 @@ def assertEqualTimedelta(td1, td2):
 # These are not considered "public" interfaces, but require tests anyway.
 
 
-def test_date_and_delta():
+def test_date_and_delta() -> None:
     now = dt.datetime.now()
     td = dt.timedelta
     int_tests = (3, 29, 86399, 86400, 86401 * 30)
@@ -61,15 +63,15 @@ def test_date_and_delta():
     for t in (int_tests, date_tests, td_tests):
         for arg, result in zip(t, results):
             date, d = time._date_and_delta(arg)
-            assertEqualDatetime(date, result[0])
-            assertEqualTimedelta(d, result[1])
+            assert_equal_datetime(date, result[0])
+            assert_equal_timedelta(d, result[1])
     assert time._date_and_delta("NaN") == (None, "NaN")
 
 
 # Tests for the public interface of humanize.time
 
 
-def nd_nomonths(d):
+def nd_nomonths(d: dt.timedelta) -> str:
     return humanize.naturaldelta(d, months=False)
 
 
@@ -82,7 +84,7 @@ def nd_nomonths(d):
         (dt.timedelta(days=400), "1 year, 35 days"),
     ],
 )
-def test_naturaldelta_nomonths(test_input, expected):
+def test_naturaldelta_nomonths(test_input: dt.timedelta, expected: str) -> None:
     assert nd_nomonths(test_input) == expected
 
 
@@ -124,7 +126,7 @@ def test_naturaldelta_nomonths(test_input, expected):
         (dt.timedelta(days=999_999_999), "2,739,726 years"),
     ],
 )
-def test_naturaldelta(test_input, expected):
+def test_naturaldelta(test_input: int | dt.timedelta, expected: str) -> None:
     assert humanize.naturaldelta(test_input) == expected
 
 
@@ -160,11 +162,11 @@ def test_naturaldelta(test_input, expected):
         ("NaN", "NaN"),
     ],
 )
-def test_naturaltime(test_input, expected):
+def test_naturaltime(test_input: dt.datetime, expected: str) -> None:
     assert humanize.naturaltime(test_input) == expected
 
 
-def nt_nomonths(d):
+def nt_nomonths(d: dt.datetime) -> str:
     return humanize.naturaltime(d, months=False)
 
 
@@ -202,7 +204,7 @@ def nt_nomonths(d):
         ("NaN", "NaN"),
     ],
 )
-def test_naturaltime_nomonths(test_input, expected):
+def test_naturaltime_nomonths(test_input: dt.datetime, expected: str) -> None:
     assert nt_nomonths(test_input) == expected
 
 
@@ -216,13 +218,13 @@ def test_naturaltime_nomonths(test_input, expected):
         ([dt.date(TODAY.year, 3, 5)], "Mar 05"),
         (["02/26/1984"], "02/26/1984"),
         ([dt.date(1982, 6, 27), "%Y.%m.%d"], "1982.06.27"),
-        ([None], None),
+        ([None], "None"),
         (["Not a date at all."], "Not a date at all."),
-        ([VALUE_ERROR_TEST], VALUE_ERROR_TEST),
-        ([OVERFLOW_ERROR_TEST], OVERFLOW_ERROR_TEST),
+        ([VALUE_ERROR_TEST], str(VALUE_ERROR_TEST)),
+        ([OVERFLOW_ERROR_TEST], str(OVERFLOW_ERROR_TEST)),
     ],
 )
-def test_naturalday(test_args, expected):
+def test_naturalday(test_args: list[typing.Any], expected: str) -> None:
     assert humanize.naturalday(*test_args) == expected
 
 
@@ -235,10 +237,10 @@ def test_naturalday(test_args, expected):
         (YESTERDAY, "yesterday"),
         (dt.date(TODAY.year, 3, 5), "Mar 05"),
         (dt.date(1982, 6, 27), "Jun 27 1982"),
-        (None, None),
+        (None, "None"),
         ("Not a date at all.", "Not a date at all."),
-        (VALUE_ERROR_TEST, VALUE_ERROR_TEST),
-        (OVERFLOW_ERROR_TEST, OVERFLOW_ERROR_TEST),
+        (VALUE_ERROR_TEST, str(VALUE_ERROR_TEST)),
+        (OVERFLOW_ERROR_TEST, str(OVERFLOW_ERROR_TEST)),
         (dt.date(2019, 2, 2), "Feb 02 2019"),
         (dt.date(2019, 3, 2), "Mar 02 2019"),
         (dt.date(2019, 4, 2), "Apr 02 2019"),
@@ -266,7 +268,7 @@ def test_naturalday(test_args, expected):
         (dt.date(2021, 2, 2), "Feb 02 2021"),
     ],
 )
-def test_naturaldate(test_input, expected):
+def test_naturaldate(test_input: dt.date, expected: str) -> None:
     assert humanize.naturaldate(test_input) == expected
 
 
@@ -284,7 +286,7 @@ def test_naturaldate(test_input, expected):
         (ONE_YEAR + FOUR_MICROSECONDS, "a year"),
     ],
 )
-def test_naturaldelta_minimum_unit_default(seconds, expected):
+def test_naturaldelta_minimum_unit_default(seconds: float, expected: str) -> None:
     # Arrange
     delta = dt.timedelta(seconds=seconds)
 
@@ -327,7 +329,9 @@ def test_naturaldelta_minimum_unit_default(seconds, expected):
         ("microseconds", ONE_YEAR + FOUR_MICROSECONDS, "a year"),
     ],
 )
-def test_naturaldelta_minimum_unit_explicit(minimum_unit, seconds, expected):
+def test_naturaldelta_minimum_unit_explicit(
+    minimum_unit: str, seconds: float, expected: str
+) -> None:
     # Arrange
     delta = dt.timedelta(seconds=seconds)
 
@@ -335,6 +339,7 @@ def test_naturaldelta_minimum_unit_explicit(minimum_unit, seconds, expected):
     assert humanize.naturaldelta(delta, minimum_unit=minimum_unit) == expected
 
 
+@freeze_time("2020-02-02")
 @pytest.mark.parametrize(
     "seconds, expected",
     [
@@ -349,14 +354,15 @@ def test_naturaldelta_minimum_unit_explicit(minimum_unit, seconds, expected):
         (ONE_YEAR + FOUR_MICROSECONDS, "a year ago"),
     ],
 )
-def test_naturaltime_minimum_unit_default(seconds, expected):
+def test_naturaltime_minimum_unit_default(seconds: float, expected: str) -> None:
     # Arrange
-    delta = dt.timedelta(seconds=seconds)
+    datetime = NOW - dt.timedelta(seconds=seconds)
 
     # Act / Assert
-    assert humanize.naturaltime(delta) == expected
+    assert humanize.naturaltime(datetime) == expected
 
 
+@freeze_time("2020-02-02")
 @pytest.mark.parametrize(
     "minimum_unit, seconds, expected",
     [
@@ -392,12 +398,14 @@ def test_naturaltime_minimum_unit_default(seconds, expected):
         ("microseconds", ONE_YEAR + FOUR_MICROSECONDS, "a year ago"),
     ],
 )
-def test_naturaltime_minimum_unit_explicit(minimum_unit, seconds, expected):
+def test_naturaltime_minimum_unit_explicit(
+    minimum_unit: str, seconds: float, expected: str
+) -> None:
     # Arrange
-    delta = dt.timedelta(seconds=seconds)
+    datetime = NOW - dt.timedelta(seconds=seconds)
 
     # Act / Assert
-    assert humanize.naturaltime(delta, minimum_unit=minimum_unit) == expected
+    assert humanize.naturaltime(datetime, minimum_unit=minimum_unit) == expected
 
 
 @pytest.mark.parametrize(
@@ -421,7 +429,9 @@ def test_naturaltime_minimum_unit_explicit(minimum_unit, seconds, expected):
         (3600 * 24 * 365 * 1_963, "seconds", "1,963 years"),
     ],
 )
-def test_precisedelta_one_unit_enough(val, min_unit, expected):
+def test_precisedelta_one_unit_enough(
+    val: int | dt.timedelta, min_unit: str, expected: str
+) -> None:
     assert humanize.precisedelta(val, minimum_unit=min_unit) == expected
 
 
@@ -475,7 +485,9 @@ def test_precisedelta_one_unit_enough(val, min_unit, expected):
         ),
     ],
 )
-def test_precisedelta_multiple_units(val, min_unit, expected):
+def test_precisedelta_multiple_units(
+    val: dt.timedelta, min_unit: str, expected: str
+) -> None:
     assert humanize.precisedelta(val, minimum_unit=min_unit) == expected
 
 
@@ -524,7 +536,9 @@ def test_precisedelta_multiple_units(val, min_unit, expected):
         (dt.timedelta(days=183), "years", "%0.1f", "0.5 years"),
     ],
 )
-def test_precisedelta_custom_format(val, min_unit, fmt, expected):
+def test_precisedelta_custom_format(
+    val: dt.timedelta, min_unit: str, fmt: str, expected: str
+) -> None:
     assert humanize.precisedelta(val, minimum_unit=min_unit, format=fmt) == expected
 
 
@@ -599,15 +613,15 @@ def test_precisedelta_custom_format(val, min_unit, fmt, expected):
         ),
     ],
 )
-def test_precisedelta_suppress_units(val, min_unit, suppress, expected):
+def test_precisedelta_suppress_units(
+    val: dt.timedelta, min_unit: str, suppress: list[str], expected: str
+) -> None:
     assert (
         humanize.precisedelta(val, minimum_unit=min_unit, suppress=suppress) == expected
     )
 
 
-def test_precisedelta_bogus_call():
-    assert humanize.precisedelta(None) is None
-
+def test_precisedelta_bogus_call() -> None:
     with pytest.raises(ValueError):
         humanize.precisedelta(1, minimum_unit="years", suppress=["years"])
 
@@ -615,11 +629,11 @@ def test_precisedelta_bogus_call():
         humanize.naturaldelta(1, minimum_unit="years")
 
 
-def test_time_unit():
+def test_time_unit() -> None:
     years, minutes = time.Unit["YEARS"], time.Unit["MINUTES"]
     assert minutes < years
     assert years > minutes
     assert minutes == minutes
 
     with pytest.raises(TypeError):
-        years < "foo"
+        _ = years < "foo"
