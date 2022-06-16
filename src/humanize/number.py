@@ -337,7 +337,7 @@ def scientific(value: NumberOrString, precision: int = 2) -> str:
         >>> scientific(int(500))
         '5.00 x 10²'
         >>> scientific(-1000)
-        '1.00 x 10⁻³'
+        '-1.00 x 10³'
         >>> scientific(1000, 1)
         '1.0 x 10³'
         >>> scientific(1000, 3)
@@ -369,35 +369,19 @@ def scientific(value: NumberOrString, precision: int = 2) -> str:
         "7": "⁷",
         "8": "⁸",
         "9": "⁹",
-        "+": "⁺",
         "-": "⁻",
     }
-    negative = False
     try:
-        if "-" in str(value):
-            value = str(value).replace("-", "")
-            negative = True
-
-        if isinstance(value, str):
-            value = float(value)
-
-        fmt = "{:.%se}" % str(int(precision))
-        n = fmt.format(value)
-
+        value = float(value)
     except (ValueError, TypeError):
         return str(value)
-
+    fmt = "{:.%se}" % str(int(precision))
+    n = fmt.format(value)
     part1, part2 = n.split("e")
-    if "-0" in part2:
-        part2 = part2.replace("-0", "-")
-
-    if "+0" in part2:
-        part2 = part2.replace("+0", "")
+    # Remove redundant leading '+' or '0's (preserving the last '0' for 10⁰).
+    part2 = re.sub(r"^\+?(\-?)0*(.+)$", r"\1\2", part2)
 
     new_part2 = []
-    if negative:
-        new_part2.append(exponents["-"])
-
     for char in part2:
         new_part2.append(exponents[char])
 
