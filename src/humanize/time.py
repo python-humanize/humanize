@@ -202,7 +202,7 @@ def naturaldelta(
         else:
             return _ngettext("1 year, %d day", "1 year, %d days", days) % days
 
-    return _ngettext("%s year", "%s years", years) % intcomma(years)
+    return _ngettext("%d year", "%d years", years).replace("%d", "%s") % intcomma(years)
 
 
 def naturaltime(
