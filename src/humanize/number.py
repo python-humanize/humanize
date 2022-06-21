@@ -126,7 +126,7 @@ def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
         ndigits (int, None): Digits of precision for rounding after the decimal point.
 
     Returns:
-        str: string containing commas every three digits.
+        str: String containing commas every three digits.
     """
     sep = thousands_separator()
     try:
@@ -137,7 +137,7 @@ def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
     except (TypeError, ValueError):
         return str(value)
 
-    if ndigits:
+    if ndigits is not None:
         orig = "{0:.{1}f}".format(value, ndigits)
     else:
         orig = str(value)
