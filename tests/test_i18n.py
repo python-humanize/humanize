@@ -52,6 +52,7 @@ def test_intcomma() -> None:
         humanize.i18n.deactivate()
         assert humanize.intcomma(number) == "10,000,000"
 
+
 def test_naturaldelta() -> None:
     seconds = 1234 * 365 * 24 * 60 * 60
 
@@ -69,6 +70,7 @@ def test_naturaldelta() -> None:
     finally:
         humanize.i18n.deactivate()
         assert humanize.naturaldelta(seconds) == "1,234 years"
+
 
 @pytest.mark.parametrize(
     ("locale", "number", "expected_result"),
