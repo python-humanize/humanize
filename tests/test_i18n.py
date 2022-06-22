@@ -95,6 +95,29 @@ def test_intword_plurals(locale: str, number: int, expected_result: str) -> None
 
 
 @pytest.mark.parametrize(
+    ("locale", "expected_result"),
+    (
+        ("ar", "5خامس"),
+        ("ar_SA", "5خامس"),
+        ("fr", "5e"),
+        ("fr_FR", "5e"),
+        ("pt", "5º"),
+        ("pt_BR", "5º"),
+        ("pt_PT", "5º"),
+    ),
+)
+def test_langauge_codes(locale: str, expected_result: str) -> None:
+    try:
+        humanize.i18n.activate(locale)
+    except FileNotFoundError:
+        pytest.skip("Generate .mo with scripts/generate-translation-binaries.sh")
+    else:
+        assert humanize.ordinal(5) == expected_result
+    finally:
+        humanize.i18n.deactivate()
+
+
+@pytest.mark.parametrize(
     ("locale", "number", "gender", "expected_result"),
     (
         ("fr_FR", 1, "male", "1er"),
