@@ -88,7 +88,7 @@ def _date_and_delta(
 
 
 def naturaldelta(
-    value: dt.timedelta | int,
+    value: dt.timedelta | float,
     months: bool = True,
     minimum_unit: str = "seconds",
 ) -> str:
@@ -97,7 +97,7 @@ def naturaldelta(
     This is similar to `naturaltime`, but does not add tense to the result.
 
     Args:
-        value (datetime.timedelta or int): A timedelta or a number of seconds.
+        value (datetime.timedelta, int or float): A timedelta or a number of seconds.
         months (bool): If `True`, then a number of months (based on 30.5 days) will be
             used for fuzziness between years.
         minimum_unit (str): The lowest unit that can be used.
@@ -206,7 +206,7 @@ def naturaldelta(
 
 
 def naturaltime(
-    value: dt.datetime | int,
+    value: dt.datetime | float,
     future: bool = False,
     months: bool = True,
     minimum_unit: str = "seconds",
@@ -217,7 +217,7 @@ def naturaltime(
     This is more or less compatible with Django's `naturaltime` filter.
 
     Args:
-        value (datetime.datetime, int): A `datetime` or a number of seconds.
+        value (datetime.datetime, int or float): A `datetime` or a number of seconds.
         future (bool): Ignored for `datetime`s, where the tense is always figured out
             based on the current time. For integers, the return value will be past tense
             by default, unless future is `True`.
