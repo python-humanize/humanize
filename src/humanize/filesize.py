@@ -55,22 +55,22 @@ def naturalsize(
         suffix = suffixes["decimal"]
 
     base = 1024 if (gnu or binary) else 1000
-    bytes = float(value)
-    abs_bytes = abs(bytes)
+    bytes_ = float(value)
+    abs_bytes = abs(bytes_)
 
     if abs_bytes == 1 and not gnu:
-        return "%d Byte" % bytes
+        return "%d Byte" % bytes_
     elif abs_bytes < base and not gnu:
-        return "%d Bytes" % bytes
+        return "%d Bytes" % bytes_
     elif abs_bytes < base and gnu:
-        return "%dB" % bytes
+        return "%dB" % bytes_
 
     for i, s in enumerate(suffix):
         unit = base ** (i + 2)
         if abs_bytes < unit and not gnu:
-            return (format + " %s") % ((base * bytes / unit), s)
+            return (format + " %s") % ((base * bytes_ / unit), s)
         elif abs_bytes < unit and gnu:
-            return (format + "%s") % ((base * bytes / unit), s)
+            return (format + "%s") % ((base * bytes_ / unit), s)
     if gnu:
-        return (format + "%s") % ((base * bytes / unit), s)
-    return (format + " %s") % ((base * bytes / unit), s)
+        return (format + "%s") % ((base * bytes_ / unit), s)
+    return (format + " %s") % ((base * bytes_ / unit), s)
