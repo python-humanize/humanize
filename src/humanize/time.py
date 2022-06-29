@@ -206,7 +206,7 @@ def naturaldelta(
 
 
 def naturaltime(
-    value: dt.datetime | float,
+    value: dt.datetime | dt.timedelta | float,
     future: bool = False,
     months: bool = True,
     minimum_unit: str = "seconds",
@@ -217,10 +217,11 @@ def naturaltime(
     This is more or less compatible with Django's `naturaltime` filter.
 
     Args:
-        value (datetime.datetime, int or float): A `datetime` or a number of seconds.
-        future (bool): Ignored for `datetime`s, where the tense is always figured out
-            based on the current time. For integers, the return value will be past tense
-            by default, unless future is `True`.
+        value (datetime.datetime, datetime.timedelta, int or float): A `datetime`, a
+            `timedelta`, or a number of seconds.
+        future (bool): Ignored for `datetime`s and `timedelta`s, where the tense is
+            always figured out based on the current time. For integers and floats, the
+            return value will be past tense by default, unless future is `True`.
         months (bool): If `True`, then a number of months (based on 30.5 days) will be
             used for fuzziness between years.
         minimum_unit (str): The lowest unit that can be used.
