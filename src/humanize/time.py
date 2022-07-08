@@ -151,7 +151,8 @@ def naturaldelta(
                     _ngettext("%d microsecond", "%d microseconds", delta.microseconds)
                     % delta.microseconds
                 )
-            elif min_unit == Unit.MILLISECONDS or (
+
+            if min_unit == Unit.MILLISECONDS or (
                 min_unit == Unit.MICROSECONDS and 1000 <= delta.microseconds < 1_000_000
             ):
                 milliseconds = delta.microseconds / 1000
@@ -160,47 +161,59 @@ def naturaldelta(
                     % milliseconds
                 )
             return _("a moment")
-        elif seconds == 1:
+
+        if seconds == 1:
             return _("a second")
-        elif seconds < 60:
+
+        if seconds < 60:
             return _ngettext("%d second", "%d seconds", seconds) % seconds
-        elif 60 <= seconds < 120:
+
+        if 60 <= seconds < 120:
             return _("a minute")
-        elif 120 <= seconds < 3600:
+
+        if 120 <= seconds < 3600:
             minutes = seconds // 60
             return _ngettext("%d minute", "%d minutes", minutes) % minutes
-        elif 3600 <= seconds < 3600 * 2:
+
+        if 3600 <= seconds < 3600 * 2:
             return _("an hour")
-        elif 3600 < seconds:
+
+        if 3600 < seconds:
             hours = seconds // 3600
             return _ngettext("%d hour", "%d hours", hours) % hours
+
     elif years == 0:
         if days == 1:
             return _("a day")
+
         if not use_months:
             return _ngettext("%d day", "%d days", days) % days
-        else:
-            if not num_months:
-                return _ngettext("%d day", "%d days", days) % days
-            elif num_months == 1:
-                return _("a month")
-            else:
-                return _ngettext("%d month", "%d months", num_months) % num_months
+
+        if not num_months:
+            return _ngettext("%d day", "%d days", days) % days
+
+        if num_months == 1:
+            return _("a month")
+
+        return _ngettext("%d month", "%d months", num_months) % num_months
+
     elif years == 1:
         if not num_months and not days:
             return _("a year")
-        elif not num_months:
+
+        if not num_months:
             return _ngettext("1 year, %d day", "1 year, %d days", days) % days
-        elif use_months:
+
+        if use_months:
             if num_months == 1:
                 return _("1 year, 1 month")
-            else:
-                return (
-                    _ngettext("1 year, %d month", "1 year, %d months", num_months)
-                    % num_months
-                )
-        else:
-            return _ngettext("1 year, %d day", "1 year, %d days", days) % days
+
+            return (
+                _ngettext("1 year, %d month", "1 year, %d months", num_months)
+                % num_months
+            )
+
+        return _ngettext("1 year, %d day", "1 year, %d days", days) % days
 
     return _ngettext("%d year", "%d years", years).replace("%d", "%s") % intcomma(years)
 
@@ -265,12 +278,16 @@ def naturalday(value: dt.date | dt.datetime, format: str = "%b %d") -> str:
         # Date arguments out of range
         return str(value)
     delta = value - dt.date.today()
+
     if delta.days == 0:
         return _("today")
-    elif delta.days == 1:
+
+    if delta.days == 1:
         return _("tomorrow")
-    elif delta.days == -1:
+
+    if delta.days == -1:
         return _("yesterday")
+
     return value.strftime(format)
 
 
@@ -323,10 +340,11 @@ def _quotient_and_remainder(
     """
     if unit == minimum_unit:
         return value / divisor, 0
-    elif unit in suppress:
+
+    if unit in suppress:
         return 0, value
-    else:
-        return divmod(value, divisor)
+
+    return divmod(value, divisor)
 
 
 def _carry(
@@ -361,10 +379,11 @@ def _carry(
     """
     if unit == min_unit:
         return value1 + value2 / ratio, 0
-    elif unit in suppress:
+
+    if unit in suppress:
         return 0, value2 + value1 * ratio
-    else:
-        return value1, value2
+
+    return value1, value2
 
 
 def _suitable_minimum_unit(min_unit: Unit, suppress: typing.Iterable[Unit]) -> Unit:
