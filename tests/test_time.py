@@ -640,7 +640,6 @@ def test_time_unit() -> None:
     years, minutes = time.Unit["YEARS"], time.Unit["MINUTES"]
     assert minutes < years
     assert years > minutes
-    assert minutes == minutes
 
     with pytest.raises(TypeError):
         _ = years < "foo"
