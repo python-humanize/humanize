@@ -405,10 +405,10 @@ def _suppress_lower_units(min_unit: Unit, suppress: typing.Iterable[Unit]) -> se
     ['MICROSECONDS', 'MILLISECONDS', 'DAYS']
     """
     suppress = set(suppress)
-    for u in Unit:
-        if u == min_unit:
+    for unit in Unit:
+        if unit == min_unit:
             break
-        suppress.add(u)
+        suppress.add(unit)
 
     return suppress
 
