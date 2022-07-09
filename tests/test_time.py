@@ -629,6 +629,8 @@ def test_precisedelta_suppress_units(
 
 
 def test_precisedelta_bogus_call() -> None:
+    assert humanize.precisedelta(None) == "None"
+
     with pytest.raises(ValueError):
         humanize.precisedelta(1, minimum_unit="years", suppress=["years"])
 
