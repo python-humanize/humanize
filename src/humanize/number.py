@@ -230,9 +230,7 @@ def intword(value: NumberOrString, format: str = "%.1f") -> str:
             singular, plural = human_powers[ordinal_ - 1]
             return (
                 negative_prefix
-                + " ".join(
-                    [format, _ngettext(singular, plural, math.ceil(chopped))]
-                )
+                + " ".join([format, _ngettext(singular, plural, math.ceil(chopped))])
             ) % chopped
 
     return negative_prefix + str(value)
