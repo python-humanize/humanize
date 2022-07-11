@@ -170,7 +170,9 @@ def test_naturaldelta(test_input: float | dt.timedelta, expected: str) -> None:
         ("NaN", "NaN"),
     ],
 )
-def test_naturaltime(test_input: dt.datetime, expected: str) -> None:
+def test_naturaltime(
+    test_input: dt.datetime | dt.timedelta | float, expected: str
+) -> None:
     assert humanize.naturaltime(test_input) == expected
 
 
@@ -211,7 +213,9 @@ def test_naturaltime(test_input: dt.datetime, expected: str) -> None:
         ("NaN", "NaN"),
     ],
 )
-def test_naturaltime_nomonths(test_input: dt.datetime, expected: str) -> None:
+def test_naturaltime_nomonths(
+    test_input: dt.datetime | dt.timedelta | float, expected: str
+) -> None:
     assert humanize.naturaltime(test_input, months=False) == expected
 
 
@@ -506,7 +510,7 @@ def test_naturaltime_timezone_when(test_input: dt.datetime, expected: str) -> No
     ],
 )
 def test_precisedelta_one_unit_enough(
-    val: int | dt.timedelta, min_unit: str, expected: str
+    val: dt.timedelta | float, min_unit: str, expected: str
 ) -> None:
     assert humanize.precisedelta(val, minimum_unit=min_unit) == expected
 
@@ -562,7 +566,7 @@ def test_precisedelta_one_unit_enough(
     ],
 )
 def test_precisedelta_multiple_units(
-    val: dt.timedelta, min_unit: str, expected: str
+    val: dt.timedelta | float, min_unit: str, expected: str
 ) -> None:
     assert humanize.precisedelta(val, minimum_unit=min_unit) == expected
 
@@ -634,7 +638,7 @@ def test_precisedelta_multiple_units(
     ],
 )
 def test_precisedelta_custom_format(
-    val: dt.timedelta, min_unit: str, fmt: str, expected: str
+    val: dt.timedelta | float, min_unit: str, fmt: str, expected: str
 ) -> None:
     assert humanize.precisedelta(val, minimum_unit=min_unit, format=fmt) == expected
 
@@ -711,7 +715,7 @@ def test_precisedelta_custom_format(
     ],
 )
 def test_precisedelta_suppress_units(
-    val: dt.timedelta, min_unit: str, suppress: list[str], expected: str
+    val: dt.timedelta | float, min_unit: str, suppress: list[str], expected: str
 ) -> None:
     assert (
         humanize.precisedelta(val, minimum_unit=min_unit, suppress=suppress) == expected
