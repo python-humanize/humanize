@@ -205,8 +205,14 @@ def intword(value: NumberOrString, format: str = "%.1f") -> str:
     except (TypeError, ValueError):
         return str(value)
 
+    if value < 0:
+        value *= -1
+        negative_prefix = "-"
+    else:
+        negative_prefix = ""
+
     if value < powers[0]:
-        return str(value)
+        return negative_prefix + str(value)
     for ordinal, power in enumerate(powers[1:], 1):
         if value < power:
             chopped = value / float(powers[ordinal - 1])
@@ -214,14 +220,21 @@ def intword(value: NumberOrString, format: str = "%.1f") -> str:
                 chopped = value / float(powers[ordinal])
                 singular, plural = human_powers[ordinal]
                 return (
-                    " ".join([format, _ngettext(singular, plural, math.ceil(chopped))])
+                    negative_prefix
+                    + " ".join(
+                        [format, _ngettext(singular, plural, math.ceil(chopped))]
+                    )
                 ) % chopped
             else:
                 singular, plural = human_powers[ordinal - 1]
                 return (
-                    " ".join([format, _ngettext(singular, plural, math.ceil(chopped))])
+                    negative_prefix
+                    + " ".join(
+                        [format, _ngettext(singular, plural, math.ceil(chopped))]
+                    )
                 ) % chopped
-    return str(value)
+
+    return negative_prefix + str(value)
 
 
 def apnumber(value: NumberOrString) -> str:
