@@ -9,6 +9,7 @@ from __future__ import annotations
 import collections.abc
 import datetime as dt
 import math
+import re
 import typing
 from enum import Enum
 from functools import total_ordering
@@ -63,7 +64,7 @@ def _abs_timedelta(delta: dt.timedelta) -> dt.timedelta:
 
 
 def _date_and_delta(
-    value: typing.Any, *, now: dt.datetime | None = None
+    value: typing.Any, *, now: dt.datetime | None = None, precise: bool = False
 ) -> tuple[typing.Any, typing.Any]:
     """Turn a value into a date and a timedelta which represents how long ago it was.
 
@@ -79,7 +80,7 @@ def _date_and_delta(
         delta = value
     else:
         try:
-            value = int(value)
+            value = value if precise else int(value)
             delta = dt.timedelta(seconds=value)
             date = now - delta
         except (ValueError, TypeError):
@@ -414,7 +415,7 @@ def _suppress_lower_units(min_unit: Unit, suppress: typing.Iterable[Unit]) -> se
 
 
 def precisedelta(
-    value: dt.timedelta | int,
+    value: dt.timedelta | float,
     minimum_unit: str = "seconds",
     suppress: typing.Iterable[str] = (),
     format: str = "%0.2f",
@@ -485,7 +486,7 @@ def precisedelta(
 
     ```
     """
-    date, delta = _date_and_delta(value)
+    date, delta = _date_and_delta(value, precise=True)
     if date is None:
         return str(value)
 
@@ -555,9 +556,13 @@ def precisedelta(
         ("%d microsecond", "%d microseconds", usecs),
     ]
 
+    round_fmt_value = re.fullmatch(r"%\d*(d|(\.0*f))", format)
+
     texts: list[str] = []
     for unit, fmt in zip(reversed(Unit), fmts):
         singular_txt, plural_txt, fmt_value = fmt
+        if round_fmt_value:
+            fmt_value = round(fmt_value)
         if fmt_value > 0 or (not texts and unit == min_unit):
             fmt_txt = _ngettext(singular_txt, plural_txt, fmt_value)
             if unit == min_unit and math.modf(fmt_value)[0] > 0:
