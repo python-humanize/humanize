@@ -205,44 +205,36 @@ def intword(value: NumberOrString, format: str = "%.1f") -> str:
     except (TypeError, ValueError):
         return str(value)
 
-    is_negative = value < 0
-
-    if is_negative:
+    if value < 0:
         value *= -1
+        negative_prefix = "-"
+    else:
+        negative_prefix = ""
 
     if value < powers[0]:
-        return "-" + str(value) if is_negative else str(value)
+        return negative_prefix + str(value)
     for ordinal, power in enumerate(powers[1:], 1):
         if value < power:
             chopped = value / float(powers[ordinal - 1])
             if float(format % chopped) == float(10**3):
                 chopped = value / float(powers[ordinal])
                 singular, plural = human_powers[ordinal]
-                if is_negative:
-                    return (
-                        "-"
-                        + " ".join(
-                            [format, _ngettext(singular, plural, math.ceil(chopped))]
-                        )
-                    ) % chopped
-
                 return (
-                    " ".join([format, _ngettext(singular, plural, math.ceil(chopped))])
+                    negative_prefix
+                    + " ".join(
+                        [format, _ngettext(singular, plural, math.ceil(chopped))]
+                    )
                 ) % chopped
             else:
                 singular, plural = human_powers[ordinal - 1]
-                if is_negative:
-                    return (
-                        "-"
-                        + " ".join(
-                            [format, _ngettext(singular, plural, math.ceil(chopped))]
-                        )
-                    ) % chopped
                 return (
-                    " ".join([format, _ngettext(singular, plural, math.ceil(chopped))])
+                    negative_prefix
+                    + " ".join(
+                        [format, _ngettext(singular, plural, math.ceil(chopped))]
+                    )
                 ) % chopped
 
-    return "-" + str(value) if is_negative else str(value)
+    return negative_prefix + str(value)
 
 
 def apnumber(value: NumberOrString) -> str:
