@@ -127,7 +127,7 @@ def test_naturaldelta_nomonths(test_input: dt.timedelta, expected: str) -> None:
         (dt.timedelta(days=999_999_999), "2,739,726 years"),
     ],
 )
-def test_naturaldelta(test_input: int | dt.timedelta, expected: str) -> None:
+def test_naturaldelta(test_input: dt.timedelta | float, expected: str) -> None:
     assert humanize.naturaldelta(test_input) == expected
 
 
@@ -166,11 +166,13 @@ def test_naturaldelta(test_input: int | dt.timedelta, expected: str) -> None:
         ("NaN", "NaN"),
     ],
 )
-def test_naturaltime(test_input: dt.datetime, expected: str) -> None:
+def test_naturaltime(
+    test_input: dt.datetime | dt.timedelta | float, expected: str
+) -> None:
     assert humanize.naturaltime(test_input) == expected
 
 
-def nt_nomonths(d: dt.datetime) -> str:
+def nt_nomonths(d: dt.datetime | dt.timedelta | float) -> str:
     return humanize.naturaltime(d, months=False)
 
 
@@ -211,7 +213,9 @@ def nt_nomonths(d: dt.datetime) -> str:
         ("NaN", "NaN"),
     ],
 )
-def test_naturaltime_nomonths(test_input: dt.datetime, expected: str) -> None:
+def test_naturaltime_nomonths(
+    test_input: dt.datetime | dt.timedelta | float, expected: str
+) -> None:
     assert nt_nomonths(test_input) == expected
 
 
@@ -437,7 +441,7 @@ def test_naturaltime_minimum_unit_explicit(
     ],
 )
 def test_precisedelta_one_unit_enough(
-    val: int | dt.timedelta, min_unit: str, expected: str
+    val: dt.timedelta | float, min_unit: str, expected: str
 ) -> None:
     assert humanize.precisedelta(val, minimum_unit=min_unit) == expected
 
@@ -493,7 +497,7 @@ def test_precisedelta_one_unit_enough(
     ],
 )
 def test_precisedelta_multiple_units(
-    val: dt.timedelta, min_unit: str, expected: str
+    val: dt.timedelta | float, min_unit: str, expected: str
 ) -> None:
     assert humanize.precisedelta(val, minimum_unit=min_unit) == expected
 
@@ -565,7 +569,7 @@ def test_precisedelta_multiple_units(
     ],
 )
 def test_precisedelta_custom_format(
-    val: dt.timedelta, min_unit: str, fmt: str, expected: str
+    val: dt.timedelta | float, min_unit: str, fmt: str, expected: str
 ) -> None:
     assert humanize.precisedelta(val, minimum_unit=min_unit, format=fmt) == expected
 
@@ -642,7 +646,7 @@ def test_precisedelta_custom_format(
     ],
 )
 def test_precisedelta_suppress_units(
-    val: dt.timedelta, min_unit: str, suppress: list[str], expected: str
+    val: dt.timedelta | float, min_unit: str, suppress: list[str], expected: str
 ) -> None:
     assert (
         humanize.precisedelta(val, minimum_unit=min_unit, suppress=suppress) == expected
