@@ -122,86 +122,86 @@ msgstr "."
 #: src/humanize/number.py:140
 msgid "thousand"
 msgid_plural "thousand"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "tysiąc"
+msgstr[1] "tysiąc"
+msgstr[2] "tysięcy"
 
 #: src/humanize/number.py:141
 msgid "million"
 msgid_plural "million"
 msgstr[0] "milion"
-msgstr[1] "milion"
-msgstr[2] "milion"
+msgstr[1] "miliony"
+msgstr[2] "milionów"
 
 #: src/humanize/number.py:142
 msgid "billion"
 msgid_plural "billion"
 msgstr[0] "bilion"
-msgstr[1] "bilion"
-msgstr[2] "bilion"
+msgstr[1] "biliony"
+msgstr[2] "bilionów"
 
 #: src/humanize/number.py:143
 msgid "trillion"
 msgid_plural "trillion"
 msgstr[0] "trylion"
-msgstr[1] "trylion"
-msgstr[2] "trylion"
+msgstr[1] "tryliony"
+msgstr[2] "trylionów"
 
 #: src/humanize/number.py:144
 msgid "quadrillion"
 msgid_plural "quadrillion"
 msgstr[0] "kwadrylion"
-msgstr[1] "kwadrylion"
-msgstr[2] "kwadrylion"
+msgstr[1] "kwadryliony"
+msgstr[2] "kwadrylionów"
 
 #: src/humanize/number.py:145
 msgid "quintillion"
 msgid_plural "quintillion"
 msgstr[0] "kwintylion"
-msgstr[1] "kwintylion"
-msgstr[2] "kwintylion"
+msgstr[1] "kwintyliony"
+msgstr[2] "kwintylionów"
 
 #: src/humanize/number.py:146
 msgid "sextillion"
 msgid_plural "sextillion"
 msgstr[0] "sekstylion"
-msgstr[1] "sekstylion"
-msgstr[2] "sekstylion"
+msgstr[1] "sekstyliony"
+msgstr[2] "sekstylionów"
 
 #: src/humanize/number.py:147
 msgid "septillion"
 msgid_plural "septillion"
 msgstr[0] "septylion"
-msgstr[1] "septylion"
-msgstr[2] "septylion"
+msgstr[1] "septyliony"
+msgstr[2] "septylionów"
 
 #: src/humanize/number.py:148
 msgid "octillion"
 msgid_plural "octillion"
 msgstr[0] "oktylion"
-msgstr[1] "oktylion"
-msgstr[2] "oktylion"
+msgstr[1] "oktyliony"
+msgstr[2] "oktylionów"
 
 #: src/humanize/number.py:149
 msgid "nonillion"
 msgid_plural "nonillion"
 msgstr[0] "nonilion"
-msgstr[1] "nonilion"
-msgstr[2] "nonilion"
+msgstr[1] "noniliony"
+msgstr[2] "nonilionów"
 
 #: src/humanize/number.py:150
 msgid "decillion"
 msgid_plural "decillion"
 msgstr[0] "decylion"
-msgstr[1] "decylion"
-msgstr[2] "decylion"
+msgstr[1] "decyliony"
+msgstr[2] "decylionów"
 
 #: src/humanize/number.py:151
 msgid "googol"
 msgid_plural "googol"
 msgstr[0] "googol"
-msgstr[1] "googol"
-msgstr[2] "googol"
+msgstr[1] "googoly"
+msgstr[2] "googolów"
 
 #: src/humanize/number.py:246
 msgid "zero"
