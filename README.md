@@ -207,15 +207,15 @@ FileNotFoundError: [Errno 2] No translation file found for domain: 'humanize'
 
 How to add new phrases to existing locale files:
 
-```console
-$ xgettext --from-code=UTF-8 -o humanize.pot -k'_' -k'N_' -k'P_:1c,2' -l python src/humanize/*.py  # extract new phrases
-$ msgmerge -U src/humanize/locale/ru_RU/LC_MESSAGES/humanize.po humanize.pot # add them to locale files
+```sh
+xgettext --from-code=UTF-8 -o humanize.pot -k'_' -k'N_' -k'P_:1c,2' -l python src/humanize/*.py  # extract new phrases
+msgmerge -U src/humanize/locale/ru_RU/LC_MESSAGES/humanize.po humanize.pot # add them to locale files
 ```
 
 How to add a new locale:
 
-```console
-$ msginit -i humanize.pot -o humanize/locale/<locale name>/LC_MESSAGES/humanize.po --locale <locale name>
+```sh
+msginit -i humanize.pot -o humanize/locale/<locale name>/LC_MESSAGES/humanize.po --locale <locale name>
 ```
 
 Where `<locale name>` is a locale abbreviation, eg. `en_GB`, `pt_BR` or just `ru`, `fr`
