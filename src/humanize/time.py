@@ -376,7 +376,7 @@ def _suitable_minimum_unit(min_unit: Unit, suppress: typing.Iterable[Unit]) -> U
     >>> _suitable_minimum_unit(Unit.HOURS, []).name
     'HOURS'
 
-    But if suppressed, find a unit greather than the original one that is not
+    But if suppressed, find a unit greater than the original one that is not
     suppressed:
 
     >>> _suitable_minimum_unit(Unit.HOURS, [Unit.HOURS]).name
