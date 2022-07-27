@@ -127,7 +127,7 @@ def test_naturaldelta_nomonths(test_input: dt.timedelta, expected: str) -> None:
         (dt.timedelta(days=999_999_999), "2,739,726 years"),
     ],
 )
-def test_naturaldelta(test_input: int | dt.timedelta, expected: str) -> None:
+def test_naturaldelta(test_input: dt.timedelta | float, expected: str) -> None:
     assert humanize.naturaldelta(test_input) == expected
 
 
@@ -166,11 +166,13 @@ def test_naturaldelta(test_input: int | dt.timedelta, expected: str) -> None:
         ("NaN", "NaN"),
     ],
 )
-def test_naturaltime(test_input: dt.datetime, expected: str) -> None:
+def test_naturaltime(
+    test_input: dt.datetime | dt.timedelta | float, expected: str
+) -> None:
     assert humanize.naturaltime(test_input) == expected
 
 
-def nt_nomonths(d: dt.datetime) -> str:
+def nt_nomonths(d: dt.datetime | dt.timedelta | float) -> str:
     return humanize.naturaltime(d, months=False)
 
 
@@ -211,7 +213,9 @@ def nt_nomonths(d: dt.datetime) -> str:
         ("NaN", "NaN"),
     ],
 )
-def test_naturaltime_nomonths(test_input: dt.datetime, expected: str) -> None:
+def test_naturaltime_nomonths(
+    test_input: dt.datetime | dt.timedelta | float, expected: str
+) -> None:
     assert nt_nomonths(test_input) == expected
 
 
@@ -437,7 +441,7 @@ def test_naturaltime_minimum_unit_explicit(
     ],
 )
 def test_precisedelta_one_unit_enough(
-    val: int | dt.timedelta, min_unit: str, expected: str
+    val: dt.timedelta | float, min_unit: str, expected: str
 ) -> None:
     assert humanize.precisedelta(val, minimum_unit=min_unit) == expected
 
@@ -490,10 +494,18 @@ def test_precisedelta_one_unit_enough(
             "minutes",
             "0 minutes",
         ),
+        (dt.timedelta(days=31), "seconds", "1 month and 12 hours"),
+        (dt.timedelta(days=32), "seconds", "1 month, 1 day and 12 hours"),
+        (dt.timedelta(days=62), "seconds", "2 months and 1 day"),
+        (dt.timedelta(days=92), "seconds", "3 months and 12 hours"),
+        (dt.timedelta(days=31), "days", "1 month and 0.50 days"),
+        (dt.timedelta(days=32), "days", "1 month and 1.50 days"),
+        (dt.timedelta(days=62), "days", "2 months and 1 day"),
+        (dt.timedelta(days=92), "days", "3 months and 0.50 days"),
     ],
 )
 def test_precisedelta_multiple_units(
-    val: dt.timedelta, min_unit: str, expected: str
+    val: dt.timedelta | float, min_unit: str, expected: str
 ) -> None:
     assert humanize.precisedelta(val, minimum_unit=min_unit) == expected
 
@@ -539,12 +551,36 @@ def test_precisedelta_multiple_units(
             "5 days and 4.50 hours",
         ),
         (dt.timedelta(days=5, hours=4, seconds=30 * 60), "days", "%0.2f", "5.19 days"),
+        (dt.timedelta(days=31), "days", "%d", "1 month"),
+        (dt.timedelta(days=31.01), "days", "%d", "1 month and 1 day"),
+        (dt.timedelta(days=31.99), "days", "%d", "1 month and 1 day"),
+        (dt.timedelta(days=32), "days", "%d", "1 month and 2 days"),
+        (dt.timedelta(days=62), "days", "%d", "2 months and 1 day"),
+        (dt.timedelta(days=92), "days", "%d", "3 months"),
         (dt.timedelta(days=120), "months", "%0.2f", "3.93 months"),
         (dt.timedelta(days=183), "years", "%0.1f", "0.5 years"),
+        (0.01, "seconds", "%0.3f", "0.010 seconds"),
+        (31, "minutes", "%d", "1 minute"),
+        (60 + 29.99, "minutes", "%d", "1 minute"),
+        (60 + 30, "minutes", "%d", "2 minutes"),
+        (60 * 60 + 30.99, "minutes", "%.0f", "1 hour"),
+        (60 * 60 + 31, "minutes", "%.0f", "1 hour and 1 minute"),
+        (
+            ONE_DAY - MILLISECONDS_1_337,
+            "seconds",
+            "%.1f",
+            "23 hours, 59 minutes and 58.7 seconds",
+        ),
+        (
+            ONE_DAY - ONE_MILLISECOND,
+            "seconds",
+            "%.4f",
+            "23 hours, 59 minutes and 59.9990 seconds",
+        ),
     ],
 )
 def test_precisedelta_custom_format(
-    val: dt.timedelta, min_unit: str, fmt: str, expected: str
+    val: dt.timedelta | float, min_unit: str, fmt: str, expected: str
 ) -> None:
     assert humanize.precisedelta(val, minimum_unit=min_unit, format=fmt) == expected
 
@@ -621,7 +657,7 @@ def test_precisedelta_custom_format(
     ],
 )
 def test_precisedelta_suppress_units(
-    val: dt.timedelta, min_unit: str, suppress: list[str], expected: str
+    val: dt.timedelta | float, min_unit: str, suppress: list[str], expected: str
 ) -> None:
     assert (
         humanize.precisedelta(val, minimum_unit=min_unit, suppress=suppress) == expected
