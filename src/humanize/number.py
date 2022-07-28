@@ -145,8 +145,8 @@ def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
     new = re.sub(r"^(-?\d+)(\d{3})", rf"\g<1>{sep}\g<2>", orig)
     if orig == new:
         return new
-    else:
-        return intcomma(new)
+
+    return intcomma(new)
 
 
 powers = [10**x for x in (3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 100)]
@@ -213,26 +213,25 @@ def intword(value: NumberOrString, format: str = "%.1f") -> str:
 
     if value < powers[0]:
         return negative_prefix + str(value)
-    for ordinal, power in enumerate(powers[1:], 1):
+
+    for ordinal_, power in enumerate(powers[1:], 1):
         if value < power:
-            chopped = value / float(powers[ordinal - 1])
+            chopped = value / float(powers[ordinal_ - 1])
             if float(format % chopped) == float(10**3):
-                chopped = value / float(powers[ordinal])
-                singular, plural = human_powers[ordinal]
+                chopped = value / float(powers[ordinal_])
+                singular, plural = human_powers[ordinal_]
                 return (
                     negative_prefix
                     + " ".join(
                         [format, _ngettext(singular, plural, math.ceil(chopped))]
                     )
                 ) % chopped
-            else:
-                singular, plural = human_powers[ordinal - 1]
-                return (
-                    negative_prefix
-                    + " ".join(
-                        [format, _ngettext(singular, plural, math.ceil(chopped))]
-                    )
-                ) % chopped
+
+            singular, plural = human_powers[ordinal_ - 1]
+            return (
+                negative_prefix
+                + " ".join([format, _ngettext(singular, plural, math.ceil(chopped))])
+            ) % chopped
 
     return negative_prefix + str(value)
 
@@ -334,10 +333,11 @@ def fractional(value: NumberOrString) -> str:
         # this means that an integer was passed in
         # (or variants of that integer like 1.0000)
         return f"{whole_number:.0f}"
-    elif not whole_number:
+
+    if not whole_number:
         return f"{numerator:.0f}/{denominator:.0f}"
-    else:
-        return f"{whole_number:.0f} {numerator:.0f}/{denominator:.0f}"
+
+    return f"{whole_number:.0f} {numerator:.0f}/{denominator:.0f}"
 
 
 def scientific(value: NumberOrString, precision: int = 2) -> str:
@@ -464,13 +464,14 @@ def clamp(
 
     if isinstance(format, str):
         return token + format.format(value)
-    elif callable(format):
+
+    if callable(format):
         return token + format(value)
-    else:
-        raise ValueError(
-            "Invalid format. Must be either a valid formatting string, or a function "
-            "that accepts value and returns a string."
-        )
+
+    raise ValueError(
+        "Invalid format. Must be either a valid formatting string, or a function "
+        "that accepts value and returns a string."
+    )
 
 
 def metric(value: float, unit: str = "", precision: int = 3) -> str:
@@ -515,15 +516,15 @@ def metric(value: float, unit: str = "", precision: int = 3) -> str:
 
     value /= 10 ** (exponent // 3 * 3)
     if exponent >= 3:
-        ordinal = "kMGTPEZY"[exponent // 3 - 1]
+        ordinal_ = "kMGTPEZY"[exponent // 3 - 1]
     elif exponent < 0:
-        ordinal = "mμnpfazy"[(-exponent - 1) // 3]
+        ordinal_ = "mμnpfazy"[(-exponent - 1) // 3]
     else:
-        ordinal = ""
+        ordinal_ = ""
     value_ = format(value, ".%if" % (precision - (exponent % 3) - 1))
-    if not (unit or ordinal) or unit in ("°", "′", "″"):
+    if not (unit or ordinal_) or unit in ("°", "′", "″"):
         space = ""
     else:
         space = " "
 
-    return f"{value_}{space}{ordinal}{unit}"
+    return f"{value_}{space}{ordinal_}{unit}"
