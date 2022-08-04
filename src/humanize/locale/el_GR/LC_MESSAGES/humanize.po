@@ -1,0 +1,365 @@
+# Greek translations for PACKAGE package.
+# Copyright (C) 2022 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Isaak Tsalicoglou <isaak@waseigo.com>, 2022.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: humanize\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-08-05 01:06+0300\n"
+"PO-Revision-Date: 2022-08-05 01:09+0300\n"
+"Last-Translator: Isaak Tsalicoglou <isaak@waseigo.com>\n"
+"Language-Team: Greek <team@lists.gnome.gr>\n"
+"Language: el\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Generated-By: Isaak Tsalicoglou\n"
+"X-Generator: Mousepad 0.5.9\n"
+
+#: src/humanize/number.py:71
+msgctxt "0 (male)"
+msgid "ος"
+msgstr "."
+
+#: src/humanize/number.py:72
+msgctxt "1 (male)"
+msgid "ος"
+msgstr "."
+
+#: src/humanize/number.py:73
+msgctxt "2 (male)"
+msgid "ος"
+msgstr "."
+
+#: src/humanize/number.py:74
+msgctxt "3 (male)"
+msgid "ος"
+msgstr "."
+
+#: src/humanize/number.py:75
+msgctxt "4 (male)"
+msgid "ος"
+msgstr "."
+
+#: src/humanize/number.py:76
+msgctxt "5 (male)"
+msgid "ος"
+msgstr "."
+
+#: src/humanize/number.py:77
+msgctxt "6 (male)"
+msgid "ος"
+msgstr "."
+
+#: src/humanize/number.py:78
+msgctxt "7 (male)"
+msgid "ος"
+msgstr "."
+
+#: src/humanize/number.py:79
+msgctxt "8 (male)"
+msgid "ος"
+msgstr "."
+
+#: src/humanize/number.py:80
+msgctxt "9 (male)"
+msgid "ος"
+msgstr "."
+
+#: src/humanize/number.py:84
+msgctxt "0 (female)"
+msgid "η"
+msgstr "."
+
+#: src/humanize/number.py:85
+msgctxt "1 (female)"
+msgid "η"
+msgstr "."
+
+#: src/humanize/number.py:86
+msgctxt "2 (female)"
+msgid "η"
+msgstr "."
+
+#: src/humanize/number.py:87
+msgctxt "3 (female)"
+msgid "η"
+msgstr "."
+
+#: src/humanize/number.py:88
+msgctxt "4 (female)"
+msgid "η"
+msgstr "."
+
+#: src/humanize/number.py:89
+msgctxt "5 (female)"
+msgid "η"
+msgstr "."
+
+#: src/humanize/number.py:90
+msgctxt "6 (female)"
+msgid "η"
+msgstr "."
+
+#: src/humanize/number.py:91
+msgctxt "7 (female)"
+msgid "η"
+msgstr "."
+
+#: src/humanize/number.py:92
+msgctxt "8 (female)"
+msgid "η"
+msgstr "."
+
+#: src/humanize/number.py:93
+msgctxt "9 (female)"
+msgid "η"
+msgstr "."
+
+#: src/humanize/number.py:140
+msgid "thousand"
+msgid_plural "thousand"
+msgstr[0] "χιλιάδα"
+msgstr[1] "χιλιάδες"
+
+#: src/humanize/number.py:141
+msgid "million"
+msgid_plural "million"
+msgstr[0] "εκατομμύριο"
+msgstr[1] "εκατομμύρια"
+
+#: src/humanize/number.py:142
+msgid "billion"
+msgid_plural "billion"
+msgstr[0] "δισεκατομμύριο"
+msgstr[1] "δισεκατομμύρια"
+
+#: src/humanize/number.py:143
+msgid "trillion"
+msgid_plural "trillion"
+msgstr[0] "τρισεκατομμύριο"
+msgstr[1] "τρισεκατομμύρια"
+
+#: src/humanize/number.py:144
+msgid "quadrillion"
+msgid_plural "quadrillion"
+msgstr[0] "τετράκις εκατομμύριο"
+msgstr[1] "τετράκις εκατομμύρια"
+
+#: src/humanize/number.py:145
+msgid "quintillion"
+msgid_plural "quintillion"
+msgstr[0] "πεντάκις εκατομμύριο"
+msgstr[1] "πεντάκις εκατομμύρια"
+
+#: src/humanize/number.py:146
+msgid "sextillion"
+msgid_plural "sextillion"
+msgstr[0] "εξάκις εκατομμύριο"
+msgstr[1] "εξάκις εκατομμύρια"
+
+#: src/humanize/number.py:147
+msgid "septillion"
+msgid_plural "septillion"
+msgstr[0] "επτάκις εκατομμύριο"
+msgstr[1] "επτάκις εκατομμύρια"
+
+#: src/humanize/number.py:148
+msgid "octillion"
+msgid_plural "octillion"
+msgstr[0] "οκτάκις εκατομμύριο"
+msgstr[1] "οκτάκις εκατομμύρια"
+
+#: src/humanize/number.py:149
+msgid "nonillion"
+msgid_plural "nonillion"
+msgstr[0] "εννεάκις εκατομμύριο"
+msgstr[1] "εννεάκις εκατομμύρια"
+
+#: src/humanize/number.py:150
+msgid "decillion"
+msgid_plural "decillion"
+msgstr[0] "δεκάκις εκατομμύριο"
+msgstr[1] "δεκάκις εκατομμύρια"
+
+#: src/humanize/number.py:151
+msgid "googol"
+msgid_plural "googol"
+msgstr[0] "δέκα τριακονταδυάκις εκατομμύριο"
+msgstr[1] "δέκα τριακονταδυάκις εκατομμύρια"
+
+#: src/humanize/number.py:246
+msgid "zero"
+msgstr "μηδέν"
+
+#: src/humanize/number.py:275
+msgid "one"
+msgstr "ένα"
+
+#: src/humanize/number.py:276
+msgid "two"
+msgstr "δύο"
+
+#: src/humanize/number.py:277
+msgid "three"
+msgstr "τρία"
+
+#: src/humanize/number.py:278
+msgid "four"
+msgstr "τέσσερα"
+
+#: src/humanize/number.py:279
+msgid "five"
+msgstr "πέντε"
+
+#: src/humanize/number.py:280
+msgid "six"
+msgstr "έξι"
+
+#: src/humanize/number.py:281
+msgid "seven"
+msgstr "επτά"
+
+#: src/humanize/number.py:254
+msgid "eight"
+msgstr "οκτώ"
+
+#: src/humanize/number.py:255
+msgid "nine"
+msgstr "εννέα"
+
+#: src/humanize/time.py:133
+#, fuzzy, python-format
+msgid "%d microsecond"
+msgid_plural "%d microseconds"
+msgstr[0] "%d εκατομμυριοστό του δευτερολέπτου"
+msgstr[1] "%d εκατομμυριοστά του δευτερολέπτου"
+
+#: src/humanize/time.py:142
+#, fuzzy, python-format
+msgid "%d millisecond"
+msgid_plural "%d milliseconds"
+msgstr[0] "%d χιλιοστό του δευτερολέπτου"
+msgstr[1] "%d χιλιοστά του δευτερολέπτου"
+
+#: src/humanize/time.py:145 src/humanize/time.py:220
+msgid "a moment"
+msgstr "μια στιγμή"
+
+#: src/humanize/time.py:147
+msgid "a second"
+msgstr "ένα δευτερόλεπτο"
+
+#: src/humanize/time.py:149
+#, python-format
+msgid "%d second"
+msgid_plural "%d seconds"
+msgstr[0] "%d δευτερόλεπτο"
+msgstr[1] "%d δευτερόλεπτα"
+
+#: src/humanize/time.py:151
+msgid "a minute"
+msgstr "ένα λεπτό"
+
+#: src/humanize/time.py:154
+#, python-format
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] "%d λεπτό"
+msgstr[1] "%d λεπτά"
+
+#: src/humanize/time.py:156
+msgid "an hour"
+msgstr "μία ώρα"
+
+#: src/humanize/time.py:159
+#, python-format
+msgid "%d hour"
+msgid_plural "%d hours"
+msgstr[0] "%d ώρα"
+msgstr[1] "%d ώρες"
+
+#: src/humanize/time.py:162
+msgid "a day"
+msgstr "μία ημέρα"
+
+#: src/humanize/time.py:164 src/humanize/time.py:167
+#, python-format
+msgid "%d day"
+msgid_plural "%d days"
+msgstr[0] "%d ημέρα"
+msgstr[1] "%d ημέρες"
+
+#: src/humanize/time.py:169
+msgid "a month"
+msgstr "ένα μήνα"
+
+#: src/humanize/time.py:171
+#, python-format
+msgid "%d month"
+msgid_plural "%d months"
+msgstr[0] "%d μήνα"
+msgstr[1] "%d μήνες"
+
+#: src/humanize/time.py:174
+msgid "a year"
+msgstr "ένα έτος"
+
+#: src/humanize/time.py:176 src/humanize/time.py:185
+#, python-format
+msgid "1 year, %d day"
+msgid_plural "1 year, %d days"
+msgstr[0] "ένα έτος και %d ημέρα"
+msgstr[1] "ένα έτος και %d ημέρες"
+
+#: src/humanize/time.py:179
+msgid "1 year, 1 month"
+msgstr "ένα έτος και ένα μήνα"
+
+#: src/humanize/time.py:182
+#, python-format
+msgid "1 year, %d month"
+msgid_plural "1 year, %d months"
+msgstr[0] "ένα έτος και %d μήνα"
+msgstr[1] "ένα έτος και %d μήνες"
+
+#: src/humanize/time.py:187
+#, python-format
+msgid "%d year"
+msgid_plural "%d years"
+msgstr[0] "%d έτος"
+msgstr[1] "%d έτη"
+
+#: src/humanize/time.py:217
+#, python-format
+msgid "%s from now"
+msgstr "σε %s από τώρα"
+
+#: src/humanize/time.py:242
+#, python-format
+msgid "%s ago"
+msgstr "πριν από %s"
+
+#: src/humanize/time.py:246
+msgid "now"
+msgstr "τώρα"
+
+#: src/humanize/time.py:269
+msgid "today"
+msgstr "σήμερα"
+
+#: src/humanize/time.py:271
+msgid "tomorrow"
+msgstr "αύριο"
+
+#: src/humanize/time.py:273
+msgid "yesterday"
+msgstr "χθες"
+
+#: src/humanize/time.py:581
+#, python-format
+msgid "%s and %s"
+msgstr "%s και %s"
