@@ -23,6 +23,7 @@ human-readable size or throughput. It is localized to:
 - Finnish
 - French
 - German
+- Greek
 - Indonesian
 - Italian
 - Japanese
