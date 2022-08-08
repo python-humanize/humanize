@@ -508,7 +508,7 @@ def metric(value: float, unit: str = "", precision: int = 3) -> str:
     Returns:
         str:
     """
-    exponent = int(math.floor(math.log10(abs(value))))
+    exponent = int(math.floor(math.log10(abs(value)))) if value != 0 else 0
 
     if exponent >= 27 or exponent < -24:
         return scientific(value, precision - 1) + unit

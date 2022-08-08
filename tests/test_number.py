@@ -194,6 +194,7 @@ def test_clamp(test_args: list[typing.Any], expected: str) -> None:
 @pytest.mark.parametrize(
     "test_args, expected",
     [
+        ([0], "0.00"),
         ([1, "Hz"], "1.00 Hz"),
         ([1.0, "W"], "1.00 W"),
         ([3, "C"], "3.00 C"),
