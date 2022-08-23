@@ -1,7 +1,7 @@
 """Main package for humanize."""
 
 from humanize.filesize import naturalsize
-from humanize.i18n import activate, deactivate, thousands_separator
+from humanize.i18n import activate, deactivate, decimal_separator, thousands_separator
 from humanize.number import (
     apnumber,
     clamp,
@@ -36,6 +36,7 @@ __all__ = [
     "apnumber",
     "clamp",
     "deactivate",
+    "decimal_separator",
     "fractional",
     "intcomma",
     "intword",

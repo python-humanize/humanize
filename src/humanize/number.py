@@ -13,7 +13,7 @@ from .i18n import _gettext as _
 from .i18n import _ngettext
 from .i18n import _ngettext_noop as NS_
 from .i18n import _pgettext as P_
-from .i18n import thousands_separator
+from .i18n import decimal_separator, thousands_separator
 
 if TYPE_CHECKING:
     if sys.version_info >= (3, 10):
@@ -130,10 +130,11 @@ def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
     Returns:
         str: String containing commas every three digits.
     """
-    sep = thousands_separator()
+    thousands_sep = thousands_separator()
+    decimal_sep = decimal_separator()
     try:
         if isinstance(value, str):
-            value = value.replace(sep, "")
+            value = value.replace(thousands_sep, "").replace(decimal_sep, ".")
             if "." in value:
                 value = float(value)
             else:
@@ -147,8 +148,9 @@ def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
         orig = "{0:.{1}f}".format(value, ndigits)
     else:
         orig = str(value)
+    orig = orig.replace(".", decimal_sep)
     while True:
-        new = re.sub(r"^(-?\d+)(\d{3})", rf"\g<1>{sep}\g<2>", orig)
+        new = re.sub(r"^(-?\d+)(\d{3})", rf"\g<1>{thousands_sep}\g<2>", orig)
         if orig == new:
             return new
         orig = new
