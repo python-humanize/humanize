@@ -15,6 +15,7 @@ _CURRENT = local()
 
 # Mapping of locale to thousands separator
 _THOUSANDS_SEPARATOR = {
+    "de_DE": ".",
     "fr_FR": " ",
 }
 
