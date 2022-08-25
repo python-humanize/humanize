@@ -117,6 +117,8 @@ def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
         '1,234.55'
         >>> intcomma(14308.40, 1)
         '14,308.4'
+        >>> intcomma("14308.40", 1)
+        '14,308.4'
         >>> intcomma(None)
         'None'
 
@@ -131,7 +133,11 @@ def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
     sep = thousands_separator()
     try:
         if isinstance(value, str):
-            float(value.replace(sep, ""))
+            value = value.replace(sep, "")
+            if "." in value:
+                value = float(value)
+            else:
+                value = int(value)
         else:
             float(value)
     except (TypeError, ValueError):
@@ -141,12 +147,11 @@ def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
         orig = "{0:.{1}f}".format(value, ndigits)
     else:
         orig = str(value)
-
-    new = re.sub(r"^(-?\d+)(\d{3})", rf"\g<1>{sep}\g<2>", orig)
-    if orig == new:
-        return new
-
-    return intcomma(new)
+    while True:
+        new = re.sub(r"^(-?\d+)(\d{3})", rf"\g<1>{sep}\g<2>", orig)
+        if orig == new:
+            return new
+        orig = new
 
 
 powers = [10**x for x in (3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 100)]
