@@ -629,6 +629,8 @@ def test_precisedelta_suppress_units(
 
 
 def test_precisedelta_bogus_call() -> None:
+    assert humanize.precisedelta(None) == "None"
+
     with pytest.raises(ValueError):
         humanize.precisedelta(1, minimum_unit="years", suppress=["years"])
 
@@ -640,7 +642,6 @@ def test_time_unit() -> None:
     years, minutes = time.Unit["YEARS"], time.Unit["MINUTES"]
     assert minutes < years
     assert years > minutes
-    assert minutes == minutes
 
     with pytest.raises(TypeError):
         _ = years < "foo"

@@ -60,17 +60,22 @@ def naturalsize(
 
     if abs_bytes == 1 and not gnu:
         return "%d Byte" % bytes_
-    elif abs_bytes < base and not gnu:
+
+    if abs_bytes < base and not gnu:
         return "%d Bytes" % bytes_
-    elif abs_bytes < base and gnu:
+
+    if abs_bytes < base and gnu:
         return "%dB" % bytes_
 
     for i, s in enumerate(suffix):
         unit = base ** (i + 2)
+
         if abs_bytes < unit and not gnu:
             return (format + " %s") % ((base * bytes_ / unit), s)
-        elif abs_bytes < unit and gnu:
+
+        if abs_bytes < unit and gnu:
             return (format + "%s") % ((base * bytes_ / unit), s)
+
     if gnu:
         return (format + "%s") % ((base * bytes_ / unit), s)
     return (format + " %s") % ((base * bytes_ / unit), s)

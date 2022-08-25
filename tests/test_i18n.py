@@ -158,7 +158,7 @@ def test_default_locale_path_null__file__() -> None:
 def test_default_locale_path_undefined__file__() -> None:
     i18n = importlib.import_module("humanize.i18n")
     del i18n.__file__
-    i18n._get_default_locale_path() is None
+    assert i18n._get_default_locale_path() is None
 
 
 class TestActivate:
