@@ -9,6 +9,7 @@ from __future__ import annotations
 import collections.abc
 import datetime as dt
 import math
+import re
 import typing
 from enum import Enum
 from functools import total_ordering
@@ -63,7 +64,7 @@ def _abs_timedelta(delta: dt.timedelta) -> dt.timedelta:
 
 
 def _date_and_delta(
-    value: typing.Any, *, now: dt.datetime | None = None
+    value: typing.Any, *, now: dt.datetime | None = None, precise: bool = False
 ) -> tuple[typing.Any, typing.Any]:
     """Turn a value into a date and a timedelta which represents how long ago it was.
 
@@ -79,7 +80,7 @@ def _date_and_delta(
         delta = value
     else:
         try:
-            value = int(value)
+            value = value if precise else int(value)
             delta = dt.timedelta(seconds=value)
             date = now - delta
         except (ValueError, TypeError):
@@ -297,10 +298,10 @@ def _quotient_and_remainder(
     minimum_unit: Unit,
     suppress: collections.abc.Iterable[Unit],
 ) -> tuple[float, float]:
-    """Divide `value` by `divisor` returning the quotient and remainder.
+    """Divide `value` by `divisor`, returning the quotient and remainder.
 
-    If `unit` is `minimum_unit`, makes the quotient a float number and the remainder
-    will be zero. The rational is that if `unit` is the unit of the quotient, we cannot
+    If `unit` is `minimum_unit`, the quotient will be a float number and the remainder
+    will be zero. The rationale is that if `unit` is the unit of the quotient, we cannot
     represent the remainder because it would require a unit smaller than the
     `minimum_unit`.
 
@@ -308,14 +309,14 @@ def _quotient_and_remainder(
     >>> _quotient_and_remainder(36, 24, Unit.DAYS, Unit.DAYS, [])
     (1.5, 0)
 
-    If unit is in `suppress`, the quotient will be zero and the remainder will be the
+    If `unit` is in `suppress`, the quotient will be zero and the remainder will be the
     initial value. The idea is that if we cannot use `unit`, we are forced to use a
-    lower unit so we cannot do the division.
+    lower unit, so we cannot do the division.
 
     >>> _quotient_and_remainder(36, 24, Unit.DAYS, Unit.HOURS, [Unit.DAYS])
     (0, 36)
 
-    In other case return quotient and remainder as `divmod` would do it.
+    In other cases, return the quotient and remainder as `divmod` would do it.
 
     >>> _quotient_and_remainder(36, 24, Unit.DAYS, Unit.HOURS, [])
     (1, 12)
@@ -339,16 +340,16 @@ def _carry(
 ) -> tuple[float, float]:
     """Return a tuple with two values.
 
-    If the unit is in `suppress`, multiply `value1` by `ratio` and add it to `value2`
-    (carry to right). The idea is that if we cannot represent `value1` we need to
+    If `unit` is in `suppress`, multiply `value1` by `ratio` and add it to `value2`
+    (carry to right). The idea is that if we cannot represent `value1`, we need to
     represent it in a lower unit.
 
     >>> from humanize.time import _carry, Unit
     >>> _carry(2, 6, 24, Unit.DAYS, Unit.SECONDS, [Unit.DAYS])
     (0, 54)
 
-    If the unit is the minimum unit, `value2` is divided by `ratio` and added to
-    `value1` (carry to left). We assume that `value2` has a lower unit so we need to
+    If `unit` is the minimum unit, divide `value2` by `ratio` and add it to `value1`
+    (carry to left). We assume that `value2` has a lower unit, so we need to
     carry it to `value1`.
 
     >>> _carry(2, 6, 24, Unit.DAYS, Unit.DAYS, [])
@@ -368,7 +369,7 @@ def _carry(
 
 
 def _suitable_minimum_unit(min_unit: Unit, suppress: typing.Iterable[Unit]) -> Unit:
-    """Return a minimum unit suitable that is not suppressed.
+    """Return a suitable minimum unit that is not suppressed.
 
     If not suppressed, return the same unit:
 
@@ -414,12 +415,12 @@ def _suppress_lower_units(min_unit: Unit, suppress: typing.Iterable[Unit]) -> se
 
 
 def precisedelta(
-    value: dt.timedelta | int,
+    value: dt.timedelta | float,
     minimum_unit: str = "seconds",
     suppress: typing.Iterable[str] = (),
     format: str = "%0.2f",
 ) -> str:
-    """Return a precise representation of a timedelta.
+    """Return a precise representation of a timedelta or number of seconds.
 
     ```pycon
     >>> import datetime as dt
@@ -485,14 +486,14 @@ def precisedelta(
 
     ```
     """
-    date, delta = _date_and_delta(value)
+    date, delta = _date_and_delta(value, precise=True)
     if date is None:
         return str(value)
 
     suppress_set = {Unit[s.upper()] for s in suppress}
 
-    # Find a suitable minimum unit (it can be greater the one that the
-    # user gave us if it is suppressed).
+    # Find a suitable minimum unit (it can be greater than the one that the
+    # user gave us, if that one is suppressed).
     min_unit = Unit[minimum_unit.upper()]
     min_unit = _suitable_minimum_unit(min_unit, suppress_set)
     del minimum_unit
@@ -525,12 +526,8 @@ def precisedelta(
     years, days = _quotient_and_remainder(days, 365, YEARS, min_unit, suppress_set)
     months, days = _quotient_and_remainder(days, 30.5, MONTHS, min_unit, suppress_set)
 
-    # If DAYS is not in suppress, we can represent the days but
-    # if it is a suppressed unit, we need to carry it to a lower unit,
-    # seconds in this case.
-    #
-    # The same applies for secs and usecs below
-    days, secs = _carry(days, secs, 24 * 3600, DAYS, min_unit, suppress_set)
+    secs = days * 24 * 3600 + secs
+    days, secs = _quotient_and_remainder(secs, 24 * 3600, DAYS, min_unit, suppress_set)
 
     hours, secs = _quotient_and_remainder(secs, 3600, HOURS, min_unit, suppress_set)
     minutes, secs = _quotient_and_remainder(secs, 60, MINUTES, min_unit, suppress_set)
@@ -541,7 +538,7 @@ def precisedelta(
         usecs, 1000, MILLISECONDS, min_unit, suppress_set
     )
 
-    # if _unused != 0 we had lost some precision
+    # if _unused != 0 we have lost some precision
     usecs, _unused = _carry(usecs, 0, 1, MICROSECONDS, min_unit, suppress_set)
 
     fmts = [
@@ -555,9 +552,13 @@ def precisedelta(
         ("%d microsecond", "%d microseconds", usecs),
     ]
 
+    round_fmt_value = re.fullmatch(r"%\d*(d|(\.0*f))", format)
+
     texts: list[str] = []
     for unit, fmt in zip(reversed(Unit), fmts):
         singular_txt, plural_txt, fmt_value = fmt
+        if round_fmt_value:
+            fmt_value = round(fmt_value)
         if fmt_value > 0 or (not texts and unit == min_unit):
             fmt_txt = _ngettext(singular_txt, plural_txt, fmt_value)
             if unit == min_unit and math.modf(fmt_value)[0] > 0:
