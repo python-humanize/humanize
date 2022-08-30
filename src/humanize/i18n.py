@@ -5,7 +5,7 @@ import gettext as gettext_module
 import os.path
 from threading import local
 
-__all__ = ["activate", "deactivate", "thousands_separator"]
+__all__ = ["activate", "deactivate", "decimal_separator", "thousands_separator"]
 
 _TRANSLATIONS: dict[str | None, gettext_module.NullTranslations] = {
     None: gettext_module.NullTranslations()
@@ -17,6 +17,11 @@ _CURRENT = local()
 _THOUSANDS_SEPARATOR = {
     "de_DE": ".",
     "fr_FR": " ",
+}
+
+# Mapping of locale to decimal separator
+_DECIMAL_SEPARATOR = {
+    "de_DE": ",",
 }
 
 
@@ -172,4 +177,17 @@ def thousands_separator() -> str:
         sep = _THOUSANDS_SEPARATOR[_CURRENT.locale]
     except (AttributeError, KeyError):
         sep = ","
+    return sep
+
+
+def decimal_separator() -> str:
+    """Return the decimal separator for a locale, default to dot.
+
+    Returns:
+         str: Decimal separator.
+    """
+    try:
+        sep = _DECIMAL_SEPARATOR[_CURRENT.locale]
+    except (AttributeError, KeyError):
+        sep = "."
     return sep
