@@ -3,6 +3,7 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Bartosz Bubak <bartosz.bubak@gmail.com>, 2020.
 # Added missing strings by Krystian Postek <krystian postek eu>, 2020.
+# Replace short scale with long scale by Maciej J. Mikulski (mjmikulski), 2022.
 #
 msgid ""
 msgstr ""
