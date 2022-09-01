@@ -3,6 +3,7 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Bartosz Bubak <bartosz.bubak@gmail.com>, 2020.
 # Added missing strings by Krystian Postek <krystian postek eu>, 2020.
+# Replace short scale with long scale by Maciej J. Mikulski (mjmikulski), 2022.
 #
 msgid ""
 msgstr ""
@@ -136,72 +137,72 @@ msgstr[2] "milionów"
 #: src/humanize/number.py:142
 msgid "billion"
 msgid_plural "billion"
-msgstr[0] "bilion"
-msgstr[1] "biliony"
-msgstr[2] "bilionów"
+msgstr[0] "miliard"
+msgstr[1] "miliardy"
+msgstr[2] "miliardów"
 
 #: src/humanize/number.py:143
 msgid "trillion"
 msgid_plural "trillion"
-msgstr[0] "trylion"
-msgstr[1] "tryliony"
-msgstr[2] "trylionów"
+msgstr[0] "bilion"
+msgstr[1] "biliony"
+msgstr[2] "bilionów"
 
 #: src/humanize/number.py:144
 msgid "quadrillion"
 msgid_plural "quadrillion"
-msgstr[0] "kwadrylion"
-msgstr[1] "kwadryliony"
-msgstr[2] "kwadrylionów"
+msgstr[0] "biliard"
+msgstr[1] "biliardy"
+msgstr[2] "biliardów"
 
 #: src/humanize/number.py:145
 msgid "quintillion"
 msgid_plural "quintillion"
-msgstr[0] "kwintylion"
-msgstr[1] "kwintyliony"
-msgstr[2] "kwintylionów"
+msgstr[0] "trylion"
+msgstr[1] "tryliony"
+msgstr[2] "trylionów"
 
 #: src/humanize/number.py:146
 msgid "sextillion"
 msgid_plural "sextillion"
-msgstr[0] "sekstylion"
-msgstr[1] "sekstyliony"
-msgstr[2] "sekstylionów"
+msgstr[0] "tryliard"
+msgstr[1] "tryliard"
+msgstr[2] "tryliard"
 
 #: src/humanize/number.py:147
 msgid "septillion"
 msgid_plural "septillion"
-msgstr[0] "septylion"
-msgstr[1] "septyliony"
-msgstr[2] "septylionów"
+msgstr[0] "kwadrylion"
+msgstr[1] "kwadryliony"
+msgstr[2] "kwadrylionów"
 
 #: src/humanize/number.py:148
 msgid "octillion"
 msgid_plural "octillion"
-msgstr[0] "oktylion"
-msgstr[1] "oktyliony"
-msgstr[2] "oktylionów"
+msgstr[0] "kwadryliard"
+msgstr[1] "kwadryliardy"
+msgstr[2] "kwadryliardów"
 
 #: src/humanize/number.py:149
 msgid "nonillion"
 msgid_plural "nonillion"
-msgstr[0] "nonilion"
-msgstr[1] "noniliony"
-msgstr[2] "nonilionów"
+msgstr[0] "kwintylion"
+msgstr[1] "kwintyliony"
+msgstr[2] "kwintylionów"
 
 #: src/humanize/number.py:150
 msgid "decillion"
 msgid_plural "decillion"
-msgstr[0] "decylion"
-msgstr[1] "decyliony"
-msgstr[2] "decylionów"
+msgstr[0] "kwintyliard"
+msgstr[1] "kwintyliardy"
+msgstr[2] "kwintyliardów"
 
 #: src/humanize/number.py:151
 msgid "googol"
 msgid_plural "googol"
 msgstr[0] "googol"
-msgstr[1] "googoly"
-msgstr[2] "googolów"
+msgstr[1] "googole"
+msgstr[2] "googoli"
 
 #: src/humanize/number.py:246
 msgid "zero"
@@ -352,8 +353,8 @@ msgstr[2] "1 rok, %d miesięcy"
 msgid "%d year"
 msgid_plural "%d years"
 msgstr[0] "%d rok"
-msgstr[1] "%d lat"
-msgstr[2] "%d lata"
+msgstr[1] "%d lata"
+msgstr[2] "%d lat"
 
 #: src/humanize/time.py:217
 #, python-format
