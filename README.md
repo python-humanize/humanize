@@ -46,6 +46,22 @@ human-readable size or throughput. It is localized to:
 
 <!-- usage-start -->
 
+## Installation
+
+### From PyPI
+
+```bash
+python3 -m pip install --upgrade humanize
+```
+
+### From source
+
+```bash
+git clone https://github.com/python-humanize/humanize
+cd humanize
+python3 -m pip install -e .
+```
+
 ## Usage
 
 ### Integer humanization
