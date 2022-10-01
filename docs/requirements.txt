@@ -3,4 +3,4 @@ mkdocs-material
 mkdocstrings[python]==0.19.0
 mkdocs-include-markdown-plugin
 pygments
-pymdown-extensions==9.5
+pymdown-extensions==9.6
