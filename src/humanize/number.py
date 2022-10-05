@@ -518,7 +518,7 @@ def metric(value: float, unit: str = "", precision: int = 3) -> str:
     """
     if math.isnan(value):
         return "NaN"
-    if not math.isfinite(value):
+    if math.isinf(value):
         return "Inf"
     exponent = int(math.floor(math.log10(abs(value)))) if value != 0 else 0
 
