@@ -516,7 +516,12 @@ def metric(value: float, unit: str = "", precision: int = 3) -> str:
     Returns:
         str:
     """
-    exponent = int(math.floor(math.log10(abs(value)))) if value != 0 else 0
+    if math.isnan(value):
+        return "NaN"
+    elif value != 0:
+        exponent = int(math.floor(math.log10(abs(value))))
+    else:
+        exponent = 0
 
     if exponent >= 27 or exponent < -24:
         return scientific(value, precision - 1) + unit
