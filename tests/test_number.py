@@ -1,11 +1,11 @@
 """Number tests."""
 from __future__ import annotations
 
+import math
 import typing
 
 import pytest
 
-import math
 import humanize
 from humanize import number
 
