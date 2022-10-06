@@ -518,8 +518,10 @@ def metric(value: float, unit: str = "", precision: int = 3) -> str:
     """
     if math.isnan(value):
         return "NaN"
-    if math.isinf(value):
-        return "Inf"
+    if math.isinf(value) and value < 0:
+        return "-Inf"
+    elif math.isinf(value) and value > 0:
+        return "+Inf"
     exponent = int(math.floor(math.log10(abs(value)))) if value != 0 else 0
 
     if exponent >= 27 or exponent < -24:
