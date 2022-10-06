@@ -5,6 +5,7 @@ import typing
 
 import pytest
 
+import math
 import humanize
 from humanize import number
 
@@ -226,6 +227,10 @@ def test_clamp(test_args: list[typing.Any], expected: str) -> None:
         ([0.1, "°"], "100m°"),
         ([100], "100"),
         ([0.1], "100 m"),
+        ([math.nan], "NaN"),
+        ([math.nan, "m"], "NaN"),
+        ([math.inf], "+Inf"),
+        ([-math.inf], "-Inf"),
     ],
     ids=str,
 )
