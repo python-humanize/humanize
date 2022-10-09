@@ -2,6 +2,7 @@
 
 """Humanizing functions for numbers."""
 from __future__ import annotations
+from cmath import isnan
 
 import math
 import re
@@ -328,15 +329,11 @@ def fractional(value: NumberOrString) -> str:
     Returns:
         str: Fractional number as a string.
     """
-    if math.isnan(value):
-        return "nan"
-    if math.isinf(value) and value < 0:
-        return "-inf"
-    elif math.isinf(value) and value > 0:
-        return "+inf"
     try:
         number = float(value)
-    except (TypeError, ValueError):
+        if math.isnan(number):
+            raise ValueError
+    except (TypeError, ValueError, OverflowError):
         return str(value)
     whole_number = int(number)
     frac = Fraction(number - whole_number).limit_denominator(1000)
@@ -384,12 +381,6 @@ def scientific(value: NumberOrString, precision: int = 2) -> str:
     Returns:
         str: Number in scientific notation z.wq x 10ⁿ.
     """
-    if math.isnan(value):
-        return "nan"
-    if math.isinf(value) and value < 0:
-        return "-inf"
-    elif math.isinf(value) and value > 0:
-        return "+inf"
     exponents = {
         "0": "⁰",
         "1": "¹",
@@ -405,7 +396,9 @@ def scientific(value: NumberOrString, precision: int = 2) -> str:
     }
     try:
         value = float(value)
-    except (ValueError, TypeError):
+        if math.isnan(value):
+            raise ValueError
+    except (ValueError, TypeError, OverflowError):
         return str(value)
     fmt = "{:.%se}" % str(int(precision))
     n = fmt.format(value)
