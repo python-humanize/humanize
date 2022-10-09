@@ -2,7 +2,6 @@
 
 """Humanizing functions for numbers."""
 from __future__ import annotations
-from cmath import isnan
 
 import math
 import re
