@@ -64,7 +64,7 @@ def ordinal(value: NumberOrString, gender: str = "male") -> str:
     """
     try:
         value = int(value)
-    except (TypeError, ValueError):
+    except (TypeError, ValueError, OverflowError):
         return str(value)
     if gender == "male":
         t = (
@@ -209,7 +209,7 @@ def intword(value: NumberOrString, format: str = "%.1f") -> str:
     """
     try:
         value = int(value)
-    except (TypeError, ValueError):
+    except (TypeError, ValueError, OverflowError):
         return str(value)
 
     if value < 0:
@@ -272,7 +272,7 @@ def apnumber(value: NumberOrString) -> str:
     """
     try:
         value = int(value)
-    except (TypeError, ValueError):
+    except (TypeError, ValueError, OverflowError):
         return str(value)
     if not 0 <= value < 10:
         return str(value)
@@ -328,6 +328,12 @@ def fractional(value: NumberOrString) -> str:
     Returns:
         str: Fractional number as a string.
     """
+    if math.isnan(value):
+        return "nan"
+    if math.isinf(value) and value < 0:
+        return "-inf"
+    elif math.isinf(value) and value > 0:
+        return "+inf"
     try:
         number = float(value)
     except (TypeError, ValueError):
@@ -378,6 +384,12 @@ def scientific(value: NumberOrString, precision: int = 2) -> str:
     Returns:
         str: Number in scientific notation z.wq x 10ⁿ.
     """
+    if math.isnan(value):
+        return "nan"
+    if math.isinf(value) and value < 0:
+        return "-inf"
+    elif math.isinf(value) and value > 0:
+        return "+inf"
     exponents = {
         "0": "⁰",
         "1": "¹",
