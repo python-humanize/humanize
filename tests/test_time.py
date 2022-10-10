@@ -35,6 +35,9 @@ with freeze_time("2020-02-02"):
 class FakeDate:
     def __init__(self, year: int, month: int, day: int) -> None:
         self.year, self.month, self.day = year, month, day
+        
+    def __str__(self):
+        return f"{self.year}-{self.month}-{self.day}"
 
 
 VALUE_ERROR_TEST = FakeDate(290149024, 2, 2)
