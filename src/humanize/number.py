@@ -27,6 +27,8 @@ NumberOrString: TypeAlias = "float | str"
 
 
 def format_non_finite(value: float) -> str:
+    """Utility function to handle infinite and nan cases.
+    """
     if math.isnan(value):
         return "NaN"
     if math.isinf(value) and value < 0:
