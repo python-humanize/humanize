@@ -34,8 +34,7 @@ def format_non_finite(value: float) -> str:
         return "-Inf"
     elif math.isinf(value) and value > 0:
         return "+Inf"
-    else:
-        return ""
+    return ""
 
 
 def ordinal(value: NumberOrString, gender: str = "male") -> str:
