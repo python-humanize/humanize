@@ -75,7 +75,7 @@ def ordinal(value: NumberOrString, gender: str = "male") -> str:
         str: Ordinal string.
     """
     try:
-        if (value is math.nan) or (value == math.inf) or (value == -math.inf):
+        if not math.isfinite(float(value)):
             return format_non_finite(float(value))
         value = int(value)
     except (TypeError, ValueError):
@@ -147,6 +147,8 @@ def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
     thousands_sep = thousands_separator()
     decimal_sep = decimal_separator()
     try:
+        if not math.isfinite(float(value)):
+                return format_non_finite(float(value))
         if isinstance(value, str):
             value = value.replace(thousands_sep, "").replace(decimal_sep, ".")
             if "." in value:
@@ -155,8 +157,6 @@ def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
                 value = int(value)
         else:
             float(value)
-            if not math.isfinite(value):
-                return format_non_finite(value)
     except (TypeError, ValueError):
         return str(value)
 
@@ -224,7 +224,7 @@ def intword(value: NumberOrString, format: str = "%.1f") -> str:
         be coaxed into an `int`.
     """
     try:
-        if (value is math.nan) or (value == math.inf) or (value == -math.inf):
+        if not math.isfinite(float(value)):
             return format_non_finite(float(value))
         value = int(value)
     except (TypeError, ValueError):
@@ -289,7 +289,7 @@ def apnumber(value: NumberOrString) -> str:
         is returned.
     """
     try:
-        if (value is math.nan) or (value == math.inf) or (value == -math.inf):
+        if not math.isfinite(float(value)):
             return format_non_finite(float(value))
         value = int(value)
     except (TypeError, ValueError):
@@ -483,6 +483,9 @@ def clamp(
     """
     if value is None:
         return None
+
+    if not math.isfinite(value):
+        return format_non_finite(value)
 
     if floor is not None and value < floor:
         value = floor
