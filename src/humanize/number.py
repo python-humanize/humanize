@@ -26,6 +26,17 @@ if TYPE_CHECKING:
 NumberOrString: TypeAlias = "float | str"
 
 
+def format_non_finite(value: float) -> str:
+    if math.isnan(value):
+        return "NaN"
+    if math.isinf(value) and value < 0:
+        return "-Inf"
+    elif math.isinf(value) and value > 0:
+        return "+Inf"
+    else:
+        return ""
+
+
 def ordinal(value: NumberOrString, gender: str = "male") -> str:
     """Converts an integer to its ordinal as a string.
 
@@ -63,8 +74,10 @@ def ordinal(value: NumberOrString, gender: str = "male") -> str:
         str: Ordinal string.
     """
     try:
+        if (value is math.nan) or (value == math.inf) or (value == -math.inf):
+            return format_non_finite(float(value))
         value = int(value)
-    except (TypeError, ValueError, OverflowError):
+    except (TypeError, ValueError):
         return str(value)
     if gender == "male":
         t = (
@@ -141,6 +154,8 @@ def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
                 value = int(value)
         else:
             float(value)
+            if not math.isfinite(value):
+                return format_non_finite(value)
     except (TypeError, ValueError):
         return str(value)
 
@@ -208,8 +223,10 @@ def intword(value: NumberOrString, format: str = "%.1f") -> str:
         be coaxed into an `int`.
     """
     try:
+        if (value is math.nan) or (value == math.inf) or (value == -math.inf):
+            return format_non_finite(float(value))
         value = int(value)
-    except (TypeError, ValueError, OverflowError):
+    except (TypeError, ValueError):
         return str(value)
 
     if value < 0:
@@ -271,8 +288,10 @@ def apnumber(value: NumberOrString) -> str:
         is returned.
     """
     try:
+        if (value is math.nan) or (value == math.inf) or (value == -math.inf):
+            return format_non_finite(float(value))
         value = int(value)
-    except (TypeError, ValueError, OverflowError):
+    except (TypeError, ValueError):
         return str(value)
     if not 0 <= value < 10:
         return str(value)
@@ -330,9 +349,9 @@ def fractional(value: NumberOrString) -> str:
     """
     try:
         number = float(value)
-        if math.isnan(number):
-            raise ValueError
-    except (TypeError, ValueError, OverflowError):
+        if not math.isfinite(number):
+            return format_non_finite(number)
+    except (TypeError, ValueError):
         return str(value)
     whole_number = int(number)
     frac = Fraction(number - whole_number).limit_denominator(1000)
@@ -395,9 +414,9 @@ def scientific(value: NumberOrString, precision: int = 2) -> str:
     }
     try:
         value = float(value)
-        if math.isnan(value):
-            raise ValueError
-    except (ValueError, TypeError, OverflowError):
+        if not math.isfinite(value):
+            return format_non_finite(value)
+    except (ValueError, TypeError):
         return str(value)
     fmt = "{:.%se}" % str(int(precision))
     n = fmt.format(value)
@@ -520,12 +539,8 @@ def metric(value: float, unit: str = "", precision: int = 3) -> str:
     Returns:
         str:
     """
-    if math.isnan(value):
-        return "NaN"
-    if math.isinf(value) and value < 0:
-        return "-Inf"
-    elif math.isinf(value) and value > 0:
-        return "+Inf"
+    if not math.isfinite(value):
+        return format_non_finite(value)
     exponent = int(math.floor(math.log10(abs(value)))) if value != 0 else 0
 
     if exponent >= 27 or exponent < -24:
