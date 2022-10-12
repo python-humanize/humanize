@@ -148,7 +148,7 @@ def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
     decimal_sep = decimal_separator()
     try:
         if not math.isfinite(float(value)):
-                return format_non_finite(float(value))
+            return format_non_finite(float(value))
         if isinstance(value, str):
             value = value.replace(thousands_sep, "").replace(decimal_sep, ".")
             if "." in value:
