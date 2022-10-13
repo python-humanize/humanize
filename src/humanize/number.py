@@ -26,7 +26,7 @@ if TYPE_CHECKING:
 NumberOrString: TypeAlias = "float | str"
 
 
-def format_non_finite(value: float) -> str:
+def _format_not_finite(value: float) -> str:
     """Utility function to handle infinite and nan cases."""
     if math.isnan(value):
         return "NaN"
@@ -75,7 +75,7 @@ def ordinal(value: NumberOrString, gender: str = "male") -> str:
     """
     try:
         if not math.isfinite(float(value)):
-            return format_non_finite(float(value))
+            return _format_not_finite(float(value))
         value = int(value)
     except (TypeError, ValueError):
         return str(value)
@@ -149,14 +149,14 @@ def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
         if isinstance(value, str):
             value = value.replace(thousands_sep, "").replace(decimal_sep, ".")
             if not math.isfinite(float(value)):
-                return format_non_finite(float(value))
+                return _format_not_finite(float(value))
             if "." in value:
                 value = float(value)
             else:
                 value = int(value)
         else:
             if not math.isfinite(float(value)):
-                return format_non_finite(float(value))
+                return _format_not_finite(float(value))
             float(value)
     except (TypeError, ValueError):
         return str(value)
@@ -226,7 +226,7 @@ def intword(value: NumberOrString, format: str = "%.1f") -> str:
     """
     try:
         if not math.isfinite(float(value)):
-            return format_non_finite(float(value))
+            return _format_not_finite(float(value))
         value = int(value)
     except (TypeError, ValueError):
         return str(value)
@@ -291,7 +291,7 @@ def apnumber(value: NumberOrString) -> str:
     """
     try:
         if not math.isfinite(float(value)):
-            return format_non_finite(float(value))
+            return _format_not_finite(float(value))
         value = int(value)
     except (TypeError, ValueError):
         return str(value)
@@ -352,7 +352,7 @@ def fractional(value: NumberOrString) -> str:
     try:
         number = float(value)
         if not math.isfinite(number):
-            return format_non_finite(number)
+            return _format_not_finite(number)
     except (TypeError, ValueError):
         return str(value)
     whole_number = int(number)
@@ -417,7 +417,7 @@ def scientific(value: NumberOrString, precision: int = 2) -> str:
     try:
         value = float(value)
         if not math.isfinite(value):
-            return format_non_finite(value)
+            return _format_not_finite(value)
     except (ValueError, TypeError):
         return str(value)
     fmt = "{:.%se}" % str(int(precision))
@@ -486,7 +486,7 @@ def clamp(
         return None
 
     if not math.isfinite(value):
-        return format_non_finite(value)
+        return _format_not_finite(value)
 
     if floor is not None and value < floor:
         value = floor
@@ -545,7 +545,7 @@ def metric(value: float, unit: str = "", precision: int = 3) -> str:
         str:
     """
     if not math.isfinite(value):
-        return format_non_finite(value)
+        return _format_not_finite(value)
     exponent = int(math.floor(math.log10(abs(value)))) if value != 0 else 0
 
     if exponent >= 27 or exponent < -24:
