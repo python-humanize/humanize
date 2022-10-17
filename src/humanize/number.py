@@ -32,7 +32,7 @@ def _format_not_finite(value: float) -> str:
         return "NaN"
     if math.isinf(value) and value < 0:
         return "-Inf"
-    elif math.isinf(value) and value > 0:
+    if math.isinf(value) and value > 0:
         return "+Inf"
     return ""
 
