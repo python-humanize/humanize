@@ -17,11 +17,13 @@ _CURRENT = local()
 _THOUSANDS_SEPARATOR = {
     "de_DE": ".",
     "fr_FR": " ",
+    "pt_BR": ".",
 }
 
 # Mapping of locale to decimal separator
 _DECIMAL_SEPARATOR = {
     "de_DE": ",",
+    "pt_BR": ",",
 }
 
 
