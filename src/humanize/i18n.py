@@ -26,6 +26,7 @@ _DECIMAL_SEPARATOR = {
     "pt_BR": ",",
 }
 
+
 def _get_default_locale_path() -> str | None:
     try:
         if __file__ is None:
