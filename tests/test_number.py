@@ -1,6 +1,7 @@
 """Number tests."""
 from __future__ import annotations
 
+import math
 import typing
 
 import pytest
@@ -25,6 +26,11 @@ from humanize import number
         ("111", "111th"),
         ("something else", "something else"),
         (None, "None"),
+        (math.nan, "NaN"),
+        (math.inf, "+Inf"),
+        (-math.inf, "-Inf"),
+        ("nan", "NaN"),
+        ("-inf", "-Inf"),
     ],
 )
 def test_ordinal(test_input: str, expected: str) -> None:
@@ -63,6 +69,11 @@ def test_ordinal(test_input: str, expected: str) -> None:
         ([1234.5454545, 2], "1,234.55"),
         ([1234.5454545, 3], "1,234.545"),
         ([1234.5454545, 10], "1,234.5454545000"),
+        ([math.nan], "NaN"),
+        ([math.inf], "+Inf"),
+        ([-math.inf], "-Inf"),
+        (["nan"], "NaN"),
+        (["-inf"], "-Inf"),
     ],
 )
 def test_intcomma(
@@ -107,6 +118,11 @@ def test_intword_powers() -> None:
         ([None], "None"),
         (["1230000", "%0.2f"], "1.23 million"),
         ([10**101], "1" + "0" * 101),
+        ([math.nan], "NaN"),
+        ([math.inf], "+Inf"),
+        ([-math.inf], "-Inf"),
+        (["nan"], "NaN"),
+        (["-inf"], "-Inf"),
     ],
 )
 def test_intword(test_args: list[str], expected: str) -> None:
@@ -125,6 +141,11 @@ def test_intword(test_args: list[str], expected: str) -> None:
         (10, "10"),
         ("7", "seven"),
         (None, "None"),
+        (math.nan, "NaN"),
+        (math.inf, "+Inf"),
+        (-math.inf, "-Inf"),
+        ("nan", "NaN"),
+        ("-inf", "-Inf"),
     ],
 )
 def test_apnumber(test_input: int | str, expected: str) -> None:
@@ -146,6 +167,11 @@ def test_apnumber(test_input: int | str, expected: str) -> None:
         (1.5, "1 1/2"),
         (0.3, "3/10"),
         (0.333, "333/1000"),
+        (math.nan, "NaN"),
+        (math.inf, "+Inf"),
+        (-math.inf, "-Inf"),
+        ("nan", "NaN"),
+        ("-inf", "-Inf"),
     ],
 )
 def test_fractional(test_input: float | str, expected: str) -> None:
@@ -172,6 +198,11 @@ def test_fractional(test_input: float | str, expected: str) -> None:
         ([float(2e-20)], "2.00 x 10⁻²⁰"),
         ([float(-3e20)], "-3.00 x 10²⁰"),
         ([float(-4e-20)], "-4.00 x 10⁻²⁰"),
+        ([math.nan], "NaN"),
+        ([math.inf], "+Inf"),
+        ([-math.inf], "-Inf"),
+        (["nan"], "NaN"),
+        (["-inf"], "-Inf"),
     ],
 )
 def test_scientific(test_args: list[typing.Any], expected: str) -> None:
@@ -189,6 +220,9 @@ def test_scientific(test_args: list[typing.Any], expected: str) -> None:
         ([0.0001, "{:.0%}", 0.01, None, "under ", None], "under 1%"),
         ([0.9999, "{:.0%}", None, 0.99, None, "above "], "above 99%"),
         ([1, humanize.intword, 1e6, None, "under "], "under 1.0 million"),
+        ([math.nan], "NaN"),
+        ([math.inf], "+Inf"),
+        ([-math.inf], "-Inf"),
     ],
 )
 def test_clamp(test_args: list[typing.Any], expected: str) -> None:
@@ -226,6 +260,10 @@ def test_clamp(test_args: list[typing.Any], expected: str) -> None:
         ([0.1, "°"], "100m°"),
         ([100], "100"),
         ([0.1], "100 m"),
+        ([math.nan], "NaN"),
+        ([math.nan, "m"], "NaN"),
+        ([math.inf], "+Inf"),
+        ([-math.inf], "-Inf"),
     ],
     ids=str,
 )
