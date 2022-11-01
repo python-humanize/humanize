@@ -7,6 +7,10 @@
       "groupName": "github-actions",
       "matchManagers": ["github-actions"],
       "separateMajorMinor": "false"
+    },
+    {
+      "groupName": "docs/requirements.txt",
+      "matchPaths": ["docs/requirements.txt"]
     }
   ],
   "schedule": ["on the first day of the month"]
