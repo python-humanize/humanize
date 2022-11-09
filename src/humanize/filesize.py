@@ -34,6 +34,10 @@ def naturalsize(
         '2.930K'
         >>> naturalsize(3000, True)
         '2.9 KiB'
+        >>> naturalsize(10**28)
+        '10000.0 YB'
+        >>> naturalsize(-4096, True)
+        '-4.0 KiB'
 
         ```
     Args:
