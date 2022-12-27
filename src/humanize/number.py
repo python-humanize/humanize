@@ -548,14 +548,14 @@ def metric(value: float, unit: str = "", precision: int = 3) -> str:
         return _format_not_finite(value)
     exponent = int(math.floor(math.log10(abs(value)))) if value != 0 else 0
 
-    if exponent >= 27 or exponent < -24:
+    if exponent >= 33 or exponent < -30:
         return scientific(value, precision - 1) + unit
 
     value /= 10 ** (exponent // 3 * 3)
     if exponent >= 3:
-        ordinal_ = "kMGTPEZY"[exponent // 3 - 1]
+        ordinal_ = "kMGTPEZYRQ"[exponent // 3 - 1]
     elif exponent < 0:
-        ordinal_ = "mμnpfazy"[(-exponent - 1) // 3]
+        ordinal_ = "mμnpfazyrq"[(-exponent - 1) // 3]
     else:
         ordinal_ = ""
     value_ = format(value, ".%if" % (precision - (exponent % 3) - 1))
