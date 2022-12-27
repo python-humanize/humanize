@@ -1,3 +1,5 @@
 from setuptools import setup
 
-setup()
+setup(
+    setup_requires=["setuptools_scm"],
+)

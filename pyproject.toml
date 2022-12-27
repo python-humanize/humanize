@@ -1,12 +1,79 @@
 [build-system]
 build-backend = "setuptools.build_meta"
 requires = [
-  "setuptools>=42",
-  "setuptools_scm[toml]>=3.4",
+  "setuptools>=61.2",
+  "setuptools_scm[toml]>=6.2",
 ]
+
+[project]
+name = "humanize"
+description = "Python humanize utilities"
+readme = "README.md"
+keywords = [
+  "humanize time size",
+]
+license = {text = "MIT"}
+maintainers = [{name = "Hugo van Kemenade"}]
+authors = [{name = "Jason Moiron", email = "jmoiron@jmoiron.net"}]
+requires-python = ">=3.7"
+dependencies = [
+  'importlib-metadata; python_version < "3.8"',
+]
+dynamic = [
+  "version",
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy",
+    "Topic :: Text Processing",
+    "Topic :: Text Processing :: General",
+]
+[project.optional-dependencies]
+tests = [
+  "freezegun",
+  "pytest",
+  "pytest-cov",
+]
+
+[project.urls]
+Documentation = "https://python-humanize.readthedocs.io/"
+Funding = "https://tidelift.com/subscription/pkg/pypi-humanize?utm_source=pypi-humanize&utm_medium=pypi"
+Homepage = "https://github.com/python-humanize/humanize"
+"Issue tracker" = "https://github.com/python-humanize/humanize/issues"
+"Release notes" = "https://github.com/python-humanize/humanize/releases"
+Source = "https://github.com/python-humanize/humanize"
+
 
 [tool.black]
 target_version = ["py37"]
+
+[tool.hatch]
+version.source = "vcs"
+
+[tool.isort]
+profile = "black"
+
+[tool.pydocstyle]
+convention = "google"
+
+[tool.pytest.ini_options]
+addopts = "--color=yes"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+namespaces = false
 
 [tool.setuptools_scm]
 local_scheme = "no-local-version"
