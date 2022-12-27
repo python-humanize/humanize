@@ -124,7 +124,8 @@ def naturaldelta(
     """
     tmp = Unit[minimum_unit.upper()]
     if tmp not in (Unit.SECONDS, Unit.MILLISECONDS, Unit.MICROSECONDS):
-        raise ValueError(f"Minimum unit '{minimum_unit}' not supported")
+        msg = f"Minimum unit '{minimum_unit}' not supported"
+        raise ValueError(msg)
     min_unit = tmp
 
     if isinstance(value, dt.timedelta):
@@ -409,9 +410,8 @@ def _suitable_minimum_unit(min_unit: Unit, suppress: typing.Iterable[Unit]) -> U
             if unit > min_unit and unit not in suppress:
                 return unit
 
-        raise ValueError(
-            "Minimum unit is suppressed and no suitable replacement was found"
-        )
+        msg = "Minimum unit is suppressed and no suitable replacement was found"
+        raise ValueError(msg)
 
     return min_unit
 
