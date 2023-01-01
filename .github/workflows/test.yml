@@ -57,7 +57,7 @@ jobs:
   success:
     needs: test
     runs-on: ubuntu-latest
-    name: test successful
+    name: Test successful
     steps:
       - name: Success
         run: echo Test successful
