@@ -14,6 +14,7 @@ a number into a fuzzy human-readable duration ("3 minutes ago") or into a
 human-readable size or throughput. It is localized to:
 
 - Arabic
+- Basque
 - Bengali
 - Brazilian Portuguese
 - Catalan
