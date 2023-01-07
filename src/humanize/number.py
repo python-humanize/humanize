@@ -503,10 +503,11 @@ def clamp(
     if callable(format):
         return token + format(value)
 
-    raise ValueError(
+    msg = (
         "Invalid format. Must be either a valid formatting string, or a function "
         "that accepts value and returns a string."
     )
+    raise ValueError(msg)
 
 
 def metric(value: float, unit: str = "", precision: int = 3) -> str:

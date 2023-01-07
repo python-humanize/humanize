@@ -62,10 +62,11 @@ def activate(locale: str, path: str | None = None) -> gettext_module.NullTransla
         path = _get_default_locale_path()
 
     if path is None:
-        raise Exception(
+        msg = (
             "Humanize cannot determinate the default location of the 'locale' folder. "
             "You need to pass the path explicitly."
         )
+        raise Exception(msg)
     if locale not in _TRANSLATIONS:
         translation = gettext_module.translation("humanize", path, [locale])
         _TRANSLATIONS[locale] = translation
