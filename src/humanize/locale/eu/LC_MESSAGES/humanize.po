@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-02 20:23+0100\n"
+"POT-Creation-Date: 2023-01-08 19:22+0200\n"
 "PO-Revision-Date: 2023-01-02 20:35+0100\n"
 "Last-Translator: Mikel Olasagasti <mikel@olasagasti.info>\n"
 "Language-Team: Basque <translation-team-eu@googlegroups.com>\n"
@@ -230,131 +230,131 @@ msgstr "zortzi"
 msgid "nine"
 msgstr "bederatzi"
 
-#: src/humanize/time.py:151
+#: src/humanize/time.py:152
 #, python-format
 msgid "%d microsecond"
 msgid_plural "%d microseconds"
 msgstr[0] "mikrosegundo %d"
 msgstr[1] "%d mikrosegundo"
 
-#: src/humanize/time.py:160
+#: src/humanize/time.py:161
 #, python-format
 msgid "%d millisecond"
 msgid_plural "%d milliseconds"
 msgstr[0] "milisegundo %d"
 msgstr[1] "%d milisegundo"
 
-#: src/humanize/time.py:163 src/humanize/time.py:258
+#: src/humanize/time.py:164 src/humanize/time.py:259
 msgid "a moment"
 msgstr "une bat"
 
-#: src/humanize/time.py:166
+#: src/humanize/time.py:167
 msgid "a second"
 msgstr "segundo bat"
 
-#: src/humanize/time.py:169
+#: src/humanize/time.py:170
 #, python-format
 msgid "%d second"
 msgid_plural "%d seconds"
 msgstr[0] "segundo %d"
 msgstr[1] "%d segundo"
 
-#: src/humanize/time.py:172
+#: src/humanize/time.py:173
 msgid "a minute"
 msgstr "minutu bat"
 
-#: src/humanize/time.py:176
+#: src/humanize/time.py:177
 #, python-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "minutu %d"
 msgstr[1] "%d minutu"
 
-#: src/humanize/time.py:179
+#: src/humanize/time.py:180
 msgid "an hour"
 msgstr "ordu bat"
 
-#: src/humanize/time.py:183
+#: src/humanize/time.py:184
 #, python-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "ordu %d"
 msgstr[1] "%d ordu"
 
-#: src/humanize/time.py:187
+#: src/humanize/time.py:188
 msgid "a day"
 msgstr "egun bat"
 
-#: src/humanize/time.py:190 src/humanize/time.py:193
+#: src/humanize/time.py:191 src/humanize/time.py:194
 #, python-format
 msgid "%d day"
 msgid_plural "%d days"
 msgstr[0] "egun %d"
 msgstr[1] "%d egun"
 
-#: src/humanize/time.py:196
+#: src/humanize/time.py:197
 msgid "a month"
 msgstr "hilabete bat"
 
-#: src/humanize/time.py:198
+#: src/humanize/time.py:199
 #, python-format
 msgid "%d month"
 msgid_plural "%d months"
 msgstr[0] "hilabete %d"
 msgstr[1] "%d hilabete"
 
-#: src/humanize/time.py:202
+#: src/humanize/time.py:203
 msgid "a year"
 msgstr "urte bat"
 
-#: src/humanize/time.py:205 src/humanize/time.py:216
+#: src/humanize/time.py:206 src/humanize/time.py:217
 #, python-format
 msgid "1 year, %d day"
 msgid_plural "1 year, %d days"
 msgstr[0] "urte 1, egun %d"
 msgstr[1] "urte 1, %d egun"
 
-#: src/humanize/time.py:209
+#: src/humanize/time.py:210
 msgid "1 year, 1 month"
 msgstr "urte 1, hilabete 1"
 
-#: src/humanize/time.py:212
+#: src/humanize/time.py:213
 #, python-format
 msgid "1 year, %d month"
 msgid_plural "1 year, %d months"
 msgstr[0] "urte 1, hilabete %d"
 msgstr[1] "urte 1, %d hilabete"
 
-#: src/humanize/time.py:218
+#: src/humanize/time.py:219
 #, python-format
 msgid "%d year"
 msgid_plural "%d years"
 msgstr[0] "urte %d"
 msgstr[1] "%d urte"
 
-#: src/humanize/time.py:255
+#: src/humanize/time.py:256
 #, python-format
 msgid "%s from now"
 msgstr "hemendik %s-(e)ra"
 
-#: src/humanize/time.py:255
+#: src/humanize/time.py:256
 #, python-format
 msgid "%s ago"
 msgstr "orain dela %s"
 
-#: src/humanize/time.py:259
+#: src/humanize/time.py:260
 msgid "now"
 msgstr "orain"
 
-#: src/humanize/time.py:283
+#: src/humanize/time.py:284
 msgid "today"
 msgstr "gaur"
 
-#: src/humanize/time.py:286
+#: src/humanize/time.py:287
 msgid "tomorrow"
 msgstr "bihar"
 
-#: src/humanize/time.py:289
+#: src/humanize/time.py:290
 msgid "yesterday"
 msgstr "atzo"
 
