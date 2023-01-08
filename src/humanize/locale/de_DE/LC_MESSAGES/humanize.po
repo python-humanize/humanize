@@ -122,68 +122,68 @@ msgstr "."
 #: src/humanize/number.py:140
 msgid "thousand"
 msgid_plural "thousand"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Tausend"
+msgstr[1] "Tausend"
 
 #: src/humanize/number.py:141
 msgid "million"
 msgid_plural "million"
 msgstr[0] "Million"
-msgstr[1] "Million"
+msgstr[1] "Millionen"
 
 #: src/humanize/number.py:142
 msgid "billion"
 msgid_plural "billion"
 msgstr[0] "Milliarde"
-msgstr[1] "Milliarde"
+msgstr[1] "Milliarden"
 
 #: src/humanize/number.py:143
 msgid "trillion"
 msgid_plural "trillion"
 msgstr[0] "Billion"
-msgstr[1] "Billion"
+msgstr[1] "Billionen"
 
 #: src/humanize/number.py:144
 msgid "quadrillion"
 msgid_plural "quadrillion"
 msgstr[0] "Billiarde"
-msgstr[1] "Billiarde"
+msgstr[1] "Billiarden"
 
 #: src/humanize/number.py:145
 msgid "quintillion"
 msgid_plural "quintillion"
 msgstr[0] "Trillion"
-msgstr[1] "Trillion"
+msgstr[1] "Trillionen"
 
 #: src/humanize/number.py:146
 msgid "sextillion"
 msgid_plural "sextillion"
 msgstr[0] "Trilliarde"
-msgstr[1] "Trilliarde"
+msgstr[1] "Trilliarden"
 
 #: src/humanize/number.py:147
 msgid "septillion"
 msgid_plural "septillion"
 msgstr[0] "Quadrillion"
-msgstr[1] "Quadrillion"
+msgstr[1] "Quadrillionen"
 
 #: src/humanize/number.py:148
 msgid "octillion"
 msgid_plural "octillion"
 msgstr[0] "Quadrillarde"
-msgstr[1] "Quadrillarde"
+msgstr[1] "Quadrillarden"
 
 #: src/humanize/number.py:149
 msgid "nonillion"
 msgid_plural "nonillion"
 msgstr[0] "Quintillion"
-msgstr[1] "Quintillion"
+msgstr[1] "Quintillionen"
 
 #: src/humanize/number.py:150
 msgid "decillion"
 msgid_plural "decillion"
 msgstr[0] "Quintilliarde"
-msgstr[1] "Quintilliarde"
+msgstr[1] "Quintilliarden"
 
 #: src/humanize/number.py:151
 msgid "googol"
