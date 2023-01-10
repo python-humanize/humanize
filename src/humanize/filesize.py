@@ -77,4 +77,5 @@ def naturalsize(
         if abs_bytes < unit:
             break
 
-    return format % (base * bytes_ / unit) + s
+    ret: str = format % (base * bytes_ / unit) + s
+    return ret
