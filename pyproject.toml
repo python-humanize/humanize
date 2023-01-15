@@ -63,8 +63,8 @@ target_version = ["py37"]
 version.source = "vcs"
 
 [tool.hatch.build]
-include = [
-  "src/humanize/locale/**/*.mo",
+artifacts = [
+  "*.mo",
 ]
 
 [tool.hatch.version.raw-options]
