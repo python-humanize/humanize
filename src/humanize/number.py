@@ -243,7 +243,8 @@ def intword(value: NumberOrString, format: str = "%.1f") -> str:
     for ordinal_, power in enumerate(powers[1:], 1):
         if value < power:
             chopped = value / float(powers[ordinal_ - 1])
-            if float(format % chopped) == float(10**3):
+            powers_difference = powers[ordinal_] / powers[ordinal_ - 1]
+            if float(format % chopped) == powers_difference:
                 chopped = value / float(powers[ordinal_])
                 singular, plural = human_powers[ordinal_]
                 return (
