@@ -12,7 +12,7 @@ repos:
         args: [--target-version=py37]
 
   - repo: https://github.com/PyCQA/isort
-    rev: 5.11.4
+    rev: 5.12.0
     hooks:
       - id: isort
 
@@ -37,7 +37,7 @@ repos:
         additional_dependencies: [flake8-2020, flake8-errmsg, flake8-implicit-str-concat]
 
   - repo: https://github.com/pre-commit/pygrep-hooks
-    rev: v1.9.0
+    rev: v1.10.0
     hooks:
       - id: python-check-blanket-noqa
       - id: python-no-log-warn
@@ -52,7 +52,7 @@ repos:
       - id: end-of-file-fixer
 
   - repo: https://github.com/PyCQA/pydocstyle
-    rev: 6.2.0
+    rev: 6.3.0
     hooks:
       - id: pydocstyle
         args: ["--convention", "google"]
@@ -66,17 +66,17 @@ repos:
         args: [--strict]
 
   - repo: https://github.com/tox-dev/pyproject-fmt
-    rev: 0.4.1
+    rev: 0.5.0
     hooks:
       - id: pyproject-fmt
 
   - repo: https://github.com/abravalheri/validate-pyproject
-    rev: v0.10.1
+    rev: v0.12.1
     hooks:
       - id: validate-pyproject
 
   - repo: https://github.com/tox-dev/tox-ini-fmt
-    rev: 0.5.2
+    rev: 0.6.1
     hooks:
       - id: tox-ini-fmt
 
