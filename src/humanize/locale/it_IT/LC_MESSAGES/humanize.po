@@ -121,8 +121,8 @@ msgstr "ª"
 #: src/humanize/number.py:140
 msgid "thousand"
 msgid_plural "thousand"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "mila"
+msgstr[1] "mila"
 
 #: src/humanize/number.py:141
 msgid "million"
