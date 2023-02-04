@@ -1,8 +1,8 @@
 [build-system]
-build-backend = "setuptools.build_meta"
+build-backend = "hatchling.build"
 requires = [
-  "setuptools>=61.2",
-  "setuptools_scm[toml]>=6.2",
+  "hatch-vcs",
+  "hatchling",
 ]
 
 [project]
@@ -62,6 +62,14 @@ target_version = ["py37"]
 [tool.hatch]
 version.source = "vcs"
 
+[tool.hatch.build]
+artifacts = [
+  "*.mo",
+]
+
+[tool.hatch.version.raw-options]
+local_scheme = "no-local-version"
+
 [tool.isort]
 profile = "black"
 
@@ -70,10 +78,3 @@ convention = "google"
 
 [tool.pytest.ini_options]
 addopts = "--color=yes"
-
-[tool.setuptools.packages.find]
-where = ["src"]
-namespaces = false
-
-[tool.setuptools_scm]
-local_scheme = "no-local-version"
