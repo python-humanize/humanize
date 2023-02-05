@@ -2,7 +2,7 @@
 # Copyright (C) 2021 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the humanize package.
 # Wasi Master <arianmollik323@gmail.com>, 2021.
-#
+# Zarif Ahnaf <zarifahnaf@outlook.com>, 2023
 msgid ""
 msgstr ""
 "Project-Id-Version: humanize\n"
@@ -120,27 +120,27 @@ msgstr ""
 #: src/humanize/number.py:178
 msgid "thousand"
 msgid_plural "thousand"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d হাজার"
+msgstr[1] "%d হাজার"
 
 #: src/humanize/number.py:179
 #, fuzzy
 msgid "million"
 msgid_plural "million"
-msgstr[0] "%d মিলিসেকন্ড"
-msgstr[1] "%d মিলিসেকন্ড"
+msgstr[0] "%d মিলিয়ন"
+msgstr[1] "%d মিলিয়ন"
 
 #: src/humanize/number.py:180
 msgid "billion"
 msgid_plural "billion"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d বিলিয়ন"
+msgstr[1] "%d বিলিয়ন"
 
 #: src/humanize/number.py:181
 msgid "trillion"
 msgid_plural "trillion"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d ট্রিলিয়ন"
+msgstr[1] "%d ট্রিলিয়ন"
 
 #: src/humanize/number.py:182
 msgid "quadrillion"
@@ -182,8 +182,8 @@ msgstr[1] ""
 #, fuzzy
 msgid "decillion"
 msgid_plural "decillion"
-msgstr[0] "%d মিলিসেকন্ড"
-msgstr[1] "%d মিলিসেকন্ড"
+msgstr[0] ""
+msgstr[1] ""
 
 #: src/humanize/number.py:189
 msgid "googol"
@@ -213,7 +213,7 @@ msgstr "চার"
 
 #: src/humanize/number.py:306
 msgid "five"
-msgstr "পাচ"
+msgstr "পাঁচ"
 
 #: src/humanize/number.py:307
 msgid "six"
@@ -235,15 +235,15 @@ msgstr "নয়"
 #, python-format
 msgid "%d microsecond"
 msgid_plural "%d microseconds"
-msgstr[0] "%d মাইক্রোসেকন্ড"
-msgstr[1] "%d মাইক্রোসেকন্ড"
+msgstr[0] "%d মাইক্রোসেকেন্ড"
+msgstr[1] "%d মাইক্রোসেকেন্ড"
 
 #: src/humanize/time.py:161
 #, python-format
 msgid "%d millisecond"
 msgid_plural "%d milliseconds"
-msgstr[0] "%d মিলিসেকন্ড"
-msgstr[1] "%d মিলিসেকন্ড"
+msgstr[0] "%d মিলিসেকেন্ড"
+msgstr[1] "%d মিলিসেকেন্ড"
 
 #: src/humanize/time.py:164 src/humanize/time.py:259
 msgid "a moment"
@@ -251,14 +251,14 @@ msgstr "এক মুহুর্ত"
 
 #: src/humanize/time.py:167
 msgid "a second"
-msgstr "এক সেকন্ড"
+msgstr "এক সেকেন্ড"
 
 #: src/humanize/time.py:170
 #, python-format
 msgid "%d second"
 msgid_plural "%d seconds"
-msgstr[0] "%d সেকন্ড"
-msgstr[1] "%d সেকন্ড"
+msgstr[0] "%d সেকেন্ড"
+msgstr[1] "%d সেকেন্ড"
 
 #: src/humanize/time.py:173
 msgid "a minute"
@@ -336,12 +336,12 @@ msgstr[1] "%d বছর"
 #: src/humanize/time.py:256
 #, python-format
 msgid "%s from now"
-msgstr "আজ থেকে %s পরে"
+msgstr "আজ থেকে %s সময় পরে"
 
 #: src/humanize/time.py:256
 #, python-format
 msgid "%s ago"
-msgstr "%s আগে"
+msgstr "%s দিন আগে"
 
 #: src/humanize/time.py:260
 msgid "now"
