@@ -341,7 +341,7 @@ msgstr "আজ থেকে %s সময় পরে"
 #: src/humanize/time.py:256
 #, python-format
 msgid "%s ago"
-msgstr "%s দিন আগে"
+msgstr "%s সময় আগে"
 
 #: src/humanize/time.py:260
 msgid "now"
