@@ -3,6 +3,7 @@
 # This file is distributed under the same license as the humanize package.
 # Wasi Master <arianmollik323@gmail.com>, 2021.
 # Zarif Ahnaf <zarifahnaf@outlook.com>, 2023
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: humanize\n"
@@ -145,32 +146,32 @@ msgstr[1] "%d ট্রিলিয়ন"
 #: src/humanize/number.py:182
 msgid "quadrillion"
 msgid_plural "quadrillion"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d কোয়াড্রিলিয়ন"
+msgstr[1] "%d কোয়াড্রিলিয়ন"
 
 #: src/humanize/number.py:183
 msgid "quintillion"
 msgid_plural "quintillion"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d কুইন্টিলিয়ন"
+msgstr[1] "%d কুইন্টিলিয়ন"
 
 #: src/humanize/number.py:184
 msgid "sextillion"
 msgid_plural "sextillion"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d সেক্সটিলিয়ন"
+msgstr[1] "%d সেক্সটিলিয়ন"
 
 #: src/humanize/number.py:185
 msgid "septillion"
 msgid_plural "septillion"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d সেপটিলিয়ন"
+msgstr[1] "%d সেপটিলিয়ন"
 
 #: src/humanize/number.py:186
 msgid "octillion"
 msgid_plural "octillion"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d ওকটিলিয়ন"
+msgstr[1] "%d ওকটিলিয়ন"
 
 #: src/humanize/number.py:187
 msgid "nonillion"
