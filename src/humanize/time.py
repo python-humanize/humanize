@@ -246,6 +246,10 @@ def naturaltime(
         str: A natural representation of the input in a resolution that makes sense.
     """
     now = when or _now()
+
+    if isinstance(value, dt.datetime) and value.tzinfo is not None:
+        value = dt.datetime.fromtimestamp(value.timestamp())
+
     date, delta = _date_and_delta(value, now=now)
     if date is None:
         return str(value)
