@@ -74,10 +74,6 @@ def test_date_and_delta() -> None:
 # Tests for the public interface of humanize.time
 
 
-def nd_nomonths(d: dt.timedelta) -> str:
-    return humanize.naturaldelta(d, months=False)
-
-
 @pytest.mark.parametrize(
     "test_input, expected",
     [
@@ -88,7 +84,7 @@ def nd_nomonths(d: dt.timedelta) -> str:
     ],
 )
 def test_naturaldelta_nomonths(test_input: dt.timedelta, expected: str) -> None:
-    assert nd_nomonths(test_input) == expected
+    assert humanize.naturaldelta(test_input, months=False) == expected
 
 
 @pytest.mark.parametrize(
@@ -173,10 +169,6 @@ def test_naturaltime(test_input: dt.datetime, expected: str) -> None:
     assert humanize.naturaltime(test_input) == expected
 
 
-def nt_nomonths(d: dt.datetime) -> str:
-    return humanize.naturaltime(d, months=False)
-
-
 @freeze_time("2020-02-02")
 @pytest.mark.parametrize(
     "test_input, expected",
@@ -215,7 +207,7 @@ def nt_nomonths(d: dt.datetime) -> str:
     ],
 )
 def test_naturaltime_nomonths(test_input: dt.datetime, expected: str) -> None:
-    assert nt_nomonths(test_input) == expected
+    assert humanize.naturaltime(test_input, months=False) == expected
 
 
 @freeze_time("2020-02-02")
