@@ -1,4 +1,4 @@
-from typing import List, AnyStr
+from typing import AnyStr, List
 
 __all__ = ["naturallist"]
 

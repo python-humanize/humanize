@@ -2,6 +2,7 @@ import pytest
 
 import humanize
 
+
 @pytest.mark.parametrize(
     "test_args, expected",
     [
