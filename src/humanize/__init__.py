@@ -19,6 +19,7 @@ from humanize.time import (
     naturaltime,
     precisedelta,
 )
+from humanize.lists import naturallist
 
 try:
     # Python 3.8+
@@ -50,4 +51,5 @@ __all__ = [
     "precisedelta",
     "scientific",
     "thousands_separator",
+    "naturallist",
 ]
