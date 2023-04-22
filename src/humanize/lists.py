@@ -1,10 +1,13 @@
-from typing import AnyStr, List
+"""Lists related humanization."""
+from typing import Any, List
 
 __all__ = ["naturallist"]
 
 
-def naturallist(items: List[AnyStr]) -> str:
-    """Convert a list of items into a human-readable string with commas and 'and'
+def naturallist(items: List[Any]) -> str:
+    """Natural list.
+
+    Convert a list of items into a human-readable string with commas and 'and'
 
     Args:
         items (list): A list of strings
@@ -18,10 +21,9 @@ def naturallist(items: List[AnyStr]) -> str:
         >>> naturallist(["one"])
         'one'
     """
-
     if len(items) == 1:
-        return items[0]
+        return str(items[0])
     elif len(items) == 2:
-        return f"{items[0]} and {items[1]}"
+        return f"{str(items[0])} and {str(items[1])}"
     else:
-        return ", ".join(items[:-1]) + f" and {items[-1]}"
+        return ", ".join(str(item) for item in items[:-1]) + f" and {str(items[-1])}"

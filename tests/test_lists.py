@@ -11,7 +11,11 @@ import humanize
         ([["one", "two"]], "one and two"),
         ([["one"]], "one"),
         ([[""]], ""),
+        ([[1, 2, 3]], "1, 2 and 3"),
+        ([[1, "two"]], "1 and two"),
     ],
 )
-def test_naturallist(test_args, expected):
+def test_naturallist(
+    test_args: list[str] | list[int] | list[str | int], expected: str
+) -> None:
     assert humanize.naturallist(*test_args) == expected
