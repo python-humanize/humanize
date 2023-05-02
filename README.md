@@ -20,6 +20,7 @@ human-readable size or throughput. It is localized to:
 - Catalan
 - Danish
 - Dutch
+- Esperanto
 - European Portuguese
 - Finnish
 - French
