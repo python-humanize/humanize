@@ -5,7 +5,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-02 10:46-0700\n"
 "PO-Revision-Date: 2023-05-02 10:50-0700\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Language-Team: Esperanto <translation-team-eo@lists.sourceforge.net>\n"
 "Language: eo\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ASCII\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
@@ -240,8 +240,8 @@ msgstr[1] ""
 #, python-format
 msgid "%d millisecond"
 msgid_plural "%d milliseconds"
-msgstr[0] "milisekundo"
-msgstr[1] "milisekundoj"
+msgstr[0] "%d milisekundo"
+msgstr[1] "%d milisekundoj"
 
 #: src/humanize/time.py:164 src/humanize/time.py:263
 msgid "a moment"
