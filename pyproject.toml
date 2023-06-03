@@ -15,30 +15,26 @@ keywords = [
 license = {text = "MIT"}
 maintainers = [{name = "Hugo van Kemenade"}]
 authors = [{name = "Jason Moiron", email = "jmoiron@jmoiron.net"}]
-requires-python = ">=3.7"
+requires-python = ">=3.8"
 classifiers = [
-    "Development Status :: 5 - Production/Stable",
-    "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
-    "Operating System :: OS Independent",
-    "Programming Language :: Python",
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.7",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: Implementation :: CPython",
-    "Programming Language :: Python :: Implementation :: PyPy",
-    "Topic :: Text Processing",
-    "Topic :: Text Processing :: General",
+  "Development Status :: 5 - Production/Stable",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy",
+  "Topic :: Text Processing",
+  "Topic :: Text Processing :: General",
 ]
 dynamic = [
   "version",
-]
-dependencies = [
-  'importlib-metadata; python_version < "3.8"',
 ]
 [project.optional-dependencies]
 tests = [
@@ -64,9 +60,6 @@ artifacts = [
 
 [tool.hatch.version.raw-options]
 local_scheme = "no-local-version"
-
-[tool.black]
-target_version = ["py37"]
 
 [tool.isort]
 profile = "black"
