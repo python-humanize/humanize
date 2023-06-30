@@ -474,9 +474,7 @@ def test_naturaltime_timezone(test_input: dt.datetime, expected: str) -> None:
         (NOW_UTC - dt.timedelta(days=365 + 4), "1 year, 4 days ago"),
     ],
 )
-def test_naturaltime_timezone_when(
-    test_input: dt.datetime, expected: str
-) -> None:
+def test_naturaltime_timezone_when(test_input: dt.datetime, expected: str) -> None:
     assert humanize.naturaltime(test_input, when=NOW_UTC) == expected
 
 
