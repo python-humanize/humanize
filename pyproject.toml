@@ -44,7 +44,7 @@ tests = [
   "pytest-cov",
 ]
 [project.urls]
-Documentation = "https://python-humanize.readthedocs.io/"
+Documentation = "https://humanize.readthedocs.io/"
 Funding = "https://tidelift.com/subscription/pkg/pypi-humanize?utm_source=pypi-humanize&utm_medium=pypi"
 Homepage = "https://github.com/python-humanize/humanize"
 "Issue tracker" = "https://github.com/python-humanize/humanize/issues"
