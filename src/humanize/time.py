@@ -47,6 +47,47 @@ def _now() -> dt.datetime:
     return dt.datetime.now()
 
 
+def _parseiso(
+    value: dt.time | dt.date | dt.datetime | float | str,
+) -> dt.time | dt.date | dt.datetime | float | str:
+    """If string attempts to parse as iso8601 into date, datetime or time.
+
+    Args:
+        value (str or any object): String to be parsed.
+
+    Returns:
+        str (str or any): If string, it will attempt parsing as
+        datetime.date, datetime.datetime or datetime.time, in that order,
+        and return the result of the first succesful parsing, if any.
+
+        Parsing is attempted with the iso8601 function for each of the classes.
+
+        If `value` is not a string or if all attempts at parsing fail,
+        `value` is returned as is.
+
+    """
+    if isinstance(value, str):
+        try:
+            # catches eg '2023-04-01'
+            return dt.date.fromisoformat(value)
+        except ValueError:
+            pass
+
+        try:
+            # catches eg '2023-04-01T12:00:00.123456+02:00', '2023-04-20 12:00:00'
+            return dt.datetime.fromisoformat(value)
+        except ValueError:
+            pass
+
+        try:
+            # catches eg '20:00', '20:00:16.123456', 'T20:00Z'
+            return dt.time.fromisoformat(value)
+        except ValueError:
+            pass
+
+    return value
+
+
 def _abs_timedelta(delta: dt.timedelta) -> dt.timedelta:
     """Return an "absolute" value for a timedelta, always representing a time distance.
 
@@ -246,6 +287,7 @@ def naturaltime(
         str: A natural representation of the input in a resolution that makes sense.
     """
     now = when or _now()
+    value = _parseiso(value)
 
     if isinstance(value, dt.datetime) and value.tzinfo is not None:
         value = dt.datetime.fromtimestamp(value.timestamp())
@@ -274,6 +316,8 @@ def naturalday(value: dt.date | dt.datetime, format: str = "%b %d") -> str:
     formatted according to `format`.
 
     """
+    value = _parseiso(value)
+
     try:
         value = dt.date(value.year, value.month, value.day)
     except AttributeError:
@@ -298,6 +342,8 @@ def naturalday(value: dt.date | dt.datetime, format: str = "%b %d") -> str:
 
 def naturaldate(value: dt.date | dt.datetime) -> str:
     """Like `naturalday`, but append a year for dates more than ~five months away."""
+    value = _parseiso(value)
+
     try:
         value = dt.date(value.year, value.month, value.day)
     except AttributeError:
