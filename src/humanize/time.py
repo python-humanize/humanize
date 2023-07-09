@@ -47,7 +47,7 @@ def _now() -> dt.datetime:
     return dt.datetime.now()
 
 
-def _parseiso(
+def _parse_iso(
     value: dt.date | dt.datetime | float | str,
 ) -> dt.date | dt.datetime | float | str:
     """If string attempts to parse as iso8601 date or datetime.
