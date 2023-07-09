@@ -48,23 +48,20 @@ def _now() -> dt.datetime:
 
 
 def _parseiso(
-    value: dt.time | dt.date | dt.datetime | float | str,
-) -> dt.time | dt.date | dt.datetime | float | str:
-    """If string attempts to parse as iso8601 into date, datetime or time.
+    value: dt.date | dt.datetime | float | str,
+) -> dt.date | dt.datetime | float | str:
+    """If string attempts to parse as iso8601 date or datetime.
 
     Args:
         value (str or any object): String to be parsed.
 
     Returns:
-        str (str or any): If string, it will attempt parsing as
-        datetime.date, datetime.datetime or datetime.time, in that order,
-        and return the result of the first succesful parsing, if any.
+        str (str or any): If string, it will first attempt parsing with
+        date.fromisoformat. If that fails it will attempt parsing with
+        datetime.isoformat.
 
-        Parsing is attempted with the iso8601 function for each of the classes.
-
-        If `value` is not a string or if all attempts at parsing fail,
+        If `value` is not a string or both attempts at parsing fail,
         `value` is returned as is.
-
     """
     if isinstance(value, str):
         try:
@@ -76,12 +73,6 @@ def _parseiso(
         try:
             # catches eg '2023-04-01T12:00:00.123456+02:00', '2023-04-20 12:00:00'
             return dt.datetime.fromisoformat(value)
-        except ValueError:
-            pass
-
-        try:
-            # catches eg '20:00', '20:00:16.123456', 'T20:00Z'
-            return dt.time.fromisoformat(value)
         except ValueError:
             pass
 
@@ -261,7 +252,7 @@ def naturaldelta(
 
 
 def naturaltime(
-    value: dt.datetime | dt.timedelta | float,
+    value: dt.datetime | dt.timedelta | float | str,
     future: bool = False,
     months: bool = True,
     minimum_unit: str = "seconds",
