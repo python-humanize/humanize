@@ -278,7 +278,7 @@ def naturaltime(
         str: A natural representation of the input in a resolution that makes sense.
     """
     now = when or _now()
-    value = _parseiso(value)
+    value = _parse_iso(value)
 
     if isinstance(value, dt.datetime) and value.tzinfo is not None:
         value = dt.datetime.fromtimestamp(value.timestamp())
@@ -307,7 +307,7 @@ def naturalday(value: dt.date | dt.datetime, format: str = "%b %d") -> str:
     formatted according to `format`.
 
     """
-    value = _parseiso(value)
+    value = _parse_iso(value)
 
     try:
         value = dt.date(value.year, value.month, value.day)
@@ -333,7 +333,7 @@ def naturalday(value: dt.date | dt.datetime, format: str = "%b %d") -> str:
 
 def naturaldate(value: dt.date | dt.datetime) -> str:
     """Like `naturalday`, but append a year for dates more than ~five months away."""
-    value = _parseiso(value)
+    value = _parse_iso(value)
 
     try:
         value = dt.date(value.year, value.month, value.day)
