@@ -211,7 +211,10 @@ def test_naturaldelta(test_input: int | dt.timedelta, expected: str) -> None:
         (NOW - dt.timedelta(days=365 + 4), "1 year, 4 days ago"),
         ("NaN", "NaN"),
         # iso 8601
-        ( (NOW - dt.timedelta(days=365 + 4)).isoformat(timespec='hours'), "1 year, 4 days ago"),
+        (
+            (NOW - dt.timedelta(days=365 + 4)).isoformat(timespec="hours"),
+            "1 year, 4 days ago",
+        ),
     ],
 )
 def test_naturaltime(test_input: dt.datetime, expected: str) -> None:
@@ -494,7 +497,10 @@ def test_naturaltime_minimum_unit_explicit(
         (NOW_UTC - dt.timedelta(days=365 * 2 + 65), "2 years ago"),
         (NOW_UTC - dt.timedelta(days=365 + 4), "1 year, 4 days ago"),
         # iso 8601
-        ( (NOW_UTC - dt.timedelta(days=365 + 4)).isoformat(timespec='hours'), "1 year, 4 days ago" ),
+        (
+            (NOW_UTC - dt.timedelta(days=365 + 4)).isoformat(timespec="hours"),
+            "1 year, 4 days ago",
+        ),
     ],
 )
 def test_naturaltime_timezone(test_input: dt.datetime, expected: str) -> None:
