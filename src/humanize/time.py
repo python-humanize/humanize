@@ -47,9 +47,12 @@ def _now() -> dt.datetime:
     return dt.datetime.now()
 
 
+T = typing.TypeVar("T")
+
+
 def _parse_iso(
-    value: dt.date | dt.datetime | float | str,
-) -> dt.date | dt.datetime | float | str:
+    value: T,
+) -> T | dt.date | dt.datetime:
     """If string attempts to parse as iso8601 date or datetime.
 
     Args:
@@ -278,7 +281,10 @@ def naturaltime(
         str: A natural representation of the input in a resolution that makes sense.
     """
     now = when or _now()
-    value = _parse_iso(value)
+    _value = _parse_iso(value)
+    if type(_value) != dt.date:
+        # naturaltime is not built to handle dt.date
+        value = typing.cast(typing.Union[dt.datetime, dt.timedelta, float, str], _value)
 
     if isinstance(value, dt.datetime) and value.tzinfo is not None:
         value = dt.datetime.fromtimestamp(value.timestamp())

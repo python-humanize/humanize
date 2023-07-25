@@ -99,7 +99,7 @@ def assert_equal_timedelta(td1: dt.timedelta, td2: dt.timedelta) -> None:
         ),
     ],
 )
-def test_parse_iso(test_input: Object, expected: Object) -> None:
+def test_parse_iso(test_input: object, expected: object) -> None:
     assert time._parse_iso(test_input) == expected
 
 
