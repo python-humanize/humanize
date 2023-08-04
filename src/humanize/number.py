@@ -222,7 +222,7 @@ def intword(value: NumberOrString, format: str = "%.1f") -> str:
 
     Returns:
         str: Friendly text representation as a string, unless the value passed could not
-        be coaxed into an `int`.
+            be coaxed into an `int`.
     """
     try:
         if not math.isfinite(float(value)):
@@ -287,8 +287,8 @@ def apnumber(value: NumberOrString) -> str:
 
     Returns:
         str: For numbers 0-9, the number spelled out. Otherwise, the number. This always
-        returns a string unless the value was not `int`-able, then `str(value)`
-        is returned.
+            returns a string unless the value was not `int`-able, then `str(value)`
+            is returned.
     """
     try:
         if not math.isfinite(float(value)):
@@ -479,8 +479,8 @@ def clamp(
 
     Returns:
         str: Formatted number. The output is clamped between the indicated floor and
-        ceil. If the number is larger than ceil or smaller than floor, the output will
-        be prepended with a token indicating as such.
+            ceil. If the number is larger than ceil or smaller than floor, the output
+            will be prepended with a token indicating as such.
 
     """
     if value is None:
