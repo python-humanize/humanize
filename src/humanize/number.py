@@ -479,8 +479,8 @@ def clamp(
 
     Returns:
         str: Formatted number. The output is clamped between the indicated floor and
-            ceil. If the number is larger than ceil or smaller than floor, the output will
-            be prepended with a token indicating as such.
+            ceil. If the number is larger than ceil or smaller than floor, the output
+            will be prepended with a token indicating as such.
 
     """
     if value is None:
