@@ -2,22 +2,23 @@
 # Copyright (C) 2017 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the humanize package.
 # Emre Çintay <emre@cintay.com>, 2017.
+# Furkan Kalkan <furkankalkan@mantis.com.tr>, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: humanize\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-01-08 19:22+0200\n"
-"PO-Revision-Date: 2017-02-23 20:00+0300\n"
-"Last-Translator: Emre Çintay <emre@cintay.com>\n"
+"PO-Revision-Date: 2023-08-09 13:12+0300\n"
+"Last-Translator: Furkan Kalkan <furkankalkan@mantis.com.tr>\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.7.1\n"
-"Generated-By: Emre Çintay\n"
+"X-Generator: Poedit 3.2.2\n"
+"Generated-By: Furkan Kalkan\n"
 
 #: src/humanize/number.py:84
 msgctxt "0 (male)"
@@ -122,8 +123,8 @@ msgstr "."
 #: src/humanize/number.py:178
 msgid "thousand"
 msgid_plural "thousand"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "bin"
+msgstr[1] "bin"
 
 #: src/humanize/number.py:179
 msgid "million"
@@ -193,7 +194,7 @@ msgstr[1] "googol"
 
 #: src/humanize/number.py:301
 msgid "zero"
-msgstr ""
+msgstr "sıfır"
 
 #: src/humanize/number.py:302
 msgid "one"
@@ -235,19 +236,20 @@ msgstr "dokuz"
 #, python-format
 msgid "%d microsecond"
 msgid_plural "%d microseconds"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d mikrosaniye"
+msgstr[1] "%d mikrosaniye"
 
 #: src/humanize/time.py:161
 #, python-format
 msgid "%d millisecond"
 msgid_plural "%d milliseconds"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d milisaniye"
+msgstr[1] "%d milisaniye"
 
+# The phrase "biraz"  doesn't make sense as time expression in Turkish without suffix "önce" (ago) in this case. I think one second [ago] (bir saniye [önce]) is more appropriate here.
 #: src/humanize/time.py:164 src/humanize/time.py:259
 msgid "a moment"
-msgstr "biraz"
+msgstr "bir saniye"
 
 #: src/humanize/time.py:167
 msgid "a second"
@@ -362,4 +364,4 @@ msgstr "dün"
 #: src/humanize/time.py:600
 #, python-format
 msgid "%s and %s"
-msgstr ""
+msgstr "%s ve %s"
