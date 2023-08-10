@@ -56,6 +56,53 @@ def assert_equal_timedelta(td1: dt.timedelta, td2: dt.timedelta) -> None:
 # These are not considered "public" interfaces, but require tests anyway.
 
 
+@pytest.mark.parametrize(
+    "test_input, expected",
+    [
+        # values that can not be parsed are returned as is
+        ("invalid iso 8601 string", "invalid iso 8601 string"),
+        (42, 42),
+        (-273.15, -273.15),
+        (None, None),
+        # returns date
+        ("2023-04-01", dt.date(2023, 4, 1)),
+        ("2020-02-02", dt.date(2020, 2, 2)),
+        # returns datetime
+        ("2023-04-01T13:15", dt.datetime(2023, 4, 1, 13, 15)),
+        ("2023-04-01T13:15:30", dt.datetime(2023, 4, 1, 13, 15, 30)),
+        ("2023-04-01T13:15:30.123456", dt.datetime(2023, 4, 1, 13, 15, 30, 123456)),
+        # returns datetime with timezone
+        (
+            "2023-04-01T13:15+02:00",
+            dt.datetime(
+                2023, 4, 1, 13, 15, tzinfo=dt.timezone(dt.timedelta(seconds=7200))
+            ),
+        ),
+        (
+            "2023-04-01T13:15:30+02:00",
+            dt.datetime(
+                2023, 4, 1, 13, 15, 30, tzinfo=dt.timezone(dt.timedelta(seconds=7200))
+            ),
+        ),
+        (
+            "2023-04-01T13:15:30.123456+02:00",
+            dt.datetime(
+                2023,
+                4,
+                1,
+                13,
+                15,
+                30,
+                123456,
+                tzinfo=dt.timezone(dt.timedelta(seconds=7200)),
+            ),
+        ),
+    ],
+)
+def test_parse_iso(test_input: object, expected: object) -> None:
+    assert time._parse_iso(test_input) == expected
+
+
 def test_date_and_delta() -> None:
     now = dt.datetime.now()
     td = dt.timedelta
@@ -163,6 +210,11 @@ def test_naturaldelta(test_input: int | dt.timedelta, expected: str) -> None:
         (NOW - dt.timedelta(days=365 * 2 + 65), "2 years ago"),
         (NOW - dt.timedelta(days=365 + 4), "1 year, 4 days ago"),
         ("NaN", "NaN"),
+        # iso 8601
+        (
+            (NOW - dt.timedelta(days=365 + 4)).isoformat(timespec="hours"),
+            "1 year, 4 days ago",
+        ),
     ],
 )
 def test_naturaltime(test_input: dt.datetime, expected: str) -> None:
@@ -224,6 +276,8 @@ def test_naturaltime_nomonths(test_input: dt.datetime, expected: str) -> None:
         (["Not a date at all."], "Not a date at all."),
         ([VALUE_ERROR_TEST], str(VALUE_ERROR_TEST)),
         ([OVERFLOW_ERROR_TEST], str(OVERFLOW_ERROR_TEST)),
+        # iso 8601
+        ([TODAY.isoformat()], "today"),
     ],
 )
 def test_naturalday(test_args: list[typing.Any], expected: str) -> None:
@@ -268,6 +322,10 @@ def test_naturalday(test_args: list[typing.Any], expected: str) -> None:
         (dt.date(2020, 12, 2), "Dec 02 2020"),
         (dt.date(2021, 1, 2), "Jan 02 2021"),
         (dt.date(2021, 2, 2), "Feb 02 2021"),
+        # iso 8601
+        ("2019-09-02", "Sep 02 2019"),
+        ("2020-04-02", "Apr 02"),
+        ("2021-02-02", "Feb 02 2021"),
     ],
 )
 def test_naturaldate(test_input: dt.date, expected: str) -> None:
@@ -438,6 +496,11 @@ def test_naturaltime_minimum_unit_explicit(
         (NOW_UTC - dt.timedelta(days=365 + 35), "1 year, 1 month ago"),
         (NOW_UTC - dt.timedelta(days=365 * 2 + 65), "2 years ago"),
         (NOW_UTC - dt.timedelta(days=365 + 4), "1 year, 4 days ago"),
+        # iso 8601
+        (
+            (NOW_UTC - dt.timedelta(days=365 + 4)).isoformat(timespec="hours"),
+            "1 year, 4 days ago",
+        ),
     ],
 )
 def test_naturaltime_timezone(test_input: dt.datetime, expected: str) -> None:

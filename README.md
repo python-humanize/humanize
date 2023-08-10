@@ -103,6 +103,21 @@ python3 -m pip install -e .
 'an hour ago'
 ```
 
+#### Also accepts iso8601 text strings
+
+```pycon
+>>> import humanize
+>>> humanize.naturaldate('2007-06-05')
+'Jun 05 2007'
+>>> humanize.naturaldate('2007-06-05T22:00:10')
+'Jun 05 2007'
+>>> humanize.naturaldate('2007-06-05T22:00:10+02:00')
+'Jun 05 2007'
+
+Relies on the native `fromisoformat` function that exists on date, datetime and time objects.
+```
+
+
 ### Precise time delta
 
 ```pycon
