@@ -12,6 +12,7 @@ import math
 import typing
 from enum import Enum
 from functools import total_ordering
+from typing import Any
 
 from .i18n import _gettext as _
 from .i18n import _ngettext
@@ -245,10 +246,10 @@ def naturaltime(
     Returns:
         str: A natural representation of the input in a resolution that makes sense.
     """
-    now = when or _now()
+    value = _convert_aware_datetime(value)
+    when = _convert_aware_datetime(when)
 
-    if isinstance(value, dt.datetime) and value.tzinfo is not None:
-        value = dt.datetime.fromtimestamp(value.timestamp())
+    now = when or _now()
 
     date, delta = _date_and_delta(value, now=now)
     if date is None:
@@ -264,6 +265,15 @@ def naturaltime(
         return _("now")
 
     return str(ago % delta)
+
+
+def _convert_aware_datetime(
+    value: dt.datetime | dt.timedelta | float | None,
+) -> Any:
+    """Convert aware datetime to naive datetime and pass through any other type."""
+    if isinstance(value, dt.datetime) and value.tzinfo is not None:
+        value = dt.datetime.fromtimestamp(value.timestamp())
+    return value
 
 
 def naturalday(value: dt.date | dt.datetime, format: str = "%b %d") -> str:
