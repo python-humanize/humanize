@@ -251,7 +251,6 @@ def naturaltime(
 
     now = when or _now()
 
-
     date, delta = _date_and_delta(value, now=now)
     if date is None:
         return str(value)
