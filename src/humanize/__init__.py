@@ -1,5 +1,7 @@
 """Main package for humanize."""
 
+from __future__ import annotations
+
 import importlib.metadata
 
 from humanize.filesize import naturalsize
