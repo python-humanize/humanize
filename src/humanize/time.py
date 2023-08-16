@@ -246,11 +246,11 @@ def naturaltime(
     Returns:
         str: A natural representation of the input in a resolution that makes sense.
     """
+    value = _convert_aware_datetime(value)
     when = _convert_aware_datetime(when)
 
     now = when or _now()
 
-    value = _convert_aware_datetime(value)
 
     date, delta = _date_and_delta(value, now=now)
     if date is None:
@@ -271,7 +271,7 @@ def naturaltime(
 def _convert_aware_datetime(
     value: dt.datetime | dt.timedelta | float | None,
 ) -> Any:
-    """Convert aware datetime to naive datetime and passthrough any other type."""
+    """Convert aware datetime to naive datetime and pass through any other type."""
     if isinstance(value, dt.datetime) and value.tzinfo is not None:
         value = dt.datetime.fromtimestamp(value.timestamp())
     return value
