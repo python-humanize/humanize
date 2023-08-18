@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 """Humanizing functions for numbers."""
 from __future__ import annotations
 
