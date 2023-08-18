@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 """Time humanizing functions.
 
 These are largely borrowed from Django's `contrib.humanize`.
