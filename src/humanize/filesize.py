@@ -4,9 +4,9 @@
 from __future__ import annotations
 
 suffixes = {
-    "decimal": (" kB", " MB", " GB", " TB", " PB", " EB", " ZB", " YB"),
-    "binary": (" KiB", " MiB", " GiB", " TiB", " PiB", " EiB", " ZiB", " YiB"),
-    "gnu": "KMGTPEZY",
+    "decimal": (" kB", " MB", " GB", " TB", " PB", " EB", " ZB", " YB", " RB", " QB"),
+    "binary": (" KiB", " MiB", " GiB", " TiB", " PiB", " EiB", " ZiB", " YiB", " RiB", " QiB"),
+    "gnu": "KMGTPEZYRQ",
 }
 
 
@@ -35,7 +35,9 @@ def naturalsize(
         >>> naturalsize(3000, True)
         '2.9 KiB'
         >>> naturalsize(10**28)
-        '10000.0 YB'
+        '10.0 RB'
+        >>> naturalsize(10**34 * 3)
+        '30000.0 QB'
         >>> naturalsize(-4096, True)
         '-4.0 KiB'
 
