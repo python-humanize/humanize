@@ -4,8 +4,30 @@
 from __future__ import annotations
 
 suffixes = {
-    "decimal": (" kB", " MB", " GB", " TB", " PB", " EB", " ZB", " YB", " RB", " QB"),
-    "binary": (" KiB", " MiB", " GiB", " TiB", " PiB", " EiB", " ZiB", " YiB", " RiB", " QiB"),
+    "decimal": (
+        " kB",
+        " MB",
+        " GB",
+        " TB",
+        " PB",
+        " EB",
+        " ZB",
+        " YB",
+        " RB",
+        " QB",
+    ),
+    "binary": (
+        " KiB",
+        " MiB",
+        " GiB",
+        " TiB",
+        " PiB",
+        " EiB",
+        " ZiB",
+        " YiB",
+        " RiB",
+        " QiB",
+    ),
     "gnu": "KMGTPEZYRQ",
 }
 
