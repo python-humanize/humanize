@@ -6,6 +6,7 @@ Welcome to the humanize API reference.
 * [Time](time)
 * [Filesize](filesize)
 * [I18n](i18n)
+* [Lists](lists)
 
 {%
    include-markdown "../README.md"

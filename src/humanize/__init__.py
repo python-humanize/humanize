@@ -6,6 +6,7 @@ import importlib.metadata
 
 from humanize.filesize import naturalsize
 from humanize.i18n import activate, deactivate, decimal_separator, thousands_separator
+from humanize.lists import naturallist
 from humanize.number import (
     apnumber,
     clamp,
@@ -47,4 +48,5 @@ __all__ = [
     "precisedelta",
     "scientific",
     "thousands_separator",
+    "naturallist",
 ]
