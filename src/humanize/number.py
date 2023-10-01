@@ -64,6 +64,7 @@ def ordinal(value: NumberOrString, gender: str = "male") -> str:
         True
 
         ```
+
     Args:
         value (int, str, float): Integer to convert.
         gender (str): Gender for translations. Accepts either "male" or "female".
@@ -134,6 +135,7 @@ def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
         'None'
 
         ```
+
     Args:
         value (int, float, str): Integer or float to convert.
         ndigits (int, None): Digits of precision for rounding after the decimal point.
@@ -213,6 +215,7 @@ def intword(value: NumberOrString, format: str = "%.1f") -> str:
         '1.234 million'
 
         ```
+
     Args:
         value (int, float, str): Integer to convert.
         format (str): To change the number of decimal or general format of the number
@@ -280,6 +283,7 @@ def apnumber(value: NumberOrString) -> str:
       'None'
 
       ```
+
     Args:
         value (int, float, str): Integer to convert.
 
@@ -342,6 +346,7 @@ def fractional(value: NumberOrString) -> str:
         'None'
 
         ```
+
     Args:
         value (int, float, str): Integer to convert.
 
