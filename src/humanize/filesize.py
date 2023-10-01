@@ -40,6 +40,7 @@ def naturalsize(
         '-4.0 KiB'
 
         ```
+
     Args:
         value (int, float, str): Integer to convert.
         binary (bool): If `True`, uses binary suffixes (KiB, MiB) with base
