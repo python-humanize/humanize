@@ -123,7 +123,7 @@ def _ngettext(message: str, plural: str, num: int) -> str:
     Returns:
         str: Translated text.
     """
-    return get_translation().ngettext(message, plural, num)
+    return get_translation().ngettext(message, plural, int(num))
 
 
 def _gettext_noop(message: str) -> str:
