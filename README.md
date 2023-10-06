@@ -26,6 +26,7 @@ human-readable size or throughput. It is localized to:
 - French
 - German
 - Greek
+- Hebrew
 - Indonesian
 - Italian
 - Japanese
