@@ -86,8 +86,6 @@ extend-ignore = [
 
 [tool.ruff.isort]
 required-imports = ["from __future__ import annotations"]
-
-[tool.ruff.lint.isort]
 known-first-party = ["humanize"]
 
 [tool.pytest.ini_options]
