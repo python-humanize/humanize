@@ -24,7 +24,6 @@ jobs:
           allow-prereleases: true
           cache: pip
 
-
       - name: Install Linux dependencies
         if: startsWith(matrix.os, 'ubuntu')
         run: |
