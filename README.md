@@ -9,9 +9,9 @@
 [![MIT License](https://img.shields.io/github/license/python-humanize/humanize.svg)](LICENCE)
 [![Tidelift](https://tidelift.com/badges/package/pypi/humanize)](https://tidelift.com/subscription/pkg/pypi-humanize?utm_source=pypi-humanize&utm_medium=badge)
 
-This modest package contains various common humanization utilities, like turning
-a number into a fuzzy human-readable duration ("3 minutes ago") or into a
-human-readable size or throughput. It is localized to:
+This modest package contains various common humanization utilities, like turning a
+number into a fuzzy human-readable duration ("3 minutes ago") or into a human-readable
+size or throughput. It is localized to:
 
 - Arabic
 - Basque
