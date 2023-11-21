@@ -8,10 +8,9 @@ from fractions import Fraction
 from typing import TYPE_CHECKING
 
 from .i18n import _gettext as _
-from .i18n import _ngettext
+from .i18n import _ngettext, decimal_separator, thousands_separator
 from .i18n import _ngettext_noop as NS_
 from .i18n import _pgettext as P_
-from .i18n import decimal_separator, thousands_separator
 
 if TYPE_CHECKING:
     if sys.version_info >= (3, 10):

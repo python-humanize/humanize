@@ -62,8 +62,33 @@ artifacts = [
 [tool.hatch.version.raw-options]
 local_scheme = "no-local-version"
 
-[tool.isort]
-profile = "black"
+[tool.ruff]
+line-length = 88
+select = [
+  "E", # pycodestyle errors
+  "EM", # flake8-errmsg
+  "F", # pyflakes errors
+  "I", # isort
+  "ISC", # flake8-implicit-str-concat
+  "PGH", # pygrep-hooks
+  "RUF100", # unused noqa (yesqa)
+  "UP", # pyupgrade
+  "W", # pycodestyle warnings
+  "YTT", # flake8-2020
+  # "LOG", # TODO: enable flake8-logging when it's not in preview anymore
+]
+extend-ignore = [
+  "E203", # Whitespace before ':'
+  "E221", # Multiple spaces before operator
+  "E226", # Missing whitespace around arithmetic operator
+  "E241", # Multiple spaces after ','
+]
+
+[tool.ruff.isort]
+required-imports = ["from __future__ import annotations"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["humanize"]
 
 [tool.pytest.ini_options]
 addopts = "--color=yes"
