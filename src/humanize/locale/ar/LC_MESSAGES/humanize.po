@@ -1,7 +1,7 @@
 # Arabic (عربي) translations for humanize package.
 # Copyright (C) 2022.
 # This file is distributed under the same license as the humanize package.
-# AYMEN Mohammed <let.me.code.safe@gmail.com>, 2022.
+# AYMEN Mohammed <let.me.code.safe@gmail.com>, 2022. | Second contributor: YazeedT, 2023.
 #
 msgid ""
 msgstr ""
@@ -75,47 +75,47 @@ msgstr "صفر"
 #: src/humanize/number.py:98
 msgctxt "1 (female)"
 msgid "st"
-msgstr "اول"
+msgstr "اولى"
 
 #: src/humanize/number.py:99
 msgctxt "2 (female)"
 msgid "nd"
-msgstr "ثاني"
+msgstr "ثانية"
 
 #: src/humanize/number.py:100
 msgctxt "3 (female)"
 msgid "rd"
-msgstr "ثالث"
+msgstr "ثالثة"
 
 #: src/humanize/number.py:101
 msgctxt "4 (female)"
 msgid "th"
-msgstr "رابع"
+msgstr "رابعة"
 
 #: src/humanize/number.py:102
 msgctxt "5 (female)"
 msgid "th"
-msgstr "خامس"
+msgstr "خامسة"
 
 #: src/humanize/number.py:103
 msgctxt "6 (female)"
 msgid "th"
-msgstr "سادس"
+msgstr "سادسة"
 
 #: src/humanize/number.py:104
 msgctxt "7 (female)"
 msgid "th"
-msgstr "سابع"
+msgstr "سابعة"
 
 #: src/humanize/number.py:105
 msgctxt "8 (female)"
 msgid "th"
-msgstr "ثامن"
+msgstr "ثامنة"
 
 #: src/humanize/number.py:106
 msgctxt "9 (female)"
 msgid "th"
-msgstr "تاسع"
+msgstr "تاسعة"
 
 #: src/humanize/number.py:178
 msgid "thousand"
@@ -145,49 +145,49 @@ msgstr[1] "تريليونات"
 msgid "quadrillion"
 msgid_plural "quadrillion"
 msgstr[0] "كوادريليون"
-msgstr[1] "كوادريليون"
+msgstr[1] "كوادريليونات"
 
 #: src/humanize/number.py:183
 msgid "quintillion"
 msgid_plural "quintillion"
 msgstr[0] "كوينتيليون"
-msgstr[1] "كوينتيليون"
+msgstr[1] "كوينتيليونات"
 
 #: src/humanize/number.py:184
 msgid "sextillion"
 msgid_plural "sextillion"
 msgstr[0] "سكستليون"
-msgstr[1] "سكستليون"
+msgstr[1] "سكستليونات"
 
 #: src/humanize/number.py:185
 msgid "septillion"
 msgid_plural "septillion"
 msgstr[0] "سبتيليون"
-msgstr[1] "سبتيليون"
+msgstr[1] "سبتيليونات"
 
 #: src/humanize/number.py:186
 msgid "octillion"
 msgid_plural "octillion"
 msgstr[0] "اوكتيليون"
-msgstr[1] "اوكتيليون"
+msgstr[1] "اوكتيليونات"
 
 #: src/humanize/number.py:187
 msgid "nonillion"
 msgid_plural "nonillion"
 msgstr[0] "نونليون"
-msgstr[1] "نونليون"
+msgstr[1] "نونليونات"
 
 #: src/humanize/number.py:188
 msgid "decillion"
 msgid_plural "decillion"
 msgstr[0] "ديليون"
-msgstr[1] "ديليون"
+msgstr[1] "ديليونات"
 
 #: src/humanize/number.py:189
 msgid "googol"
 msgid_plural "googol"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "جوجل"
+msgstr[1] "جوجلات"
 
 #: src/humanize/number.py:301
 msgid "zero"
@@ -203,31 +203,31 @@ msgstr "اثنين"
 
 #: src/humanize/number.py:304
 msgid "three"
-msgstr "ثلاثه"
+msgstr "ثلاثة"
 
 #: src/humanize/number.py:305
 msgid "four"
-msgstr "اربعه"
+msgstr "اربعة"
 
 #: src/humanize/number.py:306
 msgid "five"
-msgstr "خمسه"
+msgstr "خمسة"
 
 #: src/humanize/number.py:307
 msgid "six"
-msgstr "سته"
+msgstr "ستة"
 
 #: src/humanize/number.py:308
 msgid "seven"
-msgstr "سبعه"
+msgstr "سبعة"
 
 #: src/humanize/number.py:309
 msgid "eight"
-msgstr "ثمانيه"
+msgstr "ثمانية"
 
 #: src/humanize/number.py:310
 msgid "nine"
-msgstr "تسعه"
+msgstr "تسعة"
 
 #: src/humanize/time.py:152
 #, python-format
@@ -351,7 +351,7 @@ msgstr "اليوم"
 
 #: src/humanize/time.py:287
 msgid "tomorrow"
-msgstr "بكرة"
+msgstr "غداً"
 
 #: src/humanize/time.py:290
 msgid "yesterday"
