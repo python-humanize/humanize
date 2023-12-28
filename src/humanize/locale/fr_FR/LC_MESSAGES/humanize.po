@@ -257,7 +257,7 @@ msgstr[1] "%d millisecondes"
 
 #: src/humanize/time.py:164 src/humanize/time.py:259
 msgid "a moment"
-msgstr "un moment"
+msgstr "un instant"
 
 #: src/humanize/time.py:167
 msgid "a second"
