@@ -90,6 +90,11 @@ known-first-party = ["humanize"]
 
 [tool.pytest.ini_options]
 addopts = "--color=yes"
+filterwarnings = [
+    "error",
+    # https://github.com/dateutil/dateutil/issues/1314
+    "ignore:datetime.datetime.utcfromtimestamp:DeprecationWarning:dateutil.tz.tz",
+]
 
 [tool.pydocstyle]
 convention = "google"
