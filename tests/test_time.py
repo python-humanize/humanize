@@ -129,6 +129,7 @@ def test_naturaldelta_nomonths(test_input: dt.timedelta, expected: str) -> None:
 def test_naturaldelta(test_input: float | dt.timedelta, expected: str) -> None:
     assert humanize.naturaldelta(test_input) == expected
 
+
 @freeze_time("2020-02-02")
 @pytest.mark.parametrize(
     "test_input, expected",
