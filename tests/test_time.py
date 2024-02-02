@@ -126,9 +126,8 @@ def test_naturaldelta_nomonths(test_input: dt.timedelta, expected: str) -> None:
         (dt.timedelta(days=999_999_999), "2,739,726 years"),
     ],
 )
-def test_naturaldelta(test_input: int | dt.timedelta, expected: str) -> None:
+def test_naturaldelta(test_input: float | dt.timedelta, expected: str) -> None:
     assert humanize.naturaldelta(test_input) == expected
-
 
 @freeze_time("2020-02-02")
 @pytest.mark.parametrize(
@@ -339,6 +338,7 @@ def test_naturaldelta_minimum_unit_explicit(
 
     # Act / Assert
     assert humanize.naturaldelta(delta, minimum_unit=minimum_unit) == expected
+    assert humanize.naturaldelta(seconds, minimum_unit=minimum_unit) == expected
 
 
 @freeze_time("2020-02-02")
