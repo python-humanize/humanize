@@ -104,7 +104,8 @@ def naturaldelta(
     Returns:
         str (str or `value`): A natural representation of the amount of time
             elapsed unless `value` is not datetime.timedelta or cannot be
-            converted to float. In that case, a `value` is returned unchanged.
+            converted to int (cannot be float due to 'inf' or 'nan).
+            In that case, a `value` is returned unchanged.
 
     Raises:
         OverflowError: If `value` is too large to convert to datetime.timedelta.
@@ -131,6 +132,7 @@ def naturaldelta(
         delta = value
     else:
         try:
+            int(value)  # Explicitly don't support string such as "NaN" or "inf"
             value = float(value)
             delta = dt.timedelta(seconds=value)
         except (ValueError, TypeError):
