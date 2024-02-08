@@ -65,6 +65,7 @@ local_scheme = "no-local-version"
 [tool.ruff]
 line-length = 88
 select = [
+  "D", # pydocstyle
   "E", # pycodestyle errors
   "EM", # flake8-errmsg
   "F", # pyflakes errors
@@ -88,6 +89,12 @@ extend-ignore = [
 required-imports = ["from __future__ import annotations"]
 known-first-party = ["humanize"]
 
+[tool.ruff.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["D"]
+
 [tool.pytest.ini_options]
 addopts = "--color=yes"
 filterwarnings = [
@@ -95,6 +102,3 @@ filterwarnings = [
     # https://github.com/dateutil/dateutil/issues/1314
     "ignore:datetime.datetime.utcfromtimestamp:DeprecationWarning:dateutil.tz.tz",
 ]
-
-[tool.pydocstyle]
-convention = "google"

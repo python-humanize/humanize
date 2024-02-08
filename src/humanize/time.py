@@ -109,7 +109,7 @@ def naturaldelta(
     Raises:
         OverflowError: If `value` is too large to convert to datetime.timedelta.
 
-    Examples
+    Examples:
         Compare two timestamps in a custom local timezone::
 
         import datetime as dt
