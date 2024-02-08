@@ -1,12 +1,12 @@
 repos:
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.1.9
+    rev: v0.2.1
     hooks:
       - id: ruff
-        args: [--fix, --exit-non-zero-on-fix]
+        args: [--exit-non-zero-on-fix]
 
   - repo: https://github.com/psf/black-pre-commit-mirror
-    rev: 23.12.1
+    rev: 24.1.1
     hooks:
       - id: black
 
@@ -23,13 +23,6 @@ repos:
       - id: trailing-whitespace
         exclude: \.github/ISSUE_TEMPLATE\.md|\.github/PULL_REQUEST_TEMPLATE\.md
 
-  - repo: https://github.com/PyCQA/pydocstyle
-    rev: 6.3.0
-    hooks:
-      - id: pydocstyle
-        args: ["--convention", "google"]
-        files: "src/"
-
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.8.0
     hooks:
@@ -38,13 +31,13 @@ repos:
         args: [--strict, --pretty, --show-error-codes]
 
   - repo: https://github.com/tox-dev/pyproject-fmt
-    rev: 1.5.3
+    rev: 1.7.0
     hooks:
       - id: pyproject-fmt
         additional_dependencies: [tox]
 
   - repo: https://github.com/abravalheri/validate-pyproject
-    rev: v0.15
+    rev: v0.16
     hooks:
       - id: validate-pyproject
 
