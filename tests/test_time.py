@@ -95,6 +95,7 @@ def test_naturaldelta_nomonths(test_input: dt.timedelta, expected: str) -> None:
         (1, "a second"),
         (23.5, "23 seconds"),
         (30, "30 seconds"),
+        (dt.datetime.now() - dt.datetime.now(), "a moment"),
         (dt.timedelta(minutes=1, seconds=30), "a minute"),
         (dt.timedelta(minutes=2), "2 minutes"),
         (dt.timedelta(hours=1, minutes=30, seconds=30), "an hour"),
