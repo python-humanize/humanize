@@ -101,7 +101,9 @@ convention = "google"
 [tool.pytest.ini_options]
 addopts = "--color=yes"
 filterwarnings = [
-    "error",
-    # https://github.com/dateutil/dateutil/issues/1314
-    "ignore:datetime.datetime.utcfromtimestamp:DeprecationWarning:dateutil.tz.tz",
+  "error",
+  # https://github.com/dateutil/dateutil/issues/1314
+  "ignore:datetime.datetime.utcfromtimestamp:DeprecationWarning:dateutil.tz.tz",
+  # Python <= 3.11
+  "ignore:sys.monitoring isn't available, using default core:coverage.exceptions.CoverageWarning",
 ]
