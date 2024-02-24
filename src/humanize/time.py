@@ -139,8 +139,9 @@ def naturaldelta(
 
     use_months = months
 
-    seconds = abs(delta.seconds)
-    days = abs(delta.days)
+    delta = abs(delta)
+    seconds = delta.seconds
+    days = delta.days
     years = days // 365
     days = days % 365
     num_months = int(days // 30.5)
