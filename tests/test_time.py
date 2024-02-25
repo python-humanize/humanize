@@ -95,6 +95,7 @@ def test_naturaldelta_nomonths(test_input: dt.timedelta, expected: str) -> None:
         (1, "a second"),
         (23.5, "23 seconds"),
         (30, "30 seconds"),
+        (dt.timedelta(microseconds=13), "a moment"),
         (dt.timedelta(minutes=1, seconds=30), "a minute"),
         (dt.timedelta(minutes=2), "2 minutes"),
         (dt.timedelta(hours=1, minutes=30, seconds=30), "an hour"),
@@ -129,6 +130,8 @@ def test_naturaldelta_nomonths(test_input: dt.timedelta, expected: str) -> None:
 )
 def test_naturaldelta(test_input: float | dt.timedelta, expected: str) -> None:
     assert humanize.naturaldelta(test_input) == expected
+    if not isinstance(test_input, str):
+        assert humanize.naturaldelta(-test_input) == expected
 
 
 @freeze_time("2020-02-02")

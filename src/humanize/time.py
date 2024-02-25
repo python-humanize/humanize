@@ -141,14 +141,13 @@ def naturaldelta(
 
     use_months = months
 
-    seconds = abs(delta.seconds)
-    days = abs(delta.days)
-    years = days // 365
-    days = days % 365
+    delta = abs(delta)
+    years = delta.days // 365
+    days = delta.days % 365
     num_months = int(days // 30.5)
 
     if not years and days < 1:
-        if seconds == 0:
+        if delta.seconds == 0:
             if min_unit == Unit.MICROSECONDS and delta.microseconds < 1000:
                 return (
                     _ngettext("%d microsecond", "%d microseconds", delta.microseconds)
@@ -165,24 +164,24 @@ def naturaldelta(
                 )
             return _("a moment")
 
-        if seconds == 1:
+        if delta.seconds == 1:
             return _("a second")
 
-        if seconds < 60:
-            return _ngettext("%d second", "%d seconds", seconds) % seconds
+        if delta.seconds < 60:
+            return _ngettext("%d second", "%d seconds", delta.seconds) % delta.seconds
 
-        if 60 <= seconds < 120:
+        if 60 <= delta.seconds < 120:
             return _("a minute")
 
-        if 120 <= seconds < 3600:
-            minutes = seconds // 60
+        if 120 <= delta.seconds < 3600:
+            minutes = delta.seconds // 60
             return _ngettext("%d minute", "%d minutes", minutes) % minutes
 
-        if 3600 <= seconds < 3600 * 2:
+        if 3600 <= delta.seconds < 3600 * 2:
             return _("an hour")
 
-        if 3600 < seconds:
-            hours = seconds // 3600
+        if 3600 < delta.seconds:
+            hours = delta.seconds // 3600
             return _ngettext("%d hour", "%d hours", hours) % hours
 
     elif years == 0:

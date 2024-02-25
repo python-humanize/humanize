@@ -28,7 +28,8 @@ repos:
     hooks:
       - id: mypy
         additional_dependencies: [pytest, types-freezegun, types-setuptools]
-        args: [--strict, --pretty, --show-error-codes]
+        args: [--strict, --pretty, --show-error-codes, .]
+        pass_filenames: false
 
   - repo: https://github.com/tox-dev/pyproject-fmt
     rev: 1.7.0
