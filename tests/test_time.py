@@ -24,7 +24,8 @@ ONE_HOUR = 3600
 ONE_DAY = 24 * ONE_HOUR
 ONE_YEAR = 365.25 * ONE_DAY
 
-with freeze_time("2020-02-02"):
+FROZEN_DATE = "2020-02-02"
+with freeze_time(FROZEN_DATE):
     NOW = dt.datetime.now()
     NOW_UTC = dt.datetime.now(tz=dt.timezone.utc)
     NOW_UTC_PLUS_01_00 = dt.datetime.now(tz=dt.timezone(offset=dt.timedelta(hours=1)))
@@ -134,7 +135,7 @@ def test_naturaldelta(test_input: float | dt.timedelta, expected: str) -> None:
         assert humanize.naturaldelta(-test_input) == expected
 
 
-@freeze_time("2020-02-02")
+@freeze_time(FROZEN_DATE)
 @pytest.mark.parametrize(
     "test_input, expected",
     [
@@ -173,7 +174,7 @@ def test_naturaltime(test_input: dt.datetime, expected: str) -> None:
     assert humanize.naturaltime(test_input) == expected
 
 
-@freeze_time("2020-02-02")
+@freeze_time(FROZEN_DATE)
 @pytest.mark.parametrize(
     "test_input, expected",
     [
@@ -214,7 +215,7 @@ def test_naturaltime_nomonths(test_input: dt.datetime, expected: str) -> None:
     assert humanize.naturaltime(test_input, months=False) == expected
 
 
-@freeze_time("2020-02-02")
+@freeze_time(FROZEN_DATE)
 @pytest.mark.parametrize(
     "test_args, expected",
     [
@@ -234,7 +235,7 @@ def test_naturalday(test_args: list[typing.Any], expected: str) -> None:
     assert humanize.naturalday(*test_args) == expected
 
 
-@freeze_time("2020-02-02")
+@freeze_time(FROZEN_DATE)
 @pytest.mark.parametrize(
     "test_input, expected",
     [
@@ -346,7 +347,7 @@ def test_naturaldelta_minimum_unit_explicit(
     assert humanize.naturaldelta(seconds, minimum_unit=minimum_unit) == expected
 
 
-@freeze_time("2020-02-02")
+@freeze_time(FROZEN_DATE)
 @pytest.mark.parametrize(
     "seconds, expected",
     [
@@ -369,7 +370,7 @@ def test_naturaltime_minimum_unit_default(seconds: float, expected: str) -> None
     assert humanize.naturaltime(datetime) == expected
 
 
-@freeze_time("2020-02-02")
+@freeze_time(FROZEN_DATE)
 @pytest.mark.parametrize(
     "minimum_unit, seconds, expected",
     [
@@ -415,7 +416,7 @@ def test_naturaltime_minimum_unit_explicit(
     assert humanize.naturaltime(datetime, minimum_unit=minimum_unit) == expected
 
 
-@freeze_time("2020-02-02")
+@freeze_time(FROZEN_DATE)
 @pytest.mark.parametrize(
     "test_input, expected",
     [
@@ -449,7 +450,7 @@ def test_naturaltime_timezone(test_input: dt.datetime, expected: str) -> None:
     assert humanize.naturaltime(test_input) == expected
 
 
-@freeze_time("2020-02-02")
+@freeze_time(FROZEN_DATE)
 @pytest.mark.parametrize(
     "test_input, expected",
     [
