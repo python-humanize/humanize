@@ -23,8 +23,8 @@ MILLISECONDS_1_337 = 1337 / 1000  # 1.337 seconds
 ONE_HOUR = 3600
 ONE_DAY = 24 * ONE_HOUR
 ONE_YEAR = 365.25 * ONE_DAY
-
 FROZEN_DATE = "2010-02-02"
+
 with freeze_time(FROZEN_DATE):
     NOW = dt.datetime.now()
     NOW_UTC = dt.datetime.now(tz=dt.timezone.utc)
