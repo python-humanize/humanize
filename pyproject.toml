@@ -50,6 +50,8 @@ Homepage = "https://github.com/python-humanize/humanize"
 "Issue tracker" = "https://github.com/python-humanize/humanize/issues"
 "Release notes" = "https://github.com/python-humanize/humanize/releases"
 Source = "https://github.com/python-humanize/humanize"
+[project.scripts]
+humanize = "humanize.cli.main:main"
 
 [tool.hatch]
 version.source = "vcs"
@@ -97,6 +99,7 @@ convention = "google"
 
 [tool.ruff.lint.per-file-ignores]
 "tests/*" = ["D"]
+"src/humanize/cli/argutils.py" = ["UP006"]
 
 [tool.pytest.ini_options]
 addopts = "--color=yes"
