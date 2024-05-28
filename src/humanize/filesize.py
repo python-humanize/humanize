@@ -1,4 +1,5 @@
 """Bits and bytes related humanization."""
+
 from __future__ import annotations
 
 suffixes = {
