@@ -1,6 +1,5 @@
-#!/usr/bin/env python
-
 """Bits and bytes related humanization."""
+
 from __future__ import annotations
 
 suffixes = {
