@@ -12,9 +12,13 @@ readme = "README.md"
 keywords = [
   "humanize time size",
 ]
-license = {text = "MIT"}
-maintainers = [{name = "Hugo van Kemenade"}]
-authors = [{name = "Jason Moiron", email = "jmoiron@jmoiron.net"}]
+license = { text = "MIT" }
+maintainers = [
+  { name = "Hugo van Kemenade" },
+]
+authors = [
+  { name = "Jason Moiron", email = "jmoiron@jmoiron.net" },
+]
 requires-python = ">=3.8"
 classifiers = [
   "Development Status :: 5 - Production/Stable",
@@ -37,19 +41,17 @@ classifiers = [
 dynamic = [
   "version",
 ]
-[project.optional-dependencies]
-tests = [
+optional-dependencies.tests = [
   "freezegun",
   "pytest",
   "pytest-cov",
 ]
-[project.urls]
-Documentation = "https://humanize.readthedocs.io/"
-Funding = "https://tidelift.com/subscription/pkg/pypi-humanize?utm_source=pypi-humanize&utm_medium=pypi"
-Homepage = "https://github.com/python-humanize/humanize"
-"Issue tracker" = "https://github.com/python-humanize/humanize/issues"
-"Release notes" = "https://github.com/python-humanize/humanize/releases"
-Source = "https://github.com/python-humanize/humanize"
+urls.Documentation = "https://humanize.readthedocs.io/"
+urls.Funding = "https://tidelift.com/subscription/pkg/pypi-humanize?utm_source=pypi-humanize&utm_medium=pypi"
+urls.Homepage = "https://github.com/python-humanize/humanize"
+urls."Issue tracker" = "https://github.com/python-humanize/humanize/issues"
+urls."Release notes" = "https://github.com/python-humanize/humanize/releases"
+urls.Source = "https://github.com/python-humanize/humanize"
 
 [tool.hatch]
 version.source = "vcs"
@@ -65,38 +67,42 @@ local_scheme = "no-local-version"
 [tool.ruff]
 fix = true
 
-[tool.ruff.lint]
-select = [
-  "C4", # flake8-comprehensions
-  "D", # pydocstyle
-  "E", # pycodestyle errors
-  "EM", # flake8-errmsg
-  "F", # pyflakes errors
-  "I", # isort
-  "ISC", # flake8-implicit-str-concat
-  "LOG", # flake8-logging
-  "PGH", # pygrep-hooks
+lint.select = [
+  "C4",     # flake8-comprehensions
+  "D",      # pydocstyle
+  "E",      # pycodestyle errors
+  "EM",     # flake8-errmsg
+  "F",      # pyflakes errors
+  "I",      # isort
+  "ISC",    # flake8-implicit-str-concat
+  "LOG",    # flake8-logging
+  "PGH",    # pygrep-hooks
+  "PYI",    # flake8-pyi
+  "RUF022", # unsorted-dunder-all
   "RUF100", # unused noqa (yesqa)
-  "UP", # pyupgrade
-  "W", # pycodestyle warnings
-  "YTT", # flake8-2020
+  "UP",     # pyupgrade
+  "W",      # pycodestyle warnings
+  "YTT",    # flake8-2020
 ]
-extend-ignore = [
+lint.extend-ignore = [
   "E203", # Whitespace before ':'
   "E221", # Multiple spaces before operator
   "E226", # Missing whitespace around arithmetic operator
   "E241", # Multiple spaces after ','
 ]
+lint.per-file-ignores."tests/*" = [
+  "D",
+]
+lint.isort.known-first-party = [
+  "humanize",
+]
+lint.isort.required-imports = [
+  "from __future__ import annotations",
+]
+pydocstyle.convention = "google"
 
-[tool.ruff.lint.isort]
-known-first-party = ["humanize"]
-required-imports = ["from __future__ import annotations"]
-
-[tool.ruff.pydocstyle]
-convention = "google"
-
-[tool.ruff.lint.per-file-ignores]
-"tests/*" = ["D"]
+[tool.pyproject-fmt]
+max_supported_python = "3.13"
 
 [tool.pytest.ini_options]
 addopts = "--color=yes"
