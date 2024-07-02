@@ -99,7 +99,7 @@ lint.isort.known-first-party = [
 lint.isort.required-imports = [
   "from __future__ import annotations",
 ]
-pydocstyle.convention = "google"
+lint.pydocstyle.convention = "google"
 
 [tool.pyproject-fmt]
 max_supported_python = "3.13"

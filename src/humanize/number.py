@@ -424,7 +424,7 @@ def scientific(value: NumberOrString, precision: int = 2) -> str:
             return _format_not_finite(value)
     except (ValueError, TypeError):
         return str(value)
-    fmt = "{:.%se}" % str(int(precision))
+    fmt = f"{{:.{str(int(precision))}e}}"
     n = fmt.format(value)
     part1, part2 = n.split("e")
     # Remove redundant leading '+' or '0's (preserving the last '0' for 10⁰).
