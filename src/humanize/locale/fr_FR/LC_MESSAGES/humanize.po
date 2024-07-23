@@ -122,84 +122,84 @@ msgstr "e"
 #: src/humanize/number.py:178
 msgid "thousand"
 msgid_plural "thousand"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "mille"
+msgstr[1] "milles"
 
 #: src/humanize/number.py:179
 #, fuzzy
 msgid "million"
 msgid_plural "million"
 msgstr[0] "%(value)s million"
-msgstr[1] "%(value)s million"
+msgstr[1] "%(value)s millions"
 
 #: src/humanize/number.py:180
 msgid "billion"
 msgid_plural "billion"
 msgstr[0] "milliard"
-msgstr[1] "milliard"
+msgstr[1] "milliards"
 
 #: src/humanize/number.py:181
 #, fuzzy
 msgid "trillion"
 msgid_plural "trillion"
-msgstr[0] "%(value)s billion"
-msgstr[1] "%(value)s billion"
+msgstr[0] "%(value)s billions"
+msgstr[1] "%(value)s billions"
 
 #: src/humanize/number.py:182
 #, fuzzy
 msgid "quadrillion"
 msgid_plural "quadrillion"
 msgstr[0] "%(value)s billiard"
-msgstr[1] "%(value)s billiard"
+msgstr[1] "%(value)s billiards"
 
 #: src/humanize/number.py:183
 #, fuzzy
 msgid "quintillion"
 msgid_plural "quintillion"
 msgstr[0] "%(value)s trillion"
-msgstr[1] "%(value)s trillion"
+msgstr[1] "%(value)s trillions"
 
 #: src/humanize/number.py:184
 #, fuzzy
 msgid "sextillion"
 msgid_plural "sextillion"
 msgstr[0] "%(value)s trilliard"
-msgstr[1] "%(value)s trilliard"
+msgstr[1] "%(value)s trilliards"
 
 #: src/humanize/number.py:185
 #, fuzzy
 msgid "septillion"
 msgid_plural "septillion"
 msgstr[0] "%(value)s quatrillion"
-msgstr[1] "%(value)s quatrillion"
+msgstr[1] "%(value)s quatrillions"
 
 #: src/humanize/number.py:186
 #, fuzzy
 msgid "octillion"
 msgid_plural "octillion"
 msgstr[0] "%(value)s quadrilliard"
-msgstr[1] "%(value)s quadrilliard"
+msgstr[1] "%(value)s quadrilliards"
 
 #: src/humanize/number.py:187
 #, fuzzy
 msgid "nonillion"
 msgid_plural "nonillion"
 msgstr[0] "%(value)s quintillion"
-msgstr[1] "%(value)s quintillion"
+msgstr[1] "%(value)s quintillions"
 
 #: src/humanize/number.py:188
 #, fuzzy
 msgid "decillion"
 msgid_plural "decillion"
 msgstr[0] "%(value)s quintilliard"
-msgstr[1] "%(value)s quintilliard"
+msgstr[1] "%(value)s quintilliards"
 
 #: src/humanize/number.py:189
 #, fuzzy
 msgid "googol"
 msgid_plural "googol"
 msgstr[0] "%(value)s gogol"
-msgstr[1] "%(value)s gogol"
+msgstr[1] "%(value)s gogols"
 
 #: src/humanize/number.py:301
 msgid "zero"
