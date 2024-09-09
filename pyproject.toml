@@ -53,6 +53,9 @@ version.source = "vcs"
 [tool.hatch.build]
 artifacts = [ "*.mo" ]
 
+[tool.hatch.build.hooks.vcs]
+version-file = "src/humanize/_version.py"
+
 [tool.hatch.version.raw-options]
 local_scheme = "no-local-version"
 
