@@ -105,3 +105,8 @@ filterwarnings = [
   "ignore:sys.monitoring isn't available, using default core:coverage.exceptions.CoverageWarning",
 ]
 testpaths = [ "tests" ]
+
+[tool.mypy]
+pretty = true
+strict = true
+show_error_codes = true
