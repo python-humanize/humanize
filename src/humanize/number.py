@@ -5,7 +5,6 @@ from __future__ import annotations
 import math
 import re
 import sys
-from fractions import Fraction
 from typing import TYPE_CHECKING
 
 from .i18n import _gettext as _
@@ -359,6 +358,8 @@ def fractional(value: NumberOrString) -> str:
             return _format_not_finite(number)
     except (TypeError, ValueError):
         return str(value)
+    from fractions import Fraction
+
     whole_number = int(number)
     frac = Fraction(number - whole_number).limit_denominator(1000)
     numerator = frac.numerator
