@@ -13,12 +13,8 @@ keywords = [
   "humanize time size",
 ]
 license = { text = "MIT" }
-maintainers = [
-  { name = "Hugo van Kemenade" },
-]
-authors = [
-  { name = "Jason Moiron", email = "jmoiron@jmoiron.net" },
-]
+maintainers = [ { name = "Hugo van Kemenade" } ]
+authors = [ { name = "Jason Moiron", email = "jmoiron@jmoiron.net" } ]
 requires-python = ">=3.8"
 classifiers = [
   "Development Status :: 5 - Production/Stable",
@@ -38,9 +34,7 @@ classifiers = [
   "Topic :: Text Processing",
   "Topic :: Text Processing :: General",
 ]
-dynamic = [
-  "version",
-]
+dynamic = [ "version" ]
 optional-dependencies.tests = [
   "freezegun",
   "pytest",
@@ -57,9 +51,7 @@ urls.Source = "https://github.com/python-humanize/humanize"
 version.source = "vcs"
 
 [tool.hatch.build]
-artifacts = [
-  "*.mo",
-]
+artifacts = [ "*.mo" ]
 
 [tool.hatch.version.raw-options]
 local_scheme = "no-local-version"
@@ -74,6 +66,7 @@ lint.select = [
   "EM",     # flake8-errmsg
   "F",      # pyflakes errors
   "I",      # isort
+  "ICN",    # flake8-import-conventions
   "ISC",    # flake8-implicit-str-concat
   "LOG",    # flake8-logging
   "PGH",    # pygrep-hooks
@@ -84,7 +77,7 @@ lint.select = [
   "W",      # pycodestyle warnings
   "YTT",    # flake8-2020
 ]
-lint.extend-ignore = [
+lint.ignore = [
   "E203", # Whitespace before ':'
   "E221", # Multiple spaces before operator
   "E226", # Missing whitespace around arithmetic operator
@@ -93,12 +86,10 @@ lint.extend-ignore = [
 lint.per-file-ignores."tests/*" = [
   "D",
 ]
-lint.isort.known-first-party = [
-  "humanize",
-]
-lint.isort.required-imports = [
-  "from __future__ import annotations",
-]
+lint.flake8-import-conventions.aliases.datetime = "dt"
+lint.flake8-import-conventions.banned-from = [ "datetime" ]
+lint.isort.known-first-party = [ "humanize" ]
+lint.isort.required-imports = [ "from __future__ import annotations" ]
 lint.pydocstyle.convention = "google"
 
 [tool.pyproject-fmt]
@@ -113,3 +104,4 @@ filterwarnings = [
   # Python <= 3.11
   "ignore:sys.monitoring isn't available, using default core:coverage.exceptions.CoverageWarning",
 ]
+testpaths = [ "tests" ]
