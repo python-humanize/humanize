@@ -15,7 +15,7 @@ keywords = [
 license = { text = "MIT" }
 maintainers = [ { name = "Hugo van Kemenade" } ]
 authors = [ { name = "Jason Moiron", email = "jmoiron@jmoiron.net" } ]
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Intended Audience :: Developers",
@@ -23,7 +23,6 @@ classifiers = [
   "Operating System :: OS Independent",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
