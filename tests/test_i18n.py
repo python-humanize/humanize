@@ -156,20 +156,20 @@ def test_ordinal_genders(
         humanize.i18n.deactivate()
 
 
-def test_default_locale_path_defined__file__() -> None:
+def test_default_locale_path_defined__spec__() -> None:
     i18n = importlib.import_module("humanize.i18n")
     assert i18n._get_default_locale_path() is not None
 
 
-def test_default_locale_path_null__file__() -> None:
+def test_default_locale_path_none__spec__(monkeypatch: pytest.MonkeyPatch) -> None:
     i18n = importlib.import_module("humanize.i18n")
-    i18n.__file__ = None
+    monkeypatch.setattr(i18n, "__spec__", None)
     assert i18n._get_default_locale_path() is None
 
 
-def test_default_locale_path_undefined__file__() -> None:
+def test_default_locale_path_undefined__file__(monkeypatch: pytest.MonkeyPatch) -> None:
     i18n = importlib.import_module("humanize.i18n")
-    del i18n.__file__
+    monkeypatch.delattr(i18n, "__spec__")
     assert i18n._get_default_locale_path() is None
 
 
@@ -179,17 +179,21 @@ class TestActivate:
         " 'locale' folder. You need to pass the path explicitly."
     )
 
-    def test_default_locale_path_null__file__(self) -> None:
+    def test_default_locale_path_null__spec__(
+        self, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
         i18n = importlib.import_module("humanize.i18n")
-        i18n.__file__ = None
+        monkeypatch.setattr(i18n, "__spec__", None)
 
         with pytest.raises(Exception) as excinfo:
             i18n.activate("ru_RU")
         assert str(excinfo.value) == self.expected_msg
 
-    def test_default_locale_path_undefined__file__(self) -> None:
+    def test_default_locale_path_undefined__spec__(
+        self, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
         i18n = importlib.import_module("humanize.i18n")
-        del i18n.__file__
+        monkeypatch.delattr(i18n, "__spec__")
 
         with pytest.raises(Exception) as excinfo:
             i18n.activate("ru_RU")
