@@ -12,10 +12,10 @@ readme = "README.md"
 keywords = [
   "humanize time size",
 ]
-license = {text = "MIT"}
-maintainers = [{name = "Hugo van Kemenade"}]
-authors = [{name = "Jason Moiron", email = "jmoiron@jmoiron.net"}]
-requires-python = ">=3.8"
+license = { text = "MIT" }
+maintainers = [ { name = "Hugo van Kemenade" } ]
+authors = [ { name = "Jason Moiron", email = "jmoiron@jmoiron.net" } ]
+requires-python = ">=3.9"
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Intended Audience :: Developers",
@@ -23,49 +23,92 @@ classifiers = [
   "Operating System :: OS Independent",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
   "Programming Language :: Python :: Implementation :: CPython",
   "Programming Language :: Python :: Implementation :: PyPy",
   "Topic :: Text Processing",
   "Topic :: Text Processing :: General",
 ]
-dynamic = [
-  "version",
-]
-[project.optional-dependencies]
-tests = [
+dynamic = [ "version" ]
+optional-dependencies.tests = [
   "freezegun",
   "pytest",
   "pytest-cov",
 ]
-[project.urls]
-Documentation = "https://humanize.readthedocs.io/"
-Funding = "https://tidelift.com/subscription/pkg/pypi-humanize?utm_source=pypi-humanize&utm_medium=pypi"
-Homepage = "https://github.com/python-humanize/humanize"
-"Issue tracker" = "https://github.com/python-humanize/humanize/issues"
-"Release notes" = "https://github.com/python-humanize/humanize/releases"
-Source = "https://github.com/python-humanize/humanize"
+urls.Documentation = "https://humanize.readthedocs.io/"
+urls.Funding = "https://tidelift.com/subscription/pkg/pypi-humanize?utm_source=pypi-humanize&utm_medium=pypi"
+urls.Homepage = "https://github.com/python-humanize/humanize"
+urls."Issue tracker" = "https://github.com/python-humanize/humanize/issues"
+urls."Release notes" = "https://github.com/python-humanize/humanize/releases"
+urls.Source = "https://github.com/python-humanize/humanize"
 
 [tool.hatch]
 version.source = "vcs"
 
 [tool.hatch.build]
-artifacts = [
-  "*.mo",
-]
+artifacts = [ "*.mo" ]
+
+[tool.hatch.build.hooks.vcs]
+version-file = "src/humanize/_version.py"
 
 [tool.hatch.version.raw-options]
 local_scheme = "no-local-version"
 
-[tool.isort]
-profile = "black"
+[tool.ruff]
+fix = true
+
+lint.select = [
+  "C4",     # flake8-comprehensions
+  "D",      # pydocstyle
+  "E",      # pycodestyle errors
+  "EM",     # flake8-errmsg
+  "F",      # pyflakes errors
+  "I",      # isort
+  "ICN",    # flake8-import-conventions
+  "ISC",    # flake8-implicit-str-concat
+  "LOG",    # flake8-logging
+  "PGH",    # pygrep-hooks
+  "PYI",    # flake8-pyi
+  "RUF022", # unsorted-dunder-all
+  "RUF100", # unused noqa (yesqa)
+  "UP",     # pyupgrade
+  "W",      # pycodestyle warnings
+  "YTT",    # flake8-2020
+]
+lint.ignore = [
+  "E203", # Whitespace before ':'
+  "E221", # Multiple spaces before operator
+  "E226", # Missing whitespace around arithmetic operator
+  "E241", # Multiple spaces after ','
+]
+lint.per-file-ignores."tests/*" = [
+  "D",
+]
+lint.flake8-import-conventions.aliases.datetime = "dt"
+lint.flake8-import-conventions.banned-from = [ "datetime" ]
+lint.isort.known-first-party = [ "humanize" ]
+lint.isort.required-imports = [ "from __future__ import annotations" ]
+lint.pydocstyle.convention = "google"
+
+[tool.pyproject-fmt]
+max_supported_python = "3.13"
 
 [tool.pytest.ini_options]
 addopts = "--color=yes"
+filterwarnings = [
+  "error",
+  # https://github.com/dateutil/dateutil/issues/1314
+  "ignore:datetime.datetime.utcfromtimestamp:DeprecationWarning:dateutil.tz.tz",
+  # Python <= 3.11
+  "ignore:sys.monitoring isn't available, using default core:coverage.exceptions.CoverageWarning",
+]
+testpaths = [ "tests" ]
 
-[tool.pydocstyle]
-convention = "google"
+[tool.mypy]
+pretty = true
+strict = true
+show_error_codes = true

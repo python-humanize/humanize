@@ -1,6 +1,5 @@
-#!/usr/bin/env python
-
 """Bits and bytes related humanization."""
+
 from __future__ import annotations
 
 suffixes = {
@@ -64,6 +63,7 @@ def naturalsize(
         '-4.0 KiB'
 
         ```
+
     Args:
         value (int, float, str): Integer to convert.
         binary (bool): If `True`, uses binary suffixes (KiB, MiB) with base

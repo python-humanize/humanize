@@ -1,17 +1,16 @@
 """Humanizing functions for numbers."""
+
 from __future__ import annotations
 
 import math
 import re
 import sys
-from fractions import Fraction
 from typing import TYPE_CHECKING
 
 from .i18n import _gettext as _
-from .i18n import _ngettext
+from .i18n import _ngettext, decimal_separator, thousands_separator
 from .i18n import _ngettext_noop as NS_
 from .i18n import _pgettext as P_
-from .i18n import decimal_separator, thousands_separator
 
 if TYPE_CHECKING:
     if sys.version_info >= (3, 10):
@@ -64,6 +63,7 @@ def ordinal(value: NumberOrString, gender: str = "male") -> str:
         True
 
         ```
+
     Args:
         value (int, str, float): Integer to convert.
         gender (str): Gender for translations. Accepts either "male" or "female".
@@ -134,6 +134,7 @@ def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
         'None'
 
         ```
+
     Args:
         value (int, float, str): Integer or float to convert.
         ndigits (int, None): Digits of precision for rounding after the decimal point.
@@ -213,6 +214,7 @@ def intword(value: NumberOrString, format: str = "%.1f") -> str:
         '1.234 million'
 
         ```
+
     Args:
         value (int, float, str): Integer to convert.
         format (str): To change the number of decimal or general format of the number
@@ -280,6 +282,7 @@ def apnumber(value: NumberOrString) -> str:
       'None'
 
       ```
+
     Args:
         value (int, float, str): Integer to convert.
 
@@ -342,6 +345,7 @@ def fractional(value: NumberOrString) -> str:
         'None'
 
         ```
+
     Args:
         value (int, float, str): Integer to convert.
 
@@ -354,6 +358,8 @@ def fractional(value: NumberOrString) -> str:
             return _format_not_finite(number)
     except (TypeError, ValueError):
         return str(value)
+    from fractions import Fraction
+
     whole_number = int(number)
     frac = Fraction(number - whole_number).limit_denominator(1000)
     numerator = frac.numerator
@@ -419,7 +425,7 @@ def scientific(value: NumberOrString, precision: int = 2) -> str:
             return _format_not_finite(value)
     except (ValueError, TypeError):
         return str(value)
-    fmt = "{:.%se}" % str(int(precision))
+    fmt = f"{{:.{str(int(precision))}e}}"
     n = fmt.format(value)
     part1, part2 = n.split("e")
     # Remove redundant leading '+' or '0's (preserving the last '0' for 10⁰).
@@ -558,7 +564,7 @@ def metric(value: float, unit: str = "", precision: int = 3) -> str:
         ordinal_ = "mμnpfazyrq"[(-exponent - 1) // 3]
     else:
         ordinal_ = ""
-    value_ = format(value, ".%if" % (precision - (exponent % 3) - 1))
+    value_ = format(value, ".%if" % max(0, precision - (exponent % 3) - 1))
     if not (unit or ordinal_) or unit in ("°", "′", "″"):
         space = ""
     else:

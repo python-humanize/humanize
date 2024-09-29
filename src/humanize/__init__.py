@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-import importlib.metadata
-
 from humanize.filesize import naturalsize
 from humanize.i18n import activate, deactivate, decimal_separator, thousands_separator
 from humanize.number import (
@@ -24,8 +22,7 @@ from humanize.time import (
     precisedelta,
 )
 
-__version__ = importlib.metadata.version(__name__)
-
+from ._version import __version__
 
 __all__ = [
     "__version__",

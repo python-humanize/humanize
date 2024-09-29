@@ -2,6 +2,7 @@
 
 These are largely borrowed from Django's `contrib.humanize`.
 """
+
 from __future__ import annotations
 
 import collections.abc
@@ -104,12 +105,13 @@ def naturaldelta(
     Returns:
         str (str or `value`): A natural representation of the amount of time
             elapsed unless `value` is not datetime.timedelta or cannot be
-            converted to int. In that case, a `value` is returned unchanged.
+            converted to int (cannot be float due to 'inf' or 'nan').
+            In that case, a `value` is returned unchanged.
 
     Raises:
         OverflowError: If `value` is too large to convert to datetime.timedelta.
 
-    Examples
+    Examples:
         Compare two timestamps in a custom local timezone::
 
         import datetime as dt
@@ -131,21 +133,21 @@ def naturaldelta(
         delta = value
     else:
         try:
-            value = int(value)
+            int(value)  # Explicitly don't support string such as "NaN" or "inf"
+            value = float(value)
             delta = dt.timedelta(seconds=value)
         except (ValueError, TypeError):
             return str(value)
 
     use_months = months
 
-    seconds = abs(delta.seconds)
-    days = abs(delta.days)
-    years = days // 365
-    days = days % 365
+    delta = abs(delta)
+    years = delta.days // 365
+    days = delta.days % 365
     num_months = int(days // 30.5)
 
     if not years and days < 1:
-        if seconds == 0:
+        if delta.seconds == 0:
             if min_unit == Unit.MICROSECONDS and delta.microseconds < 1000:
                 return (
                     _ngettext("%d microsecond", "%d microseconds", delta.microseconds)
@@ -162,24 +164,24 @@ def naturaldelta(
                 )
             return _("a moment")
 
-        if seconds == 1:
+        if delta.seconds == 1:
             return _("a second")
 
-        if seconds < 60:
-            return _ngettext("%d second", "%d seconds", seconds) % seconds
+        if delta.seconds < 60:
+            return _ngettext("%d second", "%d seconds", delta.seconds) % delta.seconds
 
-        if 60 <= seconds < 120:
+        if 60 <= delta.seconds < 120:
             return _("a minute")
 
-        if 120 <= seconds < 3600:
-            minutes = seconds // 60
+        if 120 <= delta.seconds < 3600:
+            minutes = delta.seconds // 60
             return _ngettext("%d minute", "%d minutes", minutes) % minutes
 
-        if 3600 <= seconds < 3600 * 2:
+        if 3600 <= delta.seconds < 3600 * 2:
             return _("an hour")
 
-        if 3600 < seconds:
-            hours = seconds // 3600
+        if 3600 < delta.seconds:
+            hours = delta.seconds // 3600
             return _ngettext("%d hour", "%d hours", hours) % hours
 
     elif years == 0:
@@ -590,7 +592,8 @@ def precisedelta(
     for unit, fmt in zip(reversed(Unit), fmts):
         singular_txt, plural_txt, fmt_value = fmt
         if fmt_value > 0 or (not texts and unit == min_unit):
-            fmt_txt = _ngettext(singular_txt, plural_txt, fmt_value)
+            _fmt_value = 2 if 1 < fmt_value < 2 else int(fmt_value)
+            fmt_txt = _ngettext(singular_txt, plural_txt, _fmt_value)
             if unit == min_unit and math.modf(fmt_value)[0] > 0:
                 fmt_txt = fmt_txt.replace("%d", format)
             elif unit == YEARS:

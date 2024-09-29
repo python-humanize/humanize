@@ -1,4 +1,5 @@
 """Tests for time humanizing."""
+
 from __future__ import annotations
 
 import datetime as dt
@@ -22,8 +23,9 @@ MILLISECONDS_1_337 = 1337 / 1000  # 1.337 seconds
 ONE_HOUR = 3600
 ONE_DAY = 24 * ONE_HOUR
 ONE_YEAR = 365.25 * ONE_DAY
+FROZEN_DATE = "2010-02-02"
 
-with freeze_time("2020-02-02"):
+with freeze_time(FROZEN_DATE):
     NOW = dt.datetime.now()
     NOW_UTC = dt.datetime.now(tz=dt.timezone.utc)
     NOW_UTC_PLUS_01_00 = dt.datetime.now(tz=dt.timezone(offset=dt.timedelta(hours=1)))
@@ -94,6 +96,7 @@ def test_naturaldelta_nomonths(test_input: dt.timedelta, expected: str) -> None:
         (1, "a second"),
         (23.5, "23 seconds"),
         (30, "30 seconds"),
+        (dt.timedelta(microseconds=13), "a moment"),
         (dt.timedelta(minutes=1, seconds=30), "a minute"),
         (dt.timedelta(minutes=2), "2 minutes"),
         (dt.timedelta(hours=1, minutes=30, seconds=30), "an hour"),
@@ -126,11 +129,13 @@ def test_naturaldelta_nomonths(test_input: dt.timedelta, expected: str) -> None:
         (dt.timedelta(days=999_999_999), "2,739,726 years"),
     ],
 )
-def test_naturaldelta(test_input: int | dt.timedelta, expected: str) -> None:
+def test_naturaldelta(test_input: float | dt.timedelta, expected: str) -> None:
     assert humanize.naturaldelta(test_input) == expected
+    if not isinstance(test_input, str):
+        assert humanize.naturaldelta(-test_input) == expected
 
 
-@freeze_time("2020-02-02")
+@freeze_time(FROZEN_DATE)
 @pytest.mark.parametrize(
     "test_input, expected",
     [
@@ -169,7 +174,7 @@ def test_naturaltime(test_input: dt.datetime, expected: str) -> None:
     assert humanize.naturaltime(test_input) == expected
 
 
-@freeze_time("2020-02-02")
+@freeze_time(FROZEN_DATE)
 @pytest.mark.parametrize(
     "test_input, expected",
     [
@@ -210,7 +215,7 @@ def test_naturaltime_nomonths(test_input: dt.datetime, expected: str) -> None:
     assert humanize.naturaltime(test_input, months=False) == expected
 
 
-@freeze_time("2020-02-02")
+@freeze_time(FROZEN_DATE)
 @pytest.mark.parametrize(
     "test_args, expected",
     [
@@ -230,7 +235,7 @@ def test_naturalday(test_args: list[typing.Any], expected: str) -> None:
     assert humanize.naturalday(*test_args) == expected
 
 
-@freeze_time("2020-02-02")
+@freeze_time(FROZEN_DATE)
 @pytest.mark.parametrize(
     "test_input, expected",
     [
@@ -243,31 +248,31 @@ def test_naturalday(test_args: list[typing.Any], expected: str) -> None:
         ("Not a date at all.", "Not a date at all."),
         (VALUE_ERROR_TEST, str(VALUE_ERROR_TEST)),
         (OVERFLOW_ERROR_TEST, str(OVERFLOW_ERROR_TEST)),
-        (dt.date(2019, 2, 2), "Feb 02 2019"),
-        (dt.date(2019, 3, 2), "Mar 02 2019"),
-        (dt.date(2019, 4, 2), "Apr 02 2019"),
-        (dt.date(2019, 5, 2), "May 02 2019"),
-        (dt.date(2019, 6, 2), "Jun 02 2019"),
-        (dt.date(2019, 7, 2), "Jul 02 2019"),
-        (dt.date(2019, 8, 2), "Aug 02 2019"),
-        (dt.date(2019, 9, 2), "Sep 02 2019"),
-        (dt.date(2019, 10, 2), "Oct 02"),
-        (dt.date(2019, 11, 2), "Nov 02"),
-        (dt.date(2019, 12, 2), "Dec 02"),
-        (dt.date(2020, 1, 2), "Jan 02"),
-        (dt.date(2020, 2, 2), "today"),
-        (dt.date(2020, 3, 2), "Mar 02"),
-        (dt.date(2020, 4, 2), "Apr 02"),
-        (dt.date(2020, 5, 2), "May 02"),
-        (dt.date(2020, 6, 2), "Jun 02"),
-        (dt.date(2020, 7, 2), "Jul 02"),
-        (dt.date(2020, 8, 2), "Aug 02 2020"),
-        (dt.date(2020, 9, 2), "Sep 02 2020"),
-        (dt.date(2020, 10, 2), "Oct 02 2020"),
-        (dt.date(2020, 11, 2), "Nov 02 2020"),
-        (dt.date(2020, 12, 2), "Dec 02 2020"),
-        (dt.date(2021, 1, 2), "Jan 02 2021"),
-        (dt.date(2021, 2, 2), "Feb 02 2021"),
+        (dt.date(2009, 2, 2), "Feb 02 2009"),
+        (dt.date(2009, 3, 2), "Mar 02 2009"),
+        (dt.date(2009, 4, 2), "Apr 02 2009"),
+        (dt.date(2009, 5, 2), "May 02 2009"),
+        (dt.date(2009, 6, 2), "Jun 02 2009"),
+        (dt.date(2009, 7, 2), "Jul 02 2009"),
+        (dt.date(2009, 8, 2), "Aug 02 2009"),
+        (dt.date(2009, 9, 2), "Sep 02 2009"),
+        (dt.date(2009, 10, 2), "Oct 02"),
+        (dt.date(2009, 11, 2), "Nov 02"),
+        (dt.date(2009, 12, 2), "Dec 02"),
+        (dt.date(2010, 1, 2), "Jan 02"),
+        (dt.date(2010, 2, 2), "today"),
+        (dt.date(2010, 3, 2), "Mar 02"),
+        (dt.date(2010, 4, 2), "Apr 02"),
+        (dt.date(2010, 5, 2), "May 02"),
+        (dt.date(2010, 6, 2), "Jun 02"),
+        (dt.date(2010, 7, 2), "Jul 02"),
+        (dt.date(2010, 8, 2), "Aug 02 2010"),
+        (dt.date(2010, 9, 2), "Sep 02 2010"),
+        (dt.date(2010, 10, 2), "Oct 02 2010"),
+        (dt.date(2010, 11, 2), "Nov 02 2010"),
+        (dt.date(2010, 12, 2), "Dec 02 2010"),
+        (dt.date(2011, 1, 2), "Jan 02 2011"),
+        (dt.date(2011, 2, 2), "Feb 02 2011"),
     ],
 )
 def test_naturaldate(test_input: dt.date, expected: str) -> None:
@@ -339,9 +344,10 @@ def test_naturaldelta_minimum_unit_explicit(
 
     # Act / Assert
     assert humanize.naturaldelta(delta, minimum_unit=minimum_unit) == expected
+    assert humanize.naturaldelta(seconds, minimum_unit=minimum_unit) == expected
 
 
-@freeze_time("2020-02-02")
+@freeze_time(FROZEN_DATE)
 @pytest.mark.parametrize(
     "seconds, expected",
     [
@@ -364,7 +370,7 @@ def test_naturaltime_minimum_unit_default(seconds: float, expected: str) -> None
     assert humanize.naturaltime(datetime) == expected
 
 
-@freeze_time("2020-02-02")
+@freeze_time(FROZEN_DATE)
 @pytest.mark.parametrize(
     "minimum_unit, seconds, expected",
     [
@@ -410,7 +416,7 @@ def test_naturaltime_minimum_unit_explicit(
     assert humanize.naturaltime(datetime, minimum_unit=minimum_unit) == expected
 
 
-@freeze_time("2020-02-02")
+@freeze_time(FROZEN_DATE)
 @pytest.mark.parametrize(
     "test_input, expected",
     [
@@ -444,7 +450,7 @@ def test_naturaltime_timezone(test_input: dt.datetime, expected: str) -> None:
     assert humanize.naturaltime(test_input) == expected
 
 
-@freeze_time("2020-02-02")
+@freeze_time(FROZEN_DATE)
 @pytest.mark.parametrize(
     "test_input, expected",
     [
