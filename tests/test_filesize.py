@@ -12,6 +12,7 @@ import humanize
     "test_args, expected",
     [
         ([300], "300 Bytes"),
+        (["1000"], "1.0 kB"),
         ([10**3], "1.0 kB"),
         ([10**6], "1.0 MB"),
         ([10**9], "1.0 GB"),
@@ -74,9 +75,15 @@ import humanize
         ([10**26 * 30, True, False, "%.3f"], "2.423 RiB"),
     ],
 )
-def test_naturalsize(test_args: list[int] | list[int | bool], expected: str) -> None:
+def test_naturalsize(
+    test_args: list[int | str] | list[int | bool], expected: str
+) -> None:
     assert humanize.naturalsize(*test_args) == expected
 
-    args_with_negative = test_args
-    args_with_negative[0] *= -1
-    assert humanize.naturalsize(*args_with_negative) == "-" + expected
+    # Retest with negative input
+    if isinstance(test_args[0], int):
+        test_args[0] *= -1
+    else:
+        test_args[0] = f"-{test_args[0]}"
+
+    assert humanize.naturalsize(*test_args) == "-" + expected
