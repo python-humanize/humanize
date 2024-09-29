@@ -3,9 +3,31 @@
 from __future__ import annotations
 
 suffixes = {
-    "decimal": (" kB", " MB", " GB", " TB", " PB", " EB", " ZB", " YB"),
-    "binary": (" KiB", " MiB", " GiB", " TiB", " PiB", " EiB", " ZiB", " YiB"),
-    "gnu": "KMGTPEZY",
+    "decimal": (
+        " kB",
+        " MB",
+        " GB",
+        " TB",
+        " PB",
+        " EB",
+        " ZB",
+        " YB",
+        " RB",
+        " QB",
+    ),
+    "binary": (
+        " KiB",
+        " MiB",
+        " GiB",
+        " TiB",
+        " PiB",
+        " EiB",
+        " ZiB",
+        " YiB",
+        " RiB",
+        " QiB",
+    ),
+    "gnu": "KMGTPEZYRQ",
 }
 
 
@@ -34,7 +56,9 @@ def naturalsize(
         >>> naturalsize(3000, True)
         '2.9 KiB'
         >>> naturalsize(10**28)
-        '10000.0 YB'
+        '10.0 RB'
+        >>> naturalsize(10**34 * 3)
+        '30000.0 QB'
         >>> naturalsize(-4096, True)
         '-4.0 KiB'
 
@@ -65,15 +89,11 @@ def naturalsize(
     if abs_bytes == 1 and not gnu:
         return "%d Byte" % bytes_
 
-    if abs_bytes < base and not gnu:
-        return "%d Bytes" % bytes_
+    if abs_bytes < base:
+        return ("%dB" if gnu else "%d Bytes") % bytes_
 
-    if abs_bytes < base and gnu:
-        return "%dB" % bytes_
-
-    for i, s in enumerate(suffix):
-        unit = base ** (i + 2)
-
+    for i, s in enumerate(suffix, 2):
+        unit = base**i
         if abs_bytes < unit:
             break
 
