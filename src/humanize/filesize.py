@@ -37,7 +37,7 @@ def naturalsize(
     gnu: bool = False,
     format: str = "%.1f",
 ) -> str:
-    """Format a number of bytes like a human readable filesize (e.g. 10 kB).
+    """Format a number of bytes like a human-readable filesize (e.g. 10 kB).
 
     By default, decimal suffixes (kB, MB) are used.
 
@@ -83,7 +83,11 @@ def naturalsize(
         suffix = suffixes["decimal"]
 
     base = 1024 if (gnu or binary) else 1000
-    bytes_ = float(value)
+    if isinstance(value, str):
+        bytes_ = float(value)
+    else:
+        bytes_ = value
+
     abs_bytes = abs(bytes_)
 
     if abs_bytes == 1 and not gnu:
