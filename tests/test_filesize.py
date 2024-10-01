@@ -75,9 +75,7 @@ import humanize
         ([10**26 * 30, True, False, "%.3f"], "2.423 RiB"),
     ],
 )
-def test_naturalsize(
-    test_args: list[int | str] | list[int | bool], expected: str
-) -> None:
+def test_naturalsize(test_args: list[int] | list[int | bool], expected: str) -> None:
     assert humanize.naturalsize(*test_args) == expected
 
     # Retest with negative input
