@@ -152,8 +152,8 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
-# hatch-vcs
-src/*/_version.py
-
 # Jetbrains IDEs
 .idea/
+
+# hatch-vcs
+src/*/_version.py
