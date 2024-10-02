@@ -1,5 +1,5 @@
 site_name: humanize
-site_url: https://python-humanize.readthedocs.io
+site_url: https://humanize.readthedocs.io
 repo_url: https://github.com/python-humanize/humanize
 theme:
   name: material
@@ -25,8 +25,6 @@ nav:
 plugins:
   - search
   - mkdocstrings:
-      watch:
-        - src/humanize
   - include-markdown
 
 markdown_extensions:
@@ -37,3 +35,6 @@ markdown_extensions:
 
 extra_css:
   - css/code_select.css
+
+watch:
+  - src/humanize

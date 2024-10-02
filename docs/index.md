@@ -2,11 +2,11 @@
 
 Welcome to the humanize API reference.
 
-* [Number](number)
-* [Time](time)
-* [Filesize](filesize)
-* [I18n](i18n)
-* [Lists](lists)
+- [Number](number.md)
+- [Time](time.md)
+- [Filesize](filesize.md)
+- [I18n](i18n.md)
+- [Lists](lists)
 
 {%
    include-markdown "../README.md"

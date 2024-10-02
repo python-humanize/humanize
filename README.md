@@ -2,16 +2,16 @@
 
 [![PyPI version](https://img.shields.io/pypi/v/humanize.svg?logo=pypi&logoColor=FFE873)](https://pypi.org/project/humanize/)
 [![Supported Python versions](https://img.shields.io/pypi/pyversions/humanize.svg?logo=python&logoColor=FFE873)](https://pypi.org/project/humanize/)
-[![Documentation Status](https://readthedocs.org/projects/python-humanize/badge/?version=latest)](https://python-humanize.readthedocs.io/en/latest/?badge=latest)
+[![Documentation Status](https://readthedocs.org/projects/python-humanize/badge/?version=latest)](https://humanize.readthedocs.io/en/latest/?badge=latest)
 [![PyPI downloads](https://img.shields.io/pypi/dm/humanize.svg)](https://pypistats.org/packages/humanize)
 [![GitHub Actions status](https://github.com/python-humanize/humanize/workflows/Test/badge.svg)](https://github.com/python-humanize/humanize/actions)
 [![codecov](https://codecov.io/gh/python-humanize/humanize/branch/main/graph/badge.svg)](https://codecov.io/gh/python-humanize/humanize)
 [![MIT License](https://img.shields.io/github/license/python-humanize/humanize.svg)](LICENCE)
 [![Tidelift](https://tidelift.com/badges/package/pypi/humanize)](https://tidelift.com/subscription/pkg/pypi-humanize?utm_source=pypi-humanize&utm_medium=badge)
 
-This modest package contains various common humanization utilities, like turning
-a number into a fuzzy human-readable duration ("3 minutes ago") or into a
-human-readable size or throughput. It is localized to:
+This modest package contains various common humanization utilities, like turning a
+number into a fuzzy human-readable duration ("3 minutes ago") or into a human-readable
+size or throughput. It is localized to:
 
 - Arabic
 - Basque
@@ -20,15 +20,19 @@ human-readable size or throughput. It is localized to:
 - Catalan
 - Danish
 - Dutch
+- Esperanto
 - European Portuguese
 - Finnish
 - French
 - German
 - Greek
+- Hebrew
 - Indonesian
 - Italian
 - Japanese
+- Klingon
 - Korean
+- Norwegian
 - Persian
 - Polish
 - Russian
@@ -43,7 +47,7 @@ human-readable size or throughput. It is localized to:
 
 ## API reference
 
-[https://python-humanize.readthedocs.io](https://python-humanize.readthedocs.io)
+[https://humanize.readthedocs.io](https://humanize.readthedocs.io/)
 
 <!-- usage-start -->
 

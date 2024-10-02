@@ -1,5 +1,7 @@
 """Main package for humanize."""
 
+from __future__ import annotations
+
 from humanize.filesize import naturalsize
 from humanize.i18n import activate, deactivate, decimal_separator, thousands_separator
 from humanize.lists import naturallist
@@ -21,15 +23,7 @@ from humanize.time import (
     precisedelta,
 )
 
-try:
-    # Python 3.8+
-    import importlib.metadata as importlib_metadata
-except ImportError:
-    # <Python 3.7 and lower
-    import importlib_metadata  # type: ignore
-
-__version__ = importlib_metadata.version(__name__)
-
+from ._version import __version__
 
 __all__ = [
     "__version__",

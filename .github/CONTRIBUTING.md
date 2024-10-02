@@ -13,7 +13,8 @@ pre-commit run --all-files  # to run on all files now
 
 ## Docstrings
 
-Follow [Google style](https://google.github.io/styleguide/pyguide.html#38-comments-and-docstrings)
+Follow
+[Google style](https://google.github.io/styleguide/pyguide.html#38-comments-and-docstrings)
 for docstrings.
 
 ## Localization

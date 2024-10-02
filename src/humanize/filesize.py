@@ -1,12 +1,33 @@
-#!/usr/bin/env python
-
 """Bits and bytes related humanization."""
+
 from __future__ import annotations
 
 suffixes = {
-    "decimal": (" kB", " MB", " GB", " TB", " PB", " EB", " ZB", " YB"),
-    "binary": (" KiB", " MiB", " GiB", " TiB", " PiB", " EiB", " ZiB", " YiB"),
-    "gnu": "KMGTPEZY",
+    "decimal": (
+        " kB",
+        " MB",
+        " GB",
+        " TB",
+        " PB",
+        " EB",
+        " ZB",
+        " YB",
+        " RB",
+        " QB",
+    ),
+    "binary": (
+        " KiB",
+        " MiB",
+        " GiB",
+        " TiB",
+        " PiB",
+        " EiB",
+        " ZiB",
+        " YiB",
+        " RiB",
+        " QiB",
+    ),
+    "gnu": "KMGTPEZYRQ",
 }
 
 
@@ -16,7 +37,7 @@ def naturalsize(
     gnu: bool = False,
     format: str = "%.1f",
 ) -> str:
-    """Format a number of bytes like a human readable filesize (e.g. 10 kB).
+    """Format a number of bytes like a human-readable filesize (e.g. 10 kB).
 
     By default, decimal suffixes (kB, MB) are used.
 
@@ -35,11 +56,14 @@ def naturalsize(
         >>> naturalsize(3000, True)
         '2.9 KiB'
         >>> naturalsize(10**28)
-        '10000.0 YB'
+        '10.0 RB'
+        >>> naturalsize(10**34 * 3)
+        '30000.0 QB'
         >>> naturalsize(-4096, True)
         '-4.0 KiB'
 
         ```
+
     Args:
         value (int, float, str): Integer to convert.
         binary (bool): If `True`, uses binary suffixes (KiB, MiB) with base
@@ -59,21 +83,21 @@ def naturalsize(
         suffix = suffixes["decimal"]
 
     base = 1024 if (gnu or binary) else 1000
-    bytes_ = float(value)
+    if isinstance(value, str):
+        bytes_ = float(value)
+    else:
+        bytes_ = value
+
     abs_bytes = abs(bytes_)
 
     if abs_bytes == 1 and not gnu:
         return "%d Byte" % bytes_
 
-    if abs_bytes < base and not gnu:
-        return "%d Bytes" % bytes_
+    if abs_bytes < base:
+        return ("%dB" if gnu else "%d Bytes") % bytes_
 
-    if abs_bytes < base and gnu:
-        return "%dB" % bytes_
-
-    for i, s in enumerate(suffix):
-        unit = base ** (i + 2)
-
+    for i, s in enumerate(suffix, 2):
+        unit = base**i
         if abs_bytes < unit:
             break
 
