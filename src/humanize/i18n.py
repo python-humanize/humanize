@@ -3,8 +3,12 @@
 from __future__ import annotations
 
 import gettext as gettext_module
-import os.path
 from threading import local
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    import os
+    import pathlib
 
 __all__ = ["activate", "deactivate", "decimal_separator", "thousands_separator"]
 
@@ -32,13 +36,15 @@ _DECIMAL_SEPARATOR = {
 }
 
 
-def _get_default_locale_path() -> str | None:
-    try:
-        if __file__ is None:
-            return None
-        return os.path.join(os.path.dirname(__file__), "locale")
-    except NameError:
+def _get_default_locale_path() -> pathlib.Path | None:
+    package = __spec__ and __spec__.parent
+    if not package:
         return None
+
+    import importlib.resources
+
+    with importlib.resources.as_file(importlib.resources.files(package)) as pkg:
+        return pkg / "locale"
 
 
 def get_translation() -> gettext_module.NullTranslations:
@@ -48,14 +54,16 @@ def get_translation() -> gettext_module.NullTranslations:
         return _TRANSLATIONS[None]
 
 
-def activate(locale: str, path: str | None = None) -> gettext_module.NullTranslations:
+def activate(
+    locale: str, path: str | os.PathLike[str] | None = None
+) -> gettext_module.NullTranslations:
     """Activate internationalisation.
 
     Set `locale` as current locale. Search for locale in directory `path`.
 
     Args:
         locale (str): Language name, e.g. `en_GB`.
-        path (str): Path to search for locales.
+        path (str | pathlib.Path): Path to search for locales.
 
     Returns:
         dict: Translations.
