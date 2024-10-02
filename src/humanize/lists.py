@@ -2,12 +2,12 @@
 
 from __future__ import annotations
 
-from typing import Any, List
+from typing import Any
 
 __all__ = ["naturallist"]
 
 
-def naturallist(items: List[Any]) -> str:
+def naturallist(items: list[Any]) -> str:
     """Natural list.
 
     Convert a list of items into a human-readable string with commas and 'and'
