@@ -39,11 +39,11 @@ __all__ = [
     "naturaldate",
     "naturalday",
     "naturaldelta",
+    "naturallist",
     "naturalsize",
     "naturaltime",
     "ordinal",
     "precisedelta",
     "scientific",
     "thousands_separator",
-    "naturallist",
 ]
