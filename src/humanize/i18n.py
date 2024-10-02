@@ -3,10 +3,12 @@
 from __future__ import annotations
 
 import gettext as gettext_module
-import importlib.resources
-import os
-import pathlib
 from threading import local
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    import os
+    import pathlib
 
 __all__ = ["activate", "deactivate", "decimal_separator", "thousands_separator"]
 
@@ -38,6 +40,8 @@ def _get_default_locale_path() -> pathlib.Path | None:
     package = __spec__ and __spec__.parent
     if not package:
         return None
+
+    import importlib.resources
 
     with importlib.resources.as_file(importlib.resources.files(package)) as pkg:
         return pkg / "locale"
