@@ -21,6 +21,7 @@ nav:
   - Time: time.md
   - Filesize: filesize.md
   - Internationalisation: i18n.md
+  - Lists: lists.md
 
 plugins:
   - search
