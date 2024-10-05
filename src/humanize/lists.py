@@ -4,20 +4,20 @@ from __future__ import annotations
 
 from typing import Any
 
-__all__ = ["naturallist"]
+__all__ = ["natural_list"]
 
 
-def naturallist(items: list[Any]) -> str:
+def natural_list(items: list[Any]) -> str:
     """Natural list.
 
     Convert a list of items into a human-readable string with commas and 'and'.
 
     Examples:
-        >>> naturallist(["one", "two", "three"])
+        >>> natural_list(["one", "two", "three"])
         'one, two and three'
-        >>> naturallist(["one", "two"])
+        >>> natural_list(["one", "two"])
         'one and two'
-        >>> naturallist(["one"])
+        >>> natural_list(["one"])
         'one'
 
     Args:
