@@ -2,16 +2,15 @@
 
 from __future__ import annotations
 
-from collections.abc import Iterable
 from typing import Any
 
 __all__ = ["naturallist"]
 
 
-def naturallist(items: Iterable[Any]) -> str:
+def naturallist(items: list[Any]) -> str:
     """Natural list.
 
-    Convert an iterable of items into a human-readable string with commas and 'and'.
+    Convert a list of items into a human-readable string with commas and 'and'.
 
     Examples:
         >>> naturallist(["one", "two", "three"])
@@ -22,7 +21,7 @@ def naturallist(items: Iterable[Any]) -> str:
         'one'
 
     Args:
-        items (Iterable): An iterable of items.
+        items (list): An iterable of items.
 
     Returns:
         str: A string with commas and 'and' in the right places.
