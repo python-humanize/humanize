@@ -20,8 +20,8 @@ nav:
   - Number: number.md
   - Time: time.md
   - Filesize: filesize.md
-  - Internationalisation: i18n.md
   - Lists: lists.md
+  - Internationalisation: i18n.md
 
 plugins:
   - search
