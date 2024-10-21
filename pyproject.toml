@@ -80,10 +80,11 @@ lint.select = [
   "YTT",    # flake8-2020
 ]
 lint.ignore = [
-  "E203", # Whitespace before ':'
-  "E221", # Multiple spaces before operator
-  "E226", # Missing whitespace around arithmetic operator
-  "E241", # Multiple spaces after ','
+  "E203",  # Whitespace before ':'
+  "E221",  # Multiple spaces before operator
+  "E226",  # Missing whitespace around arithmetic operator
+  "E241",  # Multiple spaces after ','
+  "UP038", # Makes code slower and more verbose
 ]
 lint.per-file-ignores."tests/*" = [
   "D",
@@ -93,9 +94,6 @@ lint.flake8-import-conventions.banned-from = [ "datetime" ]
 lint.isort.known-first-party = [ "humanize" ]
 lint.isort.required-imports = [ "from __future__ import annotations" ]
 lint.pydocstyle.convention = "google"
-
-[tool.pyproject-fmt]
-max_supported_python = "3.13"
 
 [tool.pytest.ini_options]
 addopts = "--color=yes"
