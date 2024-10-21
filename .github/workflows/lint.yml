@@ -21,9 +21,12 @@ jobs:
           cache: pip
       - uses: pre-commit/action@v3.0.1
 
-      - name: Install dependencies
-        run: |
-          python3 -m pip install -U tox
+  mypy:
+    runs-on: ubuntu-latest
 
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install uv
+        uses: hynek/setup-cached-uv@v2
       - name: Mypy
-        run: tox -e mypy
+        run: uvx --with tox-uv tox -e mypy
