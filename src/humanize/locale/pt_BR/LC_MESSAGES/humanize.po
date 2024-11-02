@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-01-08 19:22+0200\n"
-"PO-Revision-Date: 2016-06-15 15:58-0300\n"
+"PO-Revision-Date: 2024-11-02 13:33-0400\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: pt_BR\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 1.8.5\n"
+"X-Generator: Poedit 3.5\n"
 
 #: src/humanize/number.py:84
 msgctxt "0 (male)"
@@ -121,8 +121,8 @@ msgstr "ª"
 #: src/humanize/number.py:178
 msgid "thousand"
 msgid_plural "thousand"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "mil"
+msgstr[1] "mil"
 
 #: src/humanize/number.py:179
 msgid "million"
@@ -134,61 +134,61 @@ msgstr[1] "milhão"
 msgid "billion"
 msgid_plural "billion"
 msgstr[0] "bilhão"
-msgstr[1] "bilhão"
+msgstr[1] "bilhões"
 
 #: src/humanize/number.py:181
 msgid "trillion"
 msgid_plural "trillion"
 msgstr[0] "trilhão"
-msgstr[1] "trilhão"
+msgstr[1] "trilhões"
 
 #: src/humanize/number.py:182
 msgid "quadrillion"
 msgid_plural "quadrillion"
-msgstr[0] "quatrilhão"
-msgstr[1] "quatrilhão"
+msgstr[0] "quadrilhão"
+msgstr[1] "quadrilhões"
 
 #: src/humanize/number.py:183
 msgid "quintillion"
 msgid_plural "quintillion"
 msgstr[0] "quintilhão"
-msgstr[1] "quintilhão"
+msgstr[1] "quintilhões"
 
 #: src/humanize/number.py:184
 msgid "sextillion"
 msgid_plural "sextillion"
 msgstr[0] "sextilhão"
-msgstr[1] "sextilhão"
+msgstr[1] "sextilhões"
 
 #: src/humanize/number.py:185
 msgid "septillion"
 msgid_plural "septillion"
 msgstr[0] "septilhão"
-msgstr[1] "septilhão"
+msgstr[1] "septilhões"
 
 #: src/humanize/number.py:186
 msgid "octillion"
 msgid_plural "octillion"
 msgstr[0] "octilhão"
-msgstr[1] "octilhão"
+msgstr[1] "octilhões"
 
 #: src/humanize/number.py:187
 msgid "nonillion"
 msgid_plural "nonillion"
 msgstr[0] "nonilhão"
-msgstr[1] "nonilhão"
+msgstr[1] "nonilhões"
 
 #: src/humanize/number.py:188
 msgid "decillion"
 msgid_plural "decillion"
 msgstr[0] "decilhão"
-msgstr[1] "decilhão"
+msgstr[1] "decilhões"
 
 #: src/humanize/number.py:189
 msgid "googol"
 msgid_plural "googol"
-msgstr[0] "undecilhão"
-msgstr[1] "undecilhão"
+msgstr[0] "dez duotrigintilhões"
+msgstr[1] "dez duotrigintilhões"
 
 #: src/humanize/number.py:301
 msgid "zero"
@@ -231,14 +231,14 @@ msgid "nine"
 msgstr "nove"
 
 #: src/humanize/time.py:152
-#, fuzzy, python-format
+#, python-format
 msgid "%d microsecond"
 msgid_plural "%d microseconds"
 msgstr[0] "%d microssegundo"
 msgstr[1] "%d microssegundos"
 
 #: src/humanize/time.py:161
-#, fuzzy, python-format
+#, python-format
 msgid "%d millisecond"
 msgid_plural "%d milliseconds"
 msgstr[0] "%d milissegundo"
@@ -335,7 +335,7 @@ msgstr[1] "%d anos"
 #: src/humanize/time.py:256
 #, python-format
 msgid "%s from now"
-msgstr "em %s"
+msgstr "daqui a %s"
 
 #: src/humanize/time.py:256
 #, python-format
