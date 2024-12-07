@@ -4,10 +4,6 @@ on: [push, pull_request, workflow_dispatch]
 
 env:
   FORCE_COLOR: 1
-  PIP_DISABLE_PIP_VERSION_CHECK: 1
-
-permissions:
-  contents: read
 
 jobs:
   lint:
@@ -15,17 +11,23 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - uses: actions/setup-python@v5
         with:
           python-version: "3.x"
-          cache: pip
-      - uses: pre-commit/action@v3.0.1
+      - uses: tox-dev/action-pre-commit-uv@v1
 
   mypy:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
       - name: Install uv
         uses: hynek/setup-cached-uv@v2
       - name: Mypy
