@@ -45,10 +45,10 @@ def test_en_locale() -> None:
     test_str = humanize.naturaltime(three_seconds)
 
     humanize.i18n.activate("en_US")
-    assert test_str = humanize.naturaltime(three_seconds)
+    assert test_str == humanize.naturaltime(three_seconds)
 
     humanize.i18n.activate("en_GB")
-    assert test_str = humanize.naturaltime(three_seconds)
+    assert test_str == humanize.naturaltime(three_seconds)
 
     humanize.i18n.deactivate()
 
