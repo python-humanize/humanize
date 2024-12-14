@@ -73,7 +73,7 @@ def activate(
     """
     if locale == "en_GB" or locale == "en_US":
         locale = None
-    
+
     if path is None:
         path = _get_default_locale_path()
 
