@@ -38,6 +38,7 @@ def test_i18n() -> None:
         assert humanize.ordinal(5) == "5th"
         assert humanize.precisedelta(one_min_three_seconds) == "1 minute and 7 seconds"
 
+
 def test_en_locale() -> None:
     three_seconds = NOW - dt.timedelta(seconds=3)
 
@@ -51,6 +52,7 @@ def test_en_locale() -> None:
     assert test_str == humanize.naturaltime(three_seconds)
 
     humanize.i18n.deactivate()
+
 
 def test_intcomma() -> None:
     number = 10_000_000
