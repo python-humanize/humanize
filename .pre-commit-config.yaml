@@ -26,23 +26,28 @@ repos:
         exclude: \.github/ISSUE_TEMPLATE\.md|\.github/PULL_REQUEST_TEMPLATE\.md
 
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.29.4
+    rev: 0.30.0
     hooks:
       - id: check-github-workflows
       - id: check-renovate
 
   - repo: https://github.com/rhysd/actionlint
-    rev: v1.7.3
+    rev: v1.7.4
     hooks:
       - id: actionlint
 
+  - repo: https://github.com/woodruffw/zizmor-pre-commit
+    rev: v0.9.1
+    hooks:
+      - id: zizmor
+
   - repo: https://github.com/tox-dev/pyproject-fmt
-    rev: 2.4.3
+    rev: v2.5.0
     hooks:
       - id: pyproject-fmt
 
   - repo: https://github.com/abravalheri/validate-pyproject
-    rev: v0.21
+    rev: v0.23
     hooks:
       - id: validate-pyproject
 
@@ -52,7 +57,7 @@ repos:
       - id: tox-ini-fmt
 
   - repo: https://github.com/rbubley/mirrors-prettier
-    rev: v3.3.3
+    rev: v3.4.2
     hooks:
       - id: prettier
         args: [--prose-wrap=always, --print-width=88]
