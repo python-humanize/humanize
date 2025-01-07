@@ -18,10 +18,10 @@ from .i18n import _ngettext
 from .number import intcomma
 
 __all__ = [
+    "naturaldate",
+    "naturalday",
     "naturaldelta",
     "naturaltime",
-    "naturalday",
-    "naturaldate",
     "precisedelta",
 ]
 
