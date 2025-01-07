@@ -564,7 +564,7 @@ def metric(value: float, unit: str = "", precision: int = 3) -> str:
         ordinal_ = "mμnpfazyrq"[(-exponent - 1) // 3]
     else:
         ordinal_ = ""
-    value_ = format(value, ".%if" % max(0, precision - (exponent % 3) - 1))
+    value_ = format(value, f".{int(max(0, precision - exponent % 3 - 1))}f")
     if not (unit or ordinal_) or unit in ("°", "′", "″"):
         space = ""
     else:
