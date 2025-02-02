@@ -71,9 +71,10 @@ def activate(
     Raises:
         Exception: If humanize cannot find the locale folder.
     """
-    if locale == "en_GB" or locale == "en_US":
-        locale = None
-    
+    if locale.startswith("en_"):
+        _CURRENT.locale = None
+        return _TRANSLATIONS[None]
+
     if path is None:
         path = _get_default_locale_path()
 
