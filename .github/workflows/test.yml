@@ -45,9 +45,7 @@ jobs:
       - name: Install Windows dependencies
         if: startsWith(matrix.os, 'windows')
         run: |
-          nuget install Gettext.Tools -OutputDirectory c:\nuget;
-          $gettextPath = (Get-ChildItem -Path "C:\nuget" -Directory -Filter "Gettext.Tools.*" | Select-Object -First 1).FullName;
-          Add-Content $env:GITHUB_PATH "$gettextPath\tools\bin"
+          scripts/install-gettext-windows.ps1
 
       - name: Install uv
         uses: hynek/setup-cached-uv@v2
