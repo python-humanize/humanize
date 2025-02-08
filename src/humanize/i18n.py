@@ -55,14 +55,15 @@ def get_translation() -> gettext_module.NullTranslations:
 
 
 def activate(
-    locale: str, path: str | os.PathLike[str] | None = None
+    locale: str | None, path: str | os.PathLike[str] | None = None
 ) -> gettext_module.NullTranslations:
     """Activate internationalisation.
 
     Set `locale` as current locale. Search for locale in directory `path`.
 
     Args:
-        locale (str): Language name, e.g. `en_GB`.
+        locale (str | None): Language name, e.g. `en_GB`. If `None`, defaults to no
+            transaltion. Similar to calling ``deactivate()``.
         path (str | pathlib.Path): Path to search for locales.
 
     Returns:
@@ -71,6 +72,10 @@ def activate(
     Raises:
         Exception: If humanize cannot find the locale folder.
     """
+    if locale is None or locale.startswith("en"):
+        _CURRENT.locale = None
+        return _TRANSLATIONS[None]
+
     if path is None:
         path = _get_default_locale_path()
 
