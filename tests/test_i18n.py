@@ -4,18 +4,32 @@ from __future__ import annotations
 
 import datetime as dt
 import importlib
+from collections.abc import Generator
 
 import pytest
 from freezegun import freeze_time
 
 import humanize
 
-with freeze_time("2020-02-02"):
-    NOW = dt.datetime.now()
+
+@pytest.fixture
+def NOW() -> Generator[dt.datetime, None, None]:
+    """
+    Using this fixture will give you a datetime frozen in 2020-02-02 00:00:00+00:00
+
+    In a test using this fixture, further calls to datetime.now() or date.today() would
+    return also a frozen date / datetime in 2020-02-02.
+
+    Yields:
+        Generator[datetime, None, None]: UTC aware datetime 2020-02-02 00:00:00+00:00
+    """
+    with freeze_time("2020-02-02"):
+        # TODO: Python 3.11+: replace dt.timezone.utc with dt.UTC
+        NOW = dt.datetime.now(tz=dt.timezone.utc)
+        yield NOW
 
 
-@freeze_time("2020-02-02")
-def test_i18n() -> None:
+def test_i18n(NOW: dt.datetime) -> None:
     three_seconds = NOW - dt.timedelta(seconds=3)
     one_min_three_seconds = dt.timedelta(milliseconds=67_000)
 
@@ -199,8 +213,7 @@ class TestActivate:
             i18n.activate("ru_RU")
         assert str(excinfo.value) == self.expected_msg
 
-    @freeze_time("2020-02-02")
-    def test_en_locale(self) -> None:
+    def test_en_locale(self, NOW: dt.datetime) -> None:
         three_seconds = NOW - dt.timedelta(seconds=3)
         test_str = humanize.naturaltime(three_seconds)
 
@@ -212,10 +225,8 @@ class TestActivate:
 
         humanize.i18n.deactivate()
 
-    @freeze_time("2020-02-02")
-    def test_None_locale(self) -> None:
+    def test_None_locale(self, NOW: dt.datetime) -> None:
         three_seconds = NOW - dt.timedelta(seconds=3)
-        test_str = humanize.naturaltime(three_seconds)
 
         humanize.i18n.activate("fr")
         assert humanize.naturaltime(three_seconds) == "il y a 3 secondes"
