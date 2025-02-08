@@ -39,19 +39,6 @@ def test_i18n() -> None:
         assert humanize.precisedelta(one_min_three_seconds) == "1 minute and 7 seconds"
 
 
-def test_en_locale() -> None:
-    three_seconds = NOW - dt.timedelta(seconds=3)
-    test_str = humanize.naturaltime(three_seconds)
-
-    humanize.i18n.activate("en_US")
-    assert test_str == humanize.naturaltime(three_seconds)
-
-    humanize.i18n.activate("en_GB")
-    assert test_str == humanize.naturaltime(three_seconds)
-
-    humanize.i18n.deactivate()
-
-
 def test_intcomma() -> None:
     number = 10_000_000
 
@@ -211,3 +198,31 @@ class TestActivate:
         with pytest.raises(Exception) as excinfo:
             i18n.activate("ru_RU")
         assert str(excinfo.value) == self.expected_msg
+
+    @freeze_time("2020-02-02")
+    def test_en_locale(self) -> None:
+        three_seconds = NOW - dt.timedelta(seconds=3)
+        test_str = humanize.naturaltime(three_seconds)
+
+        humanize.i18n.activate("en_US")
+        assert test_str == humanize.naturaltime(three_seconds)
+
+        humanize.i18n.activate("en_GB")
+        assert test_str == humanize.naturaltime(three_seconds)
+
+        humanize.i18n.deactivate()
+
+    @freeze_time("2020-02-02")
+    def test_None_locale(self) -> None:
+        three_seconds = NOW - dt.timedelta(seconds=3)
+        test_str = humanize.naturaltime(three_seconds)
+
+        humanize.i18n.activate("fr")
+        assert humanize.naturaltime(three_seconds) == "il y a 3 secondes"
+
+        humanize.i18n.activate(None)
+        test_str = humanize.naturaltime(three_seconds)
+        assert test_str == "3 seconds ago"
+
+        humanize.i18n.deactivate()
+        assert test_str == humanize.naturaltime(three_seconds)
