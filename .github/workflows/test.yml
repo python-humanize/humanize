@@ -13,6 +13,13 @@ jobs:
       matrix:
         python-version: ["pypy3.10", "3.9", "3.10", "3.11", "3.12", "3.13"]
         os: [windows-latest, macos-latest, ubuntu-latest]
+        include:
+          - os: windows-latest
+            translation-script: generate-translation-binaries.ps1
+          - os: macos-latest
+            translation-script: generate-translation-binaries.sh
+          - os: ubuntu-latest
+            translation-script: generate-translation-binaries.sh
 
     steps:
       - uses: actions/checkout@v4
@@ -35,12 +42,19 @@ jobs:
         run: |
           brew install gettext
 
+      - name: Install Windows dependencies
+        if: startsWith(matrix.os, 'windows')
+        run: |
+          nuget install Gettext.Tools -OutputDirectory c:\nuget;
+          $gettextPath = (Get-ChildItem -Path "C:\nuget" -Directory -Filter "Gettext.Tools.*" | Select-Object -First 1).FullName;
+          Add-Content $env:GITHUB_PATH "$gettextPath\tools\bin"
+
       - name: Install uv
         uses: hynek/setup-cached-uv@v2
 
       - name: Generate translation binaries
         run: |
-          scripts/generate-translation-binaries.sh
+          scripts/${{ matrix.translation-script }}
 
       - name: Tox tests
         run: |
