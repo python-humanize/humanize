@@ -28,6 +28,7 @@ jobs:
 
       - name: Generate translation binaries
         run: |
+          apt-get install gettext
           scripts/generate-translation-binaries.sh
 
       - uses: hynek/build-and-inspect-python-package@v2
