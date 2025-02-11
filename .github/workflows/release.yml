@@ -26,6 +26,14 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
+      - name: Install gettext
+        run: |
+          sudo apt install gettext
+
+      - name: Generate translation binaries
+        run: |
+          scripts/generate-translation-binaries.sh
+
       - uses: hynek/build-and-inspect-python-package@v2
 
   # Upload to Test PyPI on every commit on main.
