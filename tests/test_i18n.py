@@ -213,7 +213,7 @@ class TestActivate:
         humanize.i18n.deactivate()
 
     @freeze_time("2020-02-02")
-    def test_None_locale(self) -> None:
+    def test_none_locale(self) -> None:
         three_seconds = NOW - dt.timedelta(seconds=3)
 
         try:
