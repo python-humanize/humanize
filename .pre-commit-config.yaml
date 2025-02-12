@@ -22,6 +22,7 @@ repos:
       - id: debug-statements
       - id: end-of-file-fixer
       - id: forbid-submodules
+      - id: requirements-txt-fixer
       - id: trailing-whitespace
         exclude: \.github/ISSUE_TEMPLATE\.md|\.github/PULL_REQUEST_TEMPLATE\.md
 
