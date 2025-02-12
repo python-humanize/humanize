@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import math
-import re
 
 from .i18n import _gettext as _
 from .i18n import _ngettext, decimal_separator, thousands_separator
@@ -166,6 +165,8 @@ def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
     else:
         orig = str(value)
     orig = orig.replace(".", decimal_sep)
+    import re
+
     while True:
         new = re.sub(r"^(-?\d+)(\d{3})", rf"\g<1>{thousands_sep}\g<2>", orig)
         if orig == new:
@@ -430,6 +431,8 @@ def scientific(value: NumberOrString, precision: int = 2) -> str:
     n = fmt.format(value)
     part1, part2 = n.split("e")
     # Remove redundant leading '+' or '0's (preserving the last '0' for 10⁰).
+    import re
+
     part2 = re.sub(r"^\+?(\-?)0*(.+)$", r"\1\2", part2)
 
     new_part2 = []
