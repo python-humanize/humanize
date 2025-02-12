@@ -228,12 +228,17 @@ class TestActivate:
     def test_None_locale(self, NOW: dt.datetime) -> None:
         three_seconds = NOW - dt.timedelta(seconds=3)
 
-        humanize.i18n.activate("fr")
-        assert humanize.naturaltime(three_seconds) == "il y a 3 secondes"
+        try:
+            humanize.i18n.activate("fr")
+            assert humanize.naturaltime(three_seconds) == "il y a 3 secondes"
 
-        humanize.i18n.activate(None)
-        test_str = humanize.naturaltime(three_seconds)
-        assert test_str == "3 seconds ago"
+            humanize.i18n.activate(None)
+            test_str = humanize.naturaltime(three_seconds)
+            assert test_str == "3 seconds ago"
+        except FileNotFoundError:
+            pytest.skip("Generate .mo with scripts/generate-translation-binaries.sh")
 
-        humanize.i18n.deactivate()
+        finally:
+            humanize.i18n.deactivate()
+
         assert test_str == humanize.naturaltime(three_seconds)

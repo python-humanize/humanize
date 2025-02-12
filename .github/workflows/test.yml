@@ -13,13 +13,6 @@ jobs:
       matrix:
         python-version: ["pypy3.10", "3.9", "3.10", "3.11", "3.12", "3.13"]
         os: [windows-latest, macos-latest, ubuntu-latest]
-        include:
-          - os: windows-latest
-            translation-script: generate-translation-binaries.ps1
-          - os: macos-latest
-            translation-script: generate-translation-binaries.sh
-          - os: ubuntu-latest
-            translation-script: generate-translation-binaries.sh
 
     steps:
       - uses: actions/checkout@v4
@@ -42,17 +35,12 @@ jobs:
         run: |
           brew install gettext
 
-      - name: Install Windows dependencies
-        if: startsWith(matrix.os, 'windows')
-        run: |
-          scripts/install-gettext-windows.ps1
-
       - name: Install uv
         uses: hynek/setup-cached-uv@v2
 
       - name: Generate translation binaries
         run: |
-          scripts/${{ matrix.translation-script }}
+          scripts/generate-translation-binaries.sh
 
       - name: Tox tests
         run: |
