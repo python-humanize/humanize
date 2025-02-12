@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import gettext as gettext_module
 from threading import local
-from typing import TYPE_CHECKING
 
+TYPE_CHECKING = False
 if TYPE_CHECKING:
     import os
     import pathlib

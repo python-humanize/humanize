@@ -4,23 +4,24 @@ from __future__ import annotations
 
 import math
 import re
-import sys
-from typing import TYPE_CHECKING
 
 from .i18n import _gettext as _
 from .i18n import _ngettext, decimal_separator, thousands_separator
 from .i18n import _ngettext_noop as NS_
 from .i18n import _pgettext as P_
 
+TYPE_CHECKING = False
 if TYPE_CHECKING:
+    import sys
+
     if sys.version_info >= (3, 10):
         from typing import TypeAlias
     else:
         from typing_extensions import TypeAlias
 
-# This type can be better defined by typing.SupportsInt, typing.SupportsFloat
-# but that's a Python 3.8 only typing option.
-NumberOrString: TypeAlias = "float | str"
+    # This type can be better defined by typing.SupportsFloat
+    # but that's a Python 3.8 only typing option.
+    NumberOrString: TypeAlias = float | str
 
 
 def _format_not_finite(value: float) -> str:
