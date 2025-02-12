@@ -56,6 +56,11 @@ repos:
     hooks:
       - id: tox-ini-fmt
 
+  - repo: https://github.com/google/yamlfmt
+    rev: v0.16.0
+    hooks:
+      - id: yamlfmt
+
   - repo: https://github.com/rbubley/mirrors-prettier
     rev: v3.5.0
     hooks:
