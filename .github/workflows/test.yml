@@ -2,6 +2,8 @@ name: Test
 
 on: [push, pull_request, workflow_dispatch]
 
+permissions: {}
+
 env:
   FORCE_COLOR: 1
 
@@ -36,7 +38,7 @@ jobs:
           brew install gettext
 
       - name: Install uv
-        uses: hynek/setup-cached-uv@v2
+        uses: astral-sh/setup-uv@v5
 
       - name: Generate translation binaries
         run: |

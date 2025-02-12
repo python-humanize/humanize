@@ -2,8 +2,11 @@ name: Lint
 
 on: [push, pull_request, workflow_dispatch]
 
+permissions: {}
+
 env:
   FORCE_COLOR: 1
+  RUFF_OUTPUT_FORMAT: github
 
 jobs:
   lint:
@@ -29,6 +32,6 @@ jobs:
         with:
           python-version: "3.x"
       - name: Install uv
-        uses: hynek/setup-cached-uv@v2
+        uses: astral-sh/setup-uv@v5
       - name: Mypy
         run: uvx --with tox-uv tox -e mypy
