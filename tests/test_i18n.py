@@ -11,7 +11,7 @@ from freezegun import freeze_time
 import humanize
 
 with freeze_time("2020-02-02"):
-    NOW = dt.datetime.now()
+    NOW = dt.datetime.now(tz=dt.timezone.utc)
 
 
 @freeze_time("2020-02-02")
@@ -198,3 +198,35 @@ class TestActivate:
         with pytest.raises(Exception) as excinfo:
             i18n.activate("ru_RU")
         assert str(excinfo.value) == self.expected_msg
+
+    @freeze_time("2020-02-02")
+    def test_en_locale(self) -> None:
+        three_seconds = NOW - dt.timedelta(seconds=3)
+        test_str = humanize.naturaltime(three_seconds)
+
+        humanize.i18n.activate("en_US")
+        assert test_str == humanize.naturaltime(three_seconds)
+
+        humanize.i18n.activate("en_GB")
+        assert test_str == humanize.naturaltime(three_seconds)
+
+        humanize.i18n.deactivate()
+
+    @freeze_time("2020-02-02")
+    def test_none_locale(self) -> None:
+        three_seconds = NOW - dt.timedelta(seconds=3)
+
+        try:
+            humanize.i18n.activate("fr")
+            assert humanize.naturaltime(three_seconds) == "il y a 3 secondes"
+
+            humanize.i18n.activate(None)
+            test_str = humanize.naturaltime(three_seconds)
+            assert test_str == "3 seconds ago"
+        except FileNotFoundError:
+            pytest.skip("Generate .mo with scripts/generate-translation-binaries.sh")
+
+        finally:
+            humanize.i18n.deactivate()
+
+        assert test_str == humanize.naturaltime(three_seconds)
