@@ -3,24 +3,24 @@
 from __future__ import annotations
 
 import math
-import re
-import sys
-from typing import TYPE_CHECKING
 
 from .i18n import _gettext as _
 from .i18n import _ngettext, decimal_separator, thousands_separator
 from .i18n import _ngettext_noop as NS_
 from .i18n import _pgettext as P_
 
+TYPE_CHECKING = False
 if TYPE_CHECKING:
+    import sys
+
     if sys.version_info >= (3, 10):
         from typing import TypeAlias
     else:
         from typing_extensions import TypeAlias
 
-# This type can be better defined by typing.SupportsInt, typing.SupportsFloat
-# but that's a Python 3.8 only typing option.
-NumberOrString: TypeAlias = "float | str"
+    # This type can be better defined by typing.SupportsFloat
+    # but that's a Python 3.8 only typing option.
+    NumberOrString: TypeAlias = float | str
 
 
 def _format_not_finite(value: float) -> str:
@@ -165,6 +165,8 @@ def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
     else:
         orig = str(value)
     orig = orig.replace(".", decimal_sep)
+    import re
+
     while True:
         new = re.sub(r"^(-?\d+)(\d{3})", rf"\g<1>{thousands_sep}\g<2>", orig)
         if orig == new:
@@ -429,6 +431,8 @@ def scientific(value: NumberOrString, precision: int = 2) -> str:
     n = fmt.format(value)
     part1, part2 = n.split("e")
     # Remove redundant leading '+' or '0's (preserving the last '0' for 10⁰).
+    import re
+
     part2 = re.sub(r"^\+?(\-?)0*(.+)$", r"\1\2", part2)
 
     new_part2 = []

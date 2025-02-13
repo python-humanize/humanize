@@ -5,17 +5,19 @@ These are largely borrowed from Django's `contrib.humanize`.
 
 from __future__ import annotations
 
-import collections.abc
 import datetime as dt
 import math
-import typing
 from enum import Enum
 from functools import total_ordering
-from typing import Any
 
 from .i18n import _gettext as _
 from .i18n import _ngettext
 from .number import intcomma
+
+TYPE_CHECKING = False
+if TYPE_CHECKING:
+    from collections.abc import Iterable
+    from typing import Any
 
 __all__ = [
     "naturaldate",
@@ -37,7 +39,7 @@ class Unit(Enum):
     MONTHS = 6
     YEARS = 7
 
-    def __lt__(self, other: typing.Any) -> typing.Any:
+    def __lt__(self, other: Any) -> Any:
         if self.__class__ is other.__class__:
             return self.value < other.value
         return NotImplemented
@@ -62,9 +64,7 @@ def _abs_timedelta(delta: dt.timedelta) -> dt.timedelta:
     return delta
 
 
-def _date_and_delta(
-    value: typing.Any, *, now: dt.datetime | None = None
-) -> tuple[typing.Any, typing.Any]:
+def _date_and_delta(value: Any, *, now: dt.datetime | None = None) -> tuple[Any, Any]:
     """Turn a value into a date and a timedelta which represents how long ago it was.
 
     If that's not possible, return `(None, value)`.
@@ -327,7 +327,7 @@ def _quotient_and_remainder(
     divisor: float,
     unit: Unit,
     minimum_unit: Unit,
-    suppress: collections.abc.Iterable[Unit],
+    suppress: Iterable[Unit],
 ) -> tuple[float, float]:
     """Divide `value` by `divisor` returning the quotient and remainder.
 
@@ -368,7 +368,7 @@ def _carry(
     ratio: float,
     unit: Unit,
     min_unit: Unit,
-    suppress: typing.Iterable[Unit],
+    suppress: Iterable[Unit],
 ) -> tuple[float, float]:
     """Return a tuple with two values.
 
@@ -401,7 +401,7 @@ def _carry(
     return value1, value2
 
 
-def _suitable_minimum_unit(min_unit: Unit, suppress: typing.Iterable[Unit]) -> Unit:
+def _suitable_minimum_unit(min_unit: Unit, suppress: Iterable[Unit]) -> Unit:
     """Return a minimum unit suitable that is not suppressed.
 
     If not suppressed, return the same unit:
@@ -430,7 +430,7 @@ def _suitable_minimum_unit(min_unit: Unit, suppress: typing.Iterable[Unit]) -> U
     return min_unit
 
 
-def _suppress_lower_units(min_unit: Unit, suppress: typing.Iterable[Unit]) -> set[Unit]:
+def _suppress_lower_units(min_unit: Unit, suppress: Iterable[Unit]) -> set[Unit]:
     """Extend suppressed units (if any) with all units lower than the minimum unit.
 
     >>> from humanize.time import _suppress_lower_units, Unit
@@ -449,7 +449,7 @@ def _suppress_lower_units(min_unit: Unit, suppress: typing.Iterable[Unit]) -> se
 def precisedelta(
     value: dt.timedelta | int | None,
     minimum_unit: str = "seconds",
-    suppress: typing.Iterable[str] = (),
+    suppress: Iterable[str] = (),
     format: str = "%0.2f",
 ) -> str:
     """Return a precise representation of a timedelta.
