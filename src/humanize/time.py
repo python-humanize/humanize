@@ -6,7 +6,6 @@ These are largely borrowed from Django's `contrib.humanize`.
 from __future__ import annotations
 
 import datetime as dt
-import math
 from enum import Enum
 from functools import total_ordering
 
@@ -594,6 +593,8 @@ def precisedelta(
         if fmt_value > 0 or (not texts and unit == min_unit):
             _fmt_value = 2 if 1 < fmt_value < 2 else int(fmt_value)
             fmt_txt = _ngettext(singular_txt, plural_txt, _fmt_value)
+            import math
+
             if unit == min_unit and math.modf(fmt_value)[0] > 0:
                 fmt_txt = fmt_txt.replace("%d", format)
             elif unit == YEARS:
