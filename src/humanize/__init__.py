@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from humanize.filesize import naturalsize
 from humanize.i18n import activate, deactivate, decimal_separator, thousands_separator
-from humanize.lists import natural_list
+from humanize.lists import natural_list, natural_list_etc
 from humanize.number import (
     apnumber,
     clamp,
@@ -37,6 +37,7 @@ __all__ = [
     "intword",
     "metric",
     "natural_list",
+    "natural_list_etc",
     "naturaldate",
     "naturalday",
     "naturaldelta",
