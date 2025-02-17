@@ -94,7 +94,7 @@ def naturalsize(
         return f"{bytes_} Byte"
 
     if abs_bytes < base:
-        return f"{bytes_}B" if gnu else f"{bytes_} Bytes"
+        return f"{int(bytes_)}B" if gnu else f"{int(bytes_)} Bytes"
 
     for i, s in enumerate(suffix, 2):
         unit = base**i
