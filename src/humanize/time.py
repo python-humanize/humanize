@@ -116,7 +116,7 @@ def naturaldelta(
 
     Examples:
         Compare two timestamps in a custom local timezone::
-        
+
         ```pycon
         >>> import datetime as dt
         >>> from dateutil.tz import gettz
