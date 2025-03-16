@@ -117,14 +117,18 @@ def naturaldelta(
     Examples:
         Compare two timestamps in a custom local timezone::
 
-        import datetime as dt
-        from dateutil.tz import gettz
+        ```pycon
+        >>> import datetime as dt
+        >>> from dateutil.tz import gettz
 
-        berlin = gettz("Europe/Berlin")
-        now = dt.datetime.now(tz=berlin)
-        later = now + dt.timedelta(minutes=30)
+        >>> berlin = gettz("Europe/Berlin")
+        >>> now = dt.datetime.now(tz=berlin)
+        >>> later = now + dt.timedelta(minutes=30)
 
-        assert naturaldelta(later - now) == "30 minutes"
+        >>> assert naturaldelta(later - now) == "30 minutes"
+        True
+        ```
+
     """
     import datetime as dt
 
