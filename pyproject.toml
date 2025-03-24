@@ -13,7 +13,7 @@ keywords = [
   "humanize time size",
 ]
 license = "MIT"
-license-files = [ "LICENSE" ]
+license-files = [ "LICENCE" ]
 maintainers = [ { name = "Hugo van Kemenade" } ]
 authors = [ { name = "Jason Moiron", email = "jmoiron@jmoiron.net" } ]
 requires-python = ">=3.9"
