@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-08 19:22+0200\n"
+"POT-Creation-Date: 2025-04-01 12:17-0400\n"
 "PO-Revision-Date: 2013-06-22 08:52+0100\n"
 "Last-Translator: Olivier Cortès <oc@1flow.io>\n"
 "Language-Team: fr_FR <LL@li.org>\n"
@@ -119,257 +119,247 @@ msgctxt "9 (female)"
 msgid "th"
 msgstr "e"
 
-#: src/humanize/number.py:178
+#: src/humanize/number.py:183
 msgid "thousand"
 msgid_plural "thousand"
 msgstr[0] "mille"
 msgstr[1] "milles"
 
-#: src/humanize/number.py:179
-#, fuzzy
+#: src/humanize/number.py:184
 msgid "million"
 msgid_plural "million"
-msgstr[0] "%(value)s million"
-msgstr[1] "%(value)s millions"
+msgstr[0] "million"
+msgstr[1] "millions"
 
-#: src/humanize/number.py:180
+#: src/humanize/number.py:185
 msgid "billion"
 msgid_plural "billion"
 msgstr[0] "milliard"
 msgstr[1] "milliards"
 
-#: src/humanize/number.py:181
-#, fuzzy
+#: src/humanize/number.py:186
 msgid "trillion"
 msgid_plural "trillion"
-msgstr[0] "%(value)s billions"
-msgstr[1] "%(value)s billions"
-
-#: src/humanize/number.py:182
-#, fuzzy
-msgid "quadrillion"
-msgid_plural "quadrillion"
-msgstr[0] "%(value)s billiard"
-msgstr[1] "%(value)s billiards"
-
-#: src/humanize/number.py:183
-#, fuzzy
-msgid "quintillion"
-msgid_plural "quintillion"
-msgstr[0] "%(value)s trillion"
-msgstr[1] "%(value)s trillions"
-
-#: src/humanize/number.py:184
-#, fuzzy
-msgid "sextillion"
-msgid_plural "sextillion"
-msgstr[0] "%(value)s trilliard"
-msgstr[1] "%(value)s trilliards"
-
-#: src/humanize/number.py:185
-#, fuzzy
-msgid "septillion"
-msgid_plural "septillion"
-msgstr[0] "%(value)s quatrillion"
-msgstr[1] "%(value)s quatrillions"
-
-#: src/humanize/number.py:186
-#, fuzzy
-msgid "octillion"
-msgid_plural "octillion"
-msgstr[0] "%(value)s quadrilliard"
-msgstr[1] "%(value)s quadrilliards"
+msgstr[0] "billions"
+msgstr[1] "billions"
 
 #: src/humanize/number.py:187
-#, fuzzy
-msgid "nonillion"
-msgid_plural "nonillion"
-msgstr[0] "%(value)s quintillion"
-msgstr[1] "%(value)s quintillions"
+msgid "quadrillion"
+msgid_plural "quadrillion"
+msgstr[0] "billiard"
+msgstr[1] "billiards"
 
 #: src/humanize/number.py:188
-#, fuzzy
-msgid "decillion"
-msgid_plural "decillion"
-msgstr[0] "%(value)s quintilliard"
-msgstr[1] "%(value)s quintilliards"
+msgid "quintillion"
+msgid_plural "quintillion"
+msgstr[0] "trillion"
+msgstr[1] "trillions"
 
 #: src/humanize/number.py:189
-#, fuzzy
+msgid "sextillion"
+msgid_plural "sextillion"
+msgstr[0] "trilliard"
+msgstr[1] "trilliards"
+
+#: src/humanize/number.py:190
+msgid "septillion"
+msgid_plural "septillion"
+msgstr[0] "quatrillion"
+msgstr[1] "quatrillions"
+
+#: src/humanize/number.py:191
+msgid "octillion"
+msgid_plural "octillion"
+msgstr[0] "quadrilliard"
+msgstr[1] "quadrilliards"
+
+#: src/humanize/number.py:192
+msgid "nonillion"
+msgid_plural "nonillion"
+msgstr[0] "quintillion"
+msgstr[1] "quintillions"
+
+#: src/humanize/number.py:193
+msgid "decillion"
+msgid_plural "decillion"
+msgstr[0] "quintilliard"
+msgstr[1] "quintilliards"
+
+#: src/humanize/number.py:194
 msgid "googol"
 msgid_plural "googol"
-msgstr[0] "%(value)s gogol"
-msgstr[1] "%(value)s gogols"
+msgstr[0] "gogol"
+msgstr[1] "gogols"
 
-#: src/humanize/number.py:301
+#: src/humanize/number.py:313
 msgid "zero"
 msgstr "zéro"
 
-#: src/humanize/number.py:302
+#: src/humanize/number.py:314
 msgid "one"
 msgstr "un"
 
-#: src/humanize/number.py:303
+#: src/humanize/number.py:315
 msgid "two"
 msgstr "deux"
 
-#: src/humanize/number.py:304
+#: src/humanize/number.py:316
 msgid "three"
 msgstr "trois"
 
-#: src/humanize/number.py:305
+#: src/humanize/number.py:317
 msgid "four"
 msgstr "quatre"
 
-#: src/humanize/number.py:306
+#: src/humanize/number.py:318
 msgid "five"
 msgstr "cinq"
 
-#: src/humanize/number.py:307
+#: src/humanize/number.py:319
 msgid "six"
 msgstr "six"
 
-#: src/humanize/number.py:308
+#: src/humanize/number.py:320
 msgid "seven"
 msgstr "sept"
 
-#: src/humanize/number.py:309
+#: src/humanize/number.py:321
 msgid "eight"
 msgstr "huit"
 
-#: src/humanize/number.py:310
+#: src/humanize/number.py:322
 msgid "nine"
 msgstr "neuf"
 
-#: src/humanize/time.py:152
-#, fuzzy, python-format
+#: src/humanize/time.py:162
+#, python-format
 msgid "%d microsecond"
 msgid_plural "%d microseconds"
 msgstr[0] "%d microseconde"
 msgstr[1] "%d microsecondes"
 
-#: src/humanize/time.py:161
-#, fuzzy, python-format
+#: src/humanize/time.py:171
+#, python-format
 msgid "%d millisecond"
 msgid_plural "%d milliseconds"
 msgstr[0] "%d milliseconde"
 msgstr[1] "%d millisecondes"
 
-#: src/humanize/time.py:164 src/humanize/time.py:259
+#: src/humanize/time.py:174 src/humanize/time.py:275
 msgid "a moment"
 msgstr "un instant"
 
-#: src/humanize/time.py:167
+#: src/humanize/time.py:177
 msgid "a second"
 msgstr "une seconde"
 
-#: src/humanize/time.py:170
+#: src/humanize/time.py:180
 #, python-format
 msgid "%d second"
 msgid_plural "%d seconds"
 msgstr[0] "%d seconde"
 msgstr[1] "%d secondes"
 
-#: src/humanize/time.py:173
+#: src/humanize/time.py:183
 msgid "a minute"
 msgstr "une minute"
 
-#: src/humanize/time.py:177
+#: src/humanize/time.py:187
 #, python-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d minute"
 msgstr[1] "%d minutes"
 
-#: src/humanize/time.py:180
+#: src/humanize/time.py:190
 msgid "an hour"
 msgstr "une heure"
 
-#: src/humanize/time.py:184
+#: src/humanize/time.py:194
 #, python-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d heure"
 msgstr[1] "%d heures"
 
-#: src/humanize/time.py:188
+#: src/humanize/time.py:198
 msgid "a day"
 msgstr "un jour"
 
-#: src/humanize/time.py:191 src/humanize/time.py:194
+#: src/humanize/time.py:201 src/humanize/time.py:204
 #, python-format
 msgid "%d day"
 msgid_plural "%d days"
 msgstr[0] "%d jour"
 msgstr[1] "%d jours"
 
-#: src/humanize/time.py:197
+#: src/humanize/time.py:207
 msgid "a month"
 msgstr "un mois"
 
-#: src/humanize/time.py:199
+#: src/humanize/time.py:209
 #, python-format
 msgid "%d month"
 msgid_plural "%d months"
 msgstr[0] "%d mois"
 msgstr[1] "%d mois"
 
-#: src/humanize/time.py:203
+#: src/humanize/time.py:213
 msgid "a year"
 msgstr "un an"
 
-#: src/humanize/time.py:206 src/humanize/time.py:217
+#: src/humanize/time.py:216 src/humanize/time.py:227
 #, python-format
 msgid "1 year, %d day"
 msgid_plural "1 year, %d days"
 msgstr[0] "un an et %d jour"
 msgstr[1] "un an et %d jours"
 
-#: src/humanize/time.py:210
+#: src/humanize/time.py:220
 msgid "1 year, 1 month"
 msgstr "un an et un mois"
 
-#: src/humanize/time.py:213
+#: src/humanize/time.py:223
 #, python-format
 msgid "1 year, %d month"
 msgid_plural "1 year, %d months"
 msgstr[0] "un an et %d mois"
 msgstr[1] "un an et %d mois"
 
-#: src/humanize/time.py:219
+#: src/humanize/time.py:229
 #, python-format
 msgid "%d year"
 msgid_plural "%d years"
 msgstr[0] "%d an"
 msgstr[1] "%d ans"
 
-#: src/humanize/time.py:256
+#: src/humanize/time.py:272
 #, python-format
 msgid "%s from now"
 msgstr "dans %s"
 
-#: src/humanize/time.py:256
+#: src/humanize/time.py:272
 #, python-format
 msgid "%s ago"
 msgstr "il y a %s"
 
-#: src/humanize/time.py:260
+#: src/humanize/time.py:276
 msgid "now"
 msgstr "maintenant"
 
-#: src/humanize/time.py:284
+#: src/humanize/time.py:313
 msgid "today"
 msgstr "aujourd'hui"
 
-#: src/humanize/time.py:287
+#: src/humanize/time.py:316
 msgid "tomorrow"
 msgstr "demain"
 
-#: src/humanize/time.py:290
+#: src/humanize/time.py:319
 msgid "yesterday"
 msgstr "hier"
 
-#: src/humanize/time.py:600
+#: src/humanize/time.py:634
 #, python-format
 msgid "%s and %s"
 msgstr "%s et %s"
