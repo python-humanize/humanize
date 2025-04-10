@@ -69,6 +69,8 @@ import humanize
         ([3000000, False, True], "2.9M"),
         ([1024, False, True], "1.0K"),
         ([1, False, False], "1 Byte"),
+        ([1.0, False, False], "1 Byte"),
+        (["1", False, False], "1 Byte"),
         ([3141592, False, False, "%.2f"], "3.14 MB"),
         ([3000, False, True, "%.3f"], "2.930K"),
         ([3000000000, False, True, "%.0f"], "3G"),
