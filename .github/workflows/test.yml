@@ -38,7 +38,7 @@ jobs:
           brew install gettext
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v5
+        uses: astral-sh/setup-uv@v6
 
       - name: Generate translation binaries
         run: |
