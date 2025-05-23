@@ -95,5 +95,5 @@ def naturalsize(
         return f"{int(bytes_)}B" if gnu else f"{int(bytes_)} Bytes"
 
     exp = int(min(log(abs_bytes, base), len(suffix)))
-    ret: str = format % (bytes_ / (base ** exp)) + suffix[exp - 1]
+    ret: str = format % (bytes_ / (base**exp)) + suffix[exp - 1]
     return ret
