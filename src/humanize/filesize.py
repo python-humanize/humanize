@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from math import log
+
 suffixes = {
     "decimal": (
         " kB",
@@ -83,11 +85,7 @@ def naturalsize(
         suffix = suffixes["decimal"]
 
     base = 1024 if (gnu or binary) else 1000
-    if isinstance(value, str):
-        bytes_ = float(value)
-    else:
-        bytes_ = value
-
+    bytes_ = float(value)
     abs_bytes = abs(bytes_)
 
     if abs_bytes == 1 and not gnu:
@@ -96,10 +94,6 @@ def naturalsize(
     if abs_bytes < base:
         return f"{int(bytes_)}B" if gnu else f"{int(bytes_)} Bytes"
 
-    for i, s in enumerate(suffix, 2):
-        unit = base**i
-        if abs_bytes < unit:
-            break
-
-    ret: str = format % (base * (bytes_ / unit)) + s
+    exp = int(min(log(abs_bytes, base), len(suffix)))
+    ret: str = format % (bytes_ / (base**exp)) + suffix[exp - 1]
     return ret
