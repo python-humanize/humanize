@@ -607,7 +607,9 @@ def precisedelta(
     for unit, fmt in zip(reversed(Unit), fmts):
         singular_txt, plural_txt, fmt_value = fmt
 
-        fmt_value = _rounding_by_fmt(format, fmt_value)
+        if unit == min_unit:
+            fmt_value = _rounding_by_fmt(format, fmt_value)
+
         if fmt_value > 0 or (not texts and unit == min_unit):
             _fmt_value = 2 if 1 < fmt_value < 2 else int(fmt_value)
             fmt_txt = _ngettext(singular_txt, plural_txt, _fmt_value)
