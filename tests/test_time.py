@@ -594,7 +594,7 @@ def test_precisedelta_multiple_units(
             "%0.4f",
             "2.0020 milliseconds",
         ),
-        (dt.timedelta(microseconds=2002), "milliseconds", "%0.2f", "2.00 milliseconds"),
+        (dt.timedelta(microseconds=2002), "milliseconds", "%0.2f", "2 milliseconds"),
         (
             dt.timedelta(seconds=1, microseconds=230000),
             "seconds",
@@ -620,18 +620,34 @@ def test_precisedelta_multiple_units(
             "5 days and 4.50 hours",
         ),
         (dt.timedelta(days=5, hours=4, seconds=30 * 60), "days", "%0.2f", "5.19 days"),
+        # 1 month is 30.5 days. Remaining 0.5 days is rounded down for both formats
         (dt.timedelta(days=31), "days", "%d", "1 month"),
-        (dt.timedelta(days=31.01), "days", "%d", "1 month and 1 day"),
+        (dt.timedelta(days=31), "days", "%.0f", "1 month"),
+        # But adding a tiny amount will reveal a difference between %d and %.0f
+        # %d will truncate while %.0f will round to the nearest number.
+        (dt.timedelta(days=31.01), "days", "%d", "1 month"),
+        (dt.timedelta(days=31.01), "days", "%.0f", "1 month and 1 day"),
         (dt.timedelta(days=31.99), "days", "%d", "1 month and 1 day"),
-        (dt.timedelta(days=32), "days", "%d", "1 month and 2 days"),
+        # 1 month is 30.5 days. Remaining 1.5 days is truncated for %d.
+        # For format %.0f, there is a tie, so it's rounded to the nearest even number,
+        # which is 2. See https://en.wikipedia.org/wiki/IEEE_754#Rounding_rules
+        (dt.timedelta(days=32), "days", "%d", "1 month and 1 day"),
+        (dt.timedelta(days=32), "days", "%.0f", "1 month and 2 days"),
         (dt.timedelta(days=62), "days", "%d", "2 months and 1 day"),
         (dt.timedelta(days=92), "days", "%d", "3 months"),
         (dt.timedelta(days=120), "months", "%0.2f", "3.93 months"),
         (dt.timedelta(days=183), "years", "%0.1f", "0.5 years"),
         (0.01, "seconds", "%0.3f", "0.010 seconds"),
-        (31, "minutes", "%d", "1 minute"),
+        # 31 seconds will be truncated to 0 with %d and rounded to the nearest
+        # number with %.0f, ie. 1
+        (31, "minutes", "%d", "0 minutes"),
+        (31, "minutes", "%0.0f", "1 minute"),
         (60 + 29.99, "minutes", "%d", "1 minute"),
-        (60 + 30, "minutes", "%d", "2 minutes"),
+        (60 + 29.99, "minutes", "%.0f", "1 minute"),
+        (60 + 30, "minutes", "%d", "1 minute"),
+        # 30 sec is 0.5 minutes. Round to nearest, ties away from zero.
+        # See https://en.wikipedia.org/wiki/IEEE_754#Rounding_rules
+        (60 + 30, "minutes", "%.0f", "2 minutes"),
         (60 * 60 + 30.99, "minutes", "%.0f", "1 hour"),
         (60 * 60 + 31, "minutes", "%.0f", "1 hour and 1 minute"),
         (
@@ -750,3 +766,20 @@ def test_time_unit() -> None:
 
     with pytest.raises(TypeError):
         _ = years < "foo"
+
+
+@pytest.mark.parametrize(
+    "fmt, value, expected",
+    [
+        ("%.2f", 1.011, 1.01),
+        ("%.0f", 1.01, 1.0),
+        ("%.0f", 1.5, 2.0),
+        ("%10.0f", 1.01, 1.0),
+        ("%i", 1.01, 1),
+        # Surprising rounding with %d. It does not truncate for all values...
+        ("%d", 1.999999999999999, 1),
+        ("%d", 1.9999999999999999, 2),
+    ],
+)
+def test_rounding_by_fmt(fmt: str, value: float, expected: float) -> None:
+    assert time._rounding_by_fmt(fmt, value) == pytest.approx(expected)

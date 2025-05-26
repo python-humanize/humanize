@@ -603,14 +603,11 @@ def precisedelta(
         ("%d microsecond", "%d microseconds", usecs),
     ]
 
-    import re
-    round_fmt_value = re.fullmatch(r"%\d*(d|(\.0*f))", format)
-
     texts: list[str] = []
     for unit, fmt in zip(reversed(Unit), fmts):
         singular_txt, plural_txt, fmt_value = fmt
-        if round_fmt_value:
-            fmt_value = round(fmt_value)
+
+        fmt_value = _rounding_by_fmt(format, fmt_value)
         if fmt_value > 0 or (not texts and unit == min_unit):
             _fmt_value = 2 if 1 < fmt_value < 2 else int(fmt_value)
             fmt_txt = _ngettext(singular_txt, plural_txt, _fmt_value)
@@ -619,6 +616,8 @@ def precisedelta(
             if unit == min_unit and math.modf(fmt_value)[0] > 0:
                 fmt_txt = fmt_txt.replace("%d", format)
             elif unit == YEARS:
+                if math.modf(fmt_value)[0] == 0:
+                    fmt_value = int(fmt_value)
                 fmt_txt = fmt_txt.replace("%d", "%s")
                 texts.append(fmt_txt % intcomma(fmt_value))
                 continue
@@ -635,3 +634,24 @@ def precisedelta(
     tail = texts[-1]
 
     return _("%s and %s") % (head, tail)
+
+
+def _rounding_by_fmt(format: str, value: float) -> float | int:
+    """Round a number according to the string format provided.
+
+    The string format is the old printf-style String Formatting.
+
+    If we are using a format which truncates the value, such as "%d" or "%i", the
+    returned value will be of type `int`.
+
+    If we are using a format which rounds the value, such as "%.2f" or even "%.0f",
+    we will return a float.
+    """
+    result = format % value
+
+    try:
+        value = int(result)
+    except ValueError:
+        value = float(result)
+
+    return value
