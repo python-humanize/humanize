@@ -662,6 +662,25 @@ def test_precisedelta_multiple_units(
             "%.4f",
             "23 hours, 59 minutes and 59.9990 seconds",
         ),
+        (91500, "hours", "%0.0f", "1 day and 1 hour"),
+        # Because we use a format to round, we will end up with 9 hours.
+        (9 * 60 * 60 - 1, "minutes", "%0.0f", "9 hours"),
+        (dt.timedelta(days=30.99999), "minutes", "%0.0f", "1 month"),
+        # We round at the hour. We end up with 12.5 hours. It's a tie, so round to the
+        # nearest even number which is 12, thus we round down.
+        (
+            dt.timedelta(days=30.5 * 3, minutes=30),
+            "hours",
+            "%0.0f",
+            "2 months, 30 days and 12 hours",
+        ),
+        (dt.timedelta(days=10, hours=6), "days", "%0.2f", "10.25 days"),
+        (dt.timedelta(days=30.55), "days", "%0.1f", "30.6 days"),
+        (dt.timedelta(microseconds=999.5), "microseconds", "%0.0f", "1 millisecond"),
+        (dt.timedelta(milliseconds=999.5), "milliseconds", "%0.0f", "1 second"),
+        (dt.timedelta(seconds=59.5), "seconds", "%0.0f", "1 minute"),
+        (dt.timedelta(minutes=59.5), "minutes", "%0.0f", "1 hour"),
+        (dt.timedelta(days=364), "months", "%0.0f", "1 year"),
     ],
 )
 def test_precisedelta_custom_format(

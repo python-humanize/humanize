@@ -347,77 +347,39 @@ def _quotient_and_remainder(
     unit: Unit,
     minimum_unit: Unit,
     suppress: Iterable[Unit],
+    format: str,
 ) -> tuple[float, float]:
     """Divide `value` by `divisor`, returning the quotient and remainder.
 
-    If `unit` is `minimum_unit`, the quotient will be a float number and the remainder
-    will be zero. The rationale is that if `unit` is the unit of the quotient, we cannot
-    represent the remainder because it would require a unit smaller than the
-    `minimum_unit`.
+    If `unit` is `minimum_unit`, the quotient will be the rounding of `value / divisor`
+    according to the `format` string and the remainder will be zero. The rationale is
+    that if `unit` is the unit of the quotient, we cannot represent the remainder
+    because it would require a unit smaller than the `minimum_unit`.
 
     >>> from humanize.time import _quotient_and_remainder, Unit
-    >>> _quotient_and_remainder(36, 24, Unit.DAYS, Unit.DAYS, [])
+    >>> _quotient_and_remainder(36, 24, Unit.DAYS, Unit.DAYS, [], "%0.2f")
     (1.5, 0)
 
     If `unit` is in `suppress`, the quotient will be zero and the remainder will be the
     initial value. The idea is that if we cannot use `unit`, we are forced to use a
     lower unit, so we cannot do the division.
 
-    >>> _quotient_and_remainder(36, 24, Unit.DAYS, Unit.HOURS, [Unit.DAYS])
+    >>> _quotient_and_remainder(36, 24, Unit.DAYS, Unit.HOURS, [Unit.DAYS], "%0.2f")
     (0, 36)
 
     In other cases, return the quotient and remainder as `divmod` would do it.
 
-    >>> _quotient_and_remainder(36, 24, Unit.DAYS, Unit.HOURS, [])
+    >>> _quotient_and_remainder(36, 24, Unit.DAYS, Unit.HOURS, [], "%0.2f")
     (1, 12)
 
     """
     if unit == minimum_unit:
-        return value / divisor, 0
+        return _rounding_by_fmt(format, value / divisor), 0
 
     if unit in suppress:
         return 0, value
 
     return divmod(value, divisor)
-
-
-def _carry(
-    value1: float,
-    value2: float,
-    ratio: float,
-    unit: Unit,
-    min_unit: Unit,
-    suppress: Iterable[Unit],
-) -> tuple[float, float]:
-    """Return a tuple with two values.
-
-    If `unit` is in `suppress`, multiply `value1` by `ratio` and add it to `value2`
-    (carry to right). The idea is that if we cannot represent `value1`, we need to
-    represent it in a lower unit.
-
-    >>> from humanize.time import _carry, Unit
-    >>> _carry(2, 6, 24, Unit.DAYS, Unit.SECONDS, [Unit.DAYS])
-    (0, 54)
-
-    If `unit` is the minimum unit, divide `value2` by `ratio` and add it to `value1`
-    (carry to left). We assume that `value2` has a lower unit, so we need to
-    carry it to `value1`.
-
-    >>> _carry(2, 6, 24, Unit.DAYS, Unit.DAYS, [])
-    (2.25, 0)
-
-    Otherwise, just return the same input:
-
-    >>> _carry(2, 6, 24, Unit.DAYS, Unit.SECONDS, [])
-    (2, 6)
-    """
-    if unit == min_unit:
-        return value1 + value2 / ratio, 0
-
-    if unit in suppress:
-        return 0, value2 + value1 * ratio
-
-    return value1, value2
 
 
 def _suitable_minimum_unit(min_unit: Unit, suppress: Iterable[Unit]) -> Unit:
@@ -574,23 +536,57 @@ def precisedelta(
     #       years, days = divmod(years, days)
     #
     # The same applies for months, hours, minutes and milliseconds below
-    years, days = _quotient_and_remainder(days, 365, YEARS, min_unit, suppress_set)
-    months, days = _quotient_and_remainder(days, 30.5, MONTHS, min_unit, suppress_set)
-
-    secs = days * 24 * 3600 + secs
-    days, secs = _quotient_and_remainder(secs, 24 * 3600, DAYS, min_unit, suppress_set)
-
-    hours, secs = _quotient_and_remainder(secs, 3600, HOURS, min_unit, suppress_set)
-    minutes, secs = _quotient_and_remainder(secs, 60, MINUTES, min_unit, suppress_set)
-
-    secs, usecs = _carry(secs, usecs, 1e6, SECONDS, min_unit, suppress_set)
-
-    msecs, usecs = _quotient_and_remainder(
-        usecs, 1000, MILLISECONDS, min_unit, suppress_set
+    years, days = _quotient_and_remainder(
+        days, 365, YEARS, min_unit, suppress_set, format
+    )
+    months, days = _quotient_and_remainder(
+        days, 30.5, MONTHS, min_unit, suppress_set, format
     )
 
-    # if _unused != 0 we have lost some precision
-    usecs, _unused = _carry(usecs, 0, 1, MICROSECONDS, min_unit, suppress_set)
+    secs = days * 24 * 3600 + secs
+    days, secs = _quotient_and_remainder(
+        secs, 24 * 3600, DAYS, min_unit, suppress_set, format
+    )
+
+    hours, secs = _quotient_and_remainder(
+        secs, 3600, HOURS, min_unit, suppress_set, format
+    )
+    minutes, secs = _quotient_and_remainder(
+        secs, 60, MINUTES, min_unit, suppress_set, format
+    )
+
+    usecs = secs * 1e6 + usecs
+    secs, usecs = _quotient_and_remainder(
+        usecs, 1e6, SECONDS, min_unit, suppress_set, format
+    )
+
+    msecs, usecs = _quotient_and_remainder(
+        usecs, 1000, MILLISECONDS, min_unit, suppress_set, format
+    )
+
+    # Due to rounding, it could be that a unit is high enough to be promoted to a higher
+    # unit. Example: 59.9 minutes was rounded to 60 minutes, and thus it should become 0
+    # minutes and one hour more.
+    if msecs >= 1_000 and SECONDS not in suppress_set:
+        msecs -= 1_000
+        secs += 1
+    if secs >= 60 and MINUTES not in suppress_set:
+        secs -= 60
+        minutes += 1
+    if minutes >= 60 and HOURS not in suppress_set:
+        minutes -= 60
+        hours += 1
+    if hours >= 24 and DAYS not in suppress_set:
+        hours -= 24
+        days += 1
+    # When adjusting we should not deal anymore with fractional days as all rounding has
+    # been already made. We promote 31 days to an extra month.
+    if days >= 31 and MONTHS not in suppress_set:
+        days -= 31
+        months += 1
+    if months >= 12 and YEARS not in suppress_set:
+        months -= 12
+        years += 1
 
     fmts = [
         ("%d year", "%d years", years),
@@ -606,10 +602,6 @@ def precisedelta(
     texts: list[str] = []
     for unit, fmt in zip(reversed(Unit), fmts):
         singular_txt, plural_txt, fmt_value = fmt
-
-        if unit == min_unit:
-            fmt_value = _rounding_by_fmt(format, fmt_value)
-
         if fmt_value > 0 or (not texts and unit == min_unit):
             _fmt_value = 2 if 1 < fmt_value < 2 else int(fmt_value)
             fmt_txt = _ngettext(singular_txt, plural_txt, _fmt_value)
