@@ -379,7 +379,11 @@ def _quotient_and_remainder(
     if unit in suppress:
         return 0, value
 
-    return divmod(value, divisor)
+    # Convert the remainder back to integer is necessary for months. 1 month is 30.5
+    # days on average, but if we have 31 days, we want to count is as a whole month,
+    # and not as 1 month plus a remainder of 0.5 days.
+    q, r = divmod(value, divisor)
+    return q, int(r)
 
 
 def _suitable_minimum_unit(min_unit: Unit, suppress: Iterable[Unit]) -> Unit:
@@ -633,7 +637,7 @@ def precisedelta(
 def _rounding_by_fmt(format: str, value: float) -> float | int:
     """Round a number according to the string format provided.
 
-    The string format is the old printf-style String Formatting.
+    The string format is the old printf-style string formatting.
 
     If we are using a format which truncates the value, such as "%d" or "%i", the
     returned value will be of type `int`.

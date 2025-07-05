@@ -563,14 +563,14 @@ def test_precisedelta_one_unit_enough(
             "minutes",
             "0 minutes",
         ),
-        (dt.timedelta(days=31), "seconds", "1 month and 12 hours"),
-        (dt.timedelta(days=32), "seconds", "1 month, 1 day and 12 hours"),
+        (dt.timedelta(days=31), "seconds", "1 month"),
+        (dt.timedelta(days=32), "seconds", "1 month and 1 day"),
         (dt.timedelta(days=62), "seconds", "2 months and 1 day"),
-        (dt.timedelta(days=92), "seconds", "3 months and 12 hours"),
-        (dt.timedelta(days=31), "days", "1 month and 0.50 days"),
-        (dt.timedelta(days=32), "days", "1 month and 1.50 days"),
+        (dt.timedelta(days=92), "seconds", "3 months"),
+        (dt.timedelta(days=31), "days", "1 month"),
+        (dt.timedelta(days=32), "days", "1 month and 1 day"),
         (dt.timedelta(days=62), "days", "2 months and 1 day"),
-        (dt.timedelta(days=92), "days", "3 months and 0.50 days"),
+        (dt.timedelta(days=92), "days", "3 months"),
     ],
 )
 def test_precisedelta_multiple_units(
@@ -620,19 +620,11 @@ def test_precisedelta_multiple_units(
             "5 days and 4.50 hours",
         ),
         (dt.timedelta(days=5, hours=4, seconds=30 * 60), "days", "%0.2f", "5.19 days"),
-        # 1 month is 30.5 days. Remaining 0.5 days is rounded down for both formats
+        # 1 month is 30.5 days but remainder is always rounded down.
         (dt.timedelta(days=31), "days", "%d", "1 month"),
         (dt.timedelta(days=31), "days", "%.0f", "1 month"),
-        # But adding a tiny amount will reveal a difference between %d and %.0f
-        # %d will truncate while %.0f will round to the nearest number.
-        (dt.timedelta(days=31.01), "days", "%d", "1 month"),
-        (dt.timedelta(days=31.01), "days", "%.0f", "1 month and 1 day"),
-        (dt.timedelta(days=31.99), "days", "%d", "1 month and 1 day"),
-        # 1 month is 30.5 days. Remaining 1.5 days is truncated for %d.
-        # For format %.0f, there is a tie, so it's rounded to the nearest even number,
-        # which is 2. See https://en.wikipedia.org/wiki/IEEE_754#Rounding_rules
         (dt.timedelta(days=32), "days", "%d", "1 month and 1 day"),
-        (dt.timedelta(days=32), "days", "%.0f", "1 month and 2 days"),
+        (dt.timedelta(days=32), "days", "%.0f", "1 month and 1 day"),
         (dt.timedelta(days=62), "days", "%d", "2 months and 1 day"),
         (dt.timedelta(days=92), "days", "%d", "3 months"),
         (dt.timedelta(days=120), "months", "%0.2f", "3.93 months"),
