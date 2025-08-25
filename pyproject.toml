@@ -65,7 +65,7 @@ fix = true
 lint.select = [
   "C4",     # flake8-comprehensions
   "D",      # pydocstyle
-  "E",      # pycodestyle
+  "E",      # pycodestyle errors
   "EM",     # flake8-errmsg
   "F",      # pyflakes
   "I",      # isort
@@ -73,25 +73,29 @@ lint.select = [
   "ISC",    # flake8-implicit-str-concat
   "LOG",    # flake8-logging
   "PGH",    # pygrep-hooks
+  "PIE",    # flake8-pie
+  "PT",     # flake8-pytest-style
   "PYI",    # flake8-pyi
   "RUF022", # unsorted-dunder-all
   "RUF100", # unused noqa (yesqa)
   "UP",     # pyupgrade
-  "W",      # pycodestyle
+  "W",      # pycodestyle warnings
   "YTT",    # flake8-2020
 ]
 lint.ignore = [
-  "E203",  # Whitespace before ':'
-  "E221",  # Multiple spaces before operator
-  "E226",  # Missing whitespace around arithmetic operator
-  "E241",  # Multiple spaces after ','
-  "UP038", # Makes code slower and more verbose
+  "E203",   # Whitespace before ':'
+  "E221",   # Multiple spaces before operator
+  "E226",   # Missing whitespace around arithmetic operator
+  "E241",   # Multiple spaces after ','
+  "PIE790", # flake8-pie: unnecessary-placeholder
+  "UP038",  # Makes code slower and more verbose
 ]
 lint.per-file-ignores."tests/*" = [
   "D",
 ]
 lint.flake8-import-conventions.aliases.datetime = "dt"
 lint.flake8-import-conventions.banned-from = [ "datetime" ]
+lint.flake8-pytest-style.parametrize-names-type = "csv"
 lint.isort.known-first-party = [ "humanize" ]
 lint.isort.required-imports = [ "from __future__ import annotations" ]
 lint.pydocstyle.convention = "google"
@@ -103,10 +107,15 @@ max_supported_python = "3.14"
 addopts = "--color=yes"
 filterwarnings = [
   "error",
-  # https://github.com/dateutil/dateutil/issues/1314
-  "ignore:datetime.datetime.utcfromtimestamp:DeprecationWarning:dateutil.tz.tz",
 ]
 testpaths = [ "tests" ]
+
+[tool.coverage.report]
+# Regexes for lines to exclude from consideration
+exclude_also = [
+  # Don't complain if non-runnable code isn't run:
+  "if __name__ == .__main__.:",
+]
 
 [tool.mypy]
 pretty = true
