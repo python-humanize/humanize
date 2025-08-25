@@ -755,10 +755,13 @@ def test_precisedelta_suppress_units(
 def test_precisedelta_bogus_call() -> None:
     assert humanize.precisedelta(None) == "None"
 
-    with pytest.raises(ValueError):
+    with pytest.raises(
+        ValueError,
+        match="Minimum unit is suppressed and no suitable replacement was found",
+    ):
         humanize.precisedelta(1, minimum_unit="years", suppress=["years"])
 
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="Minimum unit 'years' not supported"):
         humanize.naturaldelta(1, minimum_unit="years")
 
 

@@ -89,15 +89,15 @@ def test_naturaldelta() -> None:
 
 
 @pytest.mark.parametrize(
-    ("locale", "number", "expected_result"),
-    (
+    "locale, number, expected_result",
+    [
         ("es_ES", 1000000, "1.0 millón"),
         ("es_ES", 3500000, "3.5 millones"),
         ("es_ES", 1000000000, "1.0 billón"),
         ("es_ES", 1200000000, "1.2 billones"),
         ("es_ES", 1000000000000, "1.0 trillón"),
         ("es_ES", 6700000000000, "6.7 trillones"),
-    ),
+    ],
 )
 def test_intword_plurals(locale: str, number: int, expected_result: str) -> None:
     try:
@@ -111,8 +111,8 @@ def test_intword_plurals(locale: str, number: int, expected_result: str) -> None
 
 
 @pytest.mark.parametrize(
-    ("locale", "expected_result"),
-    (
+    "locale, expected_result",
+    [
         ("ar", "5خامس"),
         ("ar_SA", "5خامس"),
         ("fr", "5e"),
@@ -120,7 +120,7 @@ def test_intword_plurals(locale: str, number: int, expected_result: str) -> None
         ("pt", "5º"),
         ("pt_BR", "5º"),
         ("pt_PT", "5º"),
-    ),
+    ],
 )
 def test_langauge_codes(locale: str, expected_result: str) -> None:
     try:
@@ -134,8 +134,8 @@ def test_langauge_codes(locale: str, expected_result: str) -> None:
 
 
 @pytest.mark.parametrize(
-    ("locale", "number", "gender", "expected_result"),
-    (
+    "locale, number, gender, expected_result",
+    [
         ("fr_FR", 1, "male", "1er"),
         ("fr_FR", 1, "female", "1ère"),
         ("fr_FR", 2, "male", "2e"),
@@ -143,7 +143,7 @@ def test_langauge_codes(locale: str, expected_result: str) -> None:
         ("es_ES", 5, "female", "5ª"),
         ("it_IT", 3, "male", "3º"),
         ("it_IT", 8, "female", "8ª"),
-    ),
+    ],
 )
 def test_ordinal_genders(
     locale: str, number: int, gender: str, expected_result: str
@@ -187,9 +187,8 @@ class TestActivate:
         i18n = importlib.import_module("humanize.i18n")
         monkeypatch.setattr(i18n, "__spec__", None)
 
-        with pytest.raises(Exception) as excinfo:
+        with pytest.raises(Exception, match=self.expected_msg):
             i18n.activate("ru_RU")
-        assert str(excinfo.value) == self.expected_msg
 
     def test_default_locale_path_undefined__spec__(
         self, monkeypatch: pytest.MonkeyPatch
@@ -197,9 +196,8 @@ class TestActivate:
         i18n = importlib.import_module("humanize.i18n")
         monkeypatch.delattr(i18n, "__spec__")
 
-        with pytest.raises(Exception) as excinfo:
+        with pytest.raises(Exception, match=self.expected_msg):
             i18n.activate("ru_RU")
-        assert str(excinfo.value) == self.expected_msg
 
     @freeze_time("2020-02-02")
     def test_en_locale(self) -> None:
