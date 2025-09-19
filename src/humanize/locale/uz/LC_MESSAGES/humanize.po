@@ -1,15 +1,15 @@
-# Russian (Russia) translations for PROJECT.
-# Copyright (C) 2013 ORGANIZATION
-# This file is distributed under the same license as the PROJECT project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
+# Uzbek (Uzbekistan) translations for humanize.
+# Copyright (C) 2025 ORGANIZATION
+# This file is distributed under the same license as the humanize project.
+# Sirojiddin Mustafayev <sirojiddinmustafayev@gmail.com>, 2013.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-08 19:22+0200\n"
+"POT-Creation-Date: 2025-09-19 19:00+0200\n"
 "PO-Revision-Date: 2025-09-19 19:09+0500\n"
-"Last-Translator: \n"
+"Last-Translator: Sirojiddin Mustafayev <sirojiddinmustafayev@gmail.com>\n"
 "Language-Team: ru_RU <LL@li.org>\n"
 "Language: uz\n"
 "MIME-Version: 1.0\n"
