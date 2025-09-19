@@ -43,6 +43,7 @@ size or throughput. It is localized to:
 - Swedish
 - Turkish
 - Ukrainian
+- Uzbek
 - Vietnamese
 
 ## API reference
