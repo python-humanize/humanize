@@ -9,12 +9,7 @@ from .i18n import _pgettext as P_
 
 TYPE_CHECKING = False
 if TYPE_CHECKING:
-    import sys
-
-    if sys.version_info >= (3, 10):
-        from typing import TypeAlias
-    else:
-        from typing_extensions import TypeAlias
+    from typing import TypeAlias
 
     # This type can be better defined by typing.SupportsFloat
     # but that's a Python 3.8 only typing option.
