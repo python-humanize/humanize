@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import bisect
+
 from .i18n import _gettext as _
 from .i18n import _ngettext, decimal_separator, thousands_separator
 from .i18n import _ngettext_noop as NS_
@@ -194,8 +196,8 @@ def intword(value: NumberOrString, format: str = "%.1f") -> str:
     """Converts a large integer to a friendly text representation.
 
     Works best for numbers over 1 million. For example, 1_000_000 becomes "1.0 million",
-    1200000 becomes "1.2 million" and "1_200_000_000" becomes "1.2 billion". Supports up
-    to decillion (33 digits) and googol (100 digits).
+    1_200_000 becomes "1.2 million" and "1_200_000_000" becomes "1.2 billion". Supports
+    up to decillion (33 digits) and googol (100 digits).
 
     Examples:
         ```pycon
@@ -241,29 +243,26 @@ def intword(value: NumberOrString, format: str = "%.1f") -> str:
         negative_prefix = ""
 
     if value < powers[0]:
-        return negative_prefix + str(value)
+        return f"{negative_prefix}{value}"
 
-    for ordinal_, power in enumerate(powers[1:], 1):
-        if value < power:
-            chopped = value / float(powers[ordinal_ - 1])
-            powers_difference = powers[ordinal_] / powers[ordinal_ - 1]
-            if float(format % chopped) == powers_difference:
-                chopped = value / float(powers[ordinal_])
-                singular, plural = human_powers[ordinal_]
-                return (
-                    negative_prefix
-                    + " ".join(
-                        [format, _ngettext(singular, plural, math.ceil(chopped))]
-                    )
-                ) % chopped
+    ordinal = bisect.bisect_right(powers, value)
+    largest_ordinal = ordinal == len(powers)
 
-            singular, plural = human_powers[ordinal_ - 1]
-            return (
-                negative_prefix
-                + " ".join([format, _ngettext(singular, plural, math.ceil(chopped))])
-            ) % chopped
+    # Consider the biggest power of 10 that is smaller than value
+    ordinal -= 1
+    power = powers[ordinal]
+    chopped = value / power
+    rounded_value = float(format % chopped)
 
-    return negative_prefix + str(value)
+    if not largest_ordinal and rounded_value * power == powers[ordinal + 1]:
+        # After rounding, we end up just at the next power
+        ordinal += 1
+        power = powers[ordinal]
+        rounded_value = 1.0
+
+    singular, plural = human_powers[ordinal]
+    unit = _ngettext(singular, plural, math.ceil(rounded_value))
+    return f"{negative_prefix}{rounded_value} {unit}"
 
 
 def apnumber(value: NumberOrString) -> str:

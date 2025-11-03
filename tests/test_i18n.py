@@ -91,15 +91,56 @@ def test_naturaldelta() -> None:
 @pytest.mark.parametrize(
     "locale, number, expected_result",
     [
-        ("es_ES", 1000000, "1.0 millón"),
-        ("es_ES", 3500000, "3.5 millones"),
-        ("es_ES", 1000000000, "1.0 billón"),
-        ("es_ES", 1200000000, "1.2 billones"),
-        ("es_ES", 1000000000000, "1.0 trillón"),
-        ("es_ES", 6700000000000, "6.7 trillones"),
+        ("es_ES", 1_000_000, "1.0 millón"),
+        ("es_ES", 3_500_000, "3.5 millones"),
+        ("es_ES", 1_000_000_000, "1.0 billón"),
+        ("es_ES", 1_200_000_000, "1.2 billones"),
+        ("es_ES", 1_000_000_000_000, "1.0 trillón"),
+        ("es_ES", 6_700_000_000_000, "6.7 trillones"),
+        ("fr_FR", "1_000", "1.0 mille"),
+        ("fr_FR", "12_400", "12.4 milles"),
+        ("fr_FR", "12_490", "12.5 milles"),
+        ("fr_FR", "1_000_000", "1.0 million"),
+        ("fr_FR", "-1_000_000", "-1.0 million"),
+        ("fr_FR", "1_200_000", "1.2 millions"),
+        ("fr_FR", "1_290_000", "1.3 millions"),
+        ("fr_FR", "999_999_999", "1.0 milliard"),
+        ("fr_FR", "1_000_000_000", "1.0 milliard"),
+        ("fr_FR", "-1_000_000_000", "-1.0 milliard"),
+        ("fr_FR", "2_000_000_000", "2.0 milliards"),
+        ("fr_FR", "999_999_999_999", "1.0 billion"),
+        ("fr_FR", "1_000_000_000_000", "1.0 billion"),
+        ("fr_FR", "6_000_000_000_000", "6.0 billions"),
+        ("fr_FR", "-6_000_000_000_000", "-6.0 billions"),
+        ("fr_FR", "999_999_999_999_999", "1.0 billiard"),
+        ("fr_FR", "1_000_000_000_000_000", "1.0 billiard"),
+        ("fr_FR", "1_300_000_000_000_000", "1.3 billiards"),
+        ("fr_FR", "-1_300_000_000_000_000", "-1.3 billiards"),
+        ("fr_FR", "3_500_000_000_000_000_000_000", "3.5 trilliards"),
+        ("fr_FR", "8_100_000_000_000_000_000_000_000_000_000_000", "8.1 quintilliards"),
+        (
+            "fr_FR",
+            "-8_100_000_000_000_000_000_000_000_000_000_000",
+            "-8.1 quintilliards",
+        ),
+        (
+            "fr_FR",
+            1_000_000_000_000_000_000_000_000_000_000_000_000,
+            "1000.0 quintilliards",
+        ),
+        (
+            "fr_FR",
+            1_100_000_000_000_000_000_000_000_000_000_000_000,
+            "1100.0 quintilliards",
+        ),
+        (
+            "fr_FR",
+            2_100_000_000_000_000_000_000_000_000_000_000_000,
+            "2100.0 quintilliards",
+        ),
     ],
 )
-def test_intword_plurals(locale: str, number: int, expected_result: str) -> None:
+def test_intword_i18n(locale: str, number: int, expected_result: str) -> None:
     try:
         humanize.i18n.activate(locale)
     except FileNotFoundError:
