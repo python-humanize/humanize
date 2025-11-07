@@ -140,7 +140,7 @@ msgstr[1] "milliards"
 #: src/humanize/number.py:186
 msgid "trillion"
 msgid_plural "trillion"
-msgstr[0] "billions"
+msgstr[0] "billion"
 msgstr[1] "billions"
 
 #: src/humanize/number.py:187
