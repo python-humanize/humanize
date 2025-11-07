@@ -128,6 +128,12 @@ def test_intword_powers() -> None:
         ([-math.inf], "-Inf"),
         (["nan"], "NaN"),
         (["-inf"], "-Inf"),
+        (["1234567", "%.0f"], "1 million"),
+        (["1234567", "%.1f"], "1.2 million"),
+        (["1234567", "%.2f"], "1.23 million"),
+        (["1234567", "%.3f"], "1.235 million"),
+        (["999500", "%.0f"], "1 million"),
+        (["999499", "%.0f"], "999 thousand"),
     ],
 )
 def test_intword(test_args: list[str], expected: str) -> None:

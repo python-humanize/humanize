@@ -257,12 +257,11 @@ def intword(value: NumberOrString, format: str = "%.1f") -> str:
     if not largest_ordinal and rounded_value * power == powers[ordinal + 1]:
         # After rounding, we end up just at the next power
         ordinal += 1
-        power = powers[ordinal]
         rounded_value = 1.0
 
     singular, plural = human_powers[ordinal]
     unit = _ngettext(singular, plural, math.ceil(rounded_value))
-    return f"{negative_prefix}{rounded_value} {unit}"
+    return f"{negative_prefix}{format % rounded_value} {unit}"
 
 
 def apnumber(value: NumberOrString) -> str:
