@@ -16,6 +16,8 @@ jobs:
       matrix:
         python-version:
           - "pypy3.11"
+          - "3.15t"
+          - "3.15"
           - "3.14t"
           - "3.14"
           - "3.13t"
