@@ -2,13 +2,12 @@
 
 ## Linting
 
-Linting is run on the CI using [pre-commit](https://pre-commit.com/), and can be run
-locally:
+Linting is run on the CI using [prek](https://prek.j178.dev//), and can be run locally:
 
 ```sh
-pip install pre-commit
-pre-commit install  # optional: to run when you commit, on just the staged changes
-pre-commit run --all-files  # to run on all files now
+pip install prek
+prek install  # optional: to run when you commit, on just the staged changes
+prek run --all-files  # to run on all files now
 ```
 
 ## Docstrings
