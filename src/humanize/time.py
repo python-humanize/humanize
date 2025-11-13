@@ -84,7 +84,7 @@ def _date_and_delta(
         delta = value
     else:
         try:
-            value = value if precise else int(value)
+            value = value if precise else round(value)
             delta = dt.timedelta(seconds=value)
             date = now - delta
         except (ValueError, TypeError):
