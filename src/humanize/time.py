@@ -84,7 +84,7 @@ def _date_and_delta(
         delta = value
     else:
         try:
-            value = value if precise else int(value)
+            value = value if precise else round(value)
             delta = dt.timedelta(seconds=value)
             date = now - delta
         except (ValueError, TypeError):
@@ -100,6 +100,8 @@ def naturaldelta(
     """Return a natural representation of a timedelta or number of seconds.
 
     This is similar to `naturaltime`, but does not add tense to the result.
+
+    The timedelta will be rounded to the nearest unit that makes sense.
 
     Args:
         value (datetime.timedelta, int or float): A timedelta or a number of seconds.
@@ -155,9 +157,9 @@ def naturaldelta(
     delta = abs(delta)
     years = delta.days // 365
     days = delta.days % 365
-    num_months = int(days // 30.5)
+    num_months = round(days / 30.5)
 
-    if not years and days < 1:
+    if years == 0 and days < 1:
         if delta.seconds == 0:
             if min_unit == Unit.MICROSECONDS and delta.microseconds < 1000:
                 return (
@@ -181,18 +183,24 @@ def naturaldelta(
         if delta.seconds < 60:
             return _ngettext("%d second", "%d seconds", delta.seconds) % delta.seconds
 
-        if 60 <= delta.seconds < 120:
-            return _("a minute")
+        if 60 <= delta.seconds < 3600:
+            minutes = round(delta.seconds / 60)
+            if minutes == 1:
+                return _("a minute")
 
-        if 120 <= delta.seconds < 3600:
-            minutes = delta.seconds // 60
+            if minutes == 60:
+                return _("an hour")
+
             return _ngettext("%d minute", "%d minutes", minutes) % minutes
 
-        if 3600 <= delta.seconds < 3600 * 2:
-            return _("an hour")
+        if 3600 <= delta.seconds:
+            hours = round(delta.seconds / 3600)
+            if hours == 1:
+                return _("an hour")
 
-        if 3600 < delta.seconds:
-            hours = delta.seconds // 3600
+            if hours == 24:
+                return _("a day")
+
             return _ngettext("%d hour", "%d hours", hours) % hours
 
     elif years == 0:
@@ -202,24 +210,31 @@ def naturaldelta(
         if not use_months:
             return _ngettext("%d day", "%d days", days) % days
 
-        if not num_months:
+        if num_months == 0:
             return _ngettext("%d day", "%d days", days) % days
 
         if num_months == 1:
             return _("a month")
 
+        if num_months == 12:
+            return _("a year")
+
         return _ngettext("%d month", "%d months", num_months) % num_months
 
     elif years == 1:
-        if not num_months and not days:
+        if num_months == 0 and days == 0:
             return _("a year")
 
-        if not num_months:
+        if num_months == 0:
             return _ngettext("1 year, %d day", "1 year, %d days", days) % days
 
         if use_months:
             if num_months == 1:
                 return _("1 year, 1 month")
+
+            if num_months == 12:
+                years += 1
+                return _ngettext("%d year", "%d years", years) % years
 
             return (
                 _ngettext("1 year, %d month", "1 year, %d months", num_months)
@@ -241,6 +256,8 @@ def naturaltime(
     """Return a natural representation of a time in a resolution that makes sense.
 
     This is more or less compatible with Django's `naturaltime` filter.
+
+    The time will be rounded to the nearest unit that makes sense.
 
     Args:
         value (datetime.datetime, datetime.timedelta, int or float): A `datetime`, a
