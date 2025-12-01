@@ -10,7 +10,8 @@
     },
     {
       "groupName": "docs/requirements.txt",
-      "matchPaths": ["docs/requirements.txt"]
+      "matchPaths": ["docs/requirements.txt"],
+      "separateMajorMinor": "false"
     }
   ],
   "schedule": ["on the first day of the month"]
