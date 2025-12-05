@@ -22,6 +22,7 @@ from humanize.time import (
     naturaltime,
     precisedelta,
 )
+from humanize.bitrate import natural_bitrate
 
 from ._version import __version__
 
@@ -36,6 +37,7 @@ __all__ = [
     "intcomma",
     "intword",
     "metric",
+    "natural_bitrate",
     "natural_list",
     "naturaldate",
     "naturalday",
