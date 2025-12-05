@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from humanize.bitrate import natural_bitrate
 from humanize.filesize import naturalsize
 from humanize.i18n import activate, deactivate, decimal_separator, thousands_separator
 from humanize.lists import natural_list
@@ -22,7 +23,6 @@ from humanize.time import (
     naturaltime,
     precisedelta,
 )
-from humanize.bitrate import natural_bitrate
 
 from ._version import __version__
 
