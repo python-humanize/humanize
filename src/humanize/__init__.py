@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from humanize.filesize import naturalsize
 from humanize.bitrate import natural_bitrate
+from humanize.filesize import naturalsize
 from humanize.i18n import activate, deactivate, decimal_separator, thousands_separator
 from humanize.lists import natural_list
 from humanize.number import (

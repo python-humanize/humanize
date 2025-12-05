@@ -1,4 +1,7 @@
-def natural_bitrate(value: float | int) -> str:
+from __future__ import annotations
+
+
+def natural_bitrate(value: float) -> str:
     """将比特率数值转换为人类可读的字符串格式。
 
     Args:
