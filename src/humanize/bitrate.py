@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from math import log
 
+
 def natural_bitrate(value: float | str, format: str = "%.1f") -> str:
     """Format a number of bits per second like a human-readable bitrate (e.g. 1 kbps).
 
@@ -46,5 +47,5 @@ def natural_bitrate(value: float | str, format: str = "%.1f") -> str:
         return f"{int(bps)} bps"
 
     exp = int(min(log(abs_bps, base), len(suffixes)))
-    ret: str = format % (bps / (base ** exp)) + suffixes[exp - 1]
+    ret: str = format % (bps / (base**exp)) + suffixes[exp - 1]
     return ret
