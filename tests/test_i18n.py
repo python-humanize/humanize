@@ -91,6 +91,12 @@ def test_naturaldelta() -> None:
 @pytest.mark.parametrize(
     "locale, number, expected_result",
     [
+        # Italian uses comma as decimal separator
+        ("it_IT", 1_000_000, "1,0 milione"),
+        ("it_IT", 1_200_000, "1,2 milioni"),
+        ("it_IT", 1_000_000_000, "1,0 miliardo"),
+        ("it_IT", 3_500_000_000, "3,5 miliardi"),
+        # Spanish uses dot as decimal separator
         ("es_ES", 1_000_000, "1.0 millón"),
         ("es_ES", 3_500_000, "3.5 millones"),
         ("es_ES", 1_000_000_000, "1.0 billón"),

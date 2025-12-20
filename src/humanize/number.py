@@ -261,7 +261,9 @@ def intword(value: NumberOrString, format: str = "%.1f") -> str:
 
     singular, plural = human_powers[ordinal]
     unit = _ngettext(singular, plural, math.ceil(rounded_value))
-    return f"{negative_prefix}{format % rounded_value} {unit}"
+    decimal_sep = decimal_separator()
+    number = (format % rounded_value).replace(".", decimal_sep)
+    return f"{negative_prefix}{number} {unit}"
 
 
 def apnumber(value: NumberOrString) -> str:
