@@ -104,7 +104,7 @@ def test_naturaldelta_nomonths(test_input: dt.timedelta, expected: str) -> None:
         (dt.timedelta(minutes=59), "59 minutes"),
         (dt.timedelta(minutes=59, seconds=30), "an hour"),
         (dt.timedelta(hours=1, minutes=29), "an hour"),
-        # Round to nearest, ties away from zero.
+        # Round to nearest, ties to even.
         # See https://en.wikipedia.org/wiki/IEEE_754#Rounding_rules
         (dt.timedelta(hours=1, minutes=30), "2 hours"),
         (dt.timedelta(hours=2, minutes=30), "2 hours"),
