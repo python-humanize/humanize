@@ -228,7 +228,7 @@ class TestActivate:
         i18n = importlib.import_module("humanize.i18n")
         monkeypatch.setattr(i18n, "__spec__", None)
 
-        with pytest.raises(Exception, match=self.expected_msg):
+        with pytest.raises(FileNotFoundError, match=self.expected_msg):
             i18n.activate("ru_RU")
 
     def test_default_locale_path_undefined__spec__(
@@ -237,7 +237,7 @@ class TestActivate:
         i18n = importlib.import_module("humanize.i18n")
         monkeypatch.delattr(i18n, "__spec__")
 
-        with pytest.raises(Exception, match=self.expected_msg):
+        with pytest.raises(FileNotFoundError, match=self.expected_msg):
             i18n.activate("ru_RU")
 
     @freeze_time("2020-02-02")

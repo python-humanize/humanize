@@ -71,7 +71,7 @@ def activate(
         dict: Translations.
 
     Raises:
-        Exception: If humanize cannot find the locale folder.
+        FileNotFoundError: If humanize cannot find the locale folder.
     """
     if locale is None or locale.startswith("en"):
         _CURRENT.locale = None
@@ -85,7 +85,7 @@ def activate(
             "Humanize cannot determinate the default location of the 'locale' folder. "
             "You need to pass the path explicitly."
         )
-        raise Exception(msg)
+        raise FileNotFoundError(msg)
     if locale not in _TRANSLATIONS:
         translation = gettext_module.translation("humanize", path, [locale])
         _TRANSLATIONS[locale] = translation
