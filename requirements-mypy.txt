@@ -1,4 +1,4 @@
-mypy==1.19.0
+mypy==1.19.1
 pytest
 types-freezegun
 types-setuptools
