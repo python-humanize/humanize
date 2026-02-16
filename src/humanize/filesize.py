@@ -4,62 +4,82 @@ from __future__ import annotations
 
 from math import log
 
-from humanize import i18n
+from humanize.i18n import gettext as _
 
-suffixes = {
-    "decimal": ("kB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB", "RB", "QB"),
-    "binary": ("KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB", "RiB", "QiB"),
-    "gnu": "KMGTPEZYRQ",
+
+_SUFFIXES = {
+    "decimal": (
+        _(" kB"),
+        _(" MB"),
+        _(" GB"),
+        _(" TB"),
+        _(" PB"),
+        _(" EB"),
+        _(" ZB"),
+        _(" YB"),
+        _(" RB"),
+        _(" QB"),
+    ),
+    "binary": (
+        _(" KiB"),
+        _(" MiB"),
+        _(" GiB"),
+        _(" TiB"),
+        _(" PiB"),
+        _(" EiB"),
+        _(" ZiB"),
+        _(" YiB"),
+        _(" RiB"),
+        _(" QiB"),
+    ),
 }
-
-
-def _translation():
-    """Return active gettext translation (or None)."""
-    try:
-        return i18n.get_translation()
-    except Exception:
-        return None
 
 
 def naturalsize(
     value: float | str,
     binary: bool = False,
-    gnu: bool = False,
     format: str = "%.1f",
 ) -> str:
-    t = _translation()
-    _ = t.gettext if t is not None else (lambda s: s)
+    """
+    Format a number of bytes like a human-readable file size.
 
-    if gnu:
-        suffix = suffixes["gnu"]
-    elif binary:
-        suffix = suffixes["binary"]
-    else:
-        suffix = suffixes["decimal"]
+    Examples:
+        >>> naturalsize(42)
+        '42 Bytes'
+        >>> naturalsize(42000)
+        '42.0 kB'
+        >>> naturalsize(42000000)
+        '42.0 MB'
 
-    base = 1024 if (gnu or binary) else 1000
-    bytes_ = float(value)
-    abs_bytes = abs(bytes_)
+    When a locale is activated via ``humanize.i18n.activate()``,
+    the unit suffixes will be translated accordingly.
 
-    if abs_bytes == 1 and not gnu:
-        return f"{int(bytes_)} {_('Byte')}"
+    :param value: The number of bytes.
+    :param binary: Use binary (powers of 1024) units instead of decimal.
+    :param format: Numeric format string.
+    :return: Human-readable file size.
+    """
 
-    if abs_bytes < base:
-        if gnu:
-            return f"{int(bytes_)}B"
-        return f"{int(bytes_)} {_('Bytes')}"
+    try:
+        bytes_value = float(value)
+    except (TypeError, ValueError):
+        return str(value)
 
-    exp = int(min(log(abs_bytes, base), len(suffix)))
-    number = format % (bytes_ / (base**exp))
+    if bytes_value == 1:
+        return _("1 Byte")
+    if bytes_value < 1024:
+        return _("%d Bytes") % bytes_value
 
-    # French decimal separator: use comma instead of dot
-    if t is not None:
-        lang = (t.info().get("language", "") or "").lower()
-        if lang.startswith("fr"):
-            number = number.replace(".", ",")
+    base = 1024 if binary else 1000
+    exp = int(log(bytes_value, base))
+    exp = min(exp, len(_SUFFIXES["binary"]) if binary else len(_SUFFIXES["decimal"]))
 
-    if gnu:
-        return number + suffix[exp - 1]
+    value = bytes_value / base**exp
 
-    unit = _(suffix[exp - 1])
-    return f"{number} {unit}"
+    suffix = (
+        _SUFFIXES["binary"][exp - 1]
+        if binary
+        else _SUFFIXES["decimal"][exp - 1]
+    )
+
+    return (format % value) + suffix
