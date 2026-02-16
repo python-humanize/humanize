@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from math import log
+
 from humanize import i18n
 
 suffixes = {
@@ -27,7 +28,7 @@ def naturalsize(
     format: str = "%.1f",
 ) -> str:
     t = _translation()
-    _ = (t.gettext if t is not None else (lambda s: s))
+    _ = t.gettext if t is not None else (lambda s: s)
 
     if gnu:
         suffix = suffixes["gnu"]
