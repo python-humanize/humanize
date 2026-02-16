@@ -4,96 +4,75 @@ from __future__ import annotations
 
 from math import log
 
-suffixes = {
+from humanize.i18n import gettext as _
+
+_SUFFIXES = {
     "decimal": (
-        " kB",
-        " MB",
-        " GB",
-        " TB",
-        " PB",
-        " EB",
-        " ZB",
-        " YB",
-        " RB",
-        " QB",
+        _(" kB"),
+        _(" MB"),
+        _(" GB"),
+        _(" TB"),
+        _(" PB"),
+        _(" EB"),
+        _(" ZB"),
+        _(" YB"),
+        _(" RB"),
+        _(" QB"),
     ),
     "binary": (
-        " KiB",
-        " MiB",
-        " GiB",
-        " TiB",
-        " PiB",
-        " EiB",
-        " ZiB",
-        " YiB",
-        " RiB",
-        " QiB",
+        _(" KiB"),
+        _(" MiB"),
+        _(" GiB"),
+        _(" TiB"),
+        _(" PiB"),
+        _(" EiB"),
+        _(" ZiB"),
+        _(" YiB"),
+        _(" RiB"),
+        _(" QiB"),
     ),
-    "gnu": "KMGTPEZYRQ",
 }
 
 
 def naturalsize(
     value: float | str,
     binary: bool = False,
-    gnu: bool = False,
     format: str = "%.1f",
 ) -> str:
-    """Format a number of bytes like a human-readable filesize (e.g. 10 kB).
-
-    By default, decimal suffixes (kB, MB) are used.
-
-    Non-GNU modes are compatible with jinja2's `filesizeformat` filter.
+    """Format a number of bytes like a human-readable file size.
 
     Examples:
-        ```pycon
-        >>> naturalsize(3000000)
-        '3.0 MB'
-        >>> naturalsize(300, False, True)
-        '300B'
-        >>> naturalsize(3000, False, True)
-        '2.9K'
-        >>> naturalsize(3000, False, True, "%.3f")
-        '2.930K'
-        >>> naturalsize(3000, True)
-        '2.9 KiB'
-        >>> naturalsize(10**28)
-        '10.0 RB'
-        >>> naturalsize(10**34 * 3)
-        '30000.0 QB'
-        >>> naturalsize(-4096, True)
-        '-4.0 KiB'
+        >>> naturalsize(42)
+        '42 Bytes'
+        >>> naturalsize(42000)
+        '42.0 kB'
+        >>> naturalsize(42000000)
+        '42.0 MB'
 
-        ```
+    When a locale is activated via ``humanize.i18n.activate()``,
+    the unit suffixes will be translated accordingly.
 
-    Args:
-        value (int, float, str): Integer to convert.
-        binary (bool): If `True`, uses binary suffixes (KiB, MiB) with base
-            2<sup>10</sup> instead of 10<sup>3</sup>.
-        gnu (bool): If `True`, the binary argument is ignored and GNU-style
-            (`ls -sh` style) prefixes are used (K, M) with the 2**10 definition.
-        format (str): Custom formatter.
-
-    Returns:
-        str: Human readable representation of a filesize.
+    :param value: The number of bytes.
+    :param binary: Use binary (powers of 1024) units instead of decimal.
+    :param format: Numeric format string.
+    :return: Human-readable file size.
     """
-    if gnu:
-        suffix = suffixes["gnu"]
-    elif binary:
-        suffix = suffixes["binary"]
-    else:
-        suffix = suffixes["decimal"]
+    try:
+        bytes_value = float(value)
+    except (TypeError, ValueError):
+        return str(value)
 
-    base = 1024 if (gnu or binary) else 1000
-    bytes_ = float(value)
-    abs_bytes = abs(bytes_)
+    if bytes_value == 1:
+        return _("1 Byte")
+    if bytes_value < 1024:
+        return _("%d Bytes") % bytes_value
 
-    if abs_bytes == 1 and not gnu:
-        return f"{int(bytes_)} Byte"
+    base = 1024 if binary else 1000
+    exp = int(log(bytes_value, base))
+    exp = min(exp, len(_SUFFIXES["binary"]) if binary else len(_SUFFIXES["decimal"]))
 
-    if abs_bytes < base:
-        return f"{int(bytes_)}B" if gnu else f"{int(bytes_)} Bytes"
+    value = bytes_value / base**exp
 
-    exp = int(min(log(abs_bytes, base), len(suffix)))
-    ret: str = format % (bytes_ / (base**exp)) + suffix[exp - 1]
-    return ret
+    suffix = _SUFFIXES["binary"][exp - 1] if binary else _SUFFIXES["decimal"][exp - 1]
+
+    return (format % value) + suffix
