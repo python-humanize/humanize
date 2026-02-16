@@ -6,7 +6,6 @@ from math import log
 
 from humanize.i18n import gettext as _
 
-
 _SUFFIXES = {
     "decimal": (
         _(" kB"),
@@ -40,8 +39,7 @@ def naturalsize(
     binary: bool = False,
     format: str = "%.1f",
 ) -> str:
-    """
-    Format a number of bytes like a human-readable file size.
+    """Format a number of bytes like a human-readable file size.
 
     Examples:
         >>> naturalsize(42)
@@ -59,7 +57,6 @@ def naturalsize(
     :param format: Numeric format string.
     :return: Human-readable file size.
     """
-
     try:
         bytes_value = float(value)
     except (TypeError, ValueError):
@@ -76,10 +73,6 @@ def naturalsize(
 
     value = bytes_value / base**exp
 
-    suffix = (
-        _SUFFIXES["binary"][exp - 1]
-        if binary
-        else _SUFFIXES["decimal"][exp - 1]
-    )
+    suffix = _SUFFIXES["binary"][exp - 1] if binary else _SUFFIXES["decimal"][exp - 1]
 
     return (format % value) + suffix
