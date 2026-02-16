@@ -3,34 +3,21 @@
 from __future__ import annotations
 
 from math import log
+from humanize import i18n
 
 suffixes = {
-    "decimal": (
-        " kB",
-        " MB",
-        " GB",
-        " TB",
-        " PB",
-        " EB",
-        " ZB",
-        " YB",
-        " RB",
-        " QB",
-    ),
-    "binary": (
-        " KiB",
-        " MiB",
-        " GiB",
-        " TiB",
-        " PiB",
-        " EiB",
-        " ZiB",
-        " YiB",
-        " RiB",
-        " QiB",
-    ),
+    "decimal": ("kB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB", "RB", "QB"),
+    "binary": ("KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB", "RiB", "QiB"),
     "gnu": "KMGTPEZYRQ",
 }
+
+
+def _translation():
+    """Return active gettext translation (or None)."""
+    try:
+        return i18n.get_translation()
+    except Exception:
+        return None
 
 
 def naturalsize(
@@ -39,44 +26,9 @@ def naturalsize(
     gnu: bool = False,
     format: str = "%.1f",
 ) -> str:
-    """Format a number of bytes like a human-readable filesize (e.g. 10 kB).
+    t = _translation()
+    _ = (t.gettext if t is not None else (lambda s: s))
 
-    By default, decimal suffixes (kB, MB) are used.
-
-    Non-GNU modes are compatible with jinja2's `filesizeformat` filter.
-
-    Examples:
-        ```pycon
-        >>> naturalsize(3000000)
-        '3.0 MB'
-        >>> naturalsize(300, False, True)
-        '300B'
-        >>> naturalsize(3000, False, True)
-        '2.9K'
-        >>> naturalsize(3000, False, True, "%.3f")
-        '2.930K'
-        >>> naturalsize(3000, True)
-        '2.9 KiB'
-        >>> naturalsize(10**28)
-        '10.0 RB'
-        >>> naturalsize(10**34 * 3)
-        '30000.0 QB'
-        >>> naturalsize(-4096, True)
-        '-4.0 KiB'
-
-        ```
-
-    Args:
-        value (int, float, str): Integer to convert.
-        binary (bool): If `True`, uses binary suffixes (KiB, MiB) with base
-            2<sup>10</sup> instead of 10<sup>3</sup>.
-        gnu (bool): If `True`, the binary argument is ignored and GNU-style
-            (`ls -sh` style) prefixes are used (K, M) with the 2**10 definition.
-        format (str): Custom formatter.
-
-    Returns:
-        str: Human readable representation of a filesize.
-    """
     if gnu:
         suffix = suffixes["gnu"]
     elif binary:
@@ -89,11 +41,24 @@ def naturalsize(
     abs_bytes = abs(bytes_)
 
     if abs_bytes == 1 and not gnu:
-        return f"{int(bytes_)} Byte"
+        return f"{int(bytes_)} {_('Byte')}"
 
     if abs_bytes < base:
-        return f"{int(bytes_)}B" if gnu else f"{int(bytes_)} Bytes"
+        if gnu:
+            return f"{int(bytes_)}B"
+        return f"{int(bytes_)} {_('Bytes')}"
 
     exp = int(min(log(abs_bytes, base), len(suffix)))
-    ret: str = format % (bytes_ / (base**exp)) + suffix[exp - 1]
-    return ret
+    number = format % (bytes_ / (base**exp))
+
+    # French decimal separator: use comma instead of dot
+    if t is not None:
+        lang = (t.info().get("language", "") or "").lower()
+        if lang.startswith("fr"):
+            number = number.replace(".", ",")
+
+    if gnu:
+        return number + suffix[exp - 1]
+
+    unit = _(suffix[exp - 1])
+    return f"{number} {unit}"

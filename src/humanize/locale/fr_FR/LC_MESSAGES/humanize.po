@@ -363,3 +363,34 @@ msgstr "hier"
 #, python-format
 msgid "%s and %s"
 msgstr "%s et %s"
+
+# --- filesize units (naturalsize) ---
+msgid "Byte"
+msgstr "octet"
+
+msgid "Bytes"
+msgstr "octets"
+
+msgid "kB"
+msgstr "Ko"
+
+msgid "MB"
+msgstr "Mo"
+
+msgid "GB"
+msgstr "Go"
+
+msgid "TB"
+msgstr "To"
+
+msgid "PB"
+msgstr "Po"
+
+msgid "EB"
+msgstr "Eo"
+
+msgid "ZB"
+msgstr "Zo"
+
+msgid "YB"
+msgstr "Yo"
