@@ -243,6 +243,7 @@ def naturaldelta(
 
         return _ngettext("1 year, %d day", "1 year, %d days", days) % days
 
+    years = round(delta.days / 365)
     return _ngettext("%d year", "%d years", years).replace("%d", "%s") % intcomma(years)
 
 
