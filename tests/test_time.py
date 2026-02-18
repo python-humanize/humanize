@@ -327,7 +327,7 @@ def test_naturalday_tz_aware() -> None:
 
 @freeze_time("2023-10-15 23:00:00", tz_offset=0)
 def test_naturaldate_tz_aware() -> None:
-    """Test that naturaldate compares dates in the value's timezone, not system local."""
+    """Test naturaldate compares dates in value's timezone."""
     # https://github.com/python-humanize/humanize/issues/152
     utc = dt.timezone.utc
     aedt = dt.timezone(dt.timedelta(hours=11))
