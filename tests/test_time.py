@@ -300,6 +300,51 @@ def test_naturaldate(test_input: dt.date, expected: str) -> None:
     assert humanize.naturaldate(test_input) == expected
 
 
+@freeze_time("2023-10-15 23:00:00", tz_offset=0)
+def test_naturalday_tz_aware() -> None:
+    """Test that naturalday compares dates in the value's timezone, not system local."""
+    # https://github.com/python-humanize/humanize/issues/152
+    utc = dt.timezone.utc
+    aedt = dt.timezone(dt.timedelta(hours=11))
+    edt = dt.timezone(dt.timedelta(hours=-4))
+    pdt = dt.timezone(dt.timedelta(hours=-7))
+
+    # A moment 7 hours in the future (UTC).
+    future = dt.datetime(2023, 10, 16, hour=6, tzinfo=utc)
+
+    # In UTC: now is Oct 15, future is Oct 16 → tomorrow
+    assert humanize.naturalday(future) == "tomorrow"
+
+    # In AEDT (+11): now is Oct 16 10:00, future is Oct 16 17:00 → today
+    assert humanize.naturalday(future.astimezone(aedt)) == "today"
+
+    # In EDT (-4): now is Oct 15 19:00, future is Oct 16 02:00 → tomorrow
+    assert humanize.naturalday(future.astimezone(edt)) == "tomorrow"
+
+    # In PDT (-7): now is Oct 15 16:00, future is Oct 15 23:00 → today
+    assert humanize.naturalday(future.astimezone(pdt)) == "today"
+
+
+@freeze_time("2023-10-15 23:00:00", tz_offset=0)
+def test_naturaldate_tz_aware() -> None:
+    """Test that naturaldate compares dates in the value's timezone, not system local."""
+    # https://github.com/python-humanize/humanize/issues/152
+    utc = dt.timezone.utc
+    aedt = dt.timezone(dt.timedelta(hours=11))
+    edt = dt.timezone(dt.timedelta(hours=-4))
+
+    future = dt.datetime(2023, 10, 16, hour=6, tzinfo=utc)
+
+    # In UTC: tomorrow
+    assert humanize.naturaldate(future) == "tomorrow"
+
+    # In AEDT (+11): today
+    assert humanize.naturaldate(future.astimezone(aedt)) == "today"
+
+    # In EDT (-4): tomorrow
+    assert humanize.naturaldate(future.astimezone(edt)) == "tomorrow"
+
+
 @pytest.mark.parametrize(
     "seconds, expected",
     [
