@@ -300,6 +300,32 @@ def test_naturaldate(test_input: dt.date, expected: str) -> None:
     assert humanize.naturaldate(test_input) == expected
 
 
+@freeze_time("2023-10-15 23:00:00+00:00")
+def test_naturaldate_tz_aware() -> None:
+    """naturaldate should compare dates in the timezone of the given value."""
+    utc = dt.timezone.utc
+    aedt = dt.timezone(dt.timedelta(hours=11))
+    cest = dt.timezone(dt.timedelta(hours=2))
+    edt = dt.timezone(dt.timedelta(hours=-4))
+    pdt = dt.timezone(dt.timedelta(hours=-7))
+    future = dt.datetime(2023, 10, 16, hour=6, tzinfo=utc)
+
+    # UTC: now is Oct 15, future is Oct 16 => tomorrow
+    assert humanize.naturaldate(future) == "tomorrow"
+
+    # AEDT (+11): now is Oct 16 10:00, future is Oct 16 17:00 => today
+    assert humanize.naturaldate(future.astimezone(aedt)) == "today"
+
+    # CEST (+2): now is Oct 16 01:00, future is Oct 16 08:00 => today
+    assert humanize.naturaldate(future.astimezone(cest)) == "today"
+
+    # EDT (-4): now is Oct 15 19:00, future is Oct 16 02:00 => tomorrow
+    assert humanize.naturaldate(future.astimezone(edt)) == "tomorrow"
+
+    # PDT (-7): now is Oct 15 16:00, future is Oct 15 23:00 => today
+    assert humanize.naturaldate(future.astimezone(pdt)) == "today"
+
+
 @pytest.mark.parametrize(
     "seconds, expected",
     [
