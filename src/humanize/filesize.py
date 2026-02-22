@@ -91,10 +91,10 @@ def naturalsize(
     abs_bytes = abs(bytes_)
 
     if abs_bytes == 1 and not gnu:
-        return f"{int(bytes_)} Byte"
+        return _("%d Byte") % int(bytes_)
 
     if abs_bytes < base:
-        return f"{int(bytes_)}B" if gnu else f"{int(bytes_)} Bytes"
+        return f"{int(bytes_)}B" if gnu else _("%d Bytes") % int(bytes_)
 
     exp = int(min(log(abs_bytes, base), len(suffix)))
     space = "" if gnu else " "

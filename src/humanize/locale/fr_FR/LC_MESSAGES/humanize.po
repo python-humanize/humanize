@@ -365,11 +365,13 @@ msgid "%s and %s"
 msgstr "%s et %s"
 
 # --- filesize units (naturalsize) ---
-msgid "Byte"
-msgstr "octet"
+#, python-format
+msgid "%d Byte"
+msgstr "%d octet"
 
-msgid "Bytes"
-msgstr "octets"
+#, python-format
+msgid "%d Bytes"
+msgstr "%d octets"
 
 msgid "kB"
 msgstr "Ko"
