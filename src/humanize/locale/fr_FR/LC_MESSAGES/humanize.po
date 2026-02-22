@@ -363,3 +363,73 @@ msgstr "hier"
 #, python-format
 msgid "%s and %s"
 msgstr "%s et %s"
+
+# --- filesize units (naturalsize) ---
+#, python-format
+msgid "%d Byte"
+msgstr "%d octet"
+
+#, python-format
+msgid "%d Bytes"
+msgstr "%d octets"
+
+msgid "kB"
+msgstr "Ko"
+
+msgid "MB"
+msgstr "Mo"
+
+msgid "GB"
+msgstr "Go"
+
+msgid "TB"
+msgstr "To"
+
+msgid "PB"
+msgstr "Po"
+
+msgid "EB"
+msgstr "Eo"
+
+msgid "ZB"
+msgstr "Zo"
+
+msgid "YB"
+msgstr "Yo"
+
+msgid "RB"
+msgstr "Ro"
+
+msgid "QB"
+msgstr "Qo"
+
+# --- binary filesize units ---
+msgid "KiB"
+msgstr "Kio"
+
+msgid "MiB"
+msgstr "Mio"
+
+msgid "GiB"
+msgstr "Gio"
+
+msgid "TiB"
+msgstr "Tio"
+
+msgid "PiB"
+msgstr "Pio"
+
+msgid "EiB"
+msgstr "Eio"
+
+msgid "ZiB"
+msgstr "Zio"
+
+msgid "YiB"
+msgstr "Yio"
+
+msgid "RiB"
+msgstr "Rio"
+
+msgid "QiB"
+msgstr "Qio"

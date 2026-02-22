@@ -158,6 +158,39 @@ def test_intword_i18n(locale: str, number: int, expected_result: str) -> None:
 
 
 @pytest.mark.parametrize(
+    "locale, value, expected_result",
+    [
+        ("fr_FR", 1, "1 octet"),
+        ("fr_FR", 42, "42 octets"),
+        ("fr_FR", 42_000, "42.0 Ko"),
+        ("fr_FR", 42_000_000, "42.0 Mo"),
+        ("fr_FR", 42_000_000_000, "42.0 Go"),
+        ("fr_FR", -42_000, "-42.0 Ko"),
+    ],
+)
+def test_naturalsize_i18n(locale: str, value: float, expected_result: str) -> None:
+    try:
+        humanize.i18n.activate(locale)
+    except FileNotFoundError:
+        pytest.skip("Generate .mo with scripts/generate-translation-binaries.sh")
+    else:
+        assert humanize.naturalsize(value) == expected_result
+    finally:
+        humanize.i18n.deactivate()
+
+
+def test_naturalsize_i18n_binary() -> None:
+    try:
+        humanize.i18n.activate("fr_FR")
+    except FileNotFoundError:
+        pytest.skip("Generate .mo with scripts/generate-translation-binaries.sh")
+    else:
+        assert humanize.naturalsize(3000, binary=True) == "2.9 Kio"
+    finally:
+        humanize.i18n.deactivate()
+
+
+@pytest.mark.parametrize(
     "locale, expected_result",
     [
         ("ar", "5خامس"),

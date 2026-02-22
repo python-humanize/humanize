@@ -4,30 +4,32 @@ from __future__ import annotations
 
 from math import log
 
+from humanize.i18n import _gettext as _
+
 suffixes = {
     "decimal": (
-        " kB",
-        " MB",
-        " GB",
-        " TB",
-        " PB",
-        " EB",
-        " ZB",
-        " YB",
-        " RB",
-        " QB",
+        "kB",
+        "MB",
+        "GB",
+        "TB",
+        "PB",
+        "EB",
+        "ZB",
+        "YB",
+        "RB",
+        "QB",
     ),
     "binary": (
-        " KiB",
-        " MiB",
-        " GiB",
-        " TiB",
-        " PiB",
-        " EiB",
-        " ZiB",
-        " YiB",
-        " RiB",
-        " QiB",
+        "KiB",
+        "MiB",
+        "GiB",
+        "TiB",
+        "PiB",
+        "EiB",
+        "ZiB",
+        "YiB",
+        "RiB",
+        "QiB",
     ),
     "gnu": "KMGTPEZYRQ",
 }
@@ -89,11 +91,12 @@ def naturalsize(
     abs_bytes = abs(bytes_)
 
     if abs_bytes == 1 and not gnu:
-        return f"{int(bytes_)} Byte"
+        return _("%d Byte") % int(bytes_)
 
     if abs_bytes < base:
-        return f"{int(bytes_)}B" if gnu else f"{int(bytes_)} Bytes"
+        return f"{int(bytes_)}B" if gnu else _("%d Bytes") % int(bytes_)
 
     exp = int(min(log(abs_bytes, base), len(suffix)))
-    ret: str = format % (bytes_ / (base**exp)) + suffix[exp - 1]
+    space = "" if gnu else " "
+    ret: str = format % (bytes_ / (base**exp)) + space + _(suffix[exp - 1])
     return ret
