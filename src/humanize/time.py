@@ -319,6 +319,12 @@ def naturalday(value: dt.date | dt.datetime, format: str = "%b %d") -> str:
     import datetime as dt
 
     try:
+        # When value is a tz-aware datetime, compute "today" in that timezone
+        # so the comparison uses the correct local date.
+        if isinstance(value, dt.datetime) and value.tzinfo is not None:
+            today = dt.datetime.now(value.tzinfo).date()
+        else:
+            today = dt.date.today()
         value = dt.date(value.year, value.month, value.day)
     except AttributeError:
         # Passed value wasn't date-ish
@@ -326,7 +332,7 @@ def naturalday(value: dt.date | dt.datetime, format: str = "%b %d") -> str:
     except (OverflowError, ValueError):
         # Date arguments out of range
         return str(value)
-    delta = value - dt.date.today()
+    delta = value - today
 
     if delta.days == 0:
         return _("today")
@@ -344,7 +350,12 @@ def naturaldate(value: dt.date | dt.datetime) -> str:
     """Like `naturalday`, but append a year for dates more than ~five months away."""
     import datetime as dt
 
+    original_value = value
     try:
+        if isinstance(value, dt.datetime) and value.tzinfo is not None:
+            today = dt.datetime.now(value.tzinfo).date()
+        else:
+            today = dt.date.today()
         value = dt.date(value.year, value.month, value.day)
     except AttributeError:
         # Passed value wasn't date-ish
@@ -352,10 +363,10 @@ def naturaldate(value: dt.date | dt.datetime) -> str:
     except (OverflowError, ValueError):
         # Date arguments out of range
         return str(value)
-    delta = _abs_timedelta(value - dt.date.today())
+    delta = _abs_timedelta(value - today)
     if delta.days >= 5 * 365 / 12:
-        return naturalday(value, "%b %d %Y")
-    return naturalday(value)
+        return naturalday(original_value, "%b %d %Y")
+    return naturalday(original_value)
 
 
 def _quotient_and_remainder(
