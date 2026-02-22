@@ -394,3 +394,40 @@ msgstr "Zo"
 
 msgid "YB"
 msgstr "Yo"
+
+msgid "RB"
+msgstr "Ro"
+
+msgid "QB"
+msgstr "Qo"
+
+# --- binary filesize units ---
+msgid "KiB"
+msgstr "Kio"
+
+msgid "MiB"
+msgstr "Mio"
+
+msgid "GiB"
+msgstr "Gio"
+
+msgid "TiB"
+msgstr "Tio"
+
+msgid "PiB"
+msgstr "Pio"
+
+msgid "EiB"
+msgstr "Eio"
+
+msgid "ZiB"
+msgstr "Zio"
+
+msgid "YiB"
+msgstr "Yio"
+
+msgid "RiB"
+msgstr "Rio"
+
+msgid "QiB"
+msgstr "Qio"
