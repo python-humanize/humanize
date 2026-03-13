@@ -25,6 +25,7 @@ _THOUSANDS_SEPARATOR = {
     "it_IT": ".",
     "pt_BR": ".",
     "hu_HU": " ",
+    "lv": " ",
 }
 
 # Mapping of locale to decimal separator
@@ -34,6 +35,7 @@ _DECIMAL_SEPARATOR = {
     "it_IT": ",",
     "pt_BR": ",",
     "hu_HU": ",",
+    "lv": ",",
 }
 
 
