@@ -24,18 +24,14 @@ def test_i18n() -> None:
     assert humanize.precisedelta(one_min_three_seconds) == "1 minute and 7 seconds"
 
     try:
+        humanize.i18n.activate("lv")
+        assert humanize.naturaltime(three_seconds) == "pirms 3 sekundēm"
+        assert humanize.ordinal(5) == "5."
+
         humanize.i18n.activate("ru_RU")
         assert humanize.naturaltime(three_seconds) == "3 секунды назад"
         assert humanize.ordinal(5) == "5ый"
         assert humanize.precisedelta(one_min_three_seconds) == "1 минута и 7 секунд"
-
-    except FileNotFoundError:
-        pytest.skip("Generate .mo with scripts/generate-translation-binaries.sh")
-
-    try:
-        humanize.i18n.activate("lv")
-        assert humanize.naturaltime(three_seconds) == "pirms 3 sekundēm"
-        assert humanize.ordinal(5) == "5."
 
     except FileNotFoundError:
         pytest.skip("Generate .mo with scripts/generate-translation-binaries.sh")
