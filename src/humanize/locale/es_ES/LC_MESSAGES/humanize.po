@@ -133,56 +133,56 @@ msgstr[1] "millones"
 #: src/humanize/number.py:180
 msgid "billion"
 msgid_plural "billion"
-msgstr[0] "billón"
-msgstr[1] "billones"
+msgstr[0] "mil millones"
+msgstr[1] "miles de millones"
 
 #: src/humanize/number.py:181
 msgid "trillion"
 msgid_plural "trillion"
-msgstr[0] "trillón"
-msgstr[1] "trillones"
+msgstr[0] "billón"
+msgstr[1] "billones"
 
 #: src/humanize/number.py:182
 msgid "quadrillion"
 msgid_plural "quadrillion"
-msgstr[0] "quatrillón"
-msgstr[1] "quatrillones"
+msgstr[0] "mil billones"
+msgstr[1] "miles de billones"
 
 #: src/humanize/number.py:183
 msgid "quintillion"
 msgid_plural "quintillion"
-msgstr[0] "quintillón"
-msgstr[1] "quintillones"
+msgstr[0] "trillón"
+msgstr[1] "trillones"
 
 #: src/humanize/number.py:184
 msgid "sextillion"
 msgid_plural "sextillion"
-msgstr[0] "sextillón"
-msgstr[1] "sextillones"
+msgstr[0] "mil trillones"
+msgstr[1] "miles de trillones"
 
 #: src/humanize/number.py:185
 msgid "septillion"
 msgid_plural "septillion"
-msgstr[0] "septillón"
-msgstr[1] "septillones"
+msgstr[0] "cuatrillón"
+msgstr[1] "cuatrillones"
 
 #: src/humanize/number.py:186
 msgid "octillion"
 msgid_plural "octillion"
-msgstr[0] "octillón"
-msgstr[1] "octillones"
+msgstr[0] "mil cuatrillones"
+msgstr[1] "miles de cuatrillones"
 
 #: src/humanize/number.py:187
 msgid "nonillion"
 msgid_plural "nonillion"
-msgstr[0] "nonillón"
-msgstr[1] "nonillones"
+msgstr[0] "quintillón"
+msgstr[1] "quintillones"
 
 #: src/humanize/number.py:188
 msgid "decillion"
 msgid_plural "decillion"
-msgstr[0] "decillón"
-msgstr[1] "decillones"
+msgstr[0] "mil quintillones"
+msgstr[1] "miles de quintillones"
 
 #: src/humanize/number.py:189
 msgid "googol"

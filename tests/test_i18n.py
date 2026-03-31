@@ -103,10 +103,10 @@ def test_naturaldelta() -> None:
         # Spanish uses dot as decimal separator
         ("es_ES", 1_000_000, "1.0 millón"),
         ("es_ES", 3_500_000, "3.5 millones"),
-        ("es_ES", 1_000_000_000, "1.0 billón"),
-        ("es_ES", 1_200_000_000, "1.2 billones"),
-        ("es_ES", 1_000_000_000_000, "1.0 trillón"),
-        ("es_ES", 6_700_000_000_000, "6.7 trillones"),
+        ("es_ES", 1_000_000_000, "1.0 mil millones"),
+        ("es_ES", 1_200_000_000, "1.2 miles de millones"),
+        ("es_ES", 1_000_000_000_000, "1.0 billón"),
+        ("es_ES", 6_700_000_000_000, "6.7 billones"),
         # Latvian uses comma as decimal separator
         ("lv", 1_000, "1,0 tūkstotis"),
         ("lv", 1_200, "1,2 tūkstoši"),
