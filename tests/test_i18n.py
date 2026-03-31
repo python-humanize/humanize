@@ -24,6 +24,10 @@ def test_i18n() -> None:
     assert humanize.precisedelta(one_min_three_seconds) == "1 minute and 7 seconds"
 
     try:
+        humanize.i18n.activate("lv")
+        assert humanize.naturaltime(three_seconds) == "pirms 3 sekundēm"
+        assert humanize.ordinal(5) == "5."
+
         humanize.i18n.activate("ru_RU")
         assert humanize.naturaltime(three_seconds) == "3 секунды назад"
         assert humanize.ordinal(5) == "5ый"
@@ -103,6 +107,16 @@ def test_naturaldelta() -> None:
         ("es_ES", 1_200_000_000, "1.2 miles de millones"),
         ("es_ES", 1_000_000_000_000, "1.0 billón"),
         ("es_ES", 6_700_000_000_000, "6.7 billones"),
+        # Latvian uses comma as decimal separator
+        ("lv", 1_000, "1,0 tūkstotis"),
+        ("lv", 1_200, "1,2 tūkstoši"),
+        ("lv", 2_000, "2,0 tūkstoši"),
+        ("lv", 11_000, "11,0 tūkstoši"),
+        ("lv", 21_000, "21,0 tūkstotis"),
+        ("lv", 1_000_000, "1,0 miljons"),
+        ("lv", 2_000_000, "2,0 miljoni"),
+        ("lv", 11_000_000, "11,0 miljoni"),
+        ("lv", 21_000_000, "21,0 miljons"),
         ("fr_FR", "1_000", "1.0 mille"),
         ("fr_FR", "12_400", "12.4 milles"),
         ("fr_FR", "12_490", "12.5 milles"),

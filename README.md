@@ -32,6 +32,7 @@ size or throughput. It is localized to:
 - Japanese
 - Klingon
 - Korean
+- Latvian
 - Norwegian
 - Persian
 - Polish
