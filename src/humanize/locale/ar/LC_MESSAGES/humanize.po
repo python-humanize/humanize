@@ -1,7 +1,7 @@
 # Arabic (عربي) translations for humanize package.
-# Copyright (C) 2022.
+# Copyright (C) 2022-2026.
 # This file is distributed under the same license as the humanize package.
-# AYMEN Mohammed <let.me.code.safe@gmail.com>, 2022.
+# AYMENJD <let.me.code.safe@gmail.com>, 2022-2026.
 # YazeedT, 2023.
 #
 msgid ""
@@ -9,186 +9,234 @@ msgstr ""
 "Project-Id-Version: humanize\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-01-08 19:22+0200\n"
-"PO-Revision-Date: 2022-04-13 17:28+0300\n"
-"Last-Translator: AYMEN Mohammed <let.me.code.safe@gmail.com>\n"
+"PO-Revision-Date: 2026-04-07 22:42+0300\n"
+"Last-Translator: AYMENJD <let.me.code.safe@gmail.com>\n"
 "Language-Team: Arabic <let.me.code.safe@gmail.com>\n"
 "Language: Arabic (عربي)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
 #: src/humanize/number.py:84
 msgctxt "0 (male)"
 msgid "th"
-msgstr "صفر"
+msgstr " صفر"
 
 #: src/humanize/number.py:85
 msgctxt "1 (male)"
 msgid "st"
-msgstr "اول"
+msgstr " أول"
 
 #: src/humanize/number.py:86
 msgctxt "2 (male)"
 msgid "nd"
-msgstr "ثاني"
+msgstr " ثاني"
 
 #: src/humanize/number.py:87
 msgctxt "3 (male)"
 msgid "rd"
-msgstr "ثالث"
+msgstr " ثالث"
 
 #: src/humanize/number.py:88
 msgctxt "4 (male)"
 msgid "th"
-msgstr "رابع"
+msgstr " رابع"
 
 #: src/humanize/number.py:89
 msgctxt "5 (male)"
 msgid "th"
-msgstr "خامس"
+msgstr " خامس"
 
 #: src/humanize/number.py:90
 msgctxt "6 (male)"
 msgid "th"
-msgstr "سادس"
+msgstr " سادس"
 
 #: src/humanize/number.py:91
 msgctxt "7 (male)"
 msgid "th"
-msgstr "سابع"
+msgstr " سابع"
 
 #: src/humanize/number.py:92
 msgctxt "8 (male)"
 msgid "th"
-msgstr "ثامن"
+msgstr " ثامن"
 
 #: src/humanize/number.py:93
 msgctxt "9 (male)"
 msgid "th"
-msgstr "تاسع"
+msgstr " تاسع"
 
 #: src/humanize/number.py:97
 msgctxt "0 (female)"
 msgid "th"
-msgstr "صفر"
+msgstr " صفر"
 
 #: src/humanize/number.py:98
 msgctxt "1 (female)"
 msgid "st"
-msgstr "اولى"
+msgstr " أولى"
 
 #: src/humanize/number.py:99
 msgctxt "2 (female)"
 msgid "nd"
-msgstr "ثانية"
+msgstr " ثانية"
 
 #: src/humanize/number.py:100
 msgctxt "3 (female)"
 msgid "rd"
-msgstr "ثالثة"
+msgstr " ثالثة"
 
 #: src/humanize/number.py:101
 msgctxt "4 (female)"
 msgid "th"
-msgstr "رابعة"
+msgstr " رابعة"
 
 #: src/humanize/number.py:102
 msgctxt "5 (female)"
 msgid "th"
-msgstr "خامسة"
+msgstr " خامسة"
 
 #: src/humanize/number.py:103
 msgctxt "6 (female)"
 msgid "th"
-msgstr "سادسة"
+msgstr " سادسة"
 
 #: src/humanize/number.py:104
 msgctxt "7 (female)"
 msgid "th"
-msgstr "سابعة"
+msgstr " سابعة"
 
 #: src/humanize/number.py:105
 msgctxt "8 (female)"
 msgid "th"
-msgstr "ثامنة"
+msgstr " ثامنة"
 
 #: src/humanize/number.py:106
 msgctxt "9 (female)"
 msgid "th"
-msgstr "تاسعة"
+msgstr " تاسعة"
 
 #: src/humanize/number.py:178
 msgid "thousand"
 msgid_plural "thousand"
-msgstr[0] "الف"
-msgstr[1] "الاف"
+msgstr[0] "ألف"
+msgstr[1] "ألف"
+msgstr[2] "ألفين"
+msgstr[3] "آلاف"
+msgstr[4] "ألف"
+msgstr[5] "ألف"
 
 #: src/humanize/number.py:179
 msgid "million"
 msgid_plural "million"
 msgstr[0] "مليون"
-msgstr[1] "ملايين"
+msgstr[1] "مليون"
+msgstr[2] "مليونين"
+msgstr[3] "ملايين"
+msgstr[4] "مليون"
+msgstr[5] "مليون"
 
 #: src/humanize/number.py:180
 msgid "billion"
 msgid_plural "billion"
 msgstr[0] "مليار"
-msgstr[1] "مليارات"
+msgstr[1] "مليار"
+msgstr[2] "مليارين"
+msgstr[3] "مليارات"
+msgstr[4] "مليار"
+msgstr[5] "مليار"
 
 #: src/humanize/number.py:181
 msgid "trillion"
 msgid_plural "trillion"
 msgstr[0] "تريليون"
-msgstr[1] "تريليونات"
+msgstr[1] "تريليون"
+msgstr[2] "تريليونين"
+msgstr[3] "تريليونات"
+msgstr[4] "تريليون"
+msgstr[5] "تريليون"
 
 #: src/humanize/number.py:182
 msgid "quadrillion"
 msgid_plural "quadrillion"
 msgstr[0] "كوادريليون"
-msgstr[1] "كوادريليونات"
+msgstr[1] "كوادريليون"
+msgstr[2] "كوادريليونين"
+msgstr[3] "كوادريليونات"
+msgstr[4] "كوادريليون"
+msgstr[5] "كوادريليون"
 
 #: src/humanize/number.py:183
 msgid "quintillion"
 msgid_plural "quintillion"
-msgstr[0] "كوينتيليون"
-msgstr[1] "كوينتيليونات"
+msgstr[0] "كوينتليون"
+msgstr[1] "كوينتليون"
+msgstr[2] "كوينتليونين"
+msgstr[3] "كوينتليونات"
+msgstr[4] "كوينتليون"
+msgstr[5] "كوينتليون"
 
 #: src/humanize/number.py:184
 msgid "sextillion"
 msgid_plural "sextillion"
 msgstr[0] "سكستليون"
-msgstr[1] "سكستليونات"
+msgstr[1] "سكستليون"
+msgstr[2] "سكستليونين"
+msgstr[3] "سكستليونات"
+msgstr[4] "سكستليون"
+msgstr[5] "سكستليون"
 
 #: src/humanize/number.py:185
 msgid "septillion"
 msgid_plural "septillion"
 msgstr[0] "سبتيليون"
-msgstr[1] "سبتيليونات"
+msgstr[1] "سبتيليون"
+msgstr[2] "سبتيليونين"
+msgstr[3] "سبتيليونات"
+msgstr[4] "سبتيليون"
+msgstr[5] "سبتيليون"
 
 #: src/humanize/number.py:186
 msgid "octillion"
 msgid_plural "octillion"
-msgstr[0] "اوكتيليون"
-msgstr[1] "اوكتيليونات"
+msgstr[0] "أوكتيليون"
+msgstr[1] "أوكتيليون"
+msgstr[2] "أوكتيليونين"
+msgstr[3] "أوكتيليونات"
+msgstr[4] "أوكتيليون"
+msgstr[5] "أوكتيليون"
 
 #: src/humanize/number.py:187
 msgid "nonillion"
 msgid_plural "nonillion"
-msgstr[0] "نونليون"
-msgstr[1] "نونليونات"
+msgstr[0] "نونيليون"
+msgstr[1] "نونيليون"
+msgstr[2] "نونيليونين"
+msgstr[3] "نونيليونات"
+msgstr[4] "نونيليون"
+msgstr[5] "نونيليون"
 
 #: src/humanize/number.py:188
 msgid "decillion"
 msgid_plural "decillion"
-msgstr[0] "ديليون"
-msgstr[1] "ديليونات"
+msgstr[0] "ديسيليون"
+msgstr[1] "ديسيليون"
+msgstr[2] "ديسيليونين"
+msgstr[3] "ديسيليونات"
+msgstr[4] "ديسيليون"
+msgstr[5] "ديسيليون"
 
 #: src/humanize/number.py:189
 msgid "googol"
 msgid_plural "googol"
 msgstr[0] "جوجل"
-msgstr[1] "جوجلات"
+msgstr[1] "جوجل"
+msgstr[2] "جوجلين"
+msgstr[3] "جوجلات"
+msgstr[4] "جوجل"
+msgstr[5] "جوجل"
 
 #: src/humanize/number.py:301
 msgid "zero"
@@ -200,7 +248,7 @@ msgstr "واحد"
 
 #: src/humanize/number.py:303
 msgid "two"
-msgstr "اثنين"
+msgstr "اثنان"
 
 #: src/humanize/number.py:304
 msgid "three"
@@ -208,7 +256,7 @@ msgstr "ثلاثة"
 
 #: src/humanize/number.py:305
 msgid "four"
-msgstr "اربعة"
+msgstr "أربعة"
 
 #: src/humanize/number.py:306
 msgid "five"
@@ -234,15 +282,23 @@ msgstr "تسعة"
 #, python-format
 msgid "%d microsecond"
 msgid_plural "%d microseconds"
-msgstr[0] "%d ميكرو من الثانية"
-msgstr[1] "%d ميكرو من الثانية"
+msgstr[0] "%d ميكروثانية"
+msgstr[1] "%d ميكروثانية"
+msgstr[2] "%d ميكروثانيتين"
+msgstr[3] "%d ميكروثوانٍ"
+msgstr[4] "%d ميكروثانية"
+msgstr[5] "%d ميكروثانية"
 
 #: src/humanize/time.py:161
 #, python-format
 msgid "%d millisecond"
 msgid_plural "%d milliseconds"
-msgstr[0] "%d جزء من الثانية"
-msgstr[1] "%d اجزاء من الثانية"
+msgstr[0] "%d مللي ثانية"
+msgstr[1] "%d مللي ثانية"
+msgstr[2] "%d مللي ثانيتين"
+msgstr[3] "%d مللي ثوانٍ"
+msgstr[4] "%d مللي ثانية"
+msgstr[5] "%d مللي ثانية"
 
 #: src/humanize/time.py:164 src/humanize/time.py:259
 msgid "a moment"
@@ -257,7 +313,11 @@ msgstr "ثانية"
 msgid "%d second"
 msgid_plural "%d seconds"
 msgstr[0] "%d ثانية"
-msgstr[1] "%d ثواني"
+msgstr[1] "%d ثانية"
+msgstr[2] "%d ثانيتين"
+msgstr[3] "%d ثوانٍ"
+msgstr[4] "%d ثانية"
+msgstr[5] "%d ثانية"
 
 #: src/humanize/time.py:173
 msgid "a minute"
@@ -268,7 +328,11 @@ msgstr "دقيقة"
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d دقيقة"
-msgstr[1] "%d دقائق"
+msgstr[1] "%d دقيقة"
+msgstr[2] "%d دقيقتين"
+msgstr[3] "%d دقائق"
+msgstr[4] "%d دقيقة"
+msgstr[5] "%d دقيقة"
 
 #: src/humanize/time.py:180
 msgid "an hour"
@@ -279,7 +343,11 @@ msgstr "ساعة"
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d ساعة"
-msgstr[1] "%d ساعات"
+msgstr[1] "%d ساعة"
+msgstr[2] "%d ساعتين"
+msgstr[3] "%d ساعات"
+msgstr[4] "%d ساعة"
+msgstr[5] "%d ساعة"
 
 #: src/humanize/time.py:188
 msgid "a day"
@@ -290,7 +358,11 @@ msgstr "يوم"
 msgid "%d day"
 msgid_plural "%d days"
 msgstr[0] "%d يوم"
-msgstr[1] "%d أيام"
+msgstr[1] "%d يوم"
+msgstr[2] "%d يومين"
+msgstr[3] "%d أيام"
+msgstr[4] "%d يومًا"
+msgstr[5] "%d يوم"
 
 #: src/humanize/time.py:197
 msgid "a month"
@@ -301,7 +373,11 @@ msgstr "شهر"
 msgid "%d month"
 msgid_plural "%d months"
 msgstr[0] "%d شهر"
-msgstr[1] "%d أشهر"
+msgstr[1] "%d شهر"
+msgstr[2] "%d شهرين"
+msgstr[3] "%d أشهر"
+msgstr[4] "%d شهر"
+msgstr[5] "%d شهر"
 
 #: src/humanize/time.py:203
 msgid "a year"
@@ -311,8 +387,12 @@ msgstr "سنة"
 #, python-format
 msgid "1 year, %d day"
 msgid_plural "1 year, %d days"
-msgstr[0] "1 سنة ، %d يوم"
-msgstr[1] "1 سنة ، %d ايام"
+msgstr[0] "سنة و %d يوم"
+msgstr[1] "سنة و %d يوم"
+msgstr[2] "سنة و %d يومين"
+msgstr[3] "سنة و %d أيام"
+msgstr[4] "سنة و %d يومًا"
+msgstr[5] "سنة و %d يوم"
 
 #: src/humanize/time.py:210
 msgid "1 year, 1 month"
@@ -322,20 +402,28 @@ msgstr "سنة وشهر"
 #, python-format
 msgid "1 year, %d month"
 msgid_plural "1 year, %d months"
-msgstr[0] "1 سنة ، %d شهر"
-msgstr[1] "1 سنة ، %d اشهر"
+msgstr[0] "سنة و %d شهر"
+msgstr[1] "سنة و %d شهر"
+msgstr[2] "سنة و %d شهرين"
+msgstr[3] "سنة و %d أشهر"
+msgstr[4] "سنة و %d شهر"
+msgstr[5] "سنة و %d شهر"
 
 #: src/humanize/time.py:219
 #, python-format
 msgid "%d year"
 msgid_plural "%d years"
 msgstr[0] "%d سنة"
-msgstr[1] "%d سنين"
+msgstr[1] "%d سنة"
+msgstr[2] "%d سنتين"
+msgstr[3] "%d سنوات"
+msgstr[4] "%d سنة"
+msgstr[5] "%d سنة"
 
 #: src/humanize/time.py:256
 #, python-format
 msgid "%s from now"
-msgstr "%s من الان"
+msgstr "%s من الآن"
 
 #: src/humanize/time.py:256
 #, python-format
@@ -344,7 +432,7 @@ msgstr "قبل %s"
 
 #: src/humanize/time.py:260
 msgid "now"
-msgstr "الان"
+msgstr "الآن"
 
 #: src/humanize/time.py:284
 msgid "today"
@@ -352,7 +440,7 @@ msgstr "اليوم"
 
 #: src/humanize/time.py:287
 msgid "tomorrow"
-msgstr "غداً"
+msgstr "غدًا"
 
 #: src/humanize/time.py:290
 msgid "yesterday"

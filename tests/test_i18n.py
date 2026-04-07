@@ -5,10 +5,9 @@ from __future__ import annotations
 import datetime as dt
 import importlib
 
+import humanize
 import pytest
 from freezegun import freeze_time
-
-import humanize
 
 with freeze_time("2020-02-02"):
     NOW = dt.datetime.now(tz=dt.timezone.utc)
@@ -207,8 +206,8 @@ def test_naturalsize_i18n_binary() -> None:
 @pytest.mark.parametrize(
     "locale, expected_result",
     [
-        ("ar", "5خامس"),
-        ("ar_SA", "5خامس"),
+        ("ar", "5 خامس"),
+        ("ar_SA", "5 خامس"),
         ("fr", "5e"),
         ("fr_FR", "5e"),
         ("pt", "5º"),
