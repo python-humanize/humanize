@@ -5,9 +5,10 @@ from __future__ import annotations
 import datetime as dt
 import importlib
 
-import humanize
 import pytest
 from freezegun import freeze_time
+
+import humanize
 
 with freeze_time("2020-02-02"):
     NOW = dt.datetime.now(tz=dt.timezone.utc)
