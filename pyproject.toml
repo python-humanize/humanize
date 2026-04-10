@@ -37,31 +37,24 @@ classifiers = [
 dynamic = [ "version" ]
 optional-dependencies.tests = [
   "freezegun",
-  "pytest",
+  "pytest>=9",
   "pytest-cov",
 ]
+urls."Issue tracker" = "https://github.com/python-humanize/humanize/issues"
+urls."Release notes" = "https://github.com/python-humanize/humanize/releases"
 urls.Documentation = "https://humanize.readthedocs.io/"
 urls.Funding = "https://tidelift.com/subscription/pkg/pypi-humanize?utm_source=pypi-humanize&utm_medium=pypi"
 urls.Homepage = "https://github.com/python-humanize/humanize"
-urls."Issue tracker" = "https://github.com/python-humanize/humanize/issues"
-urls."Release notes" = "https://github.com/python-humanize/humanize/releases"
 urls.Source = "https://github.com/python-humanize/humanize"
 
 [tool.hatch]
 version.source = "vcs"
-
-[tool.hatch.build]
-artifacts = [ "*.mo" ]
-
-[tool.hatch.build.hooks.vcs]
-version-file = "src/humanize/_version.py"
-
-[tool.hatch.version.raw-options]
-local_scheme = "no-local-version"
+version.raw-options.local_scheme = "no-local-version"
+build.artifacts = [ "*.mo" ]
+build.hooks.vcs.version-file = "src/humanize/_version.py"
 
 [tool.ruff]
 fix = true
-
 lint.select = [
   "C4",     # flake8-comprehensions
   "D",      # pydocstyle
@@ -103,21 +96,20 @@ lint.future-annotations = true
 [tool.pyproject-fmt]
 max_supported_python = "3.15"
 
-[tool.pytest.ini_options]
-addopts = "--color=yes"
-filterwarnings = [
-  "error",
-]
-testpaths = [ "tests" ]
-
-[tool.coverage.report]
-# Regexes for lines to exclude from consideration
-exclude_also = [
-  # Don't complain if non-runnable code isn't run:
-  "if __name__ == .__main__.:",
-]
-
 [tool.mypy]
 pretty = true
 strict = true
 show_error_codes = true
+
+[tool.pytest]
+minversion = "9.0"
+addopts = [ "--color=yes" ]
+testpaths = [ "tests" ]
+filterwarnings = [ "error" ]
+
+[tool.coverage]
+# Regexes for lines to exclude from consideration
+report.exclude_also = [
+  # Don't complain if non-runnable code isn't run:
+  "if __name__ == .__main__.:",
+]
