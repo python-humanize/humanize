@@ -37,7 +37,7 @@ classifiers = [
 dynamic = [ "version" ]
 optional-dependencies.tests = [
   "freezegun",
-  "pytest",
+  "pytest>=9",
   "pytest-cov",
 ]
 urls."Issue tracker" = "https://github.com/python-humanize/humanize/issues"
@@ -102,11 +102,10 @@ strict = true
 show_error_codes = true
 
 [tool.pytest]
-ini_options.addopts = "--color=yes"
-ini_options.filterwarnings = [
-  "error",
-]
-ini_options.testpaths = [ "tests" ]
+minversion = "9.0"
+addopts = [ "--color=yes" ]
+testpaths = [ "tests" ]
+filterwarnings = [ "error" ]
 
 [tool.coverage]
 # Regexes for lines to exclude from consideration
