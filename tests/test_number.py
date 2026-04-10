@@ -122,6 +122,7 @@ def test_intword_powers() -> None:
         ([2e100], "2.0 googol"),
         ([None], "None"),
         (["1230000", "%0.2f"], "1.23 million"),
+        ([10**100], "1.0 googol"),
         ([10**101], "10.0 googol"),
         ([math.nan], "NaN"),
         ([math.inf], "+Inf"),
