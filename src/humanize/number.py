@@ -441,14 +441,9 @@ def scientific(value: NumberOrString, precision: int = 2) -> str:
     import re
 
     part2 = re.sub(r"^\+?(\-?)0*(.+)$", r"\1\2", part2)
+    part2_list = [exponents[char] for char in part2]
 
-    new_part2 = []
-    for char in part2:
-        new_part2.append(exponents[char])
-
-    final_str = part1 + " x 10" + "".join(new_part2)
-
-    return final_str
+    return part1 + " x 10" + "".join(part2_list)
 
 
 def clamp(
