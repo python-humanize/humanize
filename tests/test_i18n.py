@@ -207,8 +207,8 @@ def test_naturalsize_i18n_binary() -> None:
 @pytest.mark.parametrize(
     "locale, expected_result",
     [
-        ("ar", "5خامس"),
-        ("ar_SA", "5خامس"),
+        ("ar", "5 خامس"),
+        ("ar_SA", "5 خامس"),
         ("fr", "5e"),
         ("fr_FR", "5e"),
         ("pt", "5º"),
