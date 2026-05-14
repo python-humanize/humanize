@@ -9,6 +9,16 @@ from .i18n import _ngettext, decimal_separator, thousands_separator
 from .i18n import _ngettext_noop as NS_
 from .i18n import _pgettext as P_
 
+
+TYPE_CHECKING = False
+if TYPE_CHECKING:
+    from typing import TypeAlias
+
+    # This type can be better defined by typing.SupportsFloat
+    # but that's a Python 3.8 only typing option.
+    NumberOrString: TypeAlias = float | str
+
+
 _SUPERSCRIPT_MAP = {
     "0": "⁰",
     "1": "¹",
@@ -22,14 +32,6 @@ _SUPERSCRIPT_MAP = {
     "9": "⁹",
     "-": "⁻",
 }
-
-TYPE_CHECKING = False
-if TYPE_CHECKING:
-    from typing import TypeAlias
-
-    # This type can be better defined by typing.SupportsFloat
-    # but that's a Python 3.8 only typing option.
-    NumberOrString: TypeAlias = float | str
 
 
 def _format_not_finite(value: float) -> str:
@@ -442,8 +444,8 @@ def scientific(value: NumberOrString, precision: int = 2) -> str:
     import re
 
     part2 = re.sub(r"^\+?(\-?)0*(.+)$", r"\1\2", part2)
+    return part1 + " x 10" + "".join([_SUPERSCRIPT_MAP[char] for char in part2])
 
-    return part1 + " x 10" + "".join(_SUPERSCRIPT_MAP[char] for char in part2)
 
 
 def clamp(
