@@ -9,6 +9,20 @@ from .i18n import _ngettext, decimal_separator, thousands_separator
 from .i18n import _ngettext_noop as NS_
 from .i18n import _pgettext as P_
 
+_SUPERSCRIPT_MAP = {
+    "0": "⁰",
+    "1": "¹",
+    "2": "²",
+    "3": "³",
+    "4": "⁴",
+    "5": "⁵",
+    "6": "⁶",
+    "7": "⁷",
+    "8": "⁸",
+    "9": "⁹",
+    "-": "⁻",
+}
+
 TYPE_CHECKING = False
 if TYPE_CHECKING:
     from typing import TypeAlias
@@ -415,19 +429,6 @@ def scientific(value: NumberOrString, precision: int = 2) -> str:
     """
     import math
 
-    exponents = {
-        "0": "⁰",
-        "1": "¹",
-        "2": "²",
-        "3": "³",
-        "4": "⁴",
-        "5": "⁵",
-        "6": "⁶",
-        "7": "⁷",
-        "8": "⁸",
-        "9": "⁹",
-        "-": "⁻",
-    }
     try:
         value = float(value)
         if not math.isfinite(value):
@@ -442,13 +443,7 @@ def scientific(value: NumberOrString, precision: int = 2) -> str:
 
     part2 = re.sub(r"^\+?(\-?)0*(.+)$", r"\1\2", part2)
 
-    new_part2 = []
-    for char in part2:
-        new_part2.append(exponents[char])
-
-    final_str = part1 + " x 10" + "".join(new_part2)
-
-    return final_str
+    return part1 + " x 10" + "".join(_SUPERSCRIPT_MAP[char] for char in part2)
 
 
 def clamp(
