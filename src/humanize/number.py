@@ -9,7 +9,6 @@ from .i18n import _ngettext, decimal_separator, thousands_separator
 from .i18n import _ngettext_noop as NS_
 from .i18n import _pgettext as P_
 
-
 TYPE_CHECKING = False
 if TYPE_CHECKING:
     from typing import TypeAlias
@@ -445,7 +444,6 @@ def scientific(value: NumberOrString, precision: int = 2) -> str:
 
     part2 = re.sub(r"^\+?(\-?)0*(.+)$", r"\1\2", part2)
     return part1 + " x 10" + "".join([_SUPERSCRIPT_MAP[char] for char in part2])
-
 
 
 def clamp(
