@@ -38,6 +38,8 @@ dynamic = [ "version" ]
 optional-dependencies.tests = [
   "freezegun",
   "pytest>=9",
+  "pytest-benchmark",
+  "pytest-codspeed",
   "pytest-cov",
 ]
 urls."Issue tracker" = "https://github.com/python-humanize/humanize/issues"
