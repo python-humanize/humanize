@@ -19,7 +19,7 @@ _CURRENT = local()
 
 
 # Mapping of locale to thousands separator
-_THOUSANDS_SEPARATOR = {
+_THOUSANDS_SEPARATOR: dict[str | None, str] = {
     "de_DE": ".",
     "fr_FR": " ",
     "it_IT": ".",
@@ -29,7 +29,7 @@ _THOUSANDS_SEPARATOR = {
 }
 
 # Mapping of locale to decimal separator
-_DECIMAL_SEPARATOR = {
+_DECIMAL_SEPARATOR: dict[str | None, str] = {
     "de_DE": ",",
     "fr_FR": ".",
     "it_IT": ",",
@@ -51,10 +51,7 @@ def _get_default_locale_path() -> pathlib.Path | None:
 
 
 def get_translation() -> gettext_module.NullTranslations:
-    try:
-        return _TRANSLATIONS[_CURRENT.locale]
-    except (AttributeError, KeyError):
-        return _TRANSLATIONS[None]
+    return _TRANSLATIONS.get(getattr(_CURRENT, "locale", None), _TRANSLATIONS[None])
 
 
 def activate(
@@ -188,11 +185,7 @@ def thousands_separator() -> str:
     Returns:
          str: Thousands separator.
     """
-    try:
-        sep = _THOUSANDS_SEPARATOR[_CURRENT.locale]
-    except (AttributeError, KeyError):
-        sep = ","
-    return sep
+    return _THOUSANDS_SEPARATOR.get(getattr(_CURRENT, "locale", None), ",")
 
 
 def decimal_separator() -> str:
@@ -201,8 +194,4 @@ def decimal_separator() -> str:
     Returns:
          str: Decimal separator.
     """
-    try:
-        sep = _DECIMAL_SEPARATOR[_CURRENT.locale]
-    except (AttributeError, KeyError):
-        sep = "."
-    return sep
+    return _DECIMAL_SEPARATOR.get(getattr(_CURRENT, "locale", None), ".")
