@@ -31,6 +31,21 @@ _SUPERSCRIPT_MAP = {
     "9": "⁹",
     "-": "⁻",
 }
+_SUPERSCRIPT_TRANS = str.maketrans(_SUPERSCRIPT_MAP)
+
+_ORDINAL_SUFFIXES = ("th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th")
+_APNUMBER_WORDS = (
+    "zero",
+    "one",
+    "two",
+    "three",
+    "four",
+    "five",
+    "six",
+    "seven",
+    "eight",
+    "nine",
+)
 
 
 def _format_not_finite(value: float) -> str:
@@ -91,35 +106,9 @@ def ordinal(value: NumberOrString, gender: str = "male") -> str:
         value = int(value)
     except (TypeError, ValueError):
         return str(value)
-    if gender == "male":
-        t = (
-            P_("0 (male)", "th"),
-            P_("1 (male)", "st"),
-            P_("2 (male)", "nd"),
-            P_("3 (male)", "rd"),
-            P_("4 (male)", "th"),
-            P_("5 (male)", "th"),
-            P_("6 (male)", "th"),
-            P_("7 (male)", "th"),
-            P_("8 (male)", "th"),
-            P_("9 (male)", "th"),
-        )
-    else:
-        t = (
-            P_("0 (female)", "th"),
-            P_("1 (female)", "st"),
-            P_("2 (female)", "nd"),
-            P_("3 (female)", "rd"),
-            P_("4 (female)", "th"),
-            P_("5 (female)", "th"),
-            P_("6 (female)", "th"),
-            P_("7 (female)", "th"),
-            P_("8 (female)", "th"),
-            P_("9 (female)", "th"),
-        )
-    if value % 100 in (11, 12, 13):  # special case
-        return f"{value}{t[0]}"
-    return f"{value}{t[value % 10]}"
+    gender = "male" if gender == "male" else "female"
+    digit = 0 if value % 100 in (11, 12, 13) else value % 10
+    return f"{value}{P_(f'{digit} ({gender})', _ORDINAL_SUFFIXES[digit])}"
 
 
 def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
@@ -177,17 +166,12 @@ def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
         return str(value)
 
     if ndigits is not None:
-        orig = "{0:.{1}f}".format(value, ndigits)
+        result = f"{value:,.{ndigits}f}"
     else:
-        orig = str(value)
-    orig = orig.replace(".", decimal_sep)
-    import re
-
-    while True:
-        new = re.sub(r"^(-?\d+)(\d{3})", rf"\g<1>{thousands_sep}\g<2>", orig)
-        if orig == new:
-            return new
-        orig = new
+        result = f"{value:,}"
+    if thousands_sep != "," or decimal_sep != ".":
+        result = result.translate(str.maketrans(",.", thousands_sep + decimal_sep))
+    return result
 
 
 powers = [10**x for x in (3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 100)]
@@ -319,18 +303,7 @@ def apnumber(value: NumberOrString) -> str:
         return str(value)
     if not 0 <= value < 10:
         return str(value)
-    return (
-        _("zero"),
-        _("one"),
-        _("two"),
-        _("three"),
-        _("four"),
-        _("five"),
-        _("six"),
-        _("seven"),
-        _("eight"),
-        _("nine"),
-    )[value]
+    return _(_APNUMBER_WORDS[value])
 
 
 def fractional(value: NumberOrString) -> str:
@@ -436,14 +409,12 @@ def scientific(value: NumberOrString, precision: int = 2) -> str:
             return _format_not_finite(value)
     except (ValueError, TypeError):
         return str(value)
-    fmt = f"{{:.{str(int(precision))}e}}"
+    fmt = f"{{:.{int(precision)}e}}"
     n = fmt.format(value)
     part1, part2 = n.split("e")
-    # Remove redundant leading '+' or '0's (preserving the last '0' for 10⁰).
-    import re
-
-    part2 = re.sub(r"^\+?(\-?)0*(.+)$", r"\1\2", part2)
-    return part1 + " x 10" + "".join([_SUPERSCRIPT_MAP[char] for char in part2])
+    # Normalise exponent: int() strips the "+" sign and leading zeros,
+    # while preserving "-" and a single "0" for 10⁰.
+    return part1 + " x 10" + str(int(part2)).translate(_SUPERSCRIPT_TRANS)
 
 
 def clamp(
