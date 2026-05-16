@@ -552,9 +552,13 @@ def precisedelta(
     secs = delta.seconds
     usecs = delta.microseconds
 
-    MICROSECONDS, MILLISECONDS, SECONDS, MINUTES, HOURS, DAYS, MONTHS, YEARS = list(
-        Unit
-    )
+    MILLISECONDS = Unit.MILLISECONDS
+    SECONDS = Unit.SECONDS
+    MINUTES = Unit.MINUTES
+    HOURS = Unit.HOURS
+    DAYS = Unit.DAYS
+    MONTHS = Unit.MONTHS
+    YEARS = Unit.YEARS
 
     # Given DAYS compute YEARS and the remainder of DAYS as follows:
     #   if YEARS is the minimum unit, we cannot use DAYS so
