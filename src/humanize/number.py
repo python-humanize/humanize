@@ -165,17 +165,12 @@ def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
         return str(value)
 
     if ndigits is not None:
-        orig = "{0:.{1}f}".format(value, ndigits)
+        result = f"{value:,.{ndigits}f}"
     else:
-        orig = str(value)
-    orig = orig.replace(".", decimal_sep)
-    import re
-
-    while True:
-        new = re.sub(r"^(-?\d+)(\d{3})", rf"\g<1>{thousands_sep}\g<2>", orig)
-        if orig == new:
-            return new
-        orig = new
+        result = f"{value:,}"
+    if thousands_sep != "," or decimal_sep != ".":
+        result = result.translate(str.maketrans(",.", thousands_sep + decimal_sep))
+    return result
 
 
 powers = [10**x for x in (3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 100)]
