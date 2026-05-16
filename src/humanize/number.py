@@ -31,6 +31,7 @@ _SUPERSCRIPT_MAP = {
     "9": "⁹",
     "-": "⁻",
 }
+_SUPERSCRIPT_TRANS = str.maketrans(_SUPERSCRIPT_MAP)
 
 _ORDINAL_SUFFIXES = ("th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th")
 _APNUMBER_WORDS = (
@@ -408,14 +409,12 @@ def scientific(value: NumberOrString, precision: int = 2) -> str:
             return _format_not_finite(value)
     except (ValueError, TypeError):
         return str(value)
-    fmt = f"{{:.{str(int(precision))}e}}"
+    fmt = f"{{:.{int(precision)}e}}"
     n = fmt.format(value)
     part1, part2 = n.split("e")
-    # Remove redundant leading '+' or '0's (preserving the last '0' for 10⁰).
-    import re
-
-    part2 = re.sub(r"^\+?(\-?)0*(.+)$", r"\1\2", part2)
-    return part1 + " x 10" + "".join([_SUPERSCRIPT_MAP[char] for char in part2])
+    # Normalise exponent: int() strips the "+" sign and leading zeros,
+    # while preserving "-" and a single "0" for 10⁰.
+    return part1 + " x 10" + str(int(part2)).translate(_SUPERSCRIPT_TRANS)
 
 
 def clamp(
