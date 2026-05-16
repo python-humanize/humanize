@@ -32,6 +32,8 @@ _SUPERSCRIPT_MAP = {
     "-": "⁻",
 }
 
+_ORDINAL_SUFFIXES = ("th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th")
+
 
 def _format_not_finite(value: float) -> str:
     """Utility function to handle infinite and nan cases."""
@@ -91,35 +93,9 @@ def ordinal(value: NumberOrString, gender: str = "male") -> str:
         value = int(value)
     except (TypeError, ValueError):
         return str(value)
-    if gender == "male":
-        t = (
-            P_("0 (male)", "th"),
-            P_("1 (male)", "st"),
-            P_("2 (male)", "nd"),
-            P_("3 (male)", "rd"),
-            P_("4 (male)", "th"),
-            P_("5 (male)", "th"),
-            P_("6 (male)", "th"),
-            P_("7 (male)", "th"),
-            P_("8 (male)", "th"),
-            P_("9 (male)", "th"),
-        )
-    else:
-        t = (
-            P_("0 (female)", "th"),
-            P_("1 (female)", "st"),
-            P_("2 (female)", "nd"),
-            P_("3 (female)", "rd"),
-            P_("4 (female)", "th"),
-            P_("5 (female)", "th"),
-            P_("6 (female)", "th"),
-            P_("7 (female)", "th"),
-            P_("8 (female)", "th"),
-            P_("9 (female)", "th"),
-        )
-    if value % 100 in (11, 12, 13):  # special case
-        return f"{value}{t[0]}"
-    return f"{value}{t[value % 10]}"
+    gender = "male" if gender == "male" else "female"
+    digit = 0 if value % 100 in (11, 12, 13) else value % 10
+    return f"{value}{P_(f'{digit} ({gender})', _ORDINAL_SUFFIXES[digit])}"
 
 
 def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
