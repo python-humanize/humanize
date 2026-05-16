@@ -33,6 +33,18 @@ _SUPERSCRIPT_MAP = {
 }
 
 _ORDINAL_SUFFIXES = ("th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th")
+_APNUMBER_WORDS = (
+    "zero",
+    "one",
+    "two",
+    "three",
+    "four",
+    "five",
+    "six",
+    "seven",
+    "eight",
+    "nine",
+)
 
 
 def _format_not_finite(value: float) -> str:
@@ -295,18 +307,7 @@ def apnumber(value: NumberOrString) -> str:
         return str(value)
     if not 0 <= value < 10:
         return str(value)
-    return (
-        _("zero"),
-        _("one"),
-        _("two"),
-        _("three"),
-        _("four"),
-        _("five"),
-        _("six"),
-        _("seven"),
-        _("eight"),
-        _("nine"),
-    )[value]
+    return _(_APNUMBER_WORDS[value])
 
 
 def fractional(value: NumberOrString) -> str:
