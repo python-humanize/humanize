@@ -631,14 +631,14 @@ def precisedelta(
         ("%d microsecond", "%d microseconds", usecs),
     ]
 
+    import math
+
     texts: list[str] = []
     for unit, fmt in zip(reversed(Unit), fmts):
         singular_txt, plural_txt, fmt_value = fmt
         if fmt_value > 0 or (not texts and unit == min_unit):
             _fmt_value = 2 if 1 < fmt_value < 2 else int(fmt_value)
             fmt_txt = _ngettext(singular_txt, plural_txt, _fmt_value)
-            import math
-
             if unit == min_unit and math.modf(fmt_value)[0] > 0:
                 fmt_txt = fmt_txt.replace("%d", format)
             elif unit == YEARS:
