@@ -21,3 +21,19 @@ def test_natural_list(
     test_args: list[str] | list[int] | list[str | int], expected: str
 ) -> None:
     assert humanize.natural_list(*test_args) == expected
+
+
+@pytest.mark.parametrize(
+    "items, conjunction, expected",
+    [
+        (["one", "two", "three"], "or", "one, two or three"),
+        (["one", "two"], "or", "one or two"),
+        (["one"], "or", "one"),
+        (["one", "two", "three"], "and also", "one, two and also three"),
+        (["one", "two", "three"], "and", "one, two and three"),
+    ],
+)
+def test_natural_list_conjunction(
+    items: list[str], conjunction: str, expected: str
+) -> None:
+    assert humanize.natural_list(items, conjunction=conjunction) == expected
