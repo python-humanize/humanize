@@ -75,6 +75,9 @@ def test_ordinal(test_input: str, expected: str) -> None:
         ([-math.inf], "-Inf"),
         (["nan"], "NaN"),
         (["-inf"], "-Inf"),
+        ([-1_234_567], "-1,234,567"),
+        (["foo"], "foo"),
+        ([10**15], "1,000,000,000,000,000"),
     ],
 )
 def test_intcomma(
@@ -134,6 +137,7 @@ def test_intword_powers() -> None:
         (["1234567", "%.3f"], "1.235 million"),
         (["999500", "%.0f"], "1 million"),
         (["999499", "%.0f"], "999 thousand"),
+        (["foo"], "foo"),
     ],
 )
 def test_intword(test_args: list[str], expected: str) -> None:
@@ -183,6 +187,9 @@ def test_apnumber(test_input: int | str, expected: str) -> None:
         (-math.inf, "-Inf"),
         ("nan", "NaN"),
         ("-inf", "-Inf"),
+        ("foo", "foo"),
+        (-1.5, "-1 -1/2"),
+        (1e20, "100000000000000000000"),
     ],
 )
 def test_fractional(test_input: float | str, expected: str) -> None:
@@ -236,7 +243,7 @@ def test_scientific(test_args: list[typing.Any], expected: str) -> None:
         ([-math.inf], "-Inf"),
     ],
 )
-def test_clamp(test_args: list[typing.Any], expected: str) -> None:
+def test_clamp(test_args: list[typing.Any], expected: str | None) -> None:
     assert humanize.clamp(*test_args) == expected
 
 

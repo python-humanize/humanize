@@ -418,13 +418,13 @@ def scientific(value: NumberOrString, precision: int = 2) -> str:
 
 
 def clamp(
-    value: float,
+    value: float | None,
     format: str = "{:}",
     floor: float | None = None,
     ceil: float | None = None,
     floor_token: str = "<",
     ceil_token: str = ">",
-) -> str:
+) -> str | None:
     """Returns number with the specified format, clamped between floor and ceil.
 
     If the number is larger than ceil or smaller than floor, then the respective limit
