@@ -28,6 +28,8 @@ def natural_list(items: list[Any]) -> str:
     Returns:
         str: A string with commas and 'and' in the right places.
     """
+    if not items:
+        return ""
     if len(items) == 1:
         return str(items[0])
     elif len(items) == 2:
