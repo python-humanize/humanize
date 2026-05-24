@@ -367,7 +367,12 @@ def fractional(value: NumberOrString) -> str:
     if not whole_number:
         return f"{numerator:.0f}/{denominator:.0f}"
 
-    return f"{whole_number:.0f} {numerator:.0f}/{denominator:.0f}"
+    # int() truncates toward zero, so for a negative number both
+    # whole_number and numerator carry the minus sign, which prints as
+    # "-1 -3/10". The sign already rides on the whole part; absorb it
+    # from the fractional part so the result reads as a normal mixed
+    # fraction.
+    return f"{whole_number:.0f} {abs(numerator):.0f}/{denominator:.0f}"
 
 
 def scientific(value: NumberOrString, precision: int = 2) -> str:
