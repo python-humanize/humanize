@@ -63,7 +63,7 @@ def activate(
 
     Args:
         locale (str | None): Language name, e.g. `en_GB`. If `None`, defaults to no
-            transaltion. Similar to calling ``deactivate()``.
+            translation. Similar to calling ``deactivate()``.
         path (str | pathlib.Path): Path to search for locales.
 
     Returns:
