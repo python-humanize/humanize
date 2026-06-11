@@ -367,7 +367,7 @@ def fractional(value: NumberOrString) -> str:
     if not whole_number:
         return f"{numerator:.0f}/{denominator:.0f}"
 
-    return f"{whole_number:.0f} {numerator:.0f}/{denominator:.0f}"
+    return f"{whole_number:.0f} {abs(numerator):.0f}/{denominator:.0f}"
 
 
 def scientific(value: NumberOrString, precision: int = 2) -> str:
