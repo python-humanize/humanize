@@ -325,14 +325,15 @@ class TestActivate:
 
         assert test_str == humanize.naturaltime(three_seconds)
 
-from humanize.i18n import _gettext_noop, activate
+
+from humanize.i18n import _gettext_noop
 
 
 def test_gettext_noop():
     assert _gettext_noop("hello") == "hello"
 
 
-from humanize.i18n import _gettext_noop, _ngettext_noop
+from humanize.i18n import _ngettext_noop
 
 
 def test_gettext_noop():
