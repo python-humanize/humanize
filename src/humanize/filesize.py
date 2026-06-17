@@ -97,6 +97,12 @@ def naturalsize(
         return f"{int(bytes_)}B" if gnu else _("%d Bytes") % int(bytes_)
 
     exp = int(min(log(abs_bytes, base), len(suffix)))
+    # The suffix is chosen from the unrounded byte count, but `format` rounds the
+    # mantissa afterward; rounding can push it up to `base` (e.g. 999999 is
+    # 999.999 kB, which formats to "1000.0 kB"). When that happens and a larger
+    # suffix is available, step up one suffix so the result reads "1.0 MB".
+    if exp < len(suffix) and abs(float(format % (abs_bytes / (base**exp)))) >= base:
+        exp += 1
     space = "" if gnu else " "
     ret: str = format % (bytes_ / (base**exp)) + space + _(suffix[exp - 1])
     return ret
