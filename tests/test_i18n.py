@@ -117,6 +117,12 @@ def test_naturaldelta() -> None:
         ("lv", 2_000_000, "2,0 miljoni"),
         ("lv", 11_000_000, "11,0 miljoni"),
         ("lv", 21_000_000, "21,0 miljons"),
+        # Czech uses dot as decimal separator
+        ("cs_CZ", 1_000_000, "1.0 milion"),
+        ("cs_CZ", 1_200_000, "1.2 miliony"),
+        ("cs_CZ", 1_000_000_000, "1.0 miliarda"),
+        ("cs_CZ", 3_500_000_000, "3.5 miliardy"),
+        ("cs_CZ", 1_000_000_000_000, "1.0 bilion"),
         ("fr_FR", "1_000", "1.0 mille"),
         ("fr_FR", "12_400", "12.4 milles"),
         ("fr_FR", "12_490", "12.5 milles"),
@@ -180,6 +186,8 @@ def test_intword_i18n(locale: str, number: int, expected_result: str) -> None:
         ("fr_FR", 42_000_000, "42.0 Mo"),
         ("fr_FR", 42_000_000_000, "42.0 Go"),
         ("fr_FR", -42_000, "-42.0 Ko"),
+        ("cs_CZ", 1, "1 bajt"),
+        ("cs_CZ", 42, "42 bajtů"),
     ],
 )
 def test_naturalsize_i18n(locale: str, value: float, expected_result: str) -> None:

@@ -18,6 +18,7 @@ size or throughput. It is localized to:
 - Bengali
 - Brazilian Portuguese
 - Catalan
+- Czech
 - Danish
 - Dutch
 - Esperanto
