@@ -1,0 +1,126 @@
+# Romanian translations for humanize.
+# This file is distributed under the same license as the humanize package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: humanize\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-24 00:00+0000\n"
+"PO-Revision-Date: 2026-06-24 00:00+0000\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: Romanian\n"
+"Language: ro\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < 20)) ? 1 : 2);\n"
+
+#: src/humanize/number.py
+msgctxt "ordinal value 1 (male)"
+msgid "%(value)s"
+msgstr "primul"
+
+#: src/humanize/number.py
+msgctxt "ordinal value 1 (female)"
+msgid "%(value)s"
+msgstr "prima"
+
+#: src/humanize/number.py
+msgctxt "ordinal 0 (male)"
+msgid "%(value)sth"
+msgstr "al %(value)s-lea"
+
+#: src/humanize/number.py
+msgctxt "ordinal 1 (male)"
+msgid "%(value)sst"
+msgstr "al %(value)s-lea"
+
+#: src/humanize/number.py
+msgctxt "ordinal 2 (male)"
+msgid "%(value)snd"
+msgstr "al %(value)s-lea"
+
+#: src/humanize/number.py
+msgctxt "ordinal 3 (male)"
+msgid "%(value)srd"
+msgstr "al %(value)s-lea"
+
+#: src/humanize/number.py
+msgctxt "ordinal 4 (male)"
+msgid "%(value)sth"
+msgstr "al %(value)s-lea"
+
+#: src/humanize/number.py
+msgctxt "ordinal 5 (male)"
+msgid "%(value)sth"
+msgstr "al %(value)s-lea"
+
+#: src/humanize/number.py
+msgctxt "ordinal 6 (male)"
+msgid "%(value)sth"
+msgstr "al %(value)s-lea"
+
+#: src/humanize/number.py
+msgctxt "ordinal 7 (male)"
+msgid "%(value)sth"
+msgstr "al %(value)s-lea"
+
+#: src/humanize/number.py
+msgctxt "ordinal 8 (male)"
+msgid "%(value)sth"
+msgstr "al %(value)s-lea"
+
+#: src/humanize/number.py
+msgctxt "ordinal 9 (male)"
+msgid "%(value)sth"
+msgstr "al %(value)s-lea"
+
+#: src/humanize/number.py
+msgctxt "ordinal 0 (female)"
+msgid "%(value)sth"
+msgstr "a %(value)s-a"
+
+#: src/humanize/number.py
+msgctxt "ordinal 1 (female)"
+msgid "%(value)sst"
+msgstr "a %(value)s-a"
+
+#: src/humanize/number.py
+msgctxt "ordinal 2 (female)"
+msgid "%(value)snd"
+msgstr "a %(value)s-a"
+
+#: src/humanize/number.py
+msgctxt "ordinal 3 (female)"
+msgid "%(value)srd"
+msgstr "a %(value)s-a"
+
+#: src/humanize/number.py
+msgctxt "ordinal 4 (female)"
+msgid "%(value)sth"
+msgstr "a %(value)s-a"
+
+#: src/humanize/number.py
+msgctxt "ordinal 5 (female)"
+msgid "%(value)sth"
+msgstr "a %(value)s-a"
+
+#: src/humanize/number.py
+msgctxt "ordinal 6 (female)"
+msgid "%(value)sth"
+msgstr "a %(value)s-a"
+
+#: src/humanize/number.py
+msgctxt "ordinal 7 (female)"
+msgid "%(value)sth"
+msgstr "a %(value)s-a"
+
+#: src/humanize/number.py
+msgctxt "ordinal 8 (female)"
+msgid "%(value)sth"
+msgstr "a %(value)s-a"
+
+#: src/humanize/number.py
+msgctxt "ordinal 9 (female)"
+msgid "%(value)sth"
+msgstr "a %(value)s-a"

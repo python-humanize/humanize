@@ -34,6 +34,7 @@ _SUPERSCRIPT_MAP = {
 _SUPERSCRIPT_TRANS = str.maketrans(_SUPERSCRIPT_MAP)
 
 _ORDINAL_SUFFIXES = ("th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th")
+_ORDINAL_VALUE = "%(value)s"
 _APNUMBER_WORDS = (
     "zero",
     "one",
@@ -108,7 +109,11 @@ def ordinal(value: NumberOrString, gender: str = "male") -> str:
         return str(value)
     gender = "male" if gender == "male" else "female"
     digit = 0 if value % 100 in (11, 12, 13) else value % 10
-    return f"{value}{P_(f'{digit} ({gender})', _ORDINAL_SUFFIXES[digit])}"
+    ordinal_format = P_(f"ordinal value {value} ({gender})", _ORDINAL_VALUE)
+    if ordinal_format == _ORDINAL_VALUE:
+        suffix = P_(f"{digit} ({gender})", _ORDINAL_SUFFIXES[digit])
+        ordinal_format = P_(f"ordinal {digit} ({gender})", f"{_ORDINAL_VALUE}{suffix}")
+    return ordinal_format % {"value": value}
 
 
 def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
