@@ -5,6 +5,8 @@ These are largely borrowed from Django's `contrib.humanize`.
 
 from __future__ import annotations
 
+__lazy_modules__ = {"humanize.i18n", "humanize.number"}
+
 from enum import Enum
 from functools import total_ordering
 
