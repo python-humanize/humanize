@@ -8,7 +8,6 @@ from __future__ import annotations
 __lazy_modules__ = {"humanize.i18n", "humanize.number"}
 
 import math
-
 from enum import Enum
 from functools import total_ordering
 
