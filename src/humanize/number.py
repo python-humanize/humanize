@@ -546,6 +546,7 @@ def metric(value: float, unit: str = "", precision: int = 3) -> str:
         new_bucket = exponent // 3 * 3
         value /= 10 ** (new_bucket - old_bucket)
         digits = int(max(0, precision - exponent % 3 - 1))
+
     if exponent >= 3:
         ordinal_ = "kMGTPEZYRQ"[exponent // 3 - 1]
     elif exponent < 0:
