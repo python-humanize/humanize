@@ -2,6 +2,15 @@
 
 from __future__ import annotations
 
+__lazy_modules__ = {
+    "humanize._version",
+    "humanize.filesize",
+    "humanize.i18n",
+    "humanize.lists",
+    "humanize.number",
+    "humanize.time",
+}
+
 from humanize.filesize import naturalsize
 from humanize.i18n import activate, deactivate, decimal_separator, thousands_separator
 from humanize.lists import natural_list
