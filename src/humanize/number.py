@@ -543,14 +543,22 @@ def metric(value: float, unit: str = "", precision: int = 3) -> str:
     if exponent >= 33 or exponent < -30:
         return scientific(value, precision - 1) + unit
 
-    value /= 10 ** (exponent // 3 * 3)
+    old_bucket = exponent // 3 * 3
+    value /= 10**old_bucket
+    digits = int(max(0, precision - exponent % 3 - 1))
+    if exponent < 30 and round(abs(value), digits) >= 1000:
+        exponent += 3 - exponent % 3
+        new_bucket = exponent // 3 * 3
+        value /= 10 ** (new_bucket - old_bucket)
+        digits = int(max(0, precision - exponent % 3 - 1))
+
     if exponent >= 3:
         ordinal_ = "kMGTPEZYRQ"[exponent // 3 - 1]
     elif exponent < 0:
         ordinal_ = "mμnpfazyrq"[(-exponent - 1) // 3]
     else:
         ordinal_ = ""
-    value_ = format(value, f".{int(max(0, precision - exponent % 3 - 1))}f")
+    value_ = format(value, f".{digits}f")
     if not (unit or ordinal_) or unit in ("°", "′", "″"):
         space = ""
     else:
