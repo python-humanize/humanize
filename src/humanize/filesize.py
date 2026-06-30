@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 
-from math import log
+from math import isfinite, log
 
 from humanize.i18n import _gettext as _
+from humanize.number import _format_not_finite
 
 suffixes = {
     "decimal": (
@@ -88,6 +89,8 @@ def naturalsize(
 
     base = 1024 if (gnu or binary) else 1000
     bytes_ = float(value)
+    if not isfinite(bytes_):
+        return _format_not_finite(bytes_)
     abs_bytes = abs(bytes_)
 
     if abs_bytes == 1 and not gnu:
