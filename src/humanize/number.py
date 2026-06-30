@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+__lazy_modules__ = {"bisect"}
+
 import bisect
 
 from .i18n import _gettext as _

@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+__lazy_modules__ = {"humanize.i18n", "math"}
+
 from math import log
 
 from humanize.i18n import _gettext as _
