@@ -82,6 +82,15 @@ import humanize
         ([1.123456789, False, True], "1B"),
         ([1.123456789 * 10**3, False, True], "1.1K"),
         ([1.123456789 * 10**6, False, True], "1.1M"),
+        # Rounding must not leave the mantissa at the base while a larger suffix
+        # is available: 999999 is 999.999 kB, which the "%.1f" format rounds to
+        # 1000.0 and must carry into 1.0 MB rather than render as "1000.0 kB".
+        ([999999], "1.0 MB"),
+        ([999999999], "1.0 GB"),
+        ([999999999999], "1.0 TB"),
+        ([1024**2 - 1, True], "1.0 MiB"),
+        ([1024**3 - 1, True], "1.0 GiB"),
+        ([1024**2 - 1, False, True], "1.0M"),
     ],
 )
 def test_naturalsize(test_args: list[int] | list[int | bool], expected: str) -> None:
