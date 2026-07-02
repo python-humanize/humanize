@@ -5,6 +5,7 @@ from __future__ import annotations
 import datetime as dt
 import math
 import typing
+import math
 
 import pytest
 from freezegun import freeze_time
@@ -129,6 +130,8 @@ def test_naturaldelta_nomonths(test_input: dt.timedelta, expected: str) -> None:
         (dt.timedelta(days=365), "a year"),
         (dt.timedelta(days=365 * 1_141), "1,141 years"),
         ("NaN", "NaN"),  # Returns non-numbers unchanged.
+        (float("inf"), "inf"),
+        (float("-inf"), "-inf"),
         # largest possible timedelta
         (dt.timedelta(days=999_999_999), "2,739,726 years"),
     ],
@@ -136,7 +139,8 @@ def test_naturaldelta_nomonths(test_input: dt.timedelta, expected: str) -> None:
 def test_naturaldelta(test_input: float | dt.timedelta, expected: str) -> None:
     assert humanize.naturaldelta(test_input) == expected
     if not isinstance(test_input, str):
-        assert humanize.naturaldelta(-test_input) == expected
+        if isinstance(test_input, dt.timedelta) or math.isfinite(test_input):
+            assert humanize.naturaldelta(-test_input) == expected
 
 
 @freeze_time(FROZEN_DATE)

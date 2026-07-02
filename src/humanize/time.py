@@ -151,7 +151,7 @@ def naturaldelta(
             int(value)  # Explicitly don't support string such as "NaN" or "inf"
             value = float(value)
             delta = dt.timedelta(seconds=value)
-        except (ValueError, TypeError):
+        except (ValueError, TypeError, OverflowError):
             return str(value)
 
     use_months = months
