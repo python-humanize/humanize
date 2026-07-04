@@ -148,11 +148,16 @@ def naturaldelta(
         delta = value
     else:
         try:
-            int(value)  # Explicitly don't support string such as "NaN" or "inf"
-            value = float(value)
-            delta = dt.timedelta(seconds=value)
-        except (ValueError, TypeError):
+            # Explicitly don't support non-finite or non-numeric values such as
+            # "NaN"/"inf": int() raises ValueError for NaN and OverflowError for
+            # infinity, and TypeError for unsupported types.
+            int(value)
+        except (ValueError, TypeError, OverflowError):
             return str(value)
+        value = float(value)
+        # A finite value that is too large for timedelta still raises
+        # OverflowError here, as documented.
+        delta = dt.timedelta(seconds=value)
 
     use_months = months
 
