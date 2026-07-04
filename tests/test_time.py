@@ -852,3 +852,60 @@ def test_time_unit() -> None:
 )
 def test_rounding_by_fmt(fmt: str, value: float, expected: float) -> None:
     assert time._rounding_by_fmt(fmt, value) == pytest.approx(expected)
+
+@pytest.mark.parametrize(
+    "value, expected",
+    [
+        (float("inf"), "inf"),
+        (float("-inf"), "-inf"),
+        (float("nan"), "nan"),
+    ],
+)
+def test_naturaltime_non_finite_returns_str(value: float, expected: str) -> None:
+    """naturaltime(float) must not crash on non-finite floats.
+
+    Pre-fix, naturaltime(float('inf')) and naturaltime(float('-inf')) raised
+    OverflowError: cannot convert float infinity to integer from inside
+    _date_and_delta's round() call. NaN was already handled because
+    round(float('nan')) raises ValueError, which the except clause caught.
+    """
+    assert humanize.naturaltime(value) == expected
+    assert humanize.naturaltime(value, future=True) == expected
+
+
+@pytest.mark.parametrize(
+    "value, expected",
+    [
+        (float("inf"), "inf"),
+        (float("-inf"), "-inf"),
+        (float("nan"), "nan"),
+    ],
+)
+def test_precisedelta_non_finite_returns_str(value: float, expected: str) -> None:
+    """precisedelta(float) must not crash on non-finite floats.
+
+    Pre-fix, precisedelta(float('inf')) and precisedelta(float('-inf'))
+    raised OverflowError: cannot convert float infinity to integer from
+    _date_and_delta(value, precise=True). NaN was already handled.
+    """
+    assert humanize.precisedelta(value) == expected
+    assert humanize.precisedelta(value, minimum_unit="microseconds") == expected
+
+
+@pytest.mark.parametrize(
+    "value",
+    [float("inf"), float("-inf"), float("nan")],
+)
+def test_date_and_delta_non_finite_returns_none_tuple(value: float) -> None:
+    """_date_and_delta must return (None, value) for non-finite floats.
+
+    This is the contract that the public-facing naturaltime/precisedelta
+    functions rely on to fall through to return str(value).
+    """
+    date, delta = time._date_and_delta(value)
+    assert date is None
+    assert delta is value
+    # precise=True exercises the precisedelta code path
+    date_p, delta_p = time._date_and_delta(value, precise=True)
+    assert date_p is None
+    assert delta_p is value

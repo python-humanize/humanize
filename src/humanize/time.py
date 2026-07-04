@@ -75,6 +75,7 @@ def _date_and_delta(
     If that's not possible, return `(None, value)`.
     """
     import datetime as dt
+    import math
 
     if not now:
         now = _now()
@@ -85,11 +86,19 @@ def _date_and_delta(
         date = now - value
         delta = value
     else:
+        # Reject non-finite floats (inf, -inf, NaN) before they reach
+        # round() or dt.timedelta(): `round(float("inf"))` raises
+        # OverflowError, `dt.timedelta(seconds=float("inf"))` raises
+        # OverflowError, and `round(float("nan"))` raises ValueError. The
+        # downstream callers already treat `(None, value)` as "return
+        # str(value) unchanged", which matches the docstring contract.
+        if isinstance(value, float) and not math.isfinite(value):
+            return None, value
         try:
             value = value if precise else round(value)
             delta = dt.timedelta(seconds=value)
             date = now - delta
-        except (ValueError, TypeError):
+        except (ValueError, TypeError, OverflowError):
             return None, value
     return date, _abs_timedelta(delta)
 
@@ -275,6 +284,8 @@ def naturaltime(
 
     Returns:
         str: A natural representation of the input in a resolution that makes sense.
+        Non-finite floats (`inf`, `-inf`, `nan`) and unparseable inputs are
+        returned as their `str()` representation unchanged.
     """
     import datetime as dt
 
