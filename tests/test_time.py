@@ -853,6 +853,7 @@ def test_time_unit() -> None:
 def test_rounding_by_fmt(fmt: str, value: float, expected: float) -> None:
     assert time._rounding_by_fmt(fmt, value) == pytest.approx(expected)
 
+
 @pytest.mark.parametrize(
     "value, expected",
     [
