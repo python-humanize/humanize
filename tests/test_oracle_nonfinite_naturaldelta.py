@@ -11,6 +11,7 @@ TypeError)` does not catch (time.py ~line 151-155).
 Oracle discipline: >=2 distinct inputs per rule; one test per comparison boundary; expected values
 from the documented contract, not current output. HELD-OUT (sibling call site) is disjoint — not shown.
 """
+
 from __future__ import annotations
 
 import datetime as dt

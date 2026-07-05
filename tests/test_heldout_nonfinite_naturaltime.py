@@ -5,6 +5,7 @@ exists in the SIBLING call site: naturaltime -> _date_and_delta (round(inf) rais
 except catches only ValueError/TypeError, time.py ~line 89-93). Same documented pass-through contract.
 A fix hardcoded to naturaldelta's call site FAILS here (scores 3/5); a fix addressing the CLASS passes.
 """
+
 from __future__ import annotations
 
 import datetime as dt
