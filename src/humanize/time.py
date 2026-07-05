@@ -86,6 +86,10 @@ def _date_and_delta(
         delta = value
     else:
         try:
+            import math
+
+            if isinstance(value, float) and not math.isfinite(value):
+                return None, value  # non-finite (inf/-inf/nan) passes through unchanged
             value = value if precise else round(value)
             delta = dt.timedelta(seconds=value)
             date = now - delta
@@ -148,6 +152,10 @@ def naturaldelta(
         delta = value
     else:
         try:
+            import math
+
+            if isinstance(value, float) and not math.isfinite(value):
+                return str(value)  # non-finite (inf/-inf/nan) passes through unchanged
             int(value)  # Explicitly don't support string such as "NaN" or "inf"
             value = float(value)
             delta = dt.timedelta(seconds=value)
