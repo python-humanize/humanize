@@ -100,15 +100,15 @@ lint.future-annotations = true
 max_supported_python = "3.15"
 
 [tool.mypy]
-pretty = true
 strict = true
+pretty = true
 show_error_codes = true
 
 [tool.pytest]
-minversion = "9.0"
 addopts = [ "--color=yes" ]
-testpaths = [ "tests" ]
 filterwarnings = [ "error" ]
+minversion = "9.0"
+testpaths = [ "tests" ]
 
 [tool.coverage]
 # Regexes for lines to exclude from consideration
