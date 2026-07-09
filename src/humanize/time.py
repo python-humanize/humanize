@@ -7,6 +7,7 @@ from __future__ import annotations
 
 __lazy_modules__ = {"humanize.i18n", "humanize.number"}
 
+import math
 from enum import Enum
 from functools import total_ordering
 
@@ -153,6 +154,14 @@ def naturaldelta(
             delta = dt.timedelta(seconds=value)
         except (ValueError, TypeError):
             return str(value)
+        except OverflowError:
+            # `int(value)` raises OverflowError for non-finite floats (inf/-inf),
+            # which, like NaN, are returned unchanged. A too-large *finite* value
+            # (whose OverflowError comes from `timedelta`) is still raised, per
+            # the documented `OverflowError` contract.
+            if not math.isfinite(value):
+                return str(value)
+            raise
 
     use_months = months
 
