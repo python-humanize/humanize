@@ -324,3 +324,21 @@ class TestActivate:
             humanize.i18n.deactivate()
 
         assert test_str == humanize.naturaltime(three_seconds)
+
+
+from humanize.i18n import _gettext_noop
+
+
+def test_gettext_noop():
+    assert _gettext_noop("hello") == "hello"
+
+
+from humanize.i18n import _ngettext_noop
+
+
+def test_gettext_noop():
+    assert _gettext_noop("hello") == "hello"
+
+
+def test_ngettext_noop():
+    assert _ngettext_noop("item", "items") == ("item", "items")
