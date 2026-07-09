@@ -103,3 +103,20 @@ def test_naturalsize(test_args: list[int] | list[int | bool], expected: str) -> 
         test_args[0] = f"-{test_args[0]}"
 
     assert humanize.naturalsize(*test_args) == "-" + expected
+
+
+@pytest.mark.parametrize("value", [float("nan"), float("inf"), float("-inf")])
+def test_naturalsize_rejects_non_finite(value: float) -> None:
+    # Non-finite inputs used to surface a confusing low-level error
+    # ("cannot convert float NaN to integer" from int(), or the literal string
+    # "inf QB" for +/-inf) rather than a clear rejection at the call site.
+    with pytest.raises(ValueError, match="finite number of bytes"):
+        humanize.naturalsize(value)
+
+
+@pytest.mark.parametrize("value", ["nan", "inf", "-inf", "NaN", "INF"])
+def test_naturalsize_rejects_non_finite_strings(value: str) -> None:
+    # The same finite-check must trigger for string inputs that float() accepts
+    # but that don't represent a meaningful byte count.
+    with pytest.raises(ValueError, match="finite number of bytes"):
+        humanize.naturalsize(value)

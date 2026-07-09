@@ -4,6 +4,7 @@ from __future__ import annotations
 
 __lazy_modules__ = {"humanize.i18n", "math"}
 
+import math
 from math import log
 
 from humanize.i18n import _gettext as _
@@ -67,6 +68,16 @@ def naturalsize(
         '30000.0 QB'
         >>> naturalsize(-4096, True)
         '-4.0 KiB'
+        >>> naturalsize(0)
+        '0 Bytes'
+        >>> naturalsize(float('nan'))
+        Traceback (most recent call last):
+            ...
+        ValueError: naturalsize() requires a finite number of bytes, got nan
+        >>> naturalsize(float('inf'))
+        Traceback (most recent call last):
+            ...
+        ValueError: naturalsize() requires a finite number of bytes, got inf
 
         ```
 
@@ -90,6 +101,17 @@ def naturalsize(
 
     base = 1024 if (gnu or binary) else 1000
     bytes_ = float(value)
+    # Reject NaN and infinities up front. A NaN would propagate into log()/abs() and
+    # later raise a confusing "cannot convert float NaN to integer" from int() on
+    # the suffix exponent; +inf/-inf would silently render as "inf QB" / "-inf QB",
+    # which is not a meaningful filesize for any real caller. math.isfinite() also
+    # rejects strings, so non-numeric values reach the float() call below and raise
+    # ValueError as before.
+
+    if not math.isfinite(bytes_):
+        raise ValueError(
+            f"naturalsize() requires a finite number of bytes, got {value!r}"
+        )
     abs_bytes = abs(bytes_)
 
     if abs_bytes == 1 and not gnu:
