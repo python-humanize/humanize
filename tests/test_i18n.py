@@ -237,6 +237,12 @@ def test_langauge_codes(locale: str, expected_result: str) -> None:
         ("es_ES", 5, "female", "5ª"),
         ("it_IT", 3, "male", "3º"),
         ("it_IT", 8, "female", "8ª"),
+        ("ro", 1, "male", "primul"),
+        ("ro", 1, "female", "prima"),
+        ("ro", 2, "male", "al 2-lea"),
+        ("ro", 2, "female", "a 2-a"),
+        ("ro", 21, "male", "al 21-lea"),
+        ("ro", 23, "female", "a 23-a"),
     ],
 )
 def test_ordinal_genders(

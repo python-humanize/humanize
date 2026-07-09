@@ -36,6 +36,7 @@ size or throughput. It is localized to:
 - Norwegian
 - Persian
 - Polish
+- Romanian
 - Russian
 - Simplified Chinese
 - Slovak
