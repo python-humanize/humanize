@@ -9,10 +9,11 @@ if TYPE_CHECKING:
 __all__ = ["natural_list"]
 
 
-def natural_list(items: list[Any]) -> str:
+def natural_list(items: list[Any], *, conjunction: str = "and") -> str:
     """Natural list.
 
-    Convert a list of items into a human-readable string with commas and 'and'.
+    Convert a list of items into a human-readable string with commas and a
+    conjunction.
 
     Examples:
         >>> natural_list(["one", "two", "three"])
@@ -21,18 +22,24 @@ def natural_list(items: list[Any]) -> str:
         'one and two'
         >>> natural_list(["one"])
         'one'
+        >>> natural_list(["one", "two", "three"], conjunction="or")
+        'one, two or three'
 
     Args:
         items (list): An iterable of items.
+        conjunction (str): The word used to join the last item, defaults to 'and'.
 
     Returns:
-        str: A string with commas and 'and' in the right places.
+        str: A string with commas and the conjunction in the right places.
     """
     if not items:
         return ""
     if len(items) == 1:
         return str(items[0])
     elif len(items) == 2:
-        return f"{str(items[0])} and {str(items[1])}"
+        return f"{str(items[0])} {conjunction} {str(items[1])}"
     else:
-        return ", ".join([str(item) for item in items[:-1]]) + f" and {str(items[-1])}"
+        return (
+            ", ".join([str(item) for item in items[:-1]])
+            + f" {conjunction} {str(items[-1])}"
+        )
