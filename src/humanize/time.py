@@ -246,12 +246,16 @@ def naturaldelta(
         return _ngettext("1 year, %d day", "1 year, %d days", days) % days
 
     if use_months and 0 < num_months < 12:
-        years_str = _ngettext("%d year", "%d years", years).replace("%d", "%s") % intcomma(years)
+        years_str = _ngettext("%d year", "%d years", years).replace(
+            "%d", "%s"
+        ) % intcomma(years)
         months_str = _ngettext("%d month", "%d months", num_months) % num_months
         return f"{years_str}, {months_str}"
     if use_months and num_months == 12:
         years += 1
-        return _ngettext("%d year", "%d years", years).replace("%d", "%s") % intcomma(years)
+        return _ngettext("%d year", "%d years", years).replace("%d", "%s") % intcomma(
+            years
+        )
     return _ngettext("%d year", "%d years", years).replace("%d", "%s") % intcomma(years)
 
 
