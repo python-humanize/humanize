@@ -416,7 +416,8 @@ def scientific(value: NumberOrString, precision: int = 2) -> str:
             return _format_not_finite(value)
     except (ValueError, TypeError):
         return str(value)
-    fmt = f"{{:.{int(precision)}e}}"
+    # max(0): a negative precision builds an invalid format spec ("{:.-1e}").
+    fmt = f"{{:.{max(0, int(precision))}e}}"
     n = fmt.format(value)
     part1, part2 = n.split("e")
     # Normalise exponent: int() strips the "+" sign and leading zeros,
