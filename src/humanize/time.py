@@ -82,18 +82,14 @@ def _date_and_delta(
         date = value
         delta = now - value
     elif isinstance(value, dt.timedelta):
+        date = now - value
         delta = value
-        try:
-            date = now - value
-        except OverflowError:
-            # Tense only: negative timedelta means future in naturaltime.
-            date = now + dt.timedelta(days=1) if value < dt.timedelta(0) else now - dt.timedelta(days=1)
     else:
         try:
             value = value if precise else round(value)
             delta = dt.timedelta(seconds=value)
             date = now - delta
-        except (ValueError, TypeError, OverflowError):
+        except (ValueError, TypeError):
             return None, value
     return date, _abs_timedelta(delta)
 
