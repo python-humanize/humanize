@@ -218,6 +218,10 @@ def test_fractional(test_input: float | str, expected: str) -> None:
         ([-math.inf], "-Inf"),
         (["nan"], "NaN"),
         (["-inf"], "-Inf"),
+        # Negative precision clamps to zero instead of building an invalid spec.
+        ([1e300, -1], "1 x 10³⁰⁰"),
+        ([1e300, -5], "1 x 10³⁰⁰"),
+        ([-1000, -1], "-1 x 10³"),
     ],
 )
 def test_scientific(test_args: list[typing.Any], expected: str) -> None:
@@ -310,6 +314,11 @@ def test_clamp(test_args: list[typing.Any], expected: str) -> None:
         ([math.nan, "m"], "NaN"),
         ([math.inf], "+Inf"),
         ([-math.inf], "-Inf"),
+        # precision=0 scientific fallback used to pass -1 into scientific(); see #159.
+        ([1e300, "m", 0], "1 x 10³⁰⁰m"),
+        ([-1e300, "m", 0], "-1 x 10³⁰⁰m"),
+        ([1e-300, "m", 0], "1 x 10⁻³⁰⁰m"),
+        ([1e40, "", 0], "1 x 10⁴⁰"),
     ],
     ids=str,
 )
