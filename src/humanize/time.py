@@ -61,9 +61,9 @@ def _abs_timedelta(delta: dt.timedelta) -> dt.timedelta:
     Returns:
         datetime.timedelta: Absolute timedelta.
     """
+    # Avoid datetime arithmetic: now+(now-far_future) underflows below year 1.
     if delta.days < 0:
-        now = _now()
-        return now - (now + delta)
+        return -delta
     return delta
 
 
@@ -82,14 +82,18 @@ def _date_and_delta(
         date = value
         delta = now - value
     elif isinstance(value, dt.timedelta):
-        date = now - value
         delta = value
+        try:
+            date = now - value
+        except OverflowError:
+            # Tense only: negative timedelta means future in naturaltime.
+            date = now + dt.timedelta(days=1) if value < dt.timedelta(0) else now - dt.timedelta(days=1)
     else:
         try:
             value = value if precise else round(value)
             delta = dt.timedelta(seconds=value)
             date = now - delta
-        except (ValueError, TypeError):
+        except (ValueError, TypeError, OverflowError):
             return None, value
     return date, _abs_timedelta(delta)
 

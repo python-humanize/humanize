@@ -179,6 +179,10 @@ def test_naturaldelta(test_input: float | dt.timedelta, expected: str) -> None:
         (NOW - dt.timedelta(days=365 * 2 + 65), "2 years ago"),
         (NOW - dt.timedelta(days=365 + 4), "1 year, 4 days ago"),
         ("NaN", "NaN"),
+        # Far-future datetimes used to OverflowError in _abs_timedelta.
+        (dt.datetime(9999, 1, 1), "7,994 years from now"),
+        (dt.datetime(5000, 6, 15), "2,992 years from now"),
+        (dt.timedelta(days=-1_000_000), "2,739 years from now"),
     ],
 )
 def test_naturaltime(
