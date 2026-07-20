@@ -89,7 +89,12 @@ def naturalsize(
         suffix = suffixes["decimal"]
 
     base = 1024 if (gnu or binary) else 1000
-    bytes_ = float(value)
+    try:
+        bytes_ = float(value)
+    except (ValueError, OverflowError) as exc:
+        raise ValueError(
+            f"naturalsize() argument must be a number, not {type(value).__name__!r}"
+        ) from exc
     abs_bytes = abs(bytes_)
 
     if abs_bytes == 1 and not gnu:
