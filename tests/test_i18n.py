@@ -59,8 +59,8 @@ def test_intcomma() -> None:
 
         humanize.i18n.activate("fr_FR")
         assert humanize.intcomma(number) == "10 000 000"
-        assert humanize.intcomma(1_234_567.89) == "1 234 567.89"
-        assert humanize.intcomma("1 234 567.89") == "1 234 567.89"
+        assert humanize.intcomma(1_234_567.89) == "1 234 567,89"
+        assert humanize.intcomma("1 234 567,89") == "1 234 567,89"
 
         humanize.i18n.activate("pt_BR")
         assert humanize.intcomma(number) == "10.000.000"
@@ -117,46 +117,46 @@ def test_naturaldelta() -> None:
         ("lv", 2_000_000, "2,0 miljoni"),
         ("lv", 11_000_000, "11,0 miljoni"),
         ("lv", 21_000_000, "21,0 miljons"),
-        ("fr_FR", "1_000", "1.0 mille"),
-        ("fr_FR", "12_400", "12.4 milles"),
-        ("fr_FR", "12_490", "12.5 milles"),
-        ("fr_FR", "1_000_000", "1.0 million"),
-        ("fr_FR", "-1_000_000", "-1.0 million"),
-        ("fr_FR", "1_200_000", "1.2 millions"),
-        ("fr_FR", "1_290_000", "1.3 millions"),
-        ("fr_FR", "999_999_999", "1.0 milliard"),
-        ("fr_FR", "1_000_000_000", "1.0 milliard"),
-        ("fr_FR", "-1_000_000_000", "-1.0 milliard"),
-        ("fr_FR", "2_000_000_000", "2.0 milliards"),
-        ("fr_FR", "999_999_999_999", "1.0 billion"),
-        ("fr_FR", "1_000_000_000_000", "1.0 billion"),
-        ("fr_FR", "6_000_000_000_000", "6.0 billions"),
-        ("fr_FR", "-6_000_000_000_000", "-6.0 billions"),
-        ("fr_FR", "999_999_999_999_999", "1.0 billiard"),
-        ("fr_FR", "1_000_000_000_000_000", "1.0 billiard"),
-        ("fr_FR", "1_300_000_000_000_000", "1.3 billiards"),
-        ("fr_FR", "-1_300_000_000_000_000", "-1.3 billiards"),
-        ("fr_FR", "3_500_000_000_000_000_000_000", "3.5 trilliards"),
-        ("fr_FR", "8_100_000_000_000_000_000_000_000_000_000_000", "8.1 quintilliards"),
+        ("fr_FR", "1_000", "1,0 mille"),
+        ("fr_FR", "12_400", "12,4 milles"),
+        ("fr_FR", "12_490", "12,5 milles"),
+        ("fr_FR", "1_000_000", "1,0 million"),
+        ("fr_FR", "-1_000_000", "-1,0 million"),
+        ("fr_FR", "1_200_000", "1,2 millions"),
+        ("fr_FR", "1_290_000", "1,3 millions"),
+        ("fr_FR", "999_999_999", "1,0 milliard"),
+        ("fr_FR", "1_000_000_000", "1,0 milliard"),
+        ("fr_FR", "-1_000_000_000", "-1,0 milliard"),
+        ("fr_FR", "2_000_000_000", "2,0 milliards"),
+        ("fr_FR", "999_999_999_999", "1,0 billion"),
+        ("fr_FR", "1_000_000_000_000", "1,0 billion"),
+        ("fr_FR", "6_000_000_000_000", "6,0 billions"),
+        ("fr_FR", "-6_000_000_000_000", "-6,0 billions"),
+        ("fr_FR", "999_999_999_999_999", "1,0 billiard"),
+        ("fr_FR", "1_000_000_000_000_000", "1,0 billiard"),
+        ("fr_FR", "1_300_000_000_000_000", "1,3 billiards"),
+        ("fr_FR", "-1_300_000_000_000_000", "-1,3 billiards"),
+        ("fr_FR", "3_500_000_000_000_000_000_000", "3,5 trilliards"),
+        ("fr_FR", "8_100_000_000_000_000_000_000_000_000_000_000", "8,1 quintilliards"),
         (
             "fr_FR",
             "-8_100_000_000_000_000_000_000_000_000_000_000",
-            "-8.1 quintilliards",
+            "-8,1 quintilliards",
         ),
         (
             "fr_FR",
             1_000_000_000_000_000_000_000_000_000_000_000_000,
-            "1000.0 quintilliards",
+            "1000,0 quintilliards",
         ),
         (
             "fr_FR",
             1_100_000_000_000_000_000_000_000_000_000_000_000,
-            "1100.0 quintilliards",
+            "1100,0 quintilliards",
         ),
         (
             "fr_FR",
             2_100_000_000_000_000_000_000_000_000_000_000_000,
-            "2100.0 quintilliards",
+            "2100,0 quintilliards",
         ),
     ],
 )
@@ -176,10 +176,10 @@ def test_intword_i18n(locale: str, number: int, expected_result: str) -> None:
     [
         ("fr_FR", 1, "1 octet"),
         ("fr_FR", 42, "42 octets"),
-        ("fr_FR", 42_000, "42.0 Ko"),
-        ("fr_FR", 42_000_000, "42.0 Mo"),
-        ("fr_FR", 42_000_000_000, "42.0 Go"),
-        ("fr_FR", -42_000, "-42.0 Ko"),
+        ("fr_FR", 42_000, "42,0 Ko"),
+        ("fr_FR", 42_000_000, "42,0 Mo"),
+        ("fr_FR", 42_000_000_000, "42,0 Go"),
+        ("fr_FR", -42_000, "-42,0 Ko"),
     ],
 )
 def test_naturalsize_i18n(locale: str, value: float, expected_result: str) -> None:
@@ -199,7 +199,7 @@ def test_naturalsize_i18n_binary() -> None:
     except FileNotFoundError:
         pytest.skip("Generate .mo with scripts/generate-translation-binaries.sh")
     else:
-        assert humanize.naturalsize(3000, binary=True) == "2.9 Kio"
+        assert humanize.naturalsize(3000, binary=True) == "2,9 Kio"
     finally:
         humanize.i18n.deactivate()
 

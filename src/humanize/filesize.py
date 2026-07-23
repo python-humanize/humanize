@@ -7,6 +7,7 @@ __lazy_modules__ = {"humanize.i18n", "math"}
 from math import log
 
 from humanize.i18n import _gettext as _
+from humanize.i18n import decimal_separator
 
 suffixes = {
     "decimal": (
@@ -106,5 +107,6 @@ def naturalsize(
     if exp < len(suffix) and abs(float(format % (abs_bytes / (base**exp)))) >= base:
         exp += 1
     space = "" if gnu else " "
-    ret: str = format % (bytes_ / (base**exp)) + space + _(suffix[exp - 1])
+    number = (format % (bytes_ / (base**exp))).replace(".", decimal_separator())
+    ret: str = number + space + _(suffix[exp - 1])
     return ret
