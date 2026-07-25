@@ -252,6 +252,36 @@ def test_ordinal_genders(
         humanize.i18n.deactivate()
 
 
+def test_ordinal_interpolated_number(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Ordinals whose translation carries a placeholder position the number
+    themselves, e.g. Romanian "al 2-lea" / "a 2-a". Regression test for #270.
+    """
+    from humanize import number
+
+    def fake_pgettext(msgctxt: str, message: str) -> str:
+        return "a %s-a" if "female" in msgctxt else "al %s-lea"
+
+    monkeypatch.setattr(number, "P_", fake_pgettext)
+    assert humanize.ordinal(2) == "al 2-lea"
+    assert humanize.ordinal(23) == "al 23-lea"
+    assert humanize.ordinal(2, gender="female") == "a 2-a"
+
+    # A %d placeholder is accepted as well.
+    monkeypatch.setattr(number, "P_", lambda ctx, msg: "%d-lea")
+    assert humanize.ordinal(7) == "7-lea"
+
+
+def test_ordinal_suffix_unchanged(monkeypatch: pytest.MonkeyPatch) -> None:
+    """A translation without a placeholder keeps the classic <number><suffix>
+    form, so existing locales are unaffected by the interpolation support.
+    """
+    from humanize import number
+
+    monkeypatch.setattr(number, "P_", lambda ctx, msg: "º")
+    assert humanize.ordinal(5) == "5º"
+    assert humanize.ordinal(21) == "21º"
+
+
 def test_default_locale_path_defined__spec__() -> None:
     i18n = importlib.import_module("humanize.i18n")
     assert i18n._get_default_locale_path() is not None

@@ -110,7 +110,14 @@ def ordinal(value: NumberOrString, gender: str = "male") -> str:
         return str(value)
     gender = "male" if gender == "male" else "female"
     digit = 0 if value % 100 in (11, 12, 13) else value % 10
-    return f"{value}{P_(f'{digit} ({gender})', _ORDINAL_SUFFIXES[digit])}"
+    suffix = P_(f"{digit} ({gender})", _ORDINAL_SUFFIXES[digit])
+    # Most languages append a suffix to the number ("2nd"), but some position the
+    # number inside the ordinal word (e.g. Romanian "al 2-lea", "a 2-a"). A
+    # translation can opt into that by including a "%s"/"%d" placeholder for the
+    # number; without one, the classic "<number><suffix>" form is kept.
+    if "%s" in suffix or "%d" in suffix:
+        return suffix % value
+    return f"{value}{suffix}"
 
 
 def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
