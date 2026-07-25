@@ -109,7 +109,10 @@ def ordinal(value: NumberOrString, gender: str = "male") -> str:
     except (TypeError, ValueError):
         return str(value)
     gender = "male" if gender == "male" else "female"
-    digit = 0 if value % 100 in (11, 12, 13) else value % 10
+    # The suffix follows the magnitude, and Python's % is not sign-symmetric:
+    # -1 % 10 is 9, which would pick "th" instead of "st".
+    magnitude = abs(value)
+    digit = 0 if magnitude % 100 in (11, 12, 13) else magnitude % 10
     return f"{value}{P_(f'{digit} ({gender})', _ORDINAL_SUFFIXES[digit])}"
 
 
