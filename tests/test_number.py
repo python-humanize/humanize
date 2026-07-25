@@ -258,6 +258,15 @@ def test_clamp(test_args: list[typing.Any], expected: str) -> None:
         ([1234.56], "1.23 k"),
         ([12345, "", 6], "12.3450 k"),
         ([200_000], "200 k"),
+        # Rounding that carries the mantissa up a power of ten within a
+        # bucket must not add an extra significant figure (issue: metric
+        # showed one digit too many for e.g. 9999 -> "10.00 k").
+        ([9999], "10.0 k"),
+        ([99999], "100 k"),
+        ([9.99999], "10.0"),
+        ([-9999], "-10.0 k"),
+        ([9.999, "", 2], "10"),
+        ([999.4], "999"),
         ([999.9, "V"], "1.00 kV"),
         ([999.99, "V"], "1.00 kV"),
         ([999_999, "V"], "1.00 MV"),
