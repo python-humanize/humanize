@@ -33,6 +33,10 @@ def test_i18n() -> None:
         assert humanize.ordinal(5) == "5ый"
         assert humanize.precisedelta(one_min_three_seconds) == "1 минута и 7 секунд"
 
+        humanize.i18n.activate("si_LK")
+        assert humanize.naturaltime(three_seconds) == "තත්පර 3කට පෙර"
+        assert humanize.precisedelta(one_min_three_seconds) == "විනාඩි 1යි තත්පර 7ක්"
+
     except FileNotFoundError:
         pytest.skip("Generate .mo with scripts/generate-translation-binaries.sh")
 
@@ -100,6 +104,10 @@ def test_naturaldelta() -> None:
         ("it_IT", 1_200_000, "1,2 milioni"),
         ("it_IT", 1_000_000_000, "1,0 miliardo"),
         ("it_IT", 3_500_000_000, "3,5 miliardi"),
+        # Sinhala uses borrowed scale words with a dot decimal separator
+        ("si_LK", 1_000_000, "1.0 මිලියන"),
+        ("si_LK", 1_200_000, "1.2 මිලියන"),
+        ("si_LK", 3_500_000_000, "3.5 බිලියන"),
         # Spanish uses dot as decimal separator
         ("es_ES", 1_000_000, "1.0 millón"),
         ("es_ES", 3_500_000, "3.5 millones"),
@@ -176,6 +184,8 @@ def test_intword_i18n(locale: str, number: int, expected_result: str) -> None:
     [
         ("fr_FR", 1, "1 octet"),
         ("fr_FR", 42, "42 octets"),
+        ("si_LK", 1, "බයිට් 1"),
+        ("si_LK", 42, "බයිට් 42"),
         ("fr_FR", 42_000, "42.0 Ko"),
         ("fr_FR", 42_000_000, "42.0 Mo"),
         ("fr_FR", 42_000_000_000, "42.0 Go"),
