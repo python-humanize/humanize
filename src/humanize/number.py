@@ -540,7 +540,7 @@ def metric(value: float, unit: str = "", precision: int = 3) -> str:
 
     if not math.isfinite(value):
         return _format_not_finite(value)
-    exponent = int(math.floor(math.log10(abs(value)))) if value != 0 else 0
+    exponent = math.floor(math.log10(abs(value))) if value != 0 else 0
 
     if exponent >= 33 or exponent < -30:
         return scientific(value, precision - 1) + unit

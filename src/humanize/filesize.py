@@ -81,12 +81,8 @@ def naturalsize(
     Returns:
         str: Human readable representation of a filesize.
     """
-    if gnu:
-        suffix = suffixes["gnu"]
-    elif binary:
-        suffix = suffixes["binary"]
-    else:
-        suffix = suffixes["decimal"]
+    suffix_key = "gnu" if gnu else "binary" if binary else "decimal"
+    suffix = suffixes[suffix_key]
 
     base = 1024 if (gnu or binary) else 1000
     bytes_ = float(value)

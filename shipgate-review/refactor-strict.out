@@ -1,0 +1,535 @@
+shipgate refactor: '.' uses dogfood scope src (pass tests/unit explicitly to include fixture trees)
+[
+  {
+    "rule_id": "use-named-expression",
+    "message": "Use a named expression in the following condition",
+    "location": {
+      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/i18n.py",
+      "line": 8,
+      "column": 0
+    },
+    "suggestion": {
+      "before": "TYPE_CHECKING = False\nif TYPE_CHECKING:\n    import os\n    import pathlib",
+      "after": "if TYPE_CHECKING := False:\n    import os\n    import pathlib",
+      "message": null
+    }
+  },
+  {
+    "rule_id": "merge-repeated-ifs",
+    "message": "Merge adjacent if statements with identical tests",
+    "location": {
+      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/i18n.py",
+      "line": 79,
+      "column": 4
+    },
+    "suggestion": {
+      "before": "if path is None:\n    path = _get_default_locale_path()\n\nif path is None:\n    msg = (\n        \"Humanize cannot determinate the default location of the 'locale' folder. \"\n        \"You need to pass the path explicitly.\"\n    )\n    raise FileNotFoundError(msg)",
+      "after": "if path is None:\n    path = _get_default_locale_path()\n    msg = (\n        \"Humanize cannot determinate the default location of the 'locale' folder. \"\n        \"You need to pass the path explicitly.\"\n    )\n    raise FileNotFoundError(msg)",
+      "message": null
+    }
+  },
+  {
+    "rule_id": "hoist-repeated-if-condition",
+    "message": "Merge adjacent if statements with the same condition",
+    "location": {
+      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/i18n.py",
+      "line": 79,
+      "column": 4
+    },
+    "suggestion": {
+      "before": "if path is None:\n    path = _get_default_locale_path()\n\nif path is None:\n    msg = (\n        \"Humanize cannot determinate the default location of the 'locale' folder. \"\n        \"You need to pass the path explicitly.\"\n    )\n    raise FileNotFoundError(msg)",
+      "after": "if path is None:\n    path = _get_default_locale_path()\n    msg = (\n        \"Humanize cannot determinate the default location of the 'locale' folder. \"\n        \"You need to pass the path explicitly.\"\n    )\n    raise FileNotFoundError(msg)",
+      "message": null
+    }
+  },
+  {
+    "rule_id": "use-named-expression",
+    "message": "Use a named expression in the following condition",
+    "location": {
+      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/lists.py",
+      "line": 5,
+      "column": 0
+    },
+    "suggestion": {
+      "before": "TYPE_CHECKING = False\nif TYPE_CHECKING:\n    from typing import Any",
+      "after": "if TYPE_CHECKING := False:\n    from typing import Any",
+      "message": null
+    }
+  },
+  {
+    "rule_id": "assign-if-exp",
+    "message": "Replace if statement with if expression",
+    "location": {
+      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/lists.py",
+      "line": 35,
+      "column": 4
+    },
+    "suggestion": {
+      "before": "if len(items) == 2:\n    return f\"{items[0]!s} and {items[1]!s}\"\nreturn \", \".join([str(item) for item in items[:-1]]) + f\" and {items[-1]!s}\"",
+      "after": "return f\"{items[0]!s} and {items[1]!s}\" if len(items) == 2 else \", \".join([str(item) for item in items[:-1]]) + f\" and {items[-1]!s}\"",
+      "message": null
+    }
+  },
+  {
+    "rule_id": "simplify-fstring-formatting",
+    "message": "Remove redundant !s conversion from f-string interpolation",
+    "location": {
+      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/lists.py",
+      "line": 36,
+      "column": 15
+    },
+    "suggestion": {
+      "before": "f\"{items[0]!s} and {items[1]!s}\"",
+      "after": "f\"{items[0]} and {items[1]}\"",
+      "message": null
+    }
+  },
+  {
+    "rule_id": "simplify-fstring-formatting",
+    "message": "Remove redundant !s conversion from f-string interpolation",
+    "location": {
+      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/lists.py",
+      "line": 37,
+      "column": 59
+    },
+    "suggestion": {
+      "before": "f\" and {items[-1]!s}\"",
+      "after": "f\" and {items[-1]}\"",
+      "message": null
+    }
+  },
+  {
+    "rule_id": "use-named-expression",
+    "message": "Use a named expression in the following condition",
+    "location": {
+      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/number.py",
+      "line": 14,
+      "column": 0
+    },
+    "suggestion": {
+      "before": "TYPE_CHECKING = False\nif TYPE_CHECKING:\n    from typing import TypeAlias\n\n    # This type can be better defined by typing.SupportsFloat\n    # but that's a Python 3.8 only typing option.\n    NumberOrString: TypeAlias = float | str",
+      "after": "if TYPE_CHECKING := False:\n    from typing import TypeAlias\n\n    # This type can be better defined by typing.SupportsFloat\n    # but that's a Python 3.8 only typing option.\n    NumberOrString: TypeAlias = float | str",
+      "message": null
+    }
+  },
+  {
+    "rule_id": "assign-if-exp",
+    "message": "Replace if statement with if expression",
+    "location": {
+      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/number.py",
+      "line": 61,
+      "column": 4
+    },
+    "suggestion": {
+      "before": "if math.isinf(value) and value > 0:\n    return \"+Inf\"\nreturn \"\"",
+      "after": "return \"+Inf\" if math.isinf(value) and value > 0 else \"\"",
+      "message": null
+    }
+  },
+  {
+    "rule_id": "assign-if-exp",
+    "message": "Replace if statement with if expression",
+    "location": {
+      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/number.py",
+      "line": 170,
+      "column": 4
+    },
+    "suggestion": {
+      "before": "if ndigits is not None:\n    result = f\"{value:,.{ndigits}f}\"\nelse:\n    result = f\"{value:,}\"",
+      "after": "result = f\"{value:,.{ndigits}f}\" if ndigits is not None else f\"{value:,}\"",
+      "message": null
+    }
+  },
+  {
+    "rule_id": "assign-if-exp",
+    "message": "Replace if statement with if expression",
+    "location": {
+      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/number.py",
+      "line": 159,
+      "column": 12
+    },
+    "suggestion": {
+      "before": "if \".\" in value:\n    value = float(value)\nelse:\n    value = int(value)",
+      "after": "value = float(value) if \".\" in value else int(value)",
+      "message": null
+    }
+  },
+  {
+    "rule_id": "move-assign",
+    "message": "Move duplicated assignment target outside the conditional",
+    "location": {
+      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/number.py",
+      "line": 159,
+      "column": 12
+    },
+    "suggestion": {
+      "before": "if \".\" in value:\n    value = float(value)\nelse:\n    value = int(value)",
+      "after": "value = float(value) if \".\" in value else int(value)",
+      "message": null
+    }
+  },
+  {
+    "rule_id": "ternary-to-if-expression",
+    "message": "Replace branch assignments with a conditional expression",
+    "location": {
+      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/number.py",
+      "line": 159,
+      "column": 12
+    },
+    "suggestion": {
+      "before": "if \".\" in value:\n    value = float(value)\nelse:\n    value = int(value)",
+      "after": "value = float(value) if \".\" in value else int(value)",
+      "message": null
+    }
+  },
+  {
+    "rule_id": "move-assign-in-block",
+    "message": "Move duplicated assignment target outside the block conditional",
+    "location": {
+      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/number.py",
+      "line": 159,
+      "column": 12
+    },
+    "suggestion": {
+      "before": "if \".\" in value:\n    value = float(value)\nelse:\n    value = int(value)",
+      "after": "value = float(value) if \".\" in value else int(value)",
+      "message": null
+    }
+  },
+  {
+    "rule_id": "move-assign",
+    "message": "Move duplicated assignment target outside the conditional",
+    "location": {
+      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/number.py",
+      "line": 170,
+      "column": 4
+    },
+    "suggestion": {
+      "before": "if ndigits is not None:\n    result = f\"{value:,.{ndigits}f}\"\nelse:\n    result = f\"{value:,}\"",
+      "after": "result = f\"{value:,.{ndigits}f}\" if ndigits is not None else f\"{value:,}\"",
+      "message": null
+    }
+  },
+  {
+    "rule_id": "ternary-to-if-expression",
+    "message": "Replace branch assignments with a conditional expression",
+    "location": {
+      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/number.py",
+      "line": 170,
+      "column": 4
+    },
+    "suggestion": {
+      "before": "if ndigits is not None:\n    result = f\"{value:,.{ndigits}f}\"\nelse:\n    result = f\"{value:,}\"",
+      "after": "result = f\"{value:,.{ndigits}f}\" if ndigits is not None else f\"{value:,}\"",
+      "message": null
+    }
+  },
+  {
+    "rule_id": "move-assign-in-block",
+    "message": "Move duplicated assignment target outside the block conditional",
+    "location": {
+      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/number.py",
+      "line": 170,
+      "column": 4
+    },
+    "suggestion": {
+      "before": "if ndigits is not None:\n    result = f\"{value:,.{ndigits}f}\"\nelse:\n    result = f\"{value:,}\"",
+      "after": "result = f\"{value:,.{ndigits}f}\" if ndigits is not None else f\"{value:,}\"",
+      "message": null
+    }
+  },
+  {
+    "rule_id": "assign-if-exp",
+    "message": "Replace if statement with if expression",
+    "location": {
+      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/number.py",
+      "line": 306,
+      "column": 4
+    },
+    "suggestion": {
+      "before": "if not 0 <= value < 10:\n    return str(value)\nreturn _(_APNUMBER_WORDS[value])",
+      "after": "return str(value) if not 0 <= value < 10 else _(_APNUMBER_WORDS[value])",
+      "message": null
+    }
+  },
+  {
+    "rule_id": "assign-if-exp",
+    "message": "Replace if statement with if expression",
+    "location": {
+      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/number.py",
+      "line": 369,
+      "column": 4
+    },
+    "suggestion": {
+      "before": "if not whole_number:\n    return f\"{numerator:.0f}/{denominator:.0f}\"\n\n# int() truncates toward zero, so for a negative number both\n# whole_number and numerator carry the minus sign, which prints as\n# \"-1 -3/10\". The sign already rides on the whole part; absorb it\n# from the fractional part so the result reads as a normal mixed\n# fraction.\nreturn f\"{whole_number:.0f} {abs(numerator):.0f}/{denominator:.0f}\"",
+      "after": "return f\"{numerator:.0f}/{denominator:.0f}\" if not whole_number else f\"{whole_number:.0f} {abs(numerator):.0f}/{denominator:.0f}\"",
+      "message": null
+    }
+  },
+  {
+    "rule_id": "assign-if-exp",
+    "message": "Replace if statement with if expression",
+    "location": {
+      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/number.py",
+      "line": 564,
+      "column": 4
+    },
+    "suggestion": {
+      "before": "if not (unit or ordinal_) or unit in (\"\u00b0\", \"\u2032\", \"\u2033\"):\n    space = \"\"\nelse:\n    space = \" \"",
+      "after": "space = \"\" if not (unit or ordinal_) or unit in (\"\u00b0\", \"\u2032\", \"\u2033\") else \" \"",
+      "message": null
+    }
+  },
+  {
+    "rule_id": "move-assign",
+    "message": "Move duplicated assignment target outside the conditional",
+    "location": {
+      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/number.py",
+      "line": 559,
+      "column": 4
+    },
+    "suggestion": {
+      "before": "if exponent < 0:\n    ordinal_ = \"m\u03bcnpfazyrq\"[(-exponent - 1) // 3]\nelse:\n    ordinal_ = \"\"",
+      "after": "ordinal_ = \"m\u03bcnpfazyrq\"[(-exponent - 1) // 3] if exponent < 0 else \"\"",
+      "message": null
+    }
+  },
+  {
+    "rule_id": "ternary-to-if-expression",
+    "message": "Replace branch assignments with a conditional expression",
+    "location": {
+      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/number.py",
+      "line": 559,
+      "column": 4
+    },
+    "suggestion": {
+      "before": "if exponent < 0:\n    ordinal_ = \"m\u03bcnpfazyrq\"[(-exponent - 1) // 3]\nelse:\n    ordinal_ = \"\"",
+      "after": "ordinal_ = \"m\u03bcnpfazyrq\"[(-exponent - 1) // 3] if exponent < 0 else \"\"",
+      "message": null
+    }
+  },
+  {
+    "rule_id": "move-assign-in-block",
+    "message": "Move duplicated assignment target outside the block conditional",
+    "location": {
+      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/number.py",
+      "line": 559,
+      "column": 4
+    },
+    "suggestion": {
+      "before": "if exponent < 0:\n    ordinal_ = \"m\u03bcnpfazyrq\"[(-exponent - 1) // 3]\nelse:\n    ordinal_ = \"\"",
+      "after": "ordinal_ = \"m\u03bcnpfazyrq\"[(-exponent - 1) // 3] if exponent < 0 else \"\"",
+      "message": null
+    }
+  },
+  {
+    "rule_id": "move-assign",
+    "message": "Move duplicated assignment target outside the conditional",
+    "location": {
+      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/number.py",
+      "line": 564,
+      "column": 4
+    },
+    "suggestion": {
+      "before": "if not (unit or ordinal_) or unit in (\"\u00b0\", \"\u2032\", \"\u2033\"):\n    space = \"\"\nelse:\n    space = \" \"",
+      "after": "space = \"\" if not (unit or ordinal_) or unit in (\"\u00b0\", \"\u2032\", \"\u2033\") else \" \"",
+      "message": null
+    }
+  },
+  {
+    "rule_id": "ternary-to-if-expression",
+    "message": "Replace branch assignments with a conditional expression",
+    "location": {
+      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/number.py",
+      "line": 564,
+      "column": 4
+    },
+    "suggestion": {
+      "before": "if not (unit or ordinal_) or unit in (\"\u00b0\", \"\u2032\", \"\u2033\"):\n    space = \"\"\nelse:\n    space = \" \"",
+      "after": "space = \"\" if not (unit or ordinal_) or unit in (\"\u00b0\", \"\u2032\", \"\u2033\") else \" \"",
+      "message": null
+    }
+  },
+  {
+    "rule_id": "move-assign-in-block",
+    "message": "Move duplicated assignment target outside the block conditional",
+    "location": {
+      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/number.py",
+      "line": 564,
+      "column": 4
+    },
+    "suggestion": {
+      "before": "if not (unit or ordinal_) or unit in (\"\u00b0\", \"\u2032\", \"\u2033\"):\n    space = \"\"\nelse:\n    space = \" \"",
+      "after": "space = \"\" if not (unit or ordinal_) or unit in (\"\u00b0\", \"\u2032\", \"\u2033\") else \" \"",
+      "message": null
+    }
+  },
+  {
+    "rule_id": "use-assigned-variable",
+    "message": "Reuse the assigned local instead of repeating its expression",
+    "location": {
+      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/number.py",
+      "line": 551,
+      "column": 4
+    },
+    "suggestion": {
+      "before": "if exponent < 30 and round(abs(value), digits) >= 1000:\n    exponent += 3 - exponent % 3\n    new_bucket = exponent // 3 * 3\n    value /= 10 ** (new_bucket - old_bucket)\n    digits = max(0, precision - exponent % 3 - 1)",
+      "after": "if exponent < 30 and round(abs(value), digits) >= 1000:\n    exponent += 3 - exponent % 3\n    new_bucket = old_bucket\n    value /= 10 ** (new_bucket - old_bucket)\n    digits = max(0, precision - exponent % 3 - 1)",
+      "message": null
+    }
+  },
+  {
+    "rule_id": "use-named-expression",
+    "message": "Use a named expression in the following condition",
+    "location": {
+      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/time.py",
+      "line": 17,
+      "column": 0
+    },
+    "suggestion": {
+      "before": "TYPE_CHECKING = False\nif TYPE_CHECKING:\n    import datetime as dt\n    from collections.abc import Iterable\n    from typing import Any",
+      "after": "if TYPE_CHECKING := False:\n    import datetime as dt\n    from collections.abc import Iterable\n    from typing import Any",
+      "message": null
+    }
+  },
+  {
+    "rule_id": "assign-if-exp",
+    "message": "Replace if statement with if expression",
+    "location": {
+      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/time.py",
+      "line": 44,
+      "column": 8
+    },
+    "suggestion": {
+      "before": "if self.__class__ is other.__class__:\n    return self.value < other.value\nreturn NotImplemented",
+      "after": "return self.value < other.value if self.__class__ is other.__class__ else NotImplemented",
+      "message": null
+    }
+  },
+  {
+    "rule_id": "assign-if-exp",
+    "message": "Replace if statement with if expression",
+    "location": {
+      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/time.py",
+      "line": 193,
+      "column": 12
+    },
+    "suggestion": {
+      "before": "if minutes == 60:\n    return _(\"an hour\")\n\nreturn _ngettext(\"%d minute\", \"%d minutes\", minutes) % minutes",
+      "after": "return _(\"an hour\") if minutes == 60 else _ngettext(\"%d minute\", \"%d minutes\", minutes) % minutes",
+      "message": null
+    }
+  },
+  {
+    "rule_id": "assign-if-exp",
+    "message": "Replace if statement with if expression",
+    "location": {
+      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/time.py",
+      "line": 203,
+      "column": 12
+    },
+    "suggestion": {
+      "before": "if hours == 24:\n    return _(\"a day\")\n\nreturn _ngettext(\"%d hour\", \"%d hours\", hours) % hours",
+      "after": "return _(\"a day\") if hours == 24 else _ngettext(\"%d hour\", \"%d hours\", hours) % hours",
+      "message": null
+    }
+  },
+  {
+    "rule_id": "switch",
+    "message": "Use match for repeated equality branches",
+    "location": {
+      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/time.py",
+      "line": 208,
+      "column": 4
+    },
+    "suggestion": {
+      "before": "if years == 0:\n    if days == 1:\n        return _(\"a day\")\n\n    if not use_months:\n        return _ngettext(\"%d day\", \"%d days\", days) % days\n\n    if num_months == 0:\n        return _ngettext(\"%d day\", \"%d days\", days) % days\n\n    if num_months == 1:\n        return _(\"a month\")\n\n    if num_months == 12:\n        return _(\"a year\")\n\n    return _ngettext(\"%d month\", \"%d months\", num_months) % num_months\n\nelif years == 1:\n    if num_months == 0 and days == 0:\n        return _(\"a year\")\n\n    if num_months == 0:\n        return _ngettext(\"1 year, %d day\", \"1 year, %d days\", days) % days\n\n    if use_months:\n        if num_months == 1:\n            return _(\"1 year, 1 month\")\n\n        if num_months == 12:\n            years += 1\n            return _ngettext(\"%d year\", \"%d years\", years) % years\n\n        return (\n            _ngettext(\"1 year, %d month\", \"1 year, %d months\", num_months)\n            % num_months\n        )\n\n    return _ngettext(\"1 year, %d day\", \"1 year, %d days\", days) % days",
+      "after": "match years:\n    case 0:\n        if days == 1:\n            return _(\"a day\")\n\n        if not use_months:\n            return _ngettext(\"%d day\", \"%d days\", days) % days\n\n        if num_months == 0:\n            return _ngettext(\"%d day\", \"%d days\", days) % days\n\n        if num_months == 1:\n            return _(\"a month\")\n\n        if num_months == 12:\n            return _(\"a year\")\n\n        return _ngettext(\"%d month\", \"%d months\", num_months) % num_months\n    case 1:\n        if num_months == 0 and days == 0:\n            return _(\"a year\")\n\n        if num_months == 0:\n            return _ngettext(\"1 year, %d day\", \"1 year, %d days\", days) % days\n\n        if use_months:\n            if num_months == 1:\n                return _(\"1 year, 1 month\")\n\n            if num_months == 12:\n                years += 1\n                return _ngettext(\"%d year\", \"%d years\", years) % years\n\n            return (\n                _ngettext(\"1 year, %d month\", \"1 year, %d months\", num_months)\n                % num_months\n            )\n\n        return _ngettext(\"1 year, %d day\", \"1 year, %d days\", days) % days",
+      "message": null
+    }
+  },
+  {
+    "rule_id": "assign-if-exp",
+    "message": "Replace if statement with if expression",
+    "location": {
+      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/time.py",
+      "line": 221,
+      "column": 8
+    },
+    "suggestion": {
+      "before": "if num_months == 12:\n    return _(\"a year\")\n\nreturn _ngettext(\"%d month\", \"%d months\", num_months) % num_months",
+      "after": "return _(\"a year\") if num_months == 12 else _ngettext(\"%d month\", \"%d months\", num_months) % num_months",
+      "message": null
+    }
+  },
+  {
+    "rule_id": "assign-if-exp",
+    "message": "Replace if statement with if expression",
+    "location": {
+      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/time.py",
+      "line": 296,
+      "column": 4
+    },
+    "suggestion": {
+      "before": "if delta == _(\"a moment\"):\n    return _(\"now\")\n\nreturn str(ago % delta)",
+      "after": "return _(\"now\") if delta == _(\"a moment\") else str(ago % delta)",
+      "message": null
+    }
+  },
+  {
+    "rule_id": "assign-if-exp",
+    "message": "Replace if statement with if expression",
+    "location": {
+      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/time.py",
+      "line": 320,
+      "column": 4
+    },
+    "suggestion": {
+      "before": "if isinstance(value, dt.datetime) and value.tzinfo is not None:\n    return dt.datetime.now(value.tzinfo).date()\nreturn dt.date.today()",
+      "after": "return dt.datetime.now(value.tzinfo).date() if isinstance(value, dt.datetime) and value.tzinfo is not None else dt.date.today()",
+      "message": null
+    }
+  },
+  {
+    "rule_id": "use-datetime-now-not-today",
+    "message": "Use datetime.now() instead of datetime.today()",
+    "location": {
+      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/time.py",
+      "line": 322,
+      "column": 11
+    },
+    "suggestion": {
+      "before": "dt.date.today()",
+      "after": "dt.date.now()",
+      "message": null
+    }
+  },
+  {
+    "rule_id": "assign-if-exp",
+    "message": "Replace if statement with if expression",
+    "location": {
+      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/time.py",
+      "line": 354,
+      "column": 4
+    },
+    "suggestion": {
+      "before": "if delta.days == -1:\n    return _(\"yesterday\")\n\nreturn value.strftime(format)",
+      "after": "return _(\"yesterday\") if delta.days == -1 else value.strftime(format)",
+      "message": null
+    }
+  },
+  {
+    "rule_id": "assign-if-exp",
+    "message": "Replace if statement with if expression",
+    "location": {
+      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/time.py",
+      "line": 375,
+      "column": 4
+    },
+    "suggestion": {
+      "before": "if delta.days >= 5 * 365 / 12:\n    return naturalday(original_value, \"%b %d %Y\")\nreturn naturalday(original_value)",
+      "after": "return naturalday(original_value, \"%b %d %Y\") if delta.days >= 5 * 365 / 12 else naturalday(original_value)",
+      "message": null
+    }
+  }
+]
