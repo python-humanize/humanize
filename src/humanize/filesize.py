@@ -83,8 +83,10 @@ def naturalsize(
     """
     if gnu:
         suffix = suffixes["gnu"]
+    elif binary:
+        suffix = suffixes["binary"]
     else:
-        suffix = suffixes["binary"] if binary else suffixes["decimal"]
+        suffix = suffixes["decimal"]
 
     base = 1024 if (gnu or binary) else 1000
     bytes_ = float(value)

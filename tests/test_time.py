@@ -27,7 +27,7 @@ FROZEN_DATE = "2010-02-02"
 
 with freeze_time(FROZEN_DATE):
     NOW = dt.datetime.now()
-    NOW_UTC = dt.datetime.now(tz=dt.UTC)
+    NOW_UTC = dt.datetime.now(tz=dt.timezone.utc)
     NOW_UTC_PLUS_01_00 = dt.datetime.now(tz=dt.timezone(offset=dt.timedelta(hours=1)))
     TODAY = dt.date.today()
     TOMORROW = TODAY + ONE_DAY_DELTA
@@ -303,7 +303,7 @@ def test_naturaldate(test_input: dt.date, expected: str) -> None:
 @freeze_time("2023-10-15 23:00:00+00:00")
 def test_naturaldate_tz_aware() -> None:
     """naturaldate should compare dates in the timezone of the given value."""
-    utc = dt.UTC
+    utc = dt.timezone.utc
     aedt = dt.timezone(dt.timedelta(hours=11))
     cest = dt.timezone(dt.timedelta(hours=2))
     edt = dt.timezone(dt.timedelta(hours=-4))
