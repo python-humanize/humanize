@@ -32,7 +32,6 @@ def natural_list(items: list[Any]) -> str:
         return ""
     if len(items) == 1:
         return str(items[0])
-    elif len(items) == 2:
-        return f"{str(items[0])} and {str(items[1])}"
-    else:
-        return ", ".join([str(item) for item in items[:-1]]) + f" and {str(items[-1])}"
+    if len(items) == 2:
+        return f"{items[0]!s} and {items[1]!s}"
+    return ", ".join([str(item) for item in items[:-1]]) + f" and {items[-1]!s}"

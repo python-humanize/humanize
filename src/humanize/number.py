@@ -56,10 +56,8 @@ def _format_not_finite(value: float) -> str:
 
     if math.isnan(value):
         return "NaN"
-    if math.isinf(value) and value < 0:
-        return "-Inf"
-    if math.isinf(value) and value > 0:
-        return "+Inf"
+    if math.isinf(value):
+        return "+Inf" if value > 0 else "-Inf"
     return ""
 
 
@@ -156,10 +154,7 @@ def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
             value = value.replace(thousands_sep, "").replace(decimal_sep, ".")
             if not math.isfinite(float(value)):
                 return _format_not_finite(float(value))
-            if "." in value:
-                value = float(value)
-            else:
-                value = int(value)
+            value = float(value) if "." in value else int(value)
         else:
             if not math.isfinite(float(value)):
                 return _format_not_finite(float(value))
@@ -167,10 +162,7 @@ def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
     except (TypeError, ValueError):
         return str(value)
 
-    if ndigits is not None:
-        result = f"{value:,.{ndigits}f}"
-    else:
-        result = f"{value:,}"
+    result = f"{value:,.{ndigits}f}" if ndigits is not None else f"{value:,}"
     if thousands_sep != "," or decimal_sep != ".":
         result = result.translate(str.maketrans(",.", thousands_sep + decimal_sep))
     return result
@@ -547,12 +539,12 @@ def metric(value: float, unit: str = "", precision: int = 3) -> str:
 
     old_bucket = exponent // 3 * 3
     value /= 10**old_bucket
-    digits = int(max(0, precision - exponent % 3 - 1))
+    digits = max(0, precision - exponent % 3 - 1)
     if exponent < 30 and round(abs(value), digits) >= 1000:
         exponent += 3 - exponent % 3
         new_bucket = exponent // 3 * 3
         value /= 10 ** (new_bucket - old_bucket)
-        digits = int(max(0, precision - exponent % 3 - 1))
+        digits = max(0, precision - exponent % 3 - 1)
 
     if exponent >= 3:
         ordinal_ = "kMGTPEZYRQ"[exponent // 3 - 1]
@@ -561,9 +553,6 @@ def metric(value: float, unit: str = "", precision: int = 3) -> str:
     else:
         ordinal_ = ""
     value_ = format(value, f".{digits}f")
-    if not (unit or ordinal_) or unit in ("°", "′", "″"):
-        space = ""
-    else:
-        space = " "
+    space = "" if not (unit or ordinal_) or unit in ("°", "′", "″") else " "
 
     return f"{value_}{space}{ordinal_}{unit}"

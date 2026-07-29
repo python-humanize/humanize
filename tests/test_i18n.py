@@ -11,7 +11,7 @@ from freezegun import freeze_time
 import humanize
 
 with freeze_time("2020-02-02"):
-    NOW = dt.datetime.now(tz=dt.timezone.utc)
+    NOW = dt.datetime.now(tz=dt.UTC)
 
 
 @freeze_time("2020-02-02")

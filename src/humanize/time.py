@@ -195,7 +195,7 @@ def naturaldelta(
 
             return _ngettext("%d minute", "%d minutes", minutes) % minutes
 
-        if 3600 <= delta.seconds:
+        if delta.seconds >= 3600:
             hours = round(delta.seconds / 3600)
             if hours == 1:
                 return _("an hour")
@@ -643,7 +643,7 @@ def precisedelta(
     import math
 
     texts: list[str] = []
-    for unit, fmt in zip(reversed(Unit), fmts):
+    for unit, fmt in zip(reversed(Unit), fmts, strict=True):
         singular_txt, plural_txt, fmt_value = fmt
         if fmt_value > 0 or (not texts and unit == min_unit):
             _fmt_value = 2 if 1 < fmt_value < 2 else int(fmt_value)
