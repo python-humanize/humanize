@@ -4,7 +4,7 @@ shipgate refactor: '.' uses dogfood scope src (pass tests/unit explicitly to inc
     "rule_id": "use-named-expression",
     "message": "Use a named expression in the following condition",
     "location": {
-      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/i18n.py",
+      "path": "src/humanize/i18n.py",
       "line": 8,
       "column": 0
     },
@@ -18,7 +18,7 @@ shipgate refactor: '.' uses dogfood scope src (pass tests/unit explicitly to inc
     "rule_id": "merge-repeated-ifs",
     "message": "Merge adjacent if statements with identical tests",
     "location": {
-      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/i18n.py",
+      "path": "src/humanize/i18n.py",
       "line": 79,
       "column": 4
     },
@@ -32,7 +32,7 @@ shipgate refactor: '.' uses dogfood scope src (pass tests/unit explicitly to inc
     "rule_id": "hoist-repeated-if-condition",
     "message": "Merge adjacent if statements with the same condition",
     "location": {
-      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/i18n.py",
+      "path": "src/humanize/i18n.py",
       "line": 79,
       "column": 4
     },
@@ -46,7 +46,7 @@ shipgate refactor: '.' uses dogfood scope src (pass tests/unit explicitly to inc
     "rule_id": "use-named-expression",
     "message": "Use a named expression in the following condition",
     "location": {
-      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/lists.py",
+      "path": "src/humanize/lists.py",
       "line": 5,
       "column": 0
     },
@@ -60,7 +60,7 @@ shipgate refactor: '.' uses dogfood scope src (pass tests/unit explicitly to inc
     "rule_id": "assign-if-exp",
     "message": "Replace if statement with if expression",
     "location": {
-      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/lists.py",
+      "path": "src/humanize/lists.py",
       "line": 35,
       "column": 4
     },
@@ -74,7 +74,7 @@ shipgate refactor: '.' uses dogfood scope src (pass tests/unit explicitly to inc
     "rule_id": "simplify-fstring-formatting",
     "message": "Remove redundant !s conversion from f-string interpolation",
     "location": {
-      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/lists.py",
+      "path": "src/humanize/lists.py",
       "line": 36,
       "column": 15
     },
@@ -88,7 +88,7 @@ shipgate refactor: '.' uses dogfood scope src (pass tests/unit explicitly to inc
     "rule_id": "simplify-fstring-formatting",
     "message": "Remove redundant !s conversion from f-string interpolation",
     "location": {
-      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/lists.py",
+      "path": "src/humanize/lists.py",
       "line": 37,
       "column": 59
     },
@@ -102,7 +102,7 @@ shipgate refactor: '.' uses dogfood scope src (pass tests/unit explicitly to inc
     "rule_id": "use-named-expression",
     "message": "Use a named expression in the following condition",
     "location": {
-      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/number.py",
+      "path": "src/humanize/number.py",
       "line": 14,
       "column": 0
     },
@@ -116,7 +116,7 @@ shipgate refactor: '.' uses dogfood scope src (pass tests/unit explicitly to inc
     "rule_id": "assign-if-exp",
     "message": "Replace if statement with if expression",
     "location": {
-      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/number.py",
+      "path": "src/humanize/number.py",
       "line": 61,
       "column": 4
     },
@@ -130,7 +130,7 @@ shipgate refactor: '.' uses dogfood scope src (pass tests/unit explicitly to inc
     "rule_id": "assign-if-exp",
     "message": "Replace if statement with if expression",
     "location": {
-      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/number.py",
+      "path": "src/humanize/number.py",
       "line": 170,
       "column": 4
     },
@@ -144,7 +144,7 @@ shipgate refactor: '.' uses dogfood scope src (pass tests/unit explicitly to inc
     "rule_id": "assign-if-exp",
     "message": "Replace if statement with if expression",
     "location": {
-      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/number.py",
+      "path": "src/humanize/number.py",
       "line": 159,
       "column": 12
     },
@@ -158,7 +158,7 @@ shipgate refactor: '.' uses dogfood scope src (pass tests/unit explicitly to inc
     "rule_id": "move-assign",
     "message": "Move duplicated assignment target outside the conditional",
     "location": {
-      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/number.py",
+      "path": "src/humanize/number.py",
       "line": 159,
       "column": 12
     },
@@ -172,7 +172,7 @@ shipgate refactor: '.' uses dogfood scope src (pass tests/unit explicitly to inc
     "rule_id": "ternary-to-if-expression",
     "message": "Replace branch assignments with a conditional expression",
     "location": {
-      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/number.py",
+      "path": "src/humanize/number.py",
       "line": 159,
       "column": 12
     },
@@ -186,7 +186,7 @@ shipgate refactor: '.' uses dogfood scope src (pass tests/unit explicitly to inc
     "rule_id": "move-assign-in-block",
     "message": "Move duplicated assignment target outside the block conditional",
     "location": {
-      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/number.py",
+      "path": "src/humanize/number.py",
       "line": 159,
       "column": 12
     },
@@ -200,7 +200,7 @@ shipgate refactor: '.' uses dogfood scope src (pass tests/unit explicitly to inc
     "rule_id": "move-assign",
     "message": "Move duplicated assignment target outside the conditional",
     "location": {
-      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/number.py",
+      "path": "src/humanize/number.py",
       "line": 170,
       "column": 4
     },
@@ -214,7 +214,7 @@ shipgate refactor: '.' uses dogfood scope src (pass tests/unit explicitly to inc
     "rule_id": "ternary-to-if-expression",
     "message": "Replace branch assignments with a conditional expression",
     "location": {
-      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/number.py",
+      "path": "src/humanize/number.py",
       "line": 170,
       "column": 4
     },
@@ -228,7 +228,7 @@ shipgate refactor: '.' uses dogfood scope src (pass tests/unit explicitly to inc
     "rule_id": "move-assign-in-block",
     "message": "Move duplicated assignment target outside the block conditional",
     "location": {
-      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/number.py",
+      "path": "src/humanize/number.py",
       "line": 170,
       "column": 4
     },
@@ -242,7 +242,7 @@ shipgate refactor: '.' uses dogfood scope src (pass tests/unit explicitly to inc
     "rule_id": "assign-if-exp",
     "message": "Replace if statement with if expression",
     "location": {
-      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/number.py",
+      "path": "src/humanize/number.py",
       "line": 306,
       "column": 4
     },
@@ -256,7 +256,7 @@ shipgate refactor: '.' uses dogfood scope src (pass tests/unit explicitly to inc
     "rule_id": "assign-if-exp",
     "message": "Replace if statement with if expression",
     "location": {
-      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/number.py",
+      "path": "src/humanize/number.py",
       "line": 369,
       "column": 4
     },
@@ -270,7 +270,7 @@ shipgate refactor: '.' uses dogfood scope src (pass tests/unit explicitly to inc
     "rule_id": "assign-if-exp",
     "message": "Replace if statement with if expression",
     "location": {
-      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/number.py",
+      "path": "src/humanize/number.py",
       "line": 564,
       "column": 4
     },
@@ -284,7 +284,7 @@ shipgate refactor: '.' uses dogfood scope src (pass tests/unit explicitly to inc
     "rule_id": "move-assign",
     "message": "Move duplicated assignment target outside the conditional",
     "location": {
-      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/number.py",
+      "path": "src/humanize/number.py",
       "line": 559,
       "column": 4
     },
@@ -298,7 +298,7 @@ shipgate refactor: '.' uses dogfood scope src (pass tests/unit explicitly to inc
     "rule_id": "ternary-to-if-expression",
     "message": "Replace branch assignments with a conditional expression",
     "location": {
-      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/number.py",
+      "path": "src/humanize/number.py",
       "line": 559,
       "column": 4
     },
@@ -312,7 +312,7 @@ shipgate refactor: '.' uses dogfood scope src (pass tests/unit explicitly to inc
     "rule_id": "move-assign-in-block",
     "message": "Move duplicated assignment target outside the block conditional",
     "location": {
-      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/number.py",
+      "path": "src/humanize/number.py",
       "line": 559,
       "column": 4
     },
@@ -326,7 +326,7 @@ shipgate refactor: '.' uses dogfood scope src (pass tests/unit explicitly to inc
     "rule_id": "move-assign",
     "message": "Move duplicated assignment target outside the conditional",
     "location": {
-      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/number.py",
+      "path": "src/humanize/number.py",
       "line": 564,
       "column": 4
     },
@@ -340,7 +340,7 @@ shipgate refactor: '.' uses dogfood scope src (pass tests/unit explicitly to inc
     "rule_id": "ternary-to-if-expression",
     "message": "Replace branch assignments with a conditional expression",
     "location": {
-      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/number.py",
+      "path": "src/humanize/number.py",
       "line": 564,
       "column": 4
     },
@@ -354,7 +354,7 @@ shipgate refactor: '.' uses dogfood scope src (pass tests/unit explicitly to inc
     "rule_id": "move-assign-in-block",
     "message": "Move duplicated assignment target outside the block conditional",
     "location": {
-      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/number.py",
+      "path": "src/humanize/number.py",
       "line": 564,
       "column": 4
     },
@@ -368,7 +368,7 @@ shipgate refactor: '.' uses dogfood scope src (pass tests/unit explicitly to inc
     "rule_id": "use-assigned-variable",
     "message": "Reuse the assigned local instead of repeating its expression",
     "location": {
-      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/number.py",
+      "path": "src/humanize/number.py",
       "line": 551,
       "column": 4
     },
@@ -382,7 +382,7 @@ shipgate refactor: '.' uses dogfood scope src (pass tests/unit explicitly to inc
     "rule_id": "use-named-expression",
     "message": "Use a named expression in the following condition",
     "location": {
-      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/time.py",
+      "path": "src/humanize/time.py",
       "line": 17,
       "column": 0
     },
@@ -396,7 +396,7 @@ shipgate refactor: '.' uses dogfood scope src (pass tests/unit explicitly to inc
     "rule_id": "assign-if-exp",
     "message": "Replace if statement with if expression",
     "location": {
-      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/time.py",
+      "path": "src/humanize/time.py",
       "line": 44,
       "column": 8
     },
@@ -410,7 +410,7 @@ shipgate refactor: '.' uses dogfood scope src (pass tests/unit explicitly to inc
     "rule_id": "assign-if-exp",
     "message": "Replace if statement with if expression",
     "location": {
-      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/time.py",
+      "path": "src/humanize/time.py",
       "line": 193,
       "column": 12
     },
@@ -424,7 +424,7 @@ shipgate refactor: '.' uses dogfood scope src (pass tests/unit explicitly to inc
     "rule_id": "assign-if-exp",
     "message": "Replace if statement with if expression",
     "location": {
-      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/time.py",
+      "path": "src/humanize/time.py",
       "line": 203,
       "column": 12
     },
@@ -438,7 +438,7 @@ shipgate refactor: '.' uses dogfood scope src (pass tests/unit explicitly to inc
     "rule_id": "switch",
     "message": "Use match for repeated equality branches",
     "location": {
-      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/time.py",
+      "path": "src/humanize/time.py",
       "line": 208,
       "column": 4
     },
@@ -452,7 +452,7 @@ shipgate refactor: '.' uses dogfood scope src (pass tests/unit explicitly to inc
     "rule_id": "assign-if-exp",
     "message": "Replace if statement with if expression",
     "location": {
-      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/time.py",
+      "path": "src/humanize/time.py",
       "line": 221,
       "column": 8
     },
@@ -466,7 +466,7 @@ shipgate refactor: '.' uses dogfood scope src (pass tests/unit explicitly to inc
     "rule_id": "assign-if-exp",
     "message": "Replace if statement with if expression",
     "location": {
-      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/time.py",
+      "path": "src/humanize/time.py",
       "line": 296,
       "column": 4
     },
@@ -480,7 +480,7 @@ shipgate refactor: '.' uses dogfood scope src (pass tests/unit explicitly to inc
     "rule_id": "assign-if-exp",
     "message": "Replace if statement with if expression",
     "location": {
-      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/time.py",
+      "path": "src/humanize/time.py",
       "line": 320,
       "column": 4
     },
@@ -494,7 +494,7 @@ shipgate refactor: '.' uses dogfood scope src (pass tests/unit explicitly to inc
     "rule_id": "use-datetime-now-not-today",
     "message": "Use datetime.now() instead of datetime.today()",
     "location": {
-      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/time.py",
+      "path": "src/humanize/time.py",
       "line": 322,
       "column": 11
     },
@@ -508,7 +508,7 @@ shipgate refactor: '.' uses dogfood scope src (pass tests/unit explicitly to inc
     "rule_id": "assign-if-exp",
     "message": "Replace if statement with if expression",
     "location": {
-      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/time.py",
+      "path": "src/humanize/time.py",
       "line": 354,
       "column": 4
     },
@@ -522,7 +522,7 @@ shipgate refactor: '.' uses dogfood scope src (pass tests/unit explicitly to inc
     "rule_id": "assign-if-exp",
     "message": "Replace if statement with if expression",
     "location": {
-      "path": "/home/dayhatt/workspace/outreach/python-humanize-humanize/src/humanize/time.py",
+      "path": "src/humanize/time.py",
       "line": 375,
       "column": 4
     },
