@@ -1,3 +1,10 @@
-Thanks @hugovk — fair point on the health score. I've reverted the ternaries and fixed the 3.10 timezone issue in the earlier push; this update adds a broader auto-fix pass (format/refactor/ruff aligned with your ruff config) plus a few targeted refactors: suffix lookup in `naturalsize`, `_today_for_value()` to dedupe the `naturalday`/`naturaldate` today logic, and the other safe changes listed in **Changes brought**.
+Thanks @hugovk — fair point on the health score. I've reverted the ternaries and fixed
+the 3.10 timezone issue in the earlier push; this update adds a broader auto-fix pass
+(format/refactor/ruff aligned with your ruff config) plus a few targeted refactors:
+suffix lookup in `naturalsize`, `_today_for_value()` to dedupe the
+`naturalday`/`naturaldate` today logic, and the other safe changes listed in **Changes
+brought**.
 
-CI was green on my side after the revert push (`pre-commit.ci` + RTD). I can't add `changelog:*` labels from the fork — could you add one when you have a moment? Happy to adjust anything that's still not what you want.
+CI was green on my side after the revert push (`pre-commit.ci` + RTD). I can't add
+`changelog:*` labels from the fork — could you add one when you have a moment? Happy to
+adjust anything that's still not what you want.

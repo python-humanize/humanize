@@ -2,11 +2,11 @@
 
 Captured 2026-07-30 during follow-up auto-expand pass.
 
-| Artifact | Description |
-| --- | --- |
-| `check.out` | `shipgate check --suite full --target .` |
-| `refactor-strict.out` | `shipgate refactor check --strict .` |
-| `format.out` | `shipgate format --target .` |
+| Artifact              | Description                              |
+| --------------------- | ---------------------------------------- |
+| `check.out`           | `shipgate check --suite full --target .` |
+| `refactor-strict.out` | `shipgate refactor check --strict .`     |
+| `format.out`          | `shipgate format --target .`             |
 
 ## Counts (from captures)
 
