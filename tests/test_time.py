@@ -138,6 +138,25 @@ def test_naturaldelta(test_input: float | dt.timedelta, expected: str) -> None:
         assert humanize.naturaldelta(-test_input) == expected
 
 
+def test_naturaldelta_non_finite_floats() -> None:
+    """Regression for #333: non-finite floats must not raise OverflowError.
+
+    float("inf") and float("-inf") trigger int(value) -> OverflowError inside
+    timedelta(seconds=value). They should be returned as strings, like float("nan").
+    A legitimately too-large *finite* float must still raise OverflowError.
+    """
+    import math
+    # Non-finite values return the string repr
+    assert humanize.naturaldelta(float("inf")) == "inf"
+    assert humanize.naturaldelta(float("-inf")) == "-inf"
+    # NaN already worked before; confirm it still does
+    assert humanize.naturaldelta(float("nan")) == "nan"
+    # A truly too-large finite float must still raise (documented behaviour)
+    import pytest
+    with pytest.raises(OverflowError):
+        humanize.naturaldelta(1e308 * 10)
+
+
 @freeze_time(FROZEN_DATE)
 @pytest.mark.parametrize(
     "test_input, expected",
