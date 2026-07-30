@@ -145,7 +145,6 @@ def test_naturaldelta_non_finite_floats() -> None:
     timedelta(seconds=value). They should be returned as strings, like float("nan").
     A legitimately too-large *finite* float must still raise OverflowError.
     """
-    import math
     # Non-finite values return the string repr
     assert humanize.naturaldelta(float("inf")) == "inf"
     assert humanize.naturaldelta(float("-inf")) == "-inf"
@@ -153,6 +152,7 @@ def test_naturaldelta_non_finite_floats() -> None:
     assert humanize.naturaldelta(float("nan")) == "nan"
     # A truly too-large finite float must still raise (documented behaviour)
     import pytest
+
     with pytest.raises(OverflowError):
         humanize.naturaldelta(1e308 * 10)
 
