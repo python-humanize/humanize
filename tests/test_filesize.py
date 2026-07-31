@@ -91,6 +91,10 @@ import humanize
         ([1024**2 - 1, True], "1.0 MiB"),
         ([1024**3 - 1, True], "1.0 GiB"),
         ([1024**2 - 1, False, True], "1.0M"),
+        # A custom format may contain text around the numeric conversion, which
+        # must not break the rounding carry-over check above.
+        ([999999, False, True, "%.1f~"], "976.6~K"),
+        ([999999, False, False, "%.1f~"], "1.0~ MB"),
     ],
 )
 def test_naturalsize(test_args: list[int] | list[int | bool], expected: str) -> None:
