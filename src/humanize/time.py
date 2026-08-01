@@ -11,7 +11,7 @@ from enum import Enum
 from functools import total_ordering
 
 from .i18n import _gettext as _
-from .i18n import _ngettext
+from .i18n import _ngettext, _npgettext, _pgettext
 from .number import intcomma
 
 TYPE_CHECKING = False
@@ -98,6 +98,7 @@ def naturaldelta(
     value: dt.timedelta | float,
     months: bool = True,
     minimum_unit: str = "seconds",
+    context: str | None = None,
 ) -> str:
     """Return a natural representation of a timedelta or number of seconds.
 
@@ -110,6 +111,11 @@ def naturaldelta(
         months (bool): If `True`, then a number of months (based on 30.5 days) will be
             used for fuzziness between years.
         minimum_unit (str): The lowest unit that can be used.
+        context (str | None): Optional gettext ``msgctxt`` passed through to
+            ``pgettext`` / ``npgettext``.  When set, translators can provide
+            grammatically different forms for the same source string (e.g.
+            dative case for German *"vor …"*).  ``naturaltime`` passes
+            ``"naturaltime-past"`` or ``"naturaltime-future"`` automatically.
 
     Returns:
         str (str or `value`): A natural representation of the amount of time
@@ -138,6 +144,18 @@ def naturaldelta(
     """
     import datetime as dt
 
+    # When a context is provided, use pgettext/npgettext so that translators
+    # can supply case-aware forms (e.g. German dative for "ago"/"from now").
+    if context is not None:
+        def _ng(singular: str, plural: str, num: int) -> str:
+            return _npgettext(context, singular, plural, num)
+
+        def _g(message: str) -> str:
+            return _pgettext(context, message)
+    else:
+        _ng = _ngettext
+        _g = _
+
     tmp = Unit[minimum_unit.upper()]
     if tmp not in (Unit.SECONDS, Unit.MILLISECONDS, Unit.MICROSECONDS):
         msg = f"Minimum unit '{minimum_unit}' not supported"
@@ -165,7 +183,7 @@ def naturaldelta(
         if delta.seconds == 0:
             if min_unit == Unit.MICROSECONDS and delta.microseconds < 1000:
                 return (
-                    _ngettext("%d microsecond", "%d microseconds", delta.microseconds)
+                    _ng("%d microsecond", "%d microseconds", delta.microseconds)
                     % delta.microseconds
                 )
 
@@ -174,78 +192,78 @@ def naturaldelta(
             ):
                 milliseconds = delta.microseconds / 1000
                 return (
-                    _ngettext("%d millisecond", "%d milliseconds", int(milliseconds))
+                    _ng("%d millisecond", "%d milliseconds", int(milliseconds))
                     % milliseconds
                 )
-            return _("a moment")
+            return _g("a moment")
 
         if delta.seconds == 1:
-            return _("a second")
+            return _g("a second")
 
         if delta.seconds < 60:
-            return _ngettext("%d second", "%d seconds", delta.seconds) % delta.seconds
+            return _ng("%d second", "%d seconds", delta.seconds) % delta.seconds
 
         if 60 <= delta.seconds < 3600:
             minutes = round(delta.seconds / 60)
             if minutes == 1:
-                return _("a minute")
+                return _g("a minute")
 
             if minutes == 60:
-                return _("an hour")
+                return _g("an hour")
 
-            return _ngettext("%d minute", "%d minutes", minutes) % minutes
+            return _ng("%d minute", "%d minutes", minutes) % minutes
 
         if 3600 <= delta.seconds:
             hours = round(delta.seconds / 3600)
             if hours == 1:
-                return _("an hour")
+                return _g("an hour")
 
             if hours == 24:
-                return _("a day")
+                return _g("a day")
 
-            return _ngettext("%d hour", "%d hours", hours) % hours
+            return _ng("%d hour", "%d hours", hours) % hours
 
     elif years == 0:
         if days == 1:
-            return _("a day")
+            return _g("a day")
 
         if not use_months:
-            return _ngettext("%d day", "%d days", days) % days
+            return _ng("%d day", "%d days", days) % days
 
         if num_months == 0:
-            return _ngettext("%d day", "%d days", days) % days
+            return _ng("%d day", "%d days", days) % days
 
         if num_months == 1:
-            return _("a month")
+            return _g("a month")
 
         if num_months == 12:
-            return _("a year")
+            return _g("a year")
 
-        return _ngettext("%d month", "%d months", num_months) % num_months
+        return _ng("%d month", "%d months", num_months) % num_months
 
     elif years == 1:
         if num_months == 0 and days == 0:
-            return _("a year")
+            return _g("a year")
 
         if num_months == 0:
-            return _ngettext("1 year, %d day", "1 year, %d days", days) % days
+            return _ng("1 year, %d day", "1 year, %d days", days) % days
 
         if use_months:
             if num_months == 1:
-                return _("1 year, 1 month")
+                return _g("1 year, 1 month")
 
             if num_months == 12:
                 years += 1
-                return _ngettext("%d year", "%d years", years) % years
+                return _ng("%d year", "%d years", years) % years
 
             return (
-                _ngettext("1 year, %d month", "1 year, %d months", num_months)
+                _ng("1 year, %d month", "1 year, %d months", num_months)
                 % num_months
             )
 
-        return _ngettext("1 year, %d day", "1 year, %d days", days) % days
+        return _ng("1 year, %d day", "1 year, %d days", days) % days
 
-    return _ngettext("%d year", "%d years", years).replace("%d", "%s") % intcomma(years)
+    return _ng("%d year", "%d years", years).replace("%d", "%s") % intcomma(years)
 
 
 def naturaltime(
@@ -291,7 +309,8 @@ def naturaltime(
         future = date > now
 
     ago = _("%s from now") if future else _("%s ago")
-    delta = naturaldelta(delta, months, minimum_unit)
+    ctx = "naturaltime-future" if future else "naturaltime-past"
+    delta = naturaldelta(delta, months, minimum_unit, context=ctx)
 
     if delta == _("a moment"):
         return _("now")

@@ -852,3 +852,64 @@ def test_time_unit() -> None:
 )
 def test_rounding_by_fmt(fmt: str, value: float, expected: float) -> None:
     assert time._rounding_by_fmt(fmt, value) == pytest.approx(expected)
+
+
+@pytest.mark.parametrize(
+    "seconds, expected",
+    [
+        (1, "a second"),
+        (30, "30 seconds"),
+        (60, "a minute"),
+        (3600, "an hour"),
+        (3600 * 24, "a day"),
+        (3600 * 24 * 65, "2 months"),
+        (3600 * 24 * 365, "a year"),
+    ],
+)
+def test_naturaldelta_context_returns_same_english(
+    seconds: int, expected: str
+) -> None:
+    """When no translation is active, the context parameter must not change output."""
+    assert humanize.naturaldelta(seconds, context="naturaltime-past") == expected
+    assert humanize.naturaldelta(seconds, context="naturaltime-future") == expected
+
+
+def test_naturaldelta_context_calls_npgettext() -> None:
+    """Verify that pgettext/npgettext are invoked when a context is supplied."""
+    from unittest.mock import patch
+
+    with patch("humanize.time._npgettext", wraps=time._npgettext) as mock_np, \
+         patch("humanize.time._pgettext", wraps=time._pgettext) as mock_p:
+        humanize.naturaldelta(30, context="naturaltime-past")
+        # 30 seconds uses npgettext
+        mock_np.assert_called_once_with(
+            "naturaltime-past", "%d second", "%d seconds", 30
+        )
+
+        mock_np.reset_mock()
+        mock_p.reset_mock()
+
+        humanize.naturaldelta(1, context="naturaltime-future")
+        # 1 second uses pgettext for "a second"
+        mock_p.assert_called_once_with("naturaltime-future", "a second")
+
+
+@freeze_time(FROZEN_DATE)
+def test_naturaltime_passes_context_to_naturaldelta() -> None:
+    """naturaltime must pass tense context so translations can vary by case."""
+    from unittest.mock import patch
+
+    past = NOW - dt.timedelta(seconds=30)
+    future = NOW + dt.timedelta(seconds=30)
+
+    with patch("humanize.time._npgettext", wraps=time._npgettext) as mock_np:
+        humanize.naturaltime(past)
+        mock_np.assert_called_with(
+            "naturaltime-past", "%d second", "%d seconds", 30
+        )
+
+        mock_np.reset_mock()
+        humanize.naturaltime(future)
+        mock_np.assert_called_with(
+            "naturaltime-future", "%d second", "%d seconds", 30
+        )

@@ -140,6 +140,26 @@ def _ngettext(message: str, plural: str, num: int) -> str:
     return get_translation().ngettext(message, plural, num)
 
 
+def _npgettext(msgctxt: str, message: str, plural: str, num: int) -> str:
+    """Plural version of _pgettext.
+
+    It works with ``msgctxt`` .po modifiers and allows duplicate keys with
+    different translations depending on grammatical context (e.g. nominative
+    vs. dative case).
+
+    Args:
+        msgctxt (str): Context of the translation.
+        message (str): Singular text to translate.
+        plural (str): Plural text to translate.
+        num (int): The number (e.g. item count) to determine translation for the
+            respective grammatical number.
+
+    Returns:
+        str: Translated text.
+    """
+    return get_translation().npgettext(msgctxt, message, plural, num)
+
+
 def _gettext_noop(message: str) -> str:
     """Mark a string as a translation string without translating it.
 
