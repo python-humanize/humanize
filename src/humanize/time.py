@@ -147,11 +147,13 @@ def naturaldelta(
     # When a context is provided, use pgettext/npgettext so that translators
     # can supply case-aware forms (e.g. German dative for "ago"/"from now").
     if context is not None:
+
         def _ng(singular: str, plural: str, num: int) -> str:
             return _npgettext(context, singular, plural, num)
 
         def _g(message: str) -> str:
             return _pgettext(context, message)
+
     else:
         _ng = _ngettext
         _g = _
@@ -256,10 +258,7 @@ def naturaldelta(
                 years += 1
                 return _ng("%d year", "%d years", years) % years
 
-            return (
-                _ng("1 year, %d month", "1 year, %d months", num_months)
-                % num_months
-            )
+            return _ng("1 year, %d month", "1 year, %d months", num_months) % num_months
 
         return _ng("1 year, %d day", "1 year, %d days", days) % days
 

@@ -866,9 +866,7 @@ def test_rounding_by_fmt(fmt: str, value: float, expected: float) -> None:
         (3600 * 24 * 365, "a year"),
     ],
 )
-def test_naturaldelta_context_returns_same_english(
-    seconds: int, expected: str
-) -> None:
+def test_naturaldelta_context_returns_same_english(seconds: int, expected: str) -> None:
     """When no translation is active, the context parameter must not change output."""
     assert humanize.naturaldelta(seconds, context="naturaltime-past") == expected
     assert humanize.naturaldelta(seconds, context="naturaltime-future") == expected
@@ -878,8 +876,10 @@ def test_naturaldelta_context_calls_npgettext() -> None:
     """Verify that pgettext/npgettext are invoked when a context is supplied."""
     from unittest.mock import patch
 
-    with patch("humanize.time._npgettext", wraps=time._npgettext) as mock_np, \
-         patch("humanize.time._pgettext", wraps=time._pgettext) as mock_p:
+    with (
+        patch("humanize.time._npgettext", wraps=time._npgettext) as mock_np,
+        patch("humanize.time._pgettext", wraps=time._pgettext) as mock_p,
+    ):
         humanize.naturaldelta(30, context="naturaltime-past")
         # 30 seconds uses npgettext
         mock_np.assert_called_once_with(
@@ -904,12 +904,8 @@ def test_naturaltime_passes_context_to_naturaldelta() -> None:
 
     with patch("humanize.time._npgettext", wraps=time._npgettext) as mock_np:
         humanize.naturaltime(past)
-        mock_np.assert_called_with(
-            "naturaltime-past", "%d second", "%d seconds", 30
-        )
+        mock_np.assert_called_with("naturaltime-past", "%d second", "%d seconds", 30)
 
         mock_np.reset_mock()
         humanize.naturaltime(future)
-        mock_np.assert_called_with(
-            "naturaltime-future", "%d second", "%d seconds", 30
-        )
+        mock_np.assert_called_with("naturaltime-future", "%d second", "%d seconds", 30)
