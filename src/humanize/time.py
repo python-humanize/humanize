@@ -94,6 +94,20 @@ def _date_and_delta(
     return date, _abs_timedelta(delta)
 
 
+def _minimum_unit_or_raise(name: str) -> Unit:
+    """Resolve *name* to a ``Unit`` or raise a clear ``ValueError``.
+
+    A bare ``Unit[name.upper()]`` lookup raises an opaque ``KeyError`` for an
+    unknown unit name; this helper raises a consistent, helpful ``ValueError``
+    instead.
+    """
+    try:
+        return Unit[name.upper()]
+    except KeyError:
+        msg = f"Minimum unit '{name}' not supported"
+        raise ValueError(msg) from None
+
+
 def naturaldelta(
     value: dt.timedelta | float,
     months: bool = True,
@@ -119,6 +133,7 @@ def naturaldelta(
 
     Raises:
         OverflowError: If `value` is too large to convert to datetime.timedelta.
+        ValueError: If `minimum_unit` is not a supported unit.
 
     Examples:
         Compare two timestamps in a custom local timezone::
@@ -138,11 +153,10 @@ def naturaldelta(
     """
     import datetime as dt
 
-    tmp = Unit[minimum_unit.upper()]
-    if tmp not in (Unit.SECONDS, Unit.MILLISECONDS, Unit.MICROSECONDS):
+    min_unit = _minimum_unit_or_raise(minimum_unit)
+    if min_unit not in (Unit.SECONDS, Unit.MILLISECONDS, Unit.MICROSECONDS):
         msg = f"Minimum unit '{minimum_unit}' not supported"
         raise ValueError(msg)
-    min_unit = tmp
 
     if isinstance(value, dt.timedelta):
         delta = value
@@ -275,6 +289,9 @@ def naturaltime(
 
     Returns:
         str: A natural representation of the input in a resolution that makes sense.
+
+    Raises:
+        ValueError: If `minimum_unit` is not a supported unit.
     """
     import datetime as dt
 
@@ -535,16 +552,27 @@ def precisedelta(
     '0 minutes'
 
     ```
+
+    An unsupported ``minimum_unit`` raises a clear ``ValueError`` rather than
+    an opaque ``KeyError``:
+
+    ```pycon
+    >>> precisedelta(dt.timedelta(seconds=1), minimum_unit="fortnights")
+    Traceback (most recent call last):
+        ...
+    ValueError: Minimum unit 'fortnights' not supported
+
+    ```
     """
     date, delta = _date_and_delta(value, precise=True)
     if date is None:
         return str(value)
 
-    suppress_set = {Unit[s.upper()] for s in suppress}
+    suppress_set = {_minimum_unit_or_raise(s) for s in suppress}
 
     # Find a suitable minimum unit (it can be greater than the one that the
     # user gave us, if that one is suppressed).
-    min_unit = Unit[minimum_unit.upper()]
+    min_unit = _minimum_unit_or_raise(minimum_unit)
     min_unit = _suitable_minimum_unit(min_unit, suppress_set)
     del minimum_unit
 
