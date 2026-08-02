@@ -828,6 +828,36 @@ def test_precisedelta_bogus_call() -> None:
         humanize.naturaldelta(1, minimum_unit="years")
 
 
+@pytest.mark.parametrize(
+    "func",
+    [humanize.precisedelta, humanize.naturaldelta, humanize.naturaltime],
+)
+@pytest.mark.parametrize("minimum_unit", ["weeks", "fortnights", "nanoseconds"])
+def test_minimum_unit_unknown_raises_valueerror(
+    func: typing.Callable[..., str], minimum_unit: str
+) -> None:
+    # Units that are not part of ``humanize.time.Unit`` used to raise a raw
+    # ``KeyError``. They must raise a clear ``ValueError`` instead, consistent
+    # with the message used for enum members that are not allowed as a minimum
+    # unit (e.g. ``years`` for ``naturaldelta``).
+    with pytest.raises(
+        ValueError, match=rf"^Minimum unit '{minimum_unit}' not supported$"
+    ):
+        func(dt.timedelta(seconds=1), minimum_unit=minimum_unit)
+
+
+@pytest.mark.parametrize("suppress_unit", ["weeks", "fortnights"])
+def test_suppress_unknown_unit_raises_valueerror(suppress_unit: str) -> None:
+    # An unknown unit passed to ``suppress`` must also raise a clear
+    # ``ValueError`` rather than an opaque ``KeyError``.
+    with pytest.raises(
+        ValueError, match=rf"^Minimum unit '{suppress_unit}' not supported$"
+    ):
+        humanize.precisedelta(
+            dt.timedelta(seconds=1), minimum_unit="seconds", suppress=[suppress_unit]
+        )
+
+
 def test_time_unit() -> None:
     years, minutes = time.Unit["YEARS"], time.Unit["MINUTES"]
     assert minutes < years
