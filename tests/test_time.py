@@ -827,6 +827,7 @@ def test_precisedelta_bogus_call() -> None:
     with pytest.raises(ValueError, match="Minimum unit 'years' not supported"):
         humanize.naturaldelta(1, minimum_unit="years")
 
+
 @pytest.mark.parametrize(
     "func",
     [humanize.precisedelta, humanize.naturaldelta, humanize.naturaltime],
@@ -855,7 +856,6 @@ def test_suppress_unknown_unit_raises_valueerror(suppress_unit: str) -> None:
         humanize.precisedelta(
             dt.timedelta(seconds=1), minimum_unit="seconds", suppress=[suppress_unit]
         )
-
 
 
 def test_time_unit() -> None:
