@@ -540,19 +540,19 @@ def metric(value: float, unit: str = "", precision: int = 3) -> str:
 
     if not math.isfinite(value):
         return _format_not_finite(value)
-    exponent = int(math.floor(math.log10(abs(value)))) if value != 0 else 0
+    exponent = math.floor(math.log10(abs(value))) if value != 0 else 0
 
     if exponent >= 33 or exponent < -30:
         return scientific(value, precision - 1) + unit
 
     old_bucket = exponent // 3 * 3
     value /= 10**old_bucket
-    digits = int(max(0, precision - exponent % 3 - 1))
+    digits = max(0, precision - exponent % 3 - 1)
     if exponent < 30 and round(abs(value), digits) >= 1000:
         exponent += 3 - exponent % 3
         new_bucket = exponent // 3 * 3
         value /= 10 ** (new_bucket - old_bucket)
-        digits = int(max(0, precision - exponent % 3 - 1))
+        digits = max(0, precision - exponent % 3 - 1)
 
     if exponent >= 3:
         ordinal_ = "kMGTPEZYRQ"[exponent // 3 - 1]

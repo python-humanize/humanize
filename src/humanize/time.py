@@ -195,7 +195,7 @@ def naturaldelta(
 
             return _ngettext("%d minute", "%d minutes", minutes) % minutes
 
-        if 3600 <= delta.seconds:
+        if delta.seconds >= 3600:
             hours = round(delta.seconds / 3600)
             if hours == 1:
                 return _("an hour")
@@ -313,6 +313,15 @@ def _convert_aware_datetime(
     return value
 
 
+def _today_for_value(value: dt.date | dt.datetime) -> dt.date:
+    """Return today's date in the timezone of a tz-aware datetime value."""
+    import datetime as dt
+
+    if isinstance(value, dt.datetime) and value.tzinfo is not None:
+        return dt.datetime.now(value.tzinfo).date()
+    return dt.date.today()
+
+
 def naturalday(value: dt.date | dt.datetime, format: str = "%b %d") -> str:
     """Return a natural day.
 
@@ -326,10 +335,7 @@ def naturalday(value: dt.date | dt.datetime, format: str = "%b %d") -> str:
     try:
         # When value is a tz-aware datetime, compute "today" in that timezone
         # so the comparison uses the correct local date.
-        if isinstance(value, dt.datetime) and value.tzinfo is not None:
-            today = dt.datetime.now(value.tzinfo).date()
-        else:
-            today = dt.date.today()
+        today = _today_for_value(value)
         value = dt.date(value.year, value.month, value.day)
     except AttributeError:
         # Passed value wasn't date-ish
@@ -357,10 +363,7 @@ def naturaldate(value: dt.date | dt.datetime) -> str:
 
     original_value = value
     try:
-        if isinstance(value, dt.datetime) and value.tzinfo is not None:
-            today = dt.datetime.now(value.tzinfo).date()
-        else:
-            today = dt.date.today()
+        today = _today_for_value(value)
         value = dt.date(value.year, value.month, value.day)
     except AttributeError:
         # Passed value wasn't date-ish
@@ -643,7 +646,7 @@ def precisedelta(
     import math
 
     texts: list[str] = []
-    for unit, fmt in zip(reversed(Unit), fmts):
+    for unit, fmt in zip(reversed(Unit), fmts, strict=True):
         singular_txt, plural_txt, fmt_value = fmt
         if fmt_value > 0 or (not texts and unit == min_unit):
             _fmt_value = 2 if 1 < fmt_value < 2 else int(fmt_value)
