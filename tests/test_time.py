@@ -139,7 +139,9 @@ def test_naturaldelta_nomonths(test_input: dt.timedelta, expected: str) -> None:
 )
 def test_naturaldelta(test_input: float | dt.timedelta, expected: str) -> None:
     assert humanize.naturaldelta(test_input) == expected
-    if not isinstance(test_input, str) and not (isinstance(test_input, float) and math.isinf(test_input)):
+    if not isinstance(test_input, str) and not (
+        isinstance(test_input, float) and math.isinf(test_input)
+    ):
         assert humanize.naturaldelta(-test_input) == expected
 
 
