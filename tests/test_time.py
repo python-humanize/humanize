@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import datetime as dt
+import math
 import typing
 
 import pytest
@@ -71,6 +72,8 @@ def test_date_and_delta() -> None:
             assert_equal_datetime(date, result[0])
             assert_equal_timedelta(d, result[1])
     assert time._date_and_delta("NaN") == (None, "NaN")
+    assert time._date_and_delta(float("inf")) == (None, float("inf"))
+    assert time._date_and_delta(float("-inf")) == (None, float("-inf"))
 
 
 # Tests for the public interface of humanize.time
@@ -87,6 +90,12 @@ def test_date_and_delta() -> None:
 )
 def test_naturaldelta_nomonths(test_input: dt.timedelta, expected: str) -> None:
     assert humanize.naturaldelta(test_input, months=False) == expected
+
+
+def test_naturaldelta_too_large_value_raises() -> None:
+    """A too-large finite value still raises OverflowError (unlike inf)."""
+    with pytest.raises(OverflowError):
+        humanize.naturaldelta(1e30)
 
 
 @pytest.mark.parametrize(
@@ -128,13 +137,17 @@ def test_naturaldelta_nomonths(test_input: dt.timedelta, expected: str) -> None:
         (dt.timedelta(days=365), "a year"),
         (dt.timedelta(days=365 * 1_141), "1,141 years"),
         ("NaN", "NaN"),  # Returns non-numbers unchanged.
+        (float("inf"), "inf"),
+        (float("-inf"), "-inf"),
         # largest possible timedelta
         (dt.timedelta(days=999_999_999), "2,739,726 years"),
     ],
 )
 def test_naturaldelta(test_input: float | dt.timedelta, expected: str) -> None:
     assert humanize.naturaldelta(test_input) == expected
-    if not isinstance(test_input, str):
+    if not isinstance(test_input, str) and not (
+        isinstance(test_input, float) and math.isinf(test_input)
+    ):
         assert humanize.naturaldelta(-test_input) == expected
 
 
@@ -179,6 +192,8 @@ def test_naturaldelta(test_input: float | dt.timedelta, expected: str) -> None:
         (NOW - dt.timedelta(days=365 * 2 + 65), "2 years ago"),
         (NOW - dt.timedelta(days=365 + 4), "1 year, 4 days ago"),
         ("NaN", "NaN"),
+        (float("inf"), "inf"),
+        (float("-inf"), "-inf"),
     ],
 )
 def test_naturaltime(
@@ -817,6 +832,8 @@ def test_precisedelta_suppress_units(
 
 def test_precisedelta_bogus_call() -> None:
     assert humanize.precisedelta(None) == "None"
+    assert humanize.precisedelta(float("inf")) == "inf"
+    assert humanize.precisedelta(float("-inf")) == "-inf"
 
     with pytest.raises(
         ValueError,

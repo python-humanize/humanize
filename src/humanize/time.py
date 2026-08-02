@@ -7,6 +7,7 @@ from __future__ import annotations
 
 __lazy_modules__ = {"humanize.i18n", "humanize.number"}
 
+import math
 from enum import Enum
 from functools import total_ordering
 
@@ -91,6 +92,10 @@ def _date_and_delta(
             date = now - delta
         except (ValueError, TypeError):
             return None, value
+        except OverflowError:
+            if not math.isfinite(value):
+                return None, value
+            raise
     return date, _abs_timedelta(delta)
 
 
@@ -153,6 +158,10 @@ def naturaldelta(
             delta = dt.timedelta(seconds=value)
         except (ValueError, TypeError):
             return str(value)
+        except OverflowError:
+            if not math.isfinite(value):
+                return str(value)
+            raise
 
     use_months = months
 
