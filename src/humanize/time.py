@@ -89,7 +89,7 @@ def _date_and_delta(
             value = value if precise else round(value)
             delta = dt.timedelta(seconds=value)
             date = now - delta
-        except (ValueError, TypeError):
+        except (ValueError, TypeError, OverflowError):
             return None, value
     return date, _abs_timedelta(delta)
 
@@ -116,9 +116,6 @@ def naturaldelta(
             elapsed unless `value` is not datetime.timedelta or cannot be
             converted to int (cannot be float due to 'inf' or 'nan').
             In that case, a `value` is returned unchanged.
-
-    Raises:
-        OverflowError: If `value` is too large to convert to datetime.timedelta.
 
     Examples:
         Compare two timestamps in a custom local timezone::
@@ -151,7 +148,7 @@ def naturaldelta(
             int(value)  # Explicitly don't support string such as "NaN" or "inf"
             value = float(value)
             delta = dt.timedelta(seconds=value)
-        except (ValueError, TypeError):
+        except (ValueError, TypeError, OverflowError):
             return str(value)
 
     use_months = months
