@@ -92,6 +92,12 @@ def test_naturaldelta_nomonths(test_input: dt.timedelta, expected: str) -> None:
     assert humanize.naturaldelta(test_input, months=False) == expected
 
 
+def test_naturaldelta_too_large_value_raises() -> None:
+    """A too-large finite value still raises OverflowError (unlike inf)."""
+    with pytest.raises(OverflowError):
+        humanize.naturaldelta(1e30)
+
+
 @pytest.mark.parametrize(
     "test_input, expected",
     [
