@@ -266,13 +266,18 @@ def intword(value: NumberOrString, format: str = "%.1f") -> str:
             # decillion to googol), so there is no unit for "1000+ of the
             # current one". Only bump to the next unit if the value is
             # close enough to actually round up to it; otherwise there is
-            # no name for this magnitude, so fall back to the plain number.
+            # no English name for this magnitude. Some locales translate the
+            # current unit to a larger local scale, so allow those to keep
+            # using the translated unit instead of falling back.
             next_rounded_value = float(format % (value / next_power))
             if next_rounded_value >= 1.0:
                 ordinal += 1
                 rounded_value = next_rounded_value
             else:
-                return f"{negative_prefix}{value}"
+                singular, plural = human_powers[ordinal]
+                translated_unit = _ngettext(singular, plural, math.ceil(rounded_value))
+                if translated_unit in (singular, plural):
+                    return f"{negative_prefix}{value}"
 
     singular, plural = human_powers[ordinal]
     unit = _ngettext(singular, plural, math.ceil(rounded_value))
