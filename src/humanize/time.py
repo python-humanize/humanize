@@ -9,6 +9,7 @@ __lazy_modules__ = {"humanize.i18n", "humanize.number"}
 
 from enum import Enum
 from functools import total_ordering
+import math
 
 from .i18n import _gettext as _
 from .i18n import _ngettext
