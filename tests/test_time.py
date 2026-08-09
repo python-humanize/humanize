@@ -838,6 +838,45 @@ def test_time_unit() -> None:
 
 
 @pytest.mark.parametrize(
+    "value, expected",
+    [
+        (float("inf"), "inf"),
+        (float("-inf"), "-inf"),
+        (float("nan"), "nan"),
+    ],
+)
+def test_naturaldelta_non_finite(value: float, expected: str) -> None:
+    # Regression test for #333: non-finite floats used to raise an uncaught
+    # OverflowError (or, for nan, were only handled when passed as a string)
+    # instead of being returned unchanged like other non-numeric input.
+    assert humanize.naturaldelta(value) == expected
+
+
+@pytest.mark.parametrize(
+    "value, expected",
+    [
+        (float("inf"), "inf"),
+        (float("-inf"), "-inf"),
+        (float("nan"), "nan"),
+    ],
+)
+def test_naturaltime_non_finite(value: float, expected: str) -> None:
+    assert humanize.naturaltime(value) == expected
+
+
+@pytest.mark.parametrize(
+    "value, expected",
+    [
+        (float("inf"), "inf"),
+        (float("-inf"), "-inf"),
+        (float("nan"), "nan"),
+    ],
+)
+def test_precisedelta_non_finite(value: float, expected: str) -> None:
+    assert humanize.precisedelta(value) == expected
+
+
+@pytest.mark.parametrize(
     "fmt, value, expected",
     [
         ("%.2f", 1.011, 1.01),
