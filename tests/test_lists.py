@@ -32,6 +32,4 @@ def test_natural_list_generator_and_oxford_comma() -> None:
         humanize.natural_list(["one", "two", "three"], oxford_comma=True)
         == "one, two, and three"
     )
-    assert (
-        humanize.natural_list(["one", "two"], oxford_comma=True) == "one and two"
-    )
+    assert humanize.natural_list(["one", "two"], oxford_comma=True) == "one and two"

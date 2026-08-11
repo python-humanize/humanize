@@ -4,7 +4,8 @@ from __future__ import annotations
 
 TYPE_CHECKING = False
 if TYPE_CHECKING:
-    from typing import Any, Iterable
+    from collections.abc import Iterable
+    from typing import Any
 
 __all__ = ["natural_list"]
 
