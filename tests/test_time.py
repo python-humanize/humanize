@@ -7,11 +7,11 @@ import typing
 
 import pytest
 
-freezegun = pytest.importorskip("freezegun")
-freeze_time = freezegun.freeze_time
-
 import humanize
 from humanize import time
+
+freezegun = pytest.importorskip("freezegun")
+freeze_time = freezegun.freeze_time
 
 ONE_DAY_DELTA = dt.timedelta(days=1)
 

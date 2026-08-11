@@ -7,10 +7,10 @@ import importlib
 
 import pytest
 
+import humanize
+
 freezegun = pytest.importorskip("freezegun")
 freeze_time = freezegun.freeze_time
-
-import humanize
 
 with freeze_time("2020-02-02"):
     NOW = dt.datetime.now(tz=dt.timezone.utc)

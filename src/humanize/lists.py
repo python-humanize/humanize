@@ -13,7 +13,8 @@ __all__ = ["natural_list"]
 def natural_list(items: Iterable[Any], oxford_comma: bool = False) -> str:
     """Natural list.
 
-    Convert a list or iterable of items into a human-readable string with commas and 'and'.
+    Convert a list or iterable of items into a human-readable string with
+    commas and 'and'.
 
     Examples:
         >>> natural_list(["one", "two", "three"])
@@ -27,7 +28,8 @@ def natural_list(items: Iterable[Any], oxford_comma: bool = False) -> str:
 
     Args:
         items (iterable): An iterable of items.
-        oxford_comma (bool): If True, includes an Oxford comma before 'and' for 3+ items.
+        oxford_comma (bool): If True, includes an Oxford comma before 'and'
+            for 3+ items.
 
     Returns:
         str: A string with commas and 'and' in the right places.
