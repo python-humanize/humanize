@@ -6,7 +6,9 @@ import datetime as dt
 import importlib
 
 import pytest
-from freezegun import freeze_time
+
+freezegun = pytest.importorskip("freezegun")
+freeze_time = freezegun.freeze_time
 
 import humanize
 

@@ -6,6 +6,8 @@ import datetime as dt
 
 import pytest
 
+pytest.importorskip("pytest_codspeed")
+
 import humanize
 
 TYPE_CHECKING = False
