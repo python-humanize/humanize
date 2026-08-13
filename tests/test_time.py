@@ -864,6 +864,11 @@ def test_naturalday_weekday() -> None:
         assert humanize.naturalday(past_day, weekday=True) == "last Sunday"
 
         assert humanize.naturalday(today, weekday=True) == "today"
-        assert humanize.naturalday(today + dt.timedelta(days=1), weekday=True) == "tomorrow"
-        assert humanize.naturalday(today - dt.timedelta(days=1), weekday=True) == "yesterday"
-
+        assert (
+            humanize.naturalday(today + dt.timedelta(days=1), weekday=True)
+            == "tomorrow"
+        )
+        assert (
+            humanize.naturalday(today - dt.timedelta(days=1), weekday=True)
+            == "yesterday"
+        )
