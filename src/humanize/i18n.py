@@ -31,7 +31,7 @@ _THOUSANDS_SEPARATOR: dict[str | None, str] = {
 # Mapping of locale to decimal separator
 _DECIMAL_SEPARATOR: dict[str | None, str] = {
     "de_DE": ",",
-    "fr_FR": ".",
+    "fr_FR": ",",
     "it_IT": ",",
     "pt_BR": ",",
     "hu_HU": ",",
