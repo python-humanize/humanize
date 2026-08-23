@@ -146,7 +146,9 @@ def naturaldelta(
         delta = value
     else:
         try:
-            int(value)  # Force numeric types; strings like "NaN"/"inf" are returned unchanged
+            int(
+                value
+            )  # Force numeric types; strings like "NaN"/"inf" are returned unchanged
             value = float(value)
             delta = dt.timedelta(seconds=value)
         except (ValueError, TypeError, OverflowError):
