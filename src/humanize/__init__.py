@@ -32,10 +32,7 @@ from humanize.time import (
     precisedelta,
 )
 
-try:
-    from ._version import __version__
-except ImportError:
-    __version__ = "4.12.2.dev0"
+from ._version import __version__
 
 __all__ = [
     "__version__",
