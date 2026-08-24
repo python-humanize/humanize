@@ -536,10 +536,23 @@ def precisedelta(
 
     ```
     """
+    # Sign captured from the ORIGINAL value: _date_and_delta returns
+    # _abs_timedelta(delta), which would silently drop it (#379).
+    import datetime as dt
+
+    if isinstance(value, dt.timedelta):
+        negative = value < dt.timedelta(0)
+    else:
+        try:
+            negative = value < 0
+        except TypeError:
+            negative = False
     date, delta = _date_and_delta(value, precise=True)
     if date is None:
         return str(value)
+    import datetime as dt
 
+    sign = "-" if delta < dt.timedelta(0) else ""
     suppress_set = {Unit[s.upper()] for s in suppress}
 
     # Find a suitable minimum unit (it can be greater than the one that the
@@ -663,12 +676,12 @@ def precisedelta(
             break
 
     if len(texts) == 1:
-        return texts[0]
+        return ("-" if negative else "") + texts[0]
 
     head = ", ".join(texts[:-1])
     tail = texts[-1]
 
-    return _("%s and %s") % (head, tail)
+    return ("-" if negative else "") + _("%s and %s") % (head, tail)
 
 
 def _rounding_by_fmt(format: str, value: float) -> float | int:

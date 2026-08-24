@@ -852,3 +852,29 @@ def test_time_unit() -> None:
 )
 def test_rounding_by_fmt(fmt: str, value: float, expected: float) -> None:
     assert time._rounding_by_fmt(fmt, value) == pytest.approx(expected)
+
+
+def test_precisedelta_negative_multi_unit():
+    """issue #379: precisedelta silently dropped the sign of negative timedeltas."""
+    assert (
+        humanize.precisedelta(dt.timedelta(seconds=-3661))
+        == "-1 hour, 1 minute and 1 second"
+    )
+
+
+def test_precisedelta_negative_single_unit():
+    assert (
+        humanize.precisedelta(dt.timedelta(seconds=-3661), minimum_unit="minutes")
+        == "-1 hour and 1.02 minutes"
+    )
+
+
+def test_precisedelta_zero_stays_unsigned():
+    assert humanize.precisedelta(dt.timedelta(0), minimum_unit="minutes") == "0 minutes"
+
+
+def test_precisedelta_positive_unchanged():
+    assert (
+        humanize.precisedelta(dt.timedelta(seconds=3661))
+        == "1 hour, 1 minute and 1 second"
+    )
