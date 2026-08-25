@@ -552,7 +552,6 @@ def precisedelta(
         return str(value)
     import datetime as dt
 
-    sign = "-" if delta < dt.timedelta(0) else ""
     suppress_set = {Unit[s.upper()] for s in suppress}
 
     # Find a suitable minimum unit (it can be greater than the one that the
