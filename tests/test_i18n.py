@@ -334,3 +334,14 @@ class TestActivate:
             humanize.i18n.deactivate()
 
         assert test_str == humanize.naturaltime(three_seconds)
+
+
+@pytest.mark.parametrize("locale", ["bn_BD", "ko_KR", "vi_VN"])
+def test_intword_unit_has_no_format_placeholder(locale: str) -> None:
+    """`intword` interpolates the unit verbatim, so it must carry no placeholder."""
+    try:
+        humanize.i18n.activate(locale)
+        for value in (1_000, 1_000_000, 1_000_000_000, 10**12, 10**15, 10**100):
+            assert "%" not in humanize.intword(value)
+    finally:
+        humanize.i18n.deactivate()
