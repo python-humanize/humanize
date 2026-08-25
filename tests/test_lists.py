@@ -27,7 +27,5 @@ import humanize
         ([range(1, 4)], "1, 2 and 3"),
     ],
 )
-def test_natural_list(
-    test_args: Iterable[Any], expected: str
-) -> None:
+def test_natural_list(test_args: Iterable[Any], expected: str) -> None:
     assert humanize.natural_list(*test_args) == expected
