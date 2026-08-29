@@ -105,6 +105,7 @@ max_supported_python = "3.15"
 [tool.mypy]
 strict = true
 pretty = true
+num_workers = 4
 show_error_codes = true
 
 [tool.pytest]
