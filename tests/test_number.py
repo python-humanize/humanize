@@ -187,6 +187,11 @@ def test_apnumber(test_input: int | str, expected: str) -> None:
         (-1.3, "-1 3/10"),
         (-2.5, "-2 1/2"),
         (-0.5, "-1/2"),
+        (0, "0"),
+        (0.0, "0"),
+        (2.9999999, "3"),
+        (0.9999999, "1"),
+        (-2.9999999, "-3"),
     ],
 )
 def test_fractional(test_input: float | str, expected: str) -> None:
