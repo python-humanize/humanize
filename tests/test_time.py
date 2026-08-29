@@ -138,6 +138,25 @@ def test_naturaldelta(test_input: float | dt.timedelta, expected: str) -> None:
         assert humanize.naturaldelta(-test_input) == expected
 
 
+@pytest.mark.parametrize(
+    "value, expected",
+    [
+        (float("nan"), "nan"),
+        (float("inf"), "inf"),
+        (float("-inf"), "-inf"),
+    ],
+)
+def test_naturaldelta_non_finite(value: float, expected: str) -> None:
+    """Non-finite floats are returned unchanged instead of raising."""
+    assert humanize.naturaldelta(value) == expected
+
+
+def test_naturaldelta_too_large_value_raises() -> None:
+    """A too-large *finite* value still raises OverflowError (unlike inf)."""
+    with pytest.raises(OverflowError):
+        humanize.naturaldelta(1e30)
+
+
 @freeze_time(FROZEN_DATE)
 @pytest.mark.parametrize(
     "test_input, expected",

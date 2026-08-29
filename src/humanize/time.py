@@ -153,6 +153,16 @@ def naturaldelta(
             delta = dt.timedelta(seconds=value)
         except (ValueError, TypeError):
             return str(value)
+        except OverflowError:
+            # `int(value)` raises OverflowError for non-finite floats (inf/-inf),
+            # which, like NaN, are returned unchanged. A too-large *finite* value
+            # (whose OverflowError comes from `timedelta`) is still raised, per
+            # the documented `OverflowError` contract.
+            import math
+
+            if not math.isfinite(value):
+                return str(value)
+            raise
 
     use_months = months
 
