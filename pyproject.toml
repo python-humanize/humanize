@@ -73,7 +73,9 @@ lint.select = [
   "PT",     # flake8-pytest-style
   "PYI",    # flake8-pyi
   "RUF022", # unsorted-dunder-all
+  "RUF046", # unnecessary-cast-to-int
   "RUF100", # unused noqa (yesqa)
+  "TID251", # flake8-tidy-imports: banned-api
   "UP",     # pyupgrade
   "W",      # pycodestyle warnings
   "YTT",    # flake8-2020
@@ -91,6 +93,7 @@ lint.per-file-ignores."tests/*" = [
 lint.flake8-import-conventions.aliases.datetime = "dt"
 lint.flake8-import-conventions.banned-from = [ "datetime" ]
 lint.flake8-pytest-style.parametrize-names-type = "csv"
+lint.flake8-tidy-imports.banned-api."typing.TYPE_CHECKING".msg = "Use TYPE_CHECKING = False instead"
 lint.isort.known-first-party = [ "humanize" ]
 lint.isort.required-imports = [ "from __future__ import annotations" ]
 lint.pydocstyle.convention = "google"
