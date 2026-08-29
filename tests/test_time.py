@@ -852,3 +852,23 @@ def test_time_unit() -> None:
 )
 def test_rounding_by_fmt(fmt: str, value: float, expected: float) -> None:
     assert time._rounding_by_fmt(fmt, value) == pytest.approx(expected)
+
+
+def test_naturalday_weekday() -> None:
+    with freeze_time("2026-08-12"):  # Wednesday
+        today = dt.date.today()
+        future_day = today + dt.timedelta(days=3)
+        assert humanize.naturalday(future_day, weekday=True) == "this Saturday"
+
+        past_day = today - dt.timedelta(days=3)
+        assert humanize.naturalday(past_day, weekday=True) == "last Sunday"
+
+        assert humanize.naturalday(today, weekday=True) == "today"
+        assert (
+            humanize.naturalday(today + dt.timedelta(days=1), weekday=True)
+            == "tomorrow"
+        )
+        assert (
+            humanize.naturalday(today - dt.timedelta(days=1), weekday=True)
+            == "yesterday"
+        )
