@@ -548,8 +548,13 @@ def metric(value: float, unit: str = "", precision: int = 3) -> str:
     old_bucket = exponent // 3 * 3
     value /= 10**old_bucket
     digits = int(max(0, precision - exponent % 3 - 1))
-    if exponent < 30 and round(abs(value), digits) >= 1000:
-        exponent += 3 - exponent % 3
+    # Rounding to ``digits`` decimal places can carry the mantissa up to the
+    # next power of ten (e.g. 9.999 -> 10.0, 99.99 -> 100, 999.9 -> 1000),
+    # which adds an integer digit and would otherwise show one significant
+    # figure too many. Bump the exponent to absorb the carry -- crossing into
+    # the next SI bucket when the mantissa reaches 1000 -- and recompute.
+    if exponent < 30 and round(abs(value), digits) >= 10 ** (exponent % 3 + 1):
+        exponent += 1
         new_bucket = exponent // 3 * 3
         value /= 10 ** (new_bucket - old_bucket)
         digits = int(max(0, precision - exponent % 3 - 1))
