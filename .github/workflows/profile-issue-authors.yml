@@ -1,0 +1,101 @@
+# Run gh-profiler against the author of each new issue.
+# Delete the profile output when the issue is closed.
+# PR authors are profiled by the unprivileged profile-pr-authors.yml instead,
+# so no dangerous trigger is needed for PRs from forks.
+
+name: Profile issue authors
+
+on:
+  issues:
+    types: [opened, reopened, closed]
+
+jobs:
+  profile-author:
+    if: github.event.action != 'closed'
+
+    permissions:
+      issues: write
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d # v10.0.1
+        with:
+          enable-cache: false
+          ignore-empty-workdir: true
+
+      - name: Run gh-profiler (=== Expand this to see full profile output ===)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LOGIN: ${{ github.event.issue.user.login }}
+        run: |
+          uvx gh-profiler@latest "$LOGIN" --concise > profiler.txt
+          echo
+          echo "======================== Full profile ========================="
+          echo
+          uvx gh-profiler@latest "$LOGIN"
+          echo
+          echo "==============================================================="
+
+      - name: Comment on issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SERVER_URL: ${{ github.server_url }}
+          REPOSITORY: ${{ github.repository }}
+          RUN_ID: ${{ github.run_id }}
+          CHECK_RUN_ID: ${{ job.check_run_id }}
+          NUMBER: ${{ github.event.issue.number }}
+        run: |
+          {
+            echo "<!-- gh-profiler:profile-link run-id=$RUN_ID -->"
+            echo "Profile summary:"
+            echo
+            echo '```text'
+            cat profiler.txt
+            echo '```'
+            echo
+            echo "<a href=\"$SERVER_URL/$REPOSITORY/actions/runs/$RUN_ID/job/$CHECK_RUN_ID\">Full profile</a>"
+            echo
+            echo "(This comment and the linked profile output will auto-delete when this issue is closed.)"
+          } > body.txt
+
+          jq -Rs '{body: .}' body.txt > payload.json
+
+          gh api \
+            "repos/$REPOSITORY/issues/$NUMBER/comments" \
+            --input payload.json
+
+  delete-profile:
+    if: github.event.action == 'closed'
+
+    permissions:
+      actions: write
+      issues: write
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Delete profile comment
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPOSITORY: ${{ github.repository }}
+          NUMBER: ${{ github.event.issue.number }}
+        run: |
+          gh api --paginate \
+            "repos/$REPOSITORY/issues/$NUMBER/comments" \
+            --jq '
+              .[]
+              | select(.user.login == "github-actions[bot]")
+              | select(.body | startswith("<!-- gh-profiler:profile-link run-id="))
+              | [.id, (.body | capture("gh-profiler:profile-link run-id=(?<id>[0-9]+)").id)]
+              | @tsv
+            ' |
+          while IFS=$'\t' read -r comment_id run_id; do
+            echo "Deleting logs from workflow run $run_id."
+            gh api --method DELETE \
+              "repos/$REPOSITORY/actions/runs/$run_id/logs"
+
+            echo "Deleting profile comment $comment_id."
+            gh api --method DELETE \
+              "repos/$REPOSITORY/issues/comments/$comment_id"
+          done
