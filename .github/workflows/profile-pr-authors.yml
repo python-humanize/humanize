@@ -10,7 +10,7 @@ name: Profile PR authors
 
 on:
   pull_request:
-    types: [opened]
+    types: [opened, reopened]
 
 permissions:
   contents: read

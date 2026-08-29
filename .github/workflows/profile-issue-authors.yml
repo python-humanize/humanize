@@ -7,11 +7,11 @@ name: Profile issue authors
 
 on:
   issues:
-    types: [opened, closed]
+    types: [opened, reopened, closed]
 
 jobs:
   profile-author:
-    if: github.event.action == 'opened'
+    if: github.event.action != 'closed'
 
     permissions:
       issues: write
