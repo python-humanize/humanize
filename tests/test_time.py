@@ -146,7 +146,7 @@ def test_naturaldelta(test_input: float | dt.timedelta, expected: str) -> None:
         (float("-inf"), "-inf"),
     ],
 )
-def test_naturaldelta_non_finite() -> None:
+def test_naturaldelta_non_finite(value: float, expected: str) -> None:
     """Non-finite floats are returned unchanged instead of raising."""
     assert humanize.naturaldelta(value) == expected
 
