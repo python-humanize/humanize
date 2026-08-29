@@ -7,7 +7,6 @@ from __future__ import annotations
 
 __lazy_modules__ = {"humanize.i18n", "humanize.number"}
 
-import math
 from enum import Enum
 from functools import total_ordering
 
@@ -159,6 +158,8 @@ def naturaldelta(
             # which, like NaN, are returned unchanged. A too-large *finite* value
             # (whose OverflowError comes from `timedelta`) is still raised, per
             # the documented `OverflowError` contract.
+            import math
+
             if not math.isfinite(value):
                 return str(value)
             raise
