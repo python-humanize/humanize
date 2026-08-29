@@ -1,0 +1,39 @@
+# Run gh-profiler against the author of each new PR and show the output in
+# the job log and step summary, reachable via the PR's checks.
+#
+# This runs unprivileged (read-only token, safe for PRs from forks), so it
+# cannot post a comment like profile-issue-authors.yml does for issues.
+# There is also nothing to delete when the PR is closed: the output expires
+# with the run logs.
+
+name: Profile PR authors
+
+on:
+  pull_request:
+    types: [opened]
+
+permissions:
+  contents: read
+
+jobs:
+  profile-author:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d # v10.0.1
+        with:
+          enable-cache: false
+          ignore-empty-workdir: true
+
+      - name: Run gh-profiler (=== Expand this to see full profile output ===)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LOGIN: ${{ github.event.pull_request.user.login }}
+        run: |
+          uvx gh-profiler@latest "$LOGIN" > profiler.txt
+          cat profiler.txt
+          {
+            echo '```text'
+            cat profiler.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
