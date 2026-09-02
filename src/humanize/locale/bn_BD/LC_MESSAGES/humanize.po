@@ -121,57 +121,57 @@ msgstr "তম"
 #: src/humanize/number.py:178
 msgid "thousand"
 msgid_plural "thousand"
-msgstr[0] "%d হাজার"
-msgstr[1] "%d হাজার"
+msgstr[0] "হাজার"
+msgstr[1] "হাজার"
 
 #: src/humanize/number.py:179
 #, fuzzy
 msgid "million"
 msgid_plural "million"
-msgstr[0] "%d মিলিয়ন"
-msgstr[1] "%d মিলিয়ন"
+msgstr[0] "মিলিয়ন"
+msgstr[1] "মিলিয়ন"
 
 #: src/humanize/number.py:180
 msgid "billion"
 msgid_plural "billion"
-msgstr[0] "%d বিলিয়ন"
-msgstr[1] "%d বিলিয়ন"
+msgstr[0] "বিলিয়ন"
+msgstr[1] "বিলিয়ন"
 
 #: src/humanize/number.py:181
 msgid "trillion"
 msgid_plural "trillion"
-msgstr[0] "%d ট্রিলিয়ন"
-msgstr[1] "%d ট্রিলিয়ন"
+msgstr[0] "ট্রিলিয়ন"
+msgstr[1] "ট্রিলিয়ন"
 
 #: src/humanize/number.py:182
 msgid "quadrillion"
 msgid_plural "quadrillion"
-msgstr[0] "%d কোয়াড্রিলিয়ন"
-msgstr[1] "%d কোয়াড্রিলিয়ন"
+msgstr[0] "কোয়াড্রিলিয়ন"
+msgstr[1] "কোয়াড্রিলিয়ন"
 
 #: src/humanize/number.py:183
 msgid "quintillion"
 msgid_plural "quintillion"
-msgstr[0] "%d কুইন্টিলিয়ন"
-msgstr[1] "%d কুইন্টিলিয়ন"
+msgstr[0] "কুইন্টিলিয়ন"
+msgstr[1] "কুইন্টিলিয়ন"
 
 #: src/humanize/number.py:184
 msgid "sextillion"
 msgid_plural "sextillion"
-msgstr[0] "%d সেক্সটিলিয়ন"
-msgstr[1] "%d সেক্সটিলিয়ন"
+msgstr[0] "সেক্সটিলিয়ন"
+msgstr[1] "সেক্সটিলিয়ন"
 
 #: src/humanize/number.py:185
 msgid "septillion"
 msgid_plural "septillion"
-msgstr[0] "%d সেপটিলিয়ন"
-msgstr[1] "%d সেপটিলিয়ন"
+msgstr[0] "সেপটিলিয়ন"
+msgstr[1] "সেপটিলিয়ন"
 
 #: src/humanize/number.py:186
 msgid "octillion"
 msgid_plural "octillion"
-msgstr[0] "%d ওকটিলিয়ন"
-msgstr[1] "%d ওকটিলিয়ন"
+msgstr[0] "ওকটিলিয়ন"
+msgstr[1] "ওকটিলিয়ন"
 
 #: src/humanize/number.py:187
 msgid "nonillion"
