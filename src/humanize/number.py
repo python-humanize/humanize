@@ -233,7 +233,7 @@ def intword(value: NumberOrString, format: str = "%.1f") -> str:
     try:
         if not math.isfinite(float(value)):
             return _format_not_finite(float(value))
-        value = int(value)
+        value = int(float(value))
     except (TypeError, ValueError):
         return str(value)
 
