@@ -105,6 +105,7 @@ def test_naturalsize(test_args: list[int] | list[int | bool], expected: str) -> 
 
     assert humanize.naturalsize(*test_args) == "-" + expected
 
+
 @pytest.mark.parametrize(
     "test_input, expected",
     [
