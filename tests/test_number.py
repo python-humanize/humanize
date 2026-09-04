@@ -141,6 +141,47 @@ def test_intword(test_args: list[str], expected: str) -> None:
     assert humanize.intword(*test_args) == expected
 
 
+def test_intword_rounding_rollover() -> None:
+    """Values that round up to the next power must carry to the next unit.
+
+    Regression: for magnitudes above ~10**22 the carry was checked in floating
+    point (``rounded_value * power == powers[ordinal + 1]``) and no longer
+    matched the exact integer power, so e.g. ``10**24 - 1`` was rendered as
+    "1000.0 sextillion" instead of "1.0 septillion".
+    """
+    units = [
+        "thousand",
+        "million",
+        "billion",
+        "trillion",
+        "quadrillion",
+        "quintillion",
+        "sextillion",
+        "septillion",
+        "octillion",
+        "nonillion",
+        "decillion",
+    ]
+    # value = 10**e - 1 rounds up to 10**e with "%.1f"/"%.0f", i.e. exactly 1.0
+    # of the unit sitting at 10**e (units[i] where 10**e == powers[i]).
+    for i, exponent in enumerate(range(6, 34, 3), start=1):
+        value = 10**exponent - 1
+        assert humanize.intword(value) == f"1.0 {units[i]}"
+        assert humanize.intword(value, "%.0f") == f"1 {units[i]}"
+
+    # The mantissa must never render at or above 1000 for values below a
+    # decillion; a bare "1000.0" is only expected in the sparse gap between
+    # decillion and googol, which has no dedicated unit.
+    for exponent in range(6, 34, 3):
+        rendered = humanize.intword(10**exponent - 1)
+        mantissa = float(rendered.split(" ", 1)[0])
+        assert mantissa < 1000
+
+    # The documented decillion..googol gap must be left untouched.
+    assert humanize.intword(10**36) == "1000.0 decillion"
+    assert humanize.intword(2 * 10**100) == "2.0 googol"
+
+
 @pytest.mark.parametrize(
     "test_input, expected",
     [

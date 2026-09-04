@@ -255,8 +255,12 @@ def intword(value: NumberOrString, format: str = "%.1f") -> str:
     chopped = value / power
     rounded_value = float(format % chopped)
 
-    if not largest_ordinal and rounded_value * power == powers[ordinal + 1]:
-        # After rounding, we end up just at the next power
+    if not largest_ordinal and rounded_value == powers[ordinal + 1] // power:
+        # After rounding, we end up just at the next power. Compare against the
+        # integer ratio between the two powers instead of ``rounded_value * power``:
+        # for values above ~10**22 the latter is evaluated in floating point and
+        # no longer equals the exact ``powers[ordinal + 1]``, so the carry was
+        # silently skipped (e.g. 10**24 - 1 rendered as "1000.0 sextillion").
         ordinal += 1
         rounded_value = 1.0
 
