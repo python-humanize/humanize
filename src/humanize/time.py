@@ -551,9 +551,8 @@ def precisedelta(
     """
     import datetime as dt
 
-    is_negative = (
-        (isinstance(value, dt.timedelta) and value.total_seconds() < 0)
-        or (isinstance(value, (int, float)) and value < 0)
+    is_negative = (isinstance(value, dt.timedelta) and value.total_seconds() < 0) or (
+        isinstance(value, (int, float)) and value < 0
     )
 
     date, delta = _date_and_delta(value, precise=True)
@@ -661,6 +660,7 @@ def precisedelta(
     ]
 
     import math
+
     has_nonzero_value = False
 
     texts: list[str] = []
@@ -692,6 +692,7 @@ def precisedelta(
         result = _("%s and %s") % (head, tail)
 
     return f"-{result}" if is_negative and has_nonzero_value else result
+
 
 def _rounding_by_fmt(format: str, value: float) -> float | int:
     """Round a number according to the string format provided.
