@@ -2,11 +2,17 @@
 
 from __future__ import annotations
 
-__lazy_modules__ = {"humanize.i18n", "math"}
+__lazy_modules__ = {"humanize.i18n", "humanize.number", "math"}
 
-from math import log
+from math import isfinite, log
 
+# Import isfinite so we can check whether a number is
+# a normal finite number or NaN / positive infinity / negative infinity.
+# Reuse the existing helper from number.py so that
+# naturalsize() behaves consistently with other numeric
+# humanization functions in the library.
 from humanize.i18n import _gettext as _
+from humanize.number import _format_not_finite
 
 suffixes = {
     "decimal": (
@@ -91,6 +97,10 @@ def naturalsize(
     base = 1024 if (gnu or binary) else 1000
     bytes_ = float(value)
     abs_bytes = abs(bytes_)
+
+    # Handle NaN and infinity before filesize formatting.
+    if not isfinite(bytes_):
+        return _format_not_finite(bytes_)
 
     if abs_bytes == 1 and not gnu:
         return _("%d Byte") % int(bytes_)

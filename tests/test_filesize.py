@@ -4,6 +4,8 @@
 
 from __future__ import annotations
 
+import math
+
 import pytest
 
 import humanize
@@ -95,7 +97,6 @@ import humanize
 )
 def test_naturalsize(test_args: list[int] | list[int | bool], expected: str) -> None:
     assert humanize.naturalsize(*test_args) == expected
-
     # Retest with negative input
     if isinstance(test_args[0], int):
         test_args[0] *= -1
@@ -103,3 +104,17 @@ def test_naturalsize(test_args: list[int] | list[int | bool], expected: str) -> 
         test_args[0] = f"-{test_args[0]}"
 
     assert humanize.naturalsize(*test_args) == "-" + expected
+
+
+@pytest.mark.parametrize(
+    "test_input, expected",
+    [
+        (math.nan, "NaN"),
+        (math.inf, "+Inf"),
+        (-math.inf, "-Inf"),
+    ],
+)
+def test_naturalsize_not_finite(test_input: float, expected: str) -> None:
+    assert humanize.naturalsize(test_input) == expected
+    assert humanize.naturalsize(test_input, binary=True) == expected
+    assert humanize.naturalsize(test_input, gnu=True) == expected

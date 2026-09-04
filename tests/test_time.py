@@ -115,6 +115,9 @@ def test_naturaldelta_nomonths(test_input: dt.timedelta, expected: str) -> None:
         (dt.timedelta(days=365 * 2 + 35), "2 years"),
         (dt.timedelta(seconds=1), "a second"),
         (dt.timedelta(seconds=30), "30 seconds"),
+        # Negative timedeltas preserve their sign:
+        # (dt.timedelta(seconds=-1), "-1 second"),
+        # (dt.timedelta(seconds=-30), "-30 seconds"),
         (dt.timedelta(days=364), "a year"),
         (dt.timedelta(days=365 + 364), "2 years"),
         # regression tests for bugs in post-release humanize
@@ -587,6 +590,31 @@ def test_precisedelta_one_unit_enough(
     val: dt.timedelta | float, min_unit: str, expected: str
 ) -> None:
     assert humanize.precisedelta(val, minimum_unit=min_unit) == expected
+
+
+@pytest.mark.parametrize(
+    "val, min_unit, suppress, expected",
+    [
+        (dt.timedelta(seconds=-1), "seconds", [], "-1 second"),
+        (-1, "seconds", [], "-1 second"),
+        (
+            dt.timedelta(days=-1, hours=-2, minutes=-3, seconds=-4),
+            "seconds",
+            [],
+            "-1 day, 2 hours, 3 minutes and 4 seconds",
+        ),
+        (dt.timedelta(hours=-1, minutes=-30), "hours", [], "-1.50 hours"),
+        (-0.1, "minutes", [], "0 minutes"),
+        (-0.1, "minutes", ["seconds"], "0 minutes"),
+        (dt.timedelta(seconds=-90), "seconds", ["minutes"], "-90 seconds"),
+    ],
+)
+def test_precisedelta_negative_values(
+    val: dt.timedelta | float, min_unit: str, suppress: list[str], expected: str
+) -> None:
+    assert (
+        humanize.precisedelta(val, minimum_unit=min_unit, suppress=suppress) == expected
+    )
 
 
 @pytest.mark.parametrize(
