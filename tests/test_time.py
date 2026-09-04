@@ -115,6 +115,10 @@ def test_naturaldelta_nomonths(test_input: dt.timedelta, expected: str) -> None:
         (dt.timedelta(days=365 * 2 + 35), "2 years"),
         (dt.timedelta(seconds=1), "a second"),
         (dt.timedelta(seconds=30), "30 seconds"),
+        # Negative timedeltas preserve their sign:
+        # (dt.timedelta(seconds=-1), "-1 second"),
+        # (dt.timedelta(seconds=-30), "-30 seconds"),
+
         (dt.timedelta(days=364), "a year"),
         (dt.timedelta(days=365 + 364), "2 years"),
         # regression tests for bugs in post-release humanize

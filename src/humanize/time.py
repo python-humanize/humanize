@@ -490,6 +490,9 @@ def precisedelta(
     >>> precisedelta(delta)
     '2 days, 1 hour and 33.12 seconds'
 
+    >>> precisedelta(dt.timedelta(seconds=-90))
+    '-1 minute and 30 seconds'
+
     ```
 
     A custom `format` can be specified to control how the fractional part
@@ -546,6 +549,13 @@ def precisedelta(
 
     ```
     """
+    import datetime as dt
+
+    is_negative = (
+        (isinstance(value, dt.timedelta) and value.total_seconds() < 0)
+        or (isinstance(value, (int, float)) and value < 0)
+    )
+
     date, delta = _date_and_delta(value, precise=True)
     if date is None:
         return str(value)
@@ -651,11 +661,13 @@ def precisedelta(
     ]
 
     import math
+    has_nonzero_value = False
 
     texts: list[str] = []
     for unit, fmt in zip(reversed(Unit), fmts):
         singular_txt, plural_txt, fmt_value = fmt
         if fmt_value > 0 or (not texts and unit == min_unit):
+            has_nonzero_value = has_nonzero_value or fmt_value != 0
             _fmt_value = 2 if 1 < fmt_value < 2 else int(fmt_value)
             fmt_txt = _ngettext(singular_txt, plural_txt, _fmt_value)
             if unit == min_unit and math.modf(fmt_value)[0] > 0:
@@ -673,13 +685,13 @@ def precisedelta(
             break
 
     if len(texts) == 1:
-        return texts[0]
+        result = texts[0]
+    else:
+        head = ", ".join(texts[:-1])
+        tail = texts[-1]
+        result = _("%s and %s") % (head, tail)
 
-    head = ", ".join(texts[:-1])
-    tail = texts[-1]
-
-    return _("%s and %s") % (head, tail)
-
+    return f"-{result}" if is_negative and has_nonzero_value else result
 
 def _rounding_by_fmt(format: str, value: float) -> float | int:
     """Round a number according to the string format provided.
