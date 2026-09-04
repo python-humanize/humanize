@@ -127,6 +127,11 @@ def test_naturaldelta_nomonths(test_input: dt.timedelta, expected: str) -> None:
         (dt.timedelta(days=9), "9 days"),
         (dt.timedelta(days=365), "a year"),
         (dt.timedelta(days=365 * 1_141), "1,141 years"),
+        (dt.timedelta(days=365 * 2), "2 years"),
+        (dt.timedelta(days=365 * 2.4), "2 years"),
+        (dt.timedelta(days=365 * 2.6), "3 years"),
+        (dt.timedelta(days=365 * 2.9), "3 years"),
+        (dt.timedelta(days=365 * 3), "3 years"),
         ("NaN", "NaN"),  # Returns non-numbers unchanged.
         # largest possible timedelta
         (dt.timedelta(days=999_999_999), "2,739,726 years"),
