@@ -179,6 +179,19 @@ def _ngettext_noop(singular: str, plural: str) -> tuple[str, str]:
     return singular, plural
 
 
+def _pgettext_noop(msgctxt: str, message: str) -> tuple[str, str]:
+    """Mark a contextual translation without translating it.
+
+    Args:
+        msgctxt (str): Context of the translation.
+        message (str): Text to translate in the future.
+
+    Returns:
+        tuple: Original context and text, unchanged.
+    """
+    return msgctxt, message
+
+
 def thousands_separator() -> str:
     """Return the thousands separator for a locale, default to comma.
 

@@ -7,9 +7,11 @@ __lazy_modules__ = {"bisect"}
 import bisect
 
 from .i18n import _gettext as _
+from .i18n import _gettext_noop as N_
 from .i18n import _ngettext, decimal_separator, thousands_separator
 from .i18n import _ngettext_noop as NS_
 from .i18n import _pgettext as P_
+from .i18n import _pgettext_noop as PS_
 
 TYPE_CHECKING = False
 if TYPE_CHECKING:
@@ -35,18 +37,43 @@ _SUPERSCRIPT_MAP = {
 }
 _SUPERSCRIPT_TRANS = str.maketrans(_SUPERSCRIPT_MAP)
 
-_ORDINAL_SUFFIXES = ("th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th")
+_ORDINAL_SUFFIXES = {
+    "male": (
+        PS_("0 (male)", "th"),
+        PS_("1 (male)", "st"),
+        PS_("2 (male)", "nd"),
+        PS_("3 (male)", "rd"),
+        PS_("4 (male)", "th"),
+        PS_("5 (male)", "th"),
+        PS_("6 (male)", "th"),
+        PS_("7 (male)", "th"),
+        PS_("8 (male)", "th"),
+        PS_("9 (male)", "th"),
+    ),
+    "female": (
+        PS_("0 (female)", "th"),
+        PS_("1 (female)", "st"),
+        PS_("2 (female)", "nd"),
+        PS_("3 (female)", "rd"),
+        PS_("4 (female)", "th"),
+        PS_("5 (female)", "th"),
+        PS_("6 (female)", "th"),
+        PS_("7 (female)", "th"),
+        PS_("8 (female)", "th"),
+        PS_("9 (female)", "th"),
+    ),
+}
 _APNUMBER_WORDS = (
-    "zero",
-    "one",
-    "two",
-    "three",
-    "four",
-    "five",
-    "six",
-    "seven",
-    "eight",
-    "nine",
+    N_("zero"),
+    N_("one"),
+    N_("two"),
+    N_("three"),
+    N_("four"),
+    N_("five"),
+    N_("six"),
+    N_("seven"),
+    N_("eight"),
+    N_("nine"),
 )
 
 
@@ -110,7 +137,7 @@ def ordinal(value: NumberOrString, gender: str = "male") -> str:
         return str(value)
     gender = "male" if gender == "male" else "female"
     digit = 0 if value % 100 in (11, 12, 13) else value % 10
-    return f"{value}{P_(f'{digit} ({gender})', _ORDINAL_SUFFIXES[digit])}"
+    return f"{value}{P_(*_ORDINAL_SUFFIXES[gender][digit])}"
 
 
 def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
