@@ -3,12 +3,66 @@
 from __future__ import annotations
 
 import datetime as dt
+import gettext
 import importlib
+import shutil
+import subprocess
+from pathlib import Path
 
 import pytest
 from freezegun import freeze_time
 
 import humanize
+
+
+@pytest.mark.parametrize("locale, one", [("de_DE", "eins"), ("fr_FR", "un")])
+def test_update_translations(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, locale: str, one: str
+) -> None:
+    for command in ("bash", "xgettext", "msgmerge", "msgfmt"):
+        if shutil.which(command) is None:
+            pytest.skip(f"Translation updates require {command}")
+
+    root = Path(__file__).resolve().parents[1]
+    source = root / "src" / "humanize"
+    destination = tmp_path / "src" / "humanize"
+    messages = destination / "locale" / locale / "LC_MESSAGES"
+    messages.mkdir(parents=True)
+    for path in source.glob("*.py"):
+        shutil.copy2(path, destination)
+    catalog = messages / "humanize.po"
+    shutil.copy2(source / "locale" / locale / "LC_MESSAGES" / "humanize.po", catalog)
+    binary = catalog.with_suffix(".mo")
+    subprocess.run(["msgfmt", "--check", "-o", str(binary), str(catalog)], check=True)
+
+    results = []
+    try:
+        for updated in (False, True):
+            if updated:
+                subprocess.run(
+                    ["bash", str(root / "scripts" / "update-translations.sh")],
+                    cwd=tmp_path,
+                    check=True,
+                )
+            with binary.open("rb") as stream:
+                translation = gettext.GNUTranslations(stream)
+            # Replace the cached catalog so the second pass uses the updated one.
+            monkeypatch.setitem(humanize.i18n._TRANSLATIONS, locale, translation)
+            humanize.activate(locale)
+            results.append(
+                [humanize.apnumber(value) for value in range(10)]
+                + [
+                    humanize.ordinal(value, gender=gender)
+                    for gender in ("male", "female")
+                    for value in range(10)
+                ]
+            )
+    finally:
+        humanize.deactivate()
+
+    assert results[0][1] == one
+    assert results[1] == results[0]
+
 
 with freeze_time("2020-02-02"):
     NOW = dt.datetime.now(tz=dt.timezone.utc)
