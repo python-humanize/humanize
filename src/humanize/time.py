@@ -5,6 +5,8 @@ These are largely borrowed from Django's `contrib.humanize`.
 
 from __future__ import annotations
 
+import datetime
+
 __lazy_modules__ = {"humanize.i18n", "humanize.number"}
 
 from enum import Enum
@@ -546,6 +548,13 @@ def precisedelta(
 
     ```
     """
+    if isinstance(value, datetime.timedelta):
+        negative = value < datetime.timedelta(0)
+    elif isinstance(value, (int, float)):
+        negative = value < 0
+    else:
+        negative = False
+
     date, delta = _date_and_delta(value, precise=True)
     if date is None:
         return str(value)
@@ -673,12 +682,13 @@ def precisedelta(
             break
 
     if len(texts) == 1:
-        return texts[0]
+        result = texts[0]
+    else:
+        head = ", ".join(texts[:-1])
+        tail = texts[-1]
+        result = _("%s and %s") % (head, tail)
 
-    head = ", ".join(texts[:-1])
-    tail = texts[-1]
-
-    return _("%s and %s") % (head, tail)
+    return f"-{result}" if negative else result
 
 
 def _rounding_by_fmt(format: str, value: float) -> float | int:
