@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 
-__lazy_modules__ = {"bisect"}
+__lazy_modules__ = {"bisect", "math"}
 
 import bisect
+import math
 
 from .i18n import _gettext as _
 from .i18n import _ngettext, decimal_separator, thousands_separator
@@ -52,8 +53,6 @@ _APNUMBER_WORDS = (
 
 def _format_not_finite(value: float) -> str:
     """Utility function to handle infinite and nan cases."""
-    import math
-
     if math.isnan(value):
         return "NaN"
     if math.isinf(value) and value < 0:
@@ -100,8 +99,6 @@ def ordinal(value: NumberOrString, gender: str = "male") -> str:
     Returns:
         str: Ordinal string.
     """
-    import math
-
     try:
         if not math.isfinite(float(value)):
             return _format_not_finite(float(value))
@@ -147,8 +144,6 @@ def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
     Returns:
         str: String containing commas every three digits.
     """
-    import math
-
     thousands_sep = thousands_separator()
     decimal_sep = decimal_separator()
     try:
@@ -228,8 +223,6 @@ def intword(value: NumberOrString, format: str = "%.1f") -> str:
         str: Friendly text representation as a string, unless the value passed could not
             be coaxed into an `int`.
     """
-    import math
-
     try:
         if not math.isfinite(float(value)):
             return _format_not_finite(float(value))
@@ -295,8 +288,6 @@ def apnumber(value: NumberOrString) -> str:
             returns a string unless the value was not `int`-able, then `str(value)`
             is returned.
     """
-    import math
-
     try:
         if not math.isfinite(float(value)):
             return _format_not_finite(float(value))
@@ -347,8 +338,6 @@ def fractional(value: NumberOrString) -> str:
     Returns:
         str: Fractional number as a string.
     """
-    import math
-
     try:
         number = float(value)
         if not math.isfinite(number):
@@ -410,8 +399,6 @@ def scientific(value: NumberOrString, precision: int = 2) -> str:
     Returns:
         str: Number in scientific notation z.wq x 10ⁿ.
     """
-    import math
-
     try:
         value = float(value)
         if not math.isfinite(value):
@@ -473,8 +460,6 @@ def clamp(
             will be prepended with a token indicating as such.
 
     """
-    import math
-
     if value is None:
         return None
 
@@ -538,8 +523,6 @@ def metric(value: float, unit: str = "", precision: int = 3) -> str:
     Returns:
         str:
     """
-    import math
-
     if not math.isfinite(value):
         return _format_not_finite(value)
     exponent = math.floor(math.log10(abs(value))) if value != 0 else 0
