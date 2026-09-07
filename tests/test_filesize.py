@@ -103,3 +103,10 @@ def test_naturalsize(test_args: list[int] | list[int | bool], expected: str) -> 
         test_args[0] = f"-{test_args[0]}"
 
     assert humanize.naturalsize(*test_args) == "-" + expected
+
+
+def test_naturalsize_custom_format_with_text() -> None:
+    # regression: custom format strings with surrounding text must not crash
+    # https://github.com/python-humanize/humanize/issues/366
+    assert humanize.naturalsize(999_999, gnu=True, format="Size: %.1f") == "Size: 976.6K"
+    assert humanize.naturalsize(999_999, gnu=True, format="%.1f bytes") == "976.6 bytesK"
