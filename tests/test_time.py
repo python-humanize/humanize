@@ -841,8 +841,14 @@ def test_precisedelta_bogus_call() -> None:
 def test_precisedelta_negative() -> None:
     # regression: negative timedeltas must keep their sign
     # https://github.com/python-humanize/humanize/issues/379
-    assert humanize.precisedelta(dt.timedelta(seconds=-3661)) == "-1 hour, 1 minute and 1 second"
-    assert humanize.precisedelta(dt.timedelta(seconds=3661)) == "1 hour, 1 minute and 1 second"
+    assert (
+        humanize.precisedelta(dt.timedelta(seconds=-3661))
+        == "-1 hour, 1 minute and 1 second"
+    )
+    assert (
+        humanize.precisedelta(dt.timedelta(seconds=3661))
+        == "1 hour, 1 minute and 1 second"
+    )
     assert (
         humanize.precisedelta(dt.timedelta(seconds=-3661), minimum_unit="minutes")
         == "-1 hour and 1.02 minutes"
