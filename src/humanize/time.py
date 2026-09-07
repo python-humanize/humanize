@@ -5,8 +5,9 @@ These are largely borrowed from Django's `contrib.humanize`.
 
 from __future__ import annotations
 
-__lazy_modules__ = {"humanize.i18n", "humanize.number"}
+__lazy_modules__ = {"datetime", "humanize.i18n", "humanize.number"}
 
+import datetime as dt
 from enum import Enum
 from functools import total_ordering
 
@@ -16,7 +17,6 @@ from .number import intcomma
 
 TYPE_CHECKING = False
 if TYPE_CHECKING:
-    import datetime as dt
     from collections.abc import Iterable
     from typing import Any
 
@@ -47,8 +47,6 @@ class Unit(Enum):
 
 
 def _now() -> dt.datetime:
-    import datetime as dt
-
     return dt.datetime.now()
 
 
@@ -74,8 +72,6 @@ def _date_and_delta(
 
     If that's not possible, return `(None, value)`.
     """
-    import datetime as dt
-
     if not now:
         now = _now()
     if isinstance(value, dt.datetime):
@@ -136,8 +132,6 @@ def naturaldelta(
         ```
 
     """
-    import datetime as dt
-
     tmp = Unit[minimum_unit.upper()]
     if tmp not in (Unit.SECONDS, Unit.MILLISECONDS, Unit.MICROSECONDS):
         msg = f"Minimum unit '{minimum_unit}' not supported"
@@ -286,8 +280,6 @@ def naturaltime(
     Returns:
         str: A natural representation of the input in a resolution that makes sense.
     """
-    import datetime as dt
-
     value = _convert_aware_datetime(value)
     when = _convert_aware_datetime(when)
 
@@ -316,8 +308,6 @@ def _convert_aware_datetime(
     if value is None:
         return None
 
-    import datetime as dt
-
     if isinstance(value, dt.datetime) and value.tzinfo is not None:
         value = dt.datetime.fromtimestamp(value.timestamp())
     return value
@@ -331,8 +321,6 @@ def naturalday(value: dt.date | dt.datetime, format: str = "%b %d") -> str:
     formatted according to `format`.
 
     """
-    import datetime as dt
-
     try:
         # When value is a tz-aware datetime, compute "today" in that timezone
         # so the comparison uses the correct local date.
@@ -363,8 +351,6 @@ def naturalday(value: dt.date | dt.datetime, format: str = "%b %d") -> str:
 
 def naturaldate(value: dt.date | dt.datetime) -> str:
     """Like `naturalday`, but append a year for dates more than ~five months away."""
-    import datetime as dt
-
     original_value = value
     try:
         if isinstance(value, dt.datetime) and value.tzinfo is not None:
