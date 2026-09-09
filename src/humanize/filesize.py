@@ -4,6 +4,7 @@ from __future__ import annotations
 
 __lazy_modules__ = {"humanize.i18n", "math"}
 
+import re
 from math import log
 
 from humanize.i18n import _gettext as _
@@ -35,6 +36,10 @@ suffixes = {
     ),
     "gnu": "KMGTPEZYRQ",
 }
+
+# Matches the numeric part of a rendered mantissa, ignoring any surrounding
+# text a custom `format` may add (e.g. "%.1f~" renders "976.6~").
+_MANTISSA_RE = re.compile(r"[-+]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][-+]?\d+)?")
 
 
 def naturalsize(
@@ -103,7 +108,13 @@ def naturalsize(
     # mantissa afterward; rounding can push it up to `base` (e.g. 999999 is
     # 999.999 kB, which formats to "1000.0 kB"). When that happens and a larger
     # suffix is available, step up one suffix so the result reads "1.0 MB".
-    if exp < len(suffix) and abs(float(format % (abs_bytes / (base**exp)))) >= base:
+    # `format` may contain text around the conversion, so extract the numeric
+    # mantissa from the rendered string before comparing it with `base`: parsing
+    # the whole string raises ValueError, and comparing rendered strings
+    # misjudges formats that do not round-trip through str -> float (e.g.
+    # "%.0e" % 1024 is "1e+03").
+    mantissa = _MANTISSA_RE.search(format % (abs_bytes / (base**exp)))
+    if exp < len(suffix) and mantissa and abs(float(mantissa.group())) >= base:
         exp += 1
     space = "" if gnu else " "
     ret: str = format % (bytes_ / (base**exp)) + space + _(suffix[exp - 1])

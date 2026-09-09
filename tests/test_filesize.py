@@ -91,6 +91,14 @@ import humanize
         ([1024**2 - 1, True], "1.0 MiB"),
         ([1024**3 - 1, True], "1.0 GiB"),
         ([1024**2 - 1, False, True], "1.0M"),
+        # A custom format may contain text around the numeric conversion, which
+        # must not break the rounding carry-over check above.
+        ([999999, False, True, "%.1f~"], "976.6~K"),
+        ([999999, False, False, "%.1f~"], "1.0~ MB"),
+        # The carry-over check must compare the numeric mantissa, not rendered
+        # strings: "%.0e" renders 1024 as "1e+03", which a string comparison
+        # misreads as already at the base and steps up one unit too early.
+        ([1048575, True, False, "%.0e"], "1e+03 KiB"),
     ],
 )
 def test_naturalsize(test_args: list[int] | list[int | bool], expected: str) -> None:
