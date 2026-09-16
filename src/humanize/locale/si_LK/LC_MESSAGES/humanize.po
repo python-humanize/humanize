@@ -1,0 +1,231 @@
+# Sinhala (si_LK) translations for the humanize package.
+# This file is distributed under the same license as the humanize package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: humanize\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-25 11:51+0530\n"
+"PO-Revision-Date: 2026-07-25 11:51+0530\n"
+"Last-Translator: Ravindu Pabasara Karunarathna\n"
+"Language-Team: Sinhala\n"
+"Language: si_LK\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: src/humanize/filesize.py:96
+#, python-format
+msgid "%d Byte"
+msgstr "බයිට් %d"
+
+#: src/humanize/filesize.py:99
+#, python-format
+msgid "%d Bytes"
+msgstr "බයිට් %d"
+
+#: src/humanize/number.py:181
+msgid "thousand"
+msgid_plural "thousand"
+msgstr[0] "දහස"
+msgstr[1] "දහස"
+
+#: src/humanize/number.py:182
+msgid "million"
+msgid_plural "million"
+msgstr[0] "මිලියන"
+msgstr[1] "මිලියන"
+
+#: src/humanize/number.py:183
+msgid "billion"
+msgid_plural "billion"
+msgstr[0] "බිලියන"
+msgstr[1] "බිලියන"
+
+#: src/humanize/number.py:184
+msgid "trillion"
+msgid_plural "trillion"
+msgstr[0] "ට්‍රිලියන"
+msgstr[1] "ට්‍රිලියන"
+
+#: src/humanize/number.py:185
+msgid "quadrillion"
+msgid_plural "quadrillion"
+msgstr[0] "ක්වඩ්‍රිලියන"
+msgstr[1] "ක්වඩ්‍රිලියන"
+
+#: src/humanize/number.py:186
+msgid "quintillion"
+msgid_plural "quintillion"
+msgstr[0] "ක්වින්ටිලියන"
+msgstr[1] "ක්වින්ටිලියන"
+
+#: src/humanize/number.py:187
+msgid "sextillion"
+msgid_plural "sextillion"
+msgstr[0] "සෙක්ස්ටිලියන"
+msgstr[1] "සෙක්ස්ටිලියන"
+
+#: src/humanize/number.py:188
+msgid "septillion"
+msgid_plural "septillion"
+msgstr[0] "සෙප්ටිලියන"
+msgstr[1] "සෙප්ටිලියන"
+
+#: src/humanize/number.py:189
+msgid "octillion"
+msgid_plural "octillion"
+msgstr[0] "ඔක්ටිලියන"
+msgstr[1] "ඔක්ටිලියන"
+
+#: src/humanize/number.py:190
+msgid "nonillion"
+msgid_plural "nonillion"
+msgstr[0] "නොනිලියන"
+msgstr[1] "නොනිලියන"
+
+#: src/humanize/number.py:191
+msgid "decillion"
+msgid_plural "decillion"
+msgstr[0] "ඩෙසිලියන"
+msgstr[1] "ඩෙසිලියන"
+
+#: src/humanize/number.py:192
+msgid "googol"
+msgid_plural "googol"
+msgstr[0] "ගූගොල්"
+msgstr[1] "ගූගොල්"
+
+#: src/humanize/time.py:168
+#, python-format
+msgid "%d microsecond"
+msgid_plural "%d microseconds"
+msgstr[0] "මයික්‍රො තත්පර %d"
+msgstr[1] "මයික්‍රො තත්පර %d"
+
+#: src/humanize/time.py:177
+#, python-format
+msgid "%d millisecond"
+msgid_plural "%d milliseconds"
+msgstr[0] "මිලි තත්පර %d"
+msgstr[1] "මිලි තත්පර %d"
+
+#: src/humanize/time.py:180 src/humanize/time.py:296
+msgid "a moment"
+msgstr "මොහොතක්"
+
+#: src/humanize/time.py:183
+msgid "a second"
+msgstr "තත්පරය"
+
+#: src/humanize/time.py:186
+#, python-format
+msgid "%d second"
+msgid_plural "%d seconds"
+msgstr[0] "තත්පර %d"
+msgstr[1] "තත්පර %d"
+
+#: src/humanize/time.py:191
+msgid "a minute"
+msgstr "විනාඩිය"
+
+#: src/humanize/time.py:194 src/humanize/time.py:201
+msgid "an hour"
+msgstr "පැය"
+
+#: src/humanize/time.py:196
+#, python-format
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] "විනාඩි %d"
+msgstr[1] "විනාඩි %d"
+
+#: src/humanize/time.py:204 src/humanize/time.py:210
+msgid "a day"
+msgstr "දවස"
+
+#: src/humanize/time.py:206
+#, python-format
+msgid "%d hour"
+msgid_plural "%d hours"
+msgstr[0] "පැය %d"
+msgstr[1] "පැය %d"
+
+#: src/humanize/time.py:213 src/humanize/time.py:216
+#, python-format
+msgid "%d day"
+msgid_plural "%d days"
+msgstr[0] "දින %d"
+msgstr[1] "දින %d"
+
+#: src/humanize/time.py:219
+msgid "a month"
+msgstr "මාසය"
+
+#: src/humanize/time.py:222 src/humanize/time.py:228
+msgid "a year"
+msgstr "අවුරුද්ද"
+
+#: src/humanize/time.py:224
+#, python-format
+msgid "%d month"
+msgid_plural "%d months"
+msgstr[0] "මාස %d"
+msgstr[1] "මාස %d"
+
+#: src/humanize/time.py:231 src/humanize/time.py:246
+#, python-format
+msgid "1 year, %d day"
+msgid_plural "1 year, %d days"
+msgstr[0] "අවුරුද්දයි දින %d"
+msgstr[1] "අවුරුද්දයි දින %d"
+
+#: src/humanize/time.py:235
+msgid "1 year, 1 month"
+msgstr "අවුරුද්දයි මාසය"
+
+#: src/humanize/time.py:239 src/humanize/time.py:248
+#, python-format
+msgid "%d year"
+msgid_plural "%d years"
+msgstr[0] "අවුරුදු %d"
+msgstr[1] "අවුරුදු %d"
+
+#: src/humanize/time.py:242
+#, python-format
+msgid "1 year, %d month"
+msgid_plural "1 year, %d months"
+msgstr[0] "අවුරුද්දයි මාස %d"
+msgstr[1] "අවුරුද්දයි මාස %d"
+
+#: src/humanize/time.py:293
+#, python-format
+msgid "%s from now"
+msgstr "තව %sකින්"
+
+#: src/humanize/time.py:293
+#, python-format
+msgid "%s ago"
+msgstr "%sකට පෙර"
+
+#: src/humanize/time.py:297
+msgid "now"
+msgstr "දැන්"
+
+#: src/humanize/time.py:343
+msgid "today"
+msgstr "අද"
+
+#: src/humanize/time.py:346
+msgid "tomorrow"
+msgstr "හෙට"
+
+#: src/humanize/time.py:349
+msgid "yesterday"
+msgstr "ඊයේ"
+
+#: src/humanize/time.py:671
+#, python-format
+msgid "%s and %s"
+msgstr "%sයි %sක්"

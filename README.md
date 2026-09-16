@@ -38,6 +38,7 @@ size or throughput. It is localized to:
 - Polish
 - Russian
 - Simplified Chinese
+- Sinhala
 - Slovak
 - Slovenian
 - Spanish
