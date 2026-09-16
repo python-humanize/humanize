@@ -255,8 +255,19 @@ def intword(value: NumberOrString, format: str = "%.1f") -> str:
     chopped = value / power
     rounded_value = float(format % chopped)
 
-    if not largest_ordinal and rounded_value * power == powers[ordinal + 1]:
-        # After rounding, we end up just at the next power
+    if not largest_ordinal and rounded_value >= powers[ordinal + 1] // power:
+        # After rounding, the mantissa reached the next power's boundary
+        # (e.g. 999_999 formats to "1000.0", which is 1.0 million).
+        #
+        # Compare the rounded mantissa against the integer ratio between
+        # adjacent powers, not `rounded_value * power == powers[ordinal + 1]`:
+        # that check multiplied a float by a large int, and `float(10**k)`
+        # is not exactly `10**k` for k >= 24, so the equality was silently
+        # False from septillion upward and the carry was skipped
+        # (`10**24 - 1` rendered as "1000.0 sextillion", not "1.0 septillion").
+        # Every entry in `powers` is a power of ten, so the ratio is exact,
+        # and it stays large across the decillion-to-googol gap, so a value
+        # like `10**36` is left as "1000.0 decillion" exactly as before.
         ordinal += 1
         rounded_value = 1.0
 

@@ -116,6 +116,17 @@ def test_intword_powers() -> None:
         (["3500000000000000000000"], "3.5 sextillion"),
         (["8100000000000000000000000000000000"], "8.1 decillion"),
         (["-8100000000000000000000000000000000"], "-8.1 decillion"),
+        # A value just under a power boundary must carry to the next unit after
+        # rounding. The carry check multiplied the rounded mantissa by the
+        # power and compared to an exact int power; `float(10**k) != 10**k` for
+        # k >= 24, so from septillion up these silently rendered as
+        # "1000.0 <smaller unit>" instead of carrying.
+        ([10**24 - 1], "1.0 septillion"),
+        ([10**27 - 1], "1.0 octillion"),
+        ([10**30 - 1], "1.0 nonillion"),
+        ([10**33 - 1], "1.0 decillion"),
+        # ...but the decillion-to-googol gap has no unit to carry into, so a
+        # value in it stays a large decillion count (unchanged behaviour).
         ([1_000_000_000_000_000_000_000_000_000_000_000_000], "1000.0 decillion"),
         ([1_100_000_000_000_000_000_000_000_000_000_000_000], "1100.0 decillion"),
         ([2_100_000_000_000_000_000_000_000_000_000_000_000], "2100.0 decillion"),
