@@ -14,6 +14,11 @@ from freezegun import freeze_time
 
 import humanize
 
+LOCALE_DIR = Path(humanize.i18n.__file__).parent / "locale"
+
+with freeze_time("2020-02-02"):
+    NOW = dt.datetime.now(tz=dt.timezone.utc)
+
 
 @pytest.mark.parametrize("locale, one", [("de_DE", "eins"), ("fr_FR", "un")])
 def test_update_translations(
@@ -62,12 +67,6 @@ def test_update_translations(
 
     assert results[0][1] == one
     assert results[1] == results[0]
-
-
-LOCALE_DIR = Path(humanize.i18n.__file__).parent / "locale"
-
-with freeze_time("2020-02-02"):
-    NOW = dt.datetime.now(tz=dt.timezone.utc)
 
 
 @freeze_time("2020-02-02")
