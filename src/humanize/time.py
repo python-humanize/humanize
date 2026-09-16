@@ -131,8 +131,9 @@ def naturaldelta(
         >>> now = dt.datetime.now(tz=berlin)
         >>> later = now + dt.timedelta(minutes=30)
 
-        >>> assert naturaldelta(later - now) == "30 minutes"
-        True
+        >>> naturaldelta(later - now)
+        '30 minutes'
+
         ```
 
     """
