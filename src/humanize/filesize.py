@@ -2,9 +2,7 @@
 
 from __future__ import annotations
 
-__lazy_modules__ = {"humanize.i18n", "math"}
-
-from math import log
+__lazy_modules__ = {"humanize.i18n"}
 
 from humanize.i18n import _gettext as _
 
@@ -97,6 +95,8 @@ def naturalsize(
 
     if abs_bytes < base:
         return f"{int(bytes_)}B" if gnu else _("%d Bytes") % int(bytes_)
+
+    from math import log
 
     exp = int(min(log(abs_bytes, base), len(suffix)))
     # The suffix is chosen from the unrounded byte count, but `format` rounds the

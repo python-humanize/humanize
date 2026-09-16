@@ -361,10 +361,12 @@ def fractional(value: NumberOrString) -> str:
     frac = Fraction(number - whole_number).limit_denominator(1000)
     numerator = frac.numerator
     denominator = frac.denominator
-    if whole_number and not numerator and denominator == 1:
-        # this means that an integer was passed in
-        # (or variants of that integer like 1.0000)
-        return f"{whole_number:.0f}"
+    if denominator == 1:
+        # The fractional part reduced to a whole number: either an integer
+        # was passed in (e.g. 1 or 1.0000, giving 0/1), or the fractional part
+        # rounded up to 1/1 (e.g. 2.9999999). Fold it into the integer part
+        # instead of emitting a degenerate "0/1" or "2 1/1".
+        return f"{whole_number + numerator:.0f}"
 
     if not whole_number:
         return f"{numerator:.0f}/{denominator:.0f}"
@@ -540,7 +542,7 @@ def metric(value: float, unit: str = "", precision: int = 3) -> str:
 
     if not math.isfinite(value):
         return _format_not_finite(value)
-    exponent = int(math.floor(math.log10(abs(value)))) if value != 0 else 0
+    exponent = math.floor(math.log10(abs(value))) if value != 0 else 0
 
     if exponent >= 33 or exponent < -30:
         return scientific(value, precision - 1) + unit
