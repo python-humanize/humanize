@@ -83,6 +83,13 @@ def test_intcomma(
     assert humanize.intcomma(*test_args) == expected
 
 
+@pytest.mark.parametrize("sign", [1, -1])
+def test_intcomma_large_integer(sign: int) -> None:
+    value = sign * (10**400 + 123)
+    expected = ("-" if sign < 0 else "") + "10" + ",000" * 132 + ",123"
+    assert humanize.intcomma(value) == expected
+
+
 def test_intword_powers() -> None:
     # make sure that powers & human_powers have the same number of items
     assert len(number.powers) == len(number.human_powers)
