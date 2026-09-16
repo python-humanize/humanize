@@ -4,11 +4,14 @@ from __future__ import annotations
 
 import datetime as dt
 import importlib
+import pathlib
 
 import pytest
 from freezegun import freeze_time
 
 import humanize
+
+LOCALE_DIR = pathlib.Path(humanize.i18n.__file__).parent / "locale"
 
 with freeze_time("2020-02-02"):
     NOW = dt.datetime.now(tz=dt.timezone.utc)
@@ -334,3 +337,17 @@ class TestActivate:
             humanize.i18n.deactivate()
 
         assert test_str == humanize.naturaltime(three_seconds)
+
+
+@pytest.mark.parametrize(
+    "locale", sorted(p.name for p in LOCALE_DIR.iterdir() if p.is_dir())
+)
+def test_intword_unit_has_no_format_placeholder(locale: str) -> None:
+    try:
+        humanize.i18n.activate(locale)
+        for value in (1_000, 1_000_000, 1_000_000_000, 10**12, 10**15, 10**100):
+            assert "%" not in humanize.intword(value)
+    except FileNotFoundError:
+        pytest.skip("Generate .mo with scripts/generate-translation-binaries.sh")
+    finally:
+        humanize.i18n.deactivate()
