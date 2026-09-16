@@ -148,8 +148,8 @@ msgstr[1] ""
 #: src/humanize/number.py:179
 msgid "million"
 msgid_plural "million"
-msgstr[0] "%(value)s million"
-msgstr[1] "%(value)s million"
+msgstr[0] "million"
+msgstr[1] "million"
 
 #: src/humanize/number.py:180
 msgid "billion"
@@ -161,64 +161,64 @@ msgstr[1] "milliard"
 #, fuzzy
 msgid "trillion"
 msgid_plural "trillion"
-msgstr[0] "%(value)s billion"
-msgstr[1] "%(value)s billion"
+msgstr[0] "billion"
+msgstr[1] "billion"
 
 #: src/humanize/number.py:182
 #, fuzzy
 msgid "quadrillion"
 msgid_plural "quadrillion"
-msgstr[0] "%(value)s quadrillion"
-msgstr[1] "%(value)s quadrillion"
+msgstr[0] "quadrillion"
+msgstr[1] "quadrillion"
 
 #: src/humanize/number.py:183
 #, fuzzy
 msgid "quintillion"
 msgid_plural "quintillion"
-msgstr[0] "%(value)s quintillion"
-msgstr[1] "%(value)s quintillion"
+msgstr[0] "quintillion"
+msgstr[1] "quintillion"
 
 #: src/humanize/number.py:184
 #, fuzzy
 msgid "sextillion"
 msgid_plural "sextillion"
-msgstr[0] "%(value)s sextillion"
-msgstr[1] "%(value)s sextillion"
+msgstr[0] "sextillion"
+msgstr[1] "sextillion"
 
 #: src/humanize/number.py:185
 #, fuzzy
 msgid "septillion"
 msgid_plural "septillion"
-msgstr[0] "%(value)s septillion"
-msgstr[1] "%(value)s septillion"
+msgstr[0] "septillion"
+msgstr[1] "septillion"
 
 #: src/humanize/number.py:186
 #, fuzzy
 msgid "octillion"
 msgid_plural "octillion"
-msgstr[0] "%(value)s octillion"
-msgstr[1] "%(value)s octillion"
+msgstr[0] "octillion"
+msgstr[1] "octillion"
 
 #: src/humanize/number.py:187
 #, fuzzy
 msgid "nonillion"
 msgid_plural "nonillion"
-msgstr[0] "%(value)s nonillion"
-msgstr[1] "%(value)s nonillion"
+msgstr[0] "nonillion"
+msgstr[1] "nonillion"
 
 #: src/humanize/number.py:188
 #, fuzzy
 msgid "decillion"
 msgid_plural "decillion"
-msgstr[0] "%(value)s décillion"
-msgstr[1] "%(value)s décillion"
+msgstr[0] "décillion"
+msgstr[1] "décillion"
 
 #: src/humanize/number.py:189
 #, fuzzy
 msgid "googol"
 msgid_plural "googol"
-msgstr[0] "%(value)s gogol"
-msgstr[1] "%(value)s gogol"
+msgstr[0] "gogol"
+msgstr[1] "gogol"
 
 #: src/humanize/number.py:301
 msgid "zero"

@@ -187,7 +187,7 @@ def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
                 value = float(value)
             else:
                 value = int(value)
-        else:
+        elif not isinstance(value, int):
             if not math.isfinite(float(value)):
                 return _format_not_finite(float(value))
             float(value)
@@ -577,8 +577,9 @@ def metric(value: float, unit: str = "", precision: int = 3) -> str:
     old_bucket = exponent // 3 * 3
     value /= 10**old_bucket
     digits = int(max(0, precision - exponent % 3 - 1))
-    if exponent < 30 and round(abs(value), digits) >= 1000:
-        exponent += 3 - exponent % 3
+    # Absorb a rounding carry (9.999 -> 10.0) by bumping the exponent.
+    if exponent < 30 and round(abs(value), digits) >= 10 ** (exponent % 3 + 1):
+        exponent += 1
         new_bucket = exponent // 3 * 3
         value /= 10 ** (new_bucket - old_bucket)
         digits = int(max(0, precision - exponent % 3 - 1))
