@@ -19,176 +19,208 @@ msgstr ""
 "X-Generator: Poedit 3.4.1\n"
 
 #: src/humanize/number.py:83
+#, python-format
 msgctxt "0 (male)"
-msgid "th"
-msgstr "te"
+msgid "%sth"
+msgstr "%ste"
 
 #: src/humanize/number.py:84
+#, python-format
 msgctxt "1 (male)"
-msgid "st"
-msgstr "ste"
+msgid "%sst"
+msgstr "%sste"
 
 #: src/humanize/number.py:85
+#, python-format
 msgctxt "2 (male)"
-msgid "nd"
-msgstr "dre"
+msgid "%snd"
+msgstr "%sdre"
 
 #: src/humanize/number.py:86
+#, python-format
 msgctxt "3 (male)"
-msgid "rd"
-msgstr "dje"
+msgid "%srd"
+msgstr "%sdje"
 
 #: src/humanize/number.py:87
+#, python-format
 msgctxt "4 (male)"
-msgid "th"
-msgstr "de"
+msgid "%sth"
+msgstr "%sde"
 
 #: src/humanize/number.py:88
+#, python-format
 msgctxt "5 (male)"
-msgid "th"
-msgstr "te"
+msgid "%sth"
+msgstr "%ste"
 
 #: src/humanize/number.py:89
+#, python-format
 msgctxt "6 (male)"
-msgid "th"
-msgstr "te"
+msgid "%sth"
+msgstr "%ste"
 
 #: src/humanize/number.py:90
+#, python-format
 msgctxt "7 (male)"
-msgid "th"
-msgstr "de"
+msgid "%sth"
+msgstr "%sde"
 
 #: src/humanize/number.py:91
+#, python-format
 msgctxt "8 (male)"
-msgid "th"
-msgstr "de"
+msgid "%sth"
+msgstr "%sde"
 
 #: src/humanize/number.py:92
+#, python-format
 msgctxt "9 (male)"
-msgid "th"
-msgstr "de"
+msgid "%sth"
+msgstr "%sde"
 
 #: src/humanize/number.py:96
+#, python-format
 msgctxt "0 (female)"
-msgid "th"
-msgstr "te"
+msgid "%sth"
+msgstr "%ste"
 
 #: src/humanize/number.py:97
+#, python-format
 msgctxt "1 (female)"
-msgid "st"
-msgstr "ste"
+msgid "%sst"
+msgstr "%sste"
 
 #: src/humanize/number.py:98
+#, python-format
 msgctxt "2 (female)"
-msgid "nd"
-msgstr "dre"
+msgid "%snd"
+msgstr "%sdre"
 
 #: src/humanize/number.py:99
+#, python-format
 msgctxt "3 (female)"
-msgid "rd"
-msgstr "dje"
+msgid "%srd"
+msgstr "%sdje"
 
 #: src/humanize/number.py:100
+#, python-format
 msgctxt "4 (female)"
-msgid "th"
-msgstr "de"
+msgid "%sth"
+msgstr "%sde"
 
 #: src/humanize/number.py:101
+#, python-format
 msgctxt "5 (female)"
-msgid "th"
-msgstr "te"
+msgid "%sth"
+msgstr "%ste"
 
 #: src/humanize/number.py:102
+#, python-format
 msgctxt "6 (female)"
-msgid "th"
-msgstr "te"
+msgid "%sth"
+msgstr "%ste"
 
 #: src/humanize/number.py:103
+#, python-format
 msgctxt "7 (female)"
-msgid "th"
-msgstr "de"
+msgid "%sth"
+msgstr "%sde"
 
 #: src/humanize/number.py:104
+#, python-format
 msgctxt "8 (female)"
-msgid "th"
-msgstr "de"
+msgid "%sth"
+msgstr "%sde"
 
 #: src/humanize/number.py:105
+#, python-format
 msgctxt "9 (female)"
-msgid "th"
-msgstr "de"
+msgid "%sth"
+msgstr "%sde"
 
 #: src/humanize/number.py:178
-msgid "thousand"
-msgid_plural "thousand"
-msgstr[0] "tusen"
-msgstr[1] "tusen"
+#, python-format
+msgid "%s thousand"
+msgid_plural "%s thousand"
+msgstr[0] "%s tusen"
+msgstr[1] "%s tusen"
 
 #: src/humanize/number.py:179
-msgid "million"
-msgid_plural "million"
-msgstr[0] "million"
-msgstr[1] "millioner"
+#, python-format
+msgid "%s million"
+msgid_plural "%s million"
+msgstr[0] "%s million"
+msgstr[1] "%s millioner"
 
 #: src/humanize/number.py:180
-msgid "billion"
-msgid_plural "billion"
-msgstr[0] "milliard"
-msgstr[1] "milliarder"
+#, python-format
+msgid "%s billion"
+msgid_plural "%s billion"
+msgstr[0] "%s milliard"
+msgstr[1] "%s milliarder"
 
 #: src/humanize/number.py:181
-msgid "trillion"
-msgid_plural "trillion"
-msgstr[0] "billion"
-msgstr[1] "billioner"
+#, python-format
+msgid "%s trillion"
+msgid_plural "%s trillion"
+msgstr[0] "%s billion"
+msgstr[1] "%s billioner"
 
 #: src/humanize/number.py:182
-msgid "quadrillion"
-msgid_plural "quadrillion"
-msgstr[0] "billiard"
-msgstr[1] "billiarder"
+#, python-format
+msgid "%s quadrillion"
+msgid_plural "%s quadrillion"
+msgstr[0] "%s billiard"
+msgstr[1] "%s billiarder"
 
 #: src/humanize/number.py:183
-msgid "quintillion"
-msgid_plural "quintillion"
-msgstr[0] "trillion"
-msgstr[1] "trillioner"
+#, python-format
+msgid "%s quintillion"
+msgid_plural "%s quintillion"
+msgstr[0] "%s trillion"
+msgstr[1] "%s trillioner"
 
 #: src/humanize/number.py:184
-msgid "sextillion"
-msgid_plural "sextillion"
-msgstr[0] "trilliard"
-msgstr[1] "trilliarder"
+#, python-format
+msgid "%s sextillion"
+msgid_plural "%s sextillion"
+msgstr[0] "%s trilliard"
+msgstr[1] "%s trilliarder"
 
 #: src/humanize/number.py:185
-msgid "septillion"
-msgid_plural "septillion"
-msgstr[0] "kvadrillion"
-msgstr[1] "kvadrillioner"
+#, python-format
+msgid "%s septillion"
+msgid_plural "%s septillion"
+msgstr[0] "%s kvadrillion"
+msgstr[1] "%s kvadrillioner"
 
 #: src/humanize/number.py:186
-msgid "octillion"
-msgid_plural "octillion"
-msgstr[0] "kvadrilliard"
-msgstr[1] "kvadrilliarder"
+#, python-format
+msgid "%s octillion"
+msgid_plural "%s octillion"
+msgstr[0] "%s kvadrilliard"
+msgstr[1] "%s kvadrilliarder"
 
 #: src/humanize/number.py:187
-msgid "nonillion"
-msgid_plural "nonillion"
-msgstr[0] "kvintillion"
-msgstr[1] "kvintillioner"
+#, python-format
+msgid "%s nonillion"
+msgid_plural "%s nonillion"
+msgstr[0] "%s kvintillion"
+msgstr[1] "%s kvintillioner"
 
 #: src/humanize/number.py:188
-msgid "decillion"
-msgid_plural "decillion"
-msgstr[0] "kvintilliard"
-msgstr[1] "kvintilliarder"
+#, python-format
+msgid "%s decillion"
+msgid_plural "%s decillion"
+msgstr[0] "%s kvintilliard"
+msgstr[1] "%s kvintilliarder"
 
 #: src/humanize/number.py:189
-msgid "googol"
-msgid_plural "googol"
-msgstr[0] "googol"
-msgstr[1] "googol"
+#, python-format
+msgid "%s googol"
+msgid_plural "%s googol"
+msgstr[0] "%s googol"
+msgstr[1] "%s googol"
 
 #: src/humanize/number.py:304
 msgid "zero"
