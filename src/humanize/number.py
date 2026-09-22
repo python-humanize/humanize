@@ -136,7 +136,11 @@ def ordinal(value: NumberOrString, gender: str = "male") -> str:
     except (TypeError, ValueError):
         return str(value)
     gender = "male" if gender == "male" else "female"
-    digit = 0 if value % 100 in (11, 12, 13) else value % 10
+    # Take the last digits of the magnitude: Python's % on a negative number
+    # returns a positive remainder of the wrong digit (-1 % 10 == 9), which
+    # picked the "th" suffix for every negative value, e.g. "-1th".
+    magnitude = abs(value)
+    digit = 0 if magnitude % 100 in (11, 12, 13) else magnitude % 10
     return f"{value}{P_(*_ORDINAL_SUFFIXES[gender][digit])}"
 
 
