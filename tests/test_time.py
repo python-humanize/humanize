@@ -485,6 +485,46 @@ def test_naturaltime_minimum_unit_explicit(
 
     # Act / Assert
     assert humanize.naturaltime(datetime, minimum_unit=minimum_unit) == expected
+    assert humanize.naturaltime(seconds, minimum_unit=minimum_unit) == expected
+    assert (
+        humanize.naturaltime(dt.timedelta(seconds=seconds), minimum_unit=minimum_unit)
+        == expected
+    )
+
+
+@pytest.mark.parametrize(
+    "minimum_unit, seconds, expected",
+    [
+        ("milliseconds", 0.999, "999 milliseconds"),
+        ("MILLISECONDS", ONE_MILLISECOND, "1 millisecond"),
+        ("microseconds", 0.000999, "999 microseconds"),
+        ("MICROSECONDS", ONE_MICROSECOND, "1 microsecond"),
+    ],
+)
+@pytest.mark.parametrize("sign", [1, -1])
+@pytest.mark.parametrize("future", [False, True])
+def test_naturaltime_float_subsecond(
+    minimum_unit: str, seconds: float, expected: str, sign: int, future: bool
+) -> None:
+    suffix = "from now" if future else "ago"
+    assert (
+        humanize.naturaltime(
+            sign * seconds, future=future, minimum_unit=minimum_unit, when=NOW
+        )
+        == f"{expected} {suffix}"
+    )
+
+
+@pytest.mark.parametrize("minimum_unit", ["seconds", "SECONDS"])
+@pytest.mark.parametrize(
+    "seconds, expected",
+    [(0.1, "now"), (0.6, "a second ago"), (1.9, "2 seconds ago")],
+)
+def test_naturaltime_float_seconds_rounding(
+    minimum_unit: str, seconds: float, expected: str
+) -> None:
+    assert humanize.naturaltime(seconds) == expected
+    assert humanize.naturaltime(seconds, minimum_unit=minimum_unit) == expected
 
 
 @freeze_time(FROZEN_DATE)
