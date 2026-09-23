@@ -113,6 +113,10 @@ def ordinal(value: NumberOrString, gender: str = "male") -> str:
         '101st'
         >>> ordinal(111)
         '111th'
+        >>> ordinal(-1)
+        '-1st'
+        >>> ordinal(-21)
+        '-21st'
         >>> ordinal("something else")
         'something else'
         >>> ordinal([1, 2, 3]) == "[1, 2, 3]"
@@ -136,7 +140,12 @@ def ordinal(value: NumberOrString, gender: str = "male") -> str:
     except (TypeError, ValueError):
         return str(value)
     gender = "male" if gender == "male" else "female"
-    digit = 0 if value % 100 in (11, 12, 13) else value % 10
+    # The suffix depends on the last digits of the magnitude, so negative values
+    # must be normalized with abs(): Python's `%` would otherwise map -1 % 10 to
+    # 9 and give every negative number a "th" suffix (e.g. "-1th" instead of
+    # "-1st").
+    magnitude = abs(value)
+    digit = 0 if magnitude % 100 in (11, 12, 13) else magnitude % 10
     return f"{value}{P_(*_ORDINAL_SUFFIXES[gender][digit])}"
 
 
