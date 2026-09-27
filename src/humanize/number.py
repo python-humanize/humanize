@@ -225,7 +225,9 @@ def intword(value: NumberOrString, format: str = "%.1f") -> str:
 
     Works best for numbers over 1 million. For example, 1_000_000 becomes "1.0 million",
     1_200_000 becomes "1.2 million" and "1_200_000_000" becomes "1.2 billion". Supports
-    up to decillion (33 digits) and googol (100 digits).
+    up to decillion (33 digits) and googol (100 digits). There is no named unit
+    between decillion and googol: values of 1000 decillion or more are returned as
+    the plain number, except values rounding up to a googol, which become "1.0 googol".
 
     Examples:
         ```pycon
@@ -290,6 +292,18 @@ def intword(value: NumberOrString, format: str = "%.1f") -> str:
         # silently skipped (e.g. 10**24 - 1 rendered as "1000.0 sextillion").
         ordinal += 1
         rounded_value = 1.0
+    elif not largest_ordinal and powers[ordinal + 1] // power > 1000:
+        # There is no named unit between this power and the next one (currently
+        # only decillion -> googol), so a mantissa of 1000 or more has no unit
+        # to carry into: fall back to the plain number instead of rendering an
+        # enormous unit count. Values rounding up to the next power still carry
+        # to it, mirroring the rule above.
+        next_power = powers[ordinal + 1]
+        if value >= next_power - power // 2:
+            ordinal += 1
+            rounded_value = 1.0
+        elif rounded_value >= 1000:
+            return f"{negative_prefix}{value}"
 
     singular, plural = human_powers[ordinal]
     unit = _ngettext(singular, plural, math.ceil(rounded_value))

@@ -123,9 +123,9 @@ def test_intword_powers() -> None:
         (["3500000000000000000000"], "3.5 sextillion"),
         (["8100000000000000000000000000000000"], "8.1 decillion"),
         (["-8100000000000000000000000000000000"], "-8.1 decillion"),
-        ([1_000_000_000_000_000_000_000_000_000_000_000_000], "1000.0 decillion"),
-        ([1_100_000_000_000_000_000_000_000_000_000_000_000], "1100.0 decillion"),
-        ([2_100_000_000_000_000_000_000_000_000_000_000_000], "2100.0 decillion"),
+        ([10**36], "1" + "0" * 36),
+        ([11 * 10**35], "11" + "0" * 35),
+        ([21 * 10**35], "21" + "0" * 35),
         ([2e100], "2.0 googol"),
         ([None], "None"),
         (["1230000", "%0.2f"], "1.23 million"),
@@ -184,8 +184,38 @@ def test_intword_rounding_rollover() -> None:
         mantissa = float(rendered.split(" ", 1)[0])
         assert mantissa < 1000
 
-    # The documented decillion..googol gap must be left untouched.
-    assert humanize.intword(10**36) == "1000.0 decillion"
+    # The decillion..googol gap has no named unit (#356): a mantissa of 1000 or
+    # more falls back to the plain number, while values rounding up to a googol
+    # still carry to it.
+    assert humanize.intword(10**36) == "1" + "0" * 36
+    assert humanize.intword(10**100 - 1) == "1.0 googol"
+    assert humanize.intword(2 * 10**100) == "2.0 googol"
+
+
+def test_intword_decillion_googol_gap() -> None:
+    """No named unit exists between decillion (10**33) and googol (10**100).
+
+    Regression test for #356: values in the gap used to render as enormous
+    decillion counts, e.g. ``intword(10**50)`` gave
+    "100000000000000000.0 decillion". A mantissa of 1000 decillion or more now
+    falls back to the plain number, and values rounding up to a googol carry
+    to "1.0 googol", mirroring the carry rule from #328/#346.
+    """
+    # Below the gap: ordinary decillion rendering is untouched.
+    assert humanize.intword(10**33) == "1.0 decillion"
+    assert humanize.intword(123 * 10**33) == "123.0 decillion"
+    assert humanize.intword(9995 * 10**32) == "999.5 decillion"
+    # A rounded mantissa of 1000 has no unit to carry into: plain number.
+    assert humanize.intword(10**36) == "1" + "0" * 36
+    assert humanize.intword(99995 * 10**31) == "99995" + "0" * 31
+    assert humanize.intword(10**50) == "1" + "0" * 50
+    assert humanize.intword(10**99) == "1" + "0" * 99
+    assert humanize.intword(10**100 - 10**93) == str(10**100 - 10**93)
+    assert humanize.intword(-(10**50)) == "-1" + "0" * 50
+    # Rounding up to the next power carries, like the #328/#346 rule.
+    assert humanize.intword(10**100 - 1) == "1.0 googol"
+    assert humanize.intword(10**100) == "1.0 googol"
+    # Above a googol still renders in googols.
     assert humanize.intword(2 * 10**100) == "2.0 googol"
 
 
