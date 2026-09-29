@@ -5,6 +5,7 @@ from __future__ import annotations
 __lazy_modules__ = {"bisect"}
 
 import bisect
+import decimal
 
 from .i18n import _gettext as _
 from .i18n import _gettext_noop as N_
@@ -228,6 +229,9 @@ def intword(value: NumberOrString, format: str = "%.1f") -> str:
     up to decillion (33 digits) and googol (100 digits). There is no named unit
     between decillion and googol: values of 1000 decillion or more are returned as
     the plain number, except values rounding up to a googol, which become "1.0 googol".
+    Float inputs in that range are rendered from their shortest representation, so
+    `intword(1e50)` gives the clean 51-digit number rather than the float's binary
+    expansion.
 
     Examples:
         ```pycon
@@ -241,6 +245,8 @@ def intword(value: NumberOrString, format: str = "%.1f") -> str:
         '1.2 billion'
         >>> intword(8100000000000000000000000000000000)
         '8.1 decillion'
+        >>> intword(1e50)
+        '100000000000000000000000000000000000000000000000000'
         >>> intword(None)
         'None'
         >>> intword("1234000", "%0.3f")
@@ -262,6 +268,13 @@ def intword(value: NumberOrString, format: str = "%.1f") -> str:
     try:
         if not math.isfinite(float(value)):
             return _format_not_finite(float(value))
+        if isinstance(value, float):
+            # The plain-number fallback below must render from the original
+            # float's shortest representation: int(value) exposes the float's
+            # binary expansion (int(1e50) != 10**50).
+            plain_value: str | None = f"{decimal.Decimal(repr(abs(value))):f}"
+        else:
+            plain_value = None
         value = int(value)
     except (TypeError, ValueError):
         return str(value)
@@ -303,6 +316,8 @@ def intword(value: NumberOrString, format: str = "%.1f") -> str:
             ordinal += 1
             rounded_value = 1.0
         elif rounded_value >= 1000:
+            if plain_value is not None:
+                return f"{negative_prefix}{plain_value}"
             return f"{negative_prefix}{value}"
 
     singular, plural = human_powers[ordinal]

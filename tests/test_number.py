@@ -219,6 +219,28 @@ def test_intword_decillion_googol_gap() -> None:
     assert humanize.intword(2 * 10**100) == "2.0 googol"
 
 
+def test_intword_decillion_boundary() -> None:
+    """Pin the 10**36 boundary explicitly.
+
+    1000 decillion has no named unit to carry into, so it renders as the plain
+    number (changed from "1000.0 decillion" by the #356 fix), while values just
+    below the boundary are untouched.
+    """
+    assert humanize.intword(10**33) == "1.0 decillion"
+    assert humanize.intword(9995 * 10**32) == "999.5 decillion"
+    assert humanize.intword(10**36) == "1" + "0" * 36
+    assert humanize.intword(-(10**36)) == "-1" + "0" * 36
+
+
+def test_intword_gap_float_inputs() -> None:
+    """Float inputs in the decillion..googol gap render from their shortest
+    representation, not the float's binary expansion (review on #415)."""
+    assert humanize.intword(1e50) == "1" + "0" * 50
+    assert humanize.intword(-1e50) == "-1" + "0" * 50
+    assert humanize.intword(1.5e50) == "15" + "0" * 49
+    assert humanize.intword(1e36) == "1" + "0" * 36
+
+
 @pytest.mark.parametrize(
     "test_input, expected",
     [
