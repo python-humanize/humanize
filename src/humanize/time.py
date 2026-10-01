@@ -620,26 +620,51 @@ def precisedelta(
     # Due to rounding, it could be that a unit is high enough to be promoted to a higher
     # unit. Example: 59.9 minutes was rounded to 60 minutes, and thus it should become 0
     # minutes and one hour more.
-    if msecs >= 1_000 and SECONDS not in suppress_set:
-        msecs -= 1_000
-        secs += 1
-    if secs >= 60 and MINUTES not in suppress_set:
-        secs -= 60
-        minutes += 1
-    if minutes >= 60 and HOURS not in suppress_set:
-        minutes -= 60
-        hours += 1
-    if hours >= 24 and DAYS not in suppress_set:
-        hours -= 24
-        days += 1
-    # When adjusting we should not deal anymore with fractional days as all rounding has
-    # been already made. We promote 31 days to an extra month.
-    if days >= 31 and MONTHS not in suppress_set:
-        days -= 31
-        months += 1
-    if months >= 12 and YEARS not in suppress_set:
-        months -= 12
-        years += 1
+    #
+    # If the unit that the overflow would normally carry into has itself been
+    # suppressed, the overflow cannot stop there: it keeps carrying, compounding the
+    # conversion factor along the way, until it reaches a unit that has not been
+    # suppressed. Otherwise a rounding artifact can end up displayed as, say, "60000
+    # milliseconds" instead of being folded into "1 minute".
+    overflow_units = [MILLISECONDS, SECONDS, MINUTES, HOURS, DAYS, MONTHS, YEARS]
+    overflow_factors = [1_000, 60, 60, 24, 31, 12]
+    overflow_values = {
+        MILLISECONDS: msecs,
+        SECONDS: secs,
+        MINUTES: minutes,
+        HOURS: hours,
+        DAYS: days,
+        MONTHS: months,
+        YEARS: years,
+    }
+
+    for index, unit in enumerate(overflow_units[:-1]):
+        compound_factor = overflow_factors[index]
+        target_index = index + 1
+        while (
+            target_index < len(overflow_units) - 1
+            and overflow_units[target_index] in suppress_set
+        ):
+            compound_factor *= overflow_factors[target_index]
+            target_index += 1
+
+        target_unit = overflow_units[target_index]
+        if target_unit in suppress_set:
+            # Every unit above has been suppressed too; there is nothing left to
+            # carry the overflow into.
+            continue
+
+        if overflow_values[unit] >= compound_factor:
+            overflow_values[unit] -= compound_factor
+            overflow_values[target_unit] += 1
+
+    msecs = overflow_values[MILLISECONDS]
+    secs = overflow_values[SECONDS]
+    minutes = overflow_values[MINUTES]
+    hours = overflow_values[HOURS]
+    days = overflow_values[DAYS]
+    months = overflow_values[MONTHS]
+    years = overflow_values[YEARS]
 
     fmts = [
         ("%d year", "%d years", years),

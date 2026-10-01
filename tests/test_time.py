@@ -839,6 +839,60 @@ def test_precisedelta_suppress_units(
     )
 
 
+@pytest.mark.parametrize(
+    "val, min_unit, suppress, fmt, expected",
+    [
+        # Rounding the milliseconds up to a whole second (999937 microseconds
+        # rounds to 1000 milliseconds with "%0.0f") must still promote into
+        # minutes even though "seconds" is suppressed and can't absorb the
+        # carry itself.
+        (
+            dt.timedelta(seconds=59, microseconds=999937),
+            "milliseconds",
+            ["seconds"],
+            "%0.0f",
+            "1 minute",
+        ),
+        # Same overflow, but reached without any suppression, as a sanity
+        # check that both paths agree.
+        (
+            dt.timedelta(seconds=59, microseconds=999937),
+            "milliseconds",
+            [],
+            "%0.0f",
+            "1 minute",
+        ),
+        # The carry has to compound across two suppressed units (seconds and
+        # minutes) to reach hours.
+        (
+            dt.timedelta(seconds=3599, microseconds=999900),
+            "milliseconds",
+            ["seconds", "minutes"],
+            "%0.0f",
+            "1 hour",
+        ),
+        # A large value that legitimately belongs in "hours" because "days"
+        # is suppressed must *not* be carried into days: 308 hours is well
+        # under the compounded day/month threshold and is exactly what
+        # suppressing "days" is meant to produce.
+        (
+            dt.timedelta(days=73, seconds=72927, microseconds=928728),
+            "hours",
+            ["days"],
+            "%d",
+            "2 months and 308 hours",
+        ),
+    ],
+)
+def test_precisedelta_suppress_units_rounding_overflow(
+    val: dt.timedelta, min_unit: str, suppress: list[str], fmt: str, expected: str
+) -> None:
+    assert (
+        humanize.precisedelta(val, minimum_unit=min_unit, suppress=suppress, format=fmt)
+        == expected
+    )
+
+
 def test_precisedelta_bogus_call() -> None:
     assert humanize.precisedelta(None) == "None"
 
