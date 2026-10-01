@@ -290,10 +290,13 @@ def naturaltime(
     """
     import datetime as dt
 
-    value = _convert_aware_datetime(value)
-    when = _convert_aware_datetime(when)
-
-    now = when or _now()
+    aware_value = isinstance(value, dt.datetime) and value.tzinfo is not None
+    now = when or (dt.datetime.now(dt.timezone.utc) if aware_value else _now())
+    if aware_value or now.tzinfo is not None:
+        # Compare instants in UTC so a local daylight-saving transition cannot
+        # erase a repeated hour or count a skipped hour twice.
+        value = _convert_datetime_to_utc(value)
+        now = _convert_datetime_to_utc(now)
 
     date, delta = _date_and_delta(value, now=now)
     if date is None:
@@ -311,17 +314,14 @@ def naturaltime(
     return str(ago % delta)
 
 
-def _convert_aware_datetime(
+def _convert_datetime_to_utc(
     value: dt.datetime | dt.timedelta | float | None,
 ) -> Any:
-    """Convert aware datetime to naive datetime and pass through any other type."""
-    if value is None:
-        return None
-
+    """Convert a datetime to naive UTC and pass through any other type."""
     import datetime as dt
 
-    if isinstance(value, dt.datetime) and value.tzinfo is not None:
-        value = dt.datetime.fromtimestamp(value.timestamp())
+    if isinstance(value, dt.datetime):
+        value = value.astimezone(dt.timezone.utc).replace(tzinfo=None)
     return value
 
 
