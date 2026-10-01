@@ -77,6 +77,15 @@ _APNUMBER_WORDS = (
 )
 
 
+def _is_integer(value: NumberOrString) -> bool:
+    """Whether a value is an integer, including one too large for a float."""
+    try:
+        int(value)
+    except (TypeError, ValueError, OverflowError):
+        return False
+    return True
+
+
 def _format_not_finite(value: float) -> str:
     """Utility function to handle infinite and nan cases."""
     import math
@@ -329,10 +338,16 @@ def apnumber(value: NumberOrString) -> str:
     import math
 
     try:
-        if not math.isfinite(float(value)):
-            return _format_not_finite(float(value))
         value = int(value)
-    except (TypeError, ValueError):
+    except (TypeError, ValueError, OverflowError):
+        # Not int-able directly: it may still be a float or float-like string,
+        # in which case the non-finite spellings are reported as such.
+        try:
+            float_value = float(value)
+        except (TypeError, ValueError):
+            return str(value)
+        if not math.isfinite(float_value):
+            return _format_not_finite(float_value)
         return str(value)
     if not 0 <= value < 10:
         return str(value)
@@ -383,7 +398,16 @@ def fractional(value: NumberOrString) -> str:
     try:
         number = float(value)
         if not math.isfinite(number):
+            # float() reports an integer beyond its range as infinite rather
+            # than raising, so an infinity here is only genuine if the value
+            # is not itself an integer. Either way there is no fractional
+            # part to extract, but only one of the two is "+Inf".
+            if _is_integer(value):
+                return str(value)
             return _format_not_finite(number)
+    except OverflowError:
+        # An integer too large for float to represent at all.
+        return str(value)
     except (TypeError, ValueError):
         return str(value)
     from fractions import Fraction

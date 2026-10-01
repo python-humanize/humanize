@@ -206,6 +206,13 @@ def test_intword_rounding_rollover() -> None:
         (-math.inf, "-Inf"),
         ("nan", "NaN"),
         ("-inf", "-Inf"),
+        # Integers beyond the float range are still int-able, so they are
+        # returned rather than raising OverflowError.
+        (10**400, "1" + "0" * 400),
+        ("1" + "0" * 400, "1" + "0" * 400),
+        (-(10**400), "-1" + "0" * 400),
+        # Still genuinely infinite, because this is not an integer.
+        ("1e400", "+Inf"),
     ],
 )
 def test_apnumber(test_input: int | str, expected: str) -> None:
@@ -240,6 +247,13 @@ def test_apnumber(test_input: int | str, expected: str) -> None:
         (2.9999999, "3"),
         (0.9999999, "1"),
         (-2.9999999, "-3"),
+        # An integer beyond the float range has no fractional part to take,
+        # and float() reports it as infinite rather than raising.
+        (10**400, "1" + "0" * 400),
+        ("1" + "0" * 400, "1" + "0" * 400),
+        (-(10**400), "-1" + "0" * 400),
+        # Still genuinely infinite, because this is not an integer.
+        ("1e400", "+Inf"),
     ],
 )
 def test_fractional(test_input: float | str, expected: str) -> None:
