@@ -140,6 +140,57 @@ def _ngettext(message: str, plural: str, num: int) -> str:
     return get_translation().ngettext(message, plural, num)
 
 
+def _pgettext_with_fallback(
+    msgctxt: str, message: str, use_context: bool = True
+) -> str:
+    """Translate with context, falling back to the ordinary translation.
+
+    Args:
+        msgctxt (str): Context of the translation.
+        message (str): Text to translate.
+        use_context (bool): Whether to look up the contextual translation first.
+
+    Returns:
+        str: Translated text.
+    """
+    translation = get_translation()
+    if not use_context:
+        return translation.gettext(message)
+
+    contextual_message = f"{msgctxt}\x04{message}"
+    translated = translation.gettext(contextual_message)
+    if translated == contextual_message:
+        return translation.gettext(message)
+    return translated
+
+
+def _npgettext_with_fallback(
+    msgctxt: str, message: str, plural: str, num: int, use_context: bool = True
+) -> str:
+    """Translate a plural with context, falling back to the ordinary translation.
+
+    Args:
+        msgctxt (str): Context of the translation.
+        message (str): Singular text to translate.
+        plural (str): Plural text to translate.
+        num (int): Number used to select the grammatical number.
+        use_context (bool): Whether to look up the contextual translation first.
+
+    Returns:
+        str: Translated text.
+    """
+    translation = get_translation()
+    if not use_context:
+        return translation.ngettext(message, plural, num)
+
+    contextual_message = f"{msgctxt}\x04{message}"
+    contextual_plural = f"{msgctxt}\x04{plural}"
+    translated = translation.ngettext(contextual_message, contextual_plural, num)
+    if translated in (contextual_message, contextual_plural):
+        return translation.ngettext(message, plural, num)
+    return translated
+
+
 def _gettext_noop(message: str) -> str:
     """Mark a string as a translation string without translating it.
 
