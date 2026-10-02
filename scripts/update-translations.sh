@@ -10,6 +10,19 @@ xgettext \
     -k'PS_:1c,2' \
     -k'NS_:1,2' \
     -k'_ngettext:1,2' \
+    -k'G_:2' \
+    -k'NG_:2,3' \
+    -l python \
+    src/humanize/*.py
+
+# Extract the contextual entries from the same calls without replacing ordinary ones.
+xgettext \
+    --from-code=UTF-8 \
+    --join-existing \
+    -o humanize.pot \
+    --keyword \
+    -k'G_:1c,2' \
+    -k'NG_:1c,2,3' \
     -l python \
     src/humanize/*.py
 
