@@ -21,188 +21,220 @@ msgstr ""
 "X-Generator: Poedit 1.5.4\n"
 
 #: src/humanize/number.py:84
+#, python-format
 msgctxt "0 (male)"
-msgid "th"
-msgstr "ой"
+msgid "%sth"
+msgstr "%sой"
 
 #: src/humanize/number.py:85
+#, python-format
 msgctxt "1 (male)"
-msgid "st"
-msgstr "ый"
+msgid "%sst"
+msgstr "%sый"
 
 #: src/humanize/number.py:86
+#, python-format
 msgctxt "2 (male)"
-msgid "nd"
-msgstr "ой"
+msgid "%snd"
+msgstr "%sой"
 
 #: src/humanize/number.py:87
+#, python-format
 msgctxt "3 (male)"
-msgid "rd"
-msgstr "ий"
+msgid "%srd"
+msgstr "%sий"
 
 #: src/humanize/number.py:88
+#, python-format
 msgctxt "4 (male)"
-msgid "th"
-msgstr "ый"
+msgid "%sth"
+msgstr "%sый"
 
 #: src/humanize/number.py:89
+#, python-format
 msgctxt "5 (male)"
-msgid "th"
-msgstr "ый"
+msgid "%sth"
+msgstr "%sый"
 
 #: src/humanize/number.py:90
+#, python-format
 msgctxt "6 (male)"
-msgid "th"
-msgstr "ой"
+msgid "%sth"
+msgstr "%sой"
 
 #: src/humanize/number.py:91
+#, python-format
 msgctxt "7 (male)"
-msgid "th"
-msgstr "ой"
+msgid "%sth"
+msgstr "%sой"
 
 #: src/humanize/number.py:92
+#, python-format
 msgctxt "8 (male)"
-msgid "th"
-msgstr "ой"
+msgid "%sth"
+msgstr "%sой"
 
 #: src/humanize/number.py:93
+#, python-format
 msgctxt "9 (male)"
-msgid "th"
-msgstr "ый"
+msgid "%sth"
+msgstr "%sый"
 
 #: src/humanize/number.py:97
+#, python-format
 msgctxt "0 (female)"
-msgid "th"
-msgstr "ой"
+msgid "%sth"
+msgstr "%sой"
 
 #: src/humanize/number.py:98
+#, python-format
 msgctxt "1 (female)"
-msgid "st"
-msgstr "ый"
+msgid "%sst"
+msgstr "%sый"
 
 #: src/humanize/number.py:99
+#, python-format
 msgctxt "2 (female)"
-msgid "nd"
-msgstr "ой"
+msgid "%snd"
+msgstr "%sой"
 
 #: src/humanize/number.py:100
+#, python-format
 msgctxt "3 (female)"
-msgid "rd"
-msgstr "ий"
+msgid "%srd"
+msgstr "%sий"
 
 #: src/humanize/number.py:101
+#, python-format
 msgctxt "4 (female)"
-msgid "th"
-msgstr "ый"
+msgid "%sth"
+msgstr "%sый"
 
 #: src/humanize/number.py:102
+#, python-format
 msgctxt "5 (female)"
-msgid "th"
-msgstr "ый"
+msgid "%sth"
+msgstr "%sый"
 
 #: src/humanize/number.py:103
+#, python-format
 msgctxt "6 (female)"
-msgid "th"
-msgstr "ой"
+msgid "%sth"
+msgstr "%sой"
 
 #: src/humanize/number.py:104
+#, python-format
 msgctxt "7 (female)"
-msgid "th"
-msgstr "ой"
+msgid "%sth"
+msgstr "%sой"
 
 #: src/humanize/number.py:105
+#, python-format
 msgctxt "8 (female)"
-msgid "th"
-msgstr "ой"
+msgid "%sth"
+msgstr "%sой"
 
 #: src/humanize/number.py:106
+#, python-format
 msgctxt "9 (female)"
-msgid "th"
-msgstr "ый"
+msgid "%sth"
+msgstr "%sый"
 
 #: src/humanize/number.py:178
-msgid "thousand"
-msgid_plural "thousand"
-msgstr[0] "тысяча"
-msgstr[1] "тысячи"
-msgstr[2] "тысяч"
+#, python-format
+msgid "%s thousand"
+msgid_plural "%s thousand"
+msgstr[0] "%s тысяча"
+msgstr[1] "%s тысячи"
+msgstr[2] "%s тысяч"
 
 #: src/humanize/number.py:179
-msgid "million"
-msgid_plural "million"
-msgstr[0] "миллион"
-msgstr[1] "миллиона"
-msgstr[2] "миллионов"
+#, python-format
+msgid "%s million"
+msgid_plural "%s million"
+msgstr[0] "%s миллион"
+msgstr[1] "%s миллиона"
+msgstr[2] "%s миллионов"
 
 #: src/humanize/number.py:180
-msgid "billion"
-msgid_plural "billion"
-msgstr[0] "миллиард"
-msgstr[1] "миллиарда"
-msgstr[2] "миллиардов"
+#, python-format
+msgid "%s billion"
+msgid_plural "%s billion"
+msgstr[0] "%s миллиард"
+msgstr[1] "%s миллиарда"
+msgstr[2] "%s миллиардов"
 
 #: src/humanize/number.py:181
-msgid "trillion"
-msgid_plural "trillion"
-msgstr[0] "триллион"
-msgstr[1] "триллиона"
-msgstr[2] "триллионов"
+#, python-format
+msgid "%s trillion"
+msgid_plural "%s trillion"
+msgstr[0] "%s триллион"
+msgstr[1] "%s триллиона"
+msgstr[2] "%s триллионов"
 
 #: src/humanize/number.py:182
-msgid "quadrillion"
-msgid_plural "quadrillion"
-msgstr[0] "квадриллион"
-msgstr[1] "квадриллиона"
-msgstr[2] "квадриллионов"
+#, python-format
+msgid "%s quadrillion"
+msgid_plural "%s quadrillion"
+msgstr[0] "%s квадриллион"
+msgstr[1] "%s квадриллиона"
+msgstr[2] "%s квадриллионов"
 
 #: src/humanize/number.py:183
-msgid "quintillion"
-msgid_plural "quintillion"
-msgstr[0] "квинтиллион"
-msgstr[1] "квинтиллиона"
-msgstr[2] "квинтиллионов"
+#, python-format
+msgid "%s quintillion"
+msgid_plural "%s quintillion"
+msgstr[0] "%s квинтиллион"
+msgstr[1] "%s квинтиллиона"
+msgstr[2] "%s квинтиллионов"
 
 #: src/humanize/number.py:184
-msgid "sextillion"
-msgid_plural "sextillion"
-msgstr[0] "сикстиллион"
-msgstr[1] "сикстиллиона"
-msgstr[2] "сикстиллионов"
+#, python-format
+msgid "%s sextillion"
+msgid_plural "%s sextillion"
+msgstr[0] "%s сикстиллион"
+msgstr[1] "%s сикстиллиона"
+msgstr[2] "%s сикстиллионов"
 
 #: src/humanize/number.py:185
-msgid "septillion"
-msgid_plural "septillion"
-msgstr[0] "септиллион"
-msgstr[1] "септиллиона"
-msgstr[2] "септиллионов"
+#, python-format
+msgid "%s septillion"
+msgid_plural "%s septillion"
+msgstr[0] "%s септиллион"
+msgstr[1] "%s септиллиона"
+msgstr[2] "%s септиллионов"
 
 #: src/humanize/number.py:186
-msgid "octillion"
-msgid_plural "octillion"
-msgstr[0] "октиллион"
-msgstr[1] "октиллиона"
-msgstr[2] "октиллионов"
+#, python-format
+msgid "%s octillion"
+msgid_plural "%s octillion"
+msgstr[0] "%s октиллион"
+msgstr[1] "%s октиллиона"
+msgstr[2] "%s октиллионов"
 
 #: src/humanize/number.py:187
-msgid "nonillion"
-msgid_plural "nonillion"
-msgstr[0] "нониллион"
-msgstr[1] "нониллиона"
-msgstr[2] "нониллионов"
+#, python-format
+msgid "%s nonillion"
+msgid_plural "%s nonillion"
+msgstr[0] "%s нониллион"
+msgstr[1] "%s нониллиона"
+msgstr[2] "%s нониллионов"
 
 #: src/humanize/number.py:188
-msgid "decillion"
-msgid_plural "decillion"
-msgstr[0] "децилион"
-msgstr[1] "децилиона"
-msgstr[2] "децилионов"
+#, python-format
+msgid "%s decillion"
+msgid_plural "%s decillion"
+msgstr[0] "%s децилион"
+msgstr[1] "%s децилиона"
+msgstr[2] "%s децилионов"
 
 #: src/humanize/number.py:189
-msgid "googol"
-msgid_plural "googol"
-msgstr[0] "гогол"
-msgstr[1] "гогола"
-msgstr[2] "гоголов"
+#, python-format
+msgid "%s googol"
+msgid_plural "%s googol"
+msgstr[0] "%s гогол"
+msgstr[1] "%s гогола"
+msgstr[2] "%s гоголов"
 
 #: src/humanize/number.py:301
 msgid "zero"

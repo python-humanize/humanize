@@ -5,31 +5,32 @@ from __future__ import annotations
 __lazy_modules__ = {"humanize.i18n"}
 
 from humanize.i18n import _gettext as _
+from humanize.i18n import _gettext_noop as N_
 
 suffixes = {
     "decimal": (
-        "kB",
-        "MB",
-        "GB",
-        "TB",
-        "PB",
-        "EB",
-        "ZB",
-        "YB",
-        "RB",
-        "QB",
+        N_("%s kB"),
+        N_("%s MB"),
+        N_("%s GB"),
+        N_("%s TB"),
+        N_("%s PB"),
+        N_("%s EB"),
+        N_("%s ZB"),
+        N_("%s YB"),
+        N_("%s RB"),
+        N_("%s QB"),
     ),
     "binary": (
-        "KiB",
-        "MiB",
-        "GiB",
-        "TiB",
-        "PiB",
-        "EiB",
-        "ZiB",
-        "YiB",
-        "RiB",
-        "QiB",
+        N_("%s KiB"),
+        N_("%s MiB"),
+        N_("%s GiB"),
+        N_("%s TiB"),
+        N_("%s PiB"),
+        N_("%s EiB"),
+        N_("%s ZiB"),
+        N_("%s YiB"),
+        N_("%s RiB"),
+        N_("%s QiB"),
     ),
     "gnu": "KMGTPEZYRQ",
 }
@@ -105,6 +106,7 @@ def naturalsize(
     # suffix is available, step up one suffix so the result reads "1.0 MB".
     if exp < len(suffix) and abs(float(format % (abs_bytes / (base**exp)))) >= base:
         exp += 1
-    space = "" if gnu else " "
-    ret: str = format % (bytes_ / (base**exp)) + space + _(suffix[exp - 1])
-    return ret
+    number: str = format % (bytes_ / (base**exp))
+    if gnu:
+        return number + _(suffix[exp - 1])
+    return _(suffix[exp - 1]) % number

@@ -16,188 +16,220 @@ msgstr ""
 "X-Generator: \n"
 
 #: src/humanize/number.py:84
+#, python-format
 msgctxt "0 (male)"
-msgid "th"
-msgstr "ий"
+msgid "%sth"
+msgstr "%sий"
 
 #: src/humanize/number.py:85
+#, python-format
 msgctxt "1 (male)"
-msgid "st"
-msgstr "ий"
+msgid "%sst"
+msgstr "%sий"
 
 #: src/humanize/number.py:86
+#, python-format
 msgctxt "2 (male)"
-msgid "nd"
-msgstr "ий"
+msgid "%snd"
+msgstr "%sий"
 
 #: src/humanize/number.py:87
+#, python-format
 msgctxt "3 (male)"
-msgid "rd"
-msgstr "ій"
+msgid "%srd"
+msgstr "%sій"
 
 #: src/humanize/number.py:88
+#, python-format
 msgctxt "4 (male)"
-msgid "th"
-msgstr "ий"
+msgid "%sth"
+msgstr "%sий"
 
 #: src/humanize/number.py:89
+#, python-format
 msgctxt "5 (male)"
-msgid "th"
-msgstr "ий"
+msgid "%sth"
+msgstr "%sий"
 
 #: src/humanize/number.py:90
+#, python-format
 msgctxt "6 (male)"
-msgid "th"
-msgstr "ий"
+msgid "%sth"
+msgstr "%sий"
 
 #: src/humanize/number.py:91
+#, python-format
 msgctxt "7 (male)"
-msgid "th"
-msgstr "ий"
+msgid "%sth"
+msgstr "%sий"
 
 #: src/humanize/number.py:92
+#, python-format
 msgctxt "8 (male)"
-msgid "th"
-msgstr "ий"
+msgid "%sth"
+msgstr "%sий"
 
 #: src/humanize/number.py:93
+#, python-format
 msgctxt "9 (male)"
-msgid "th"
-msgstr "ий"
+msgid "%sth"
+msgstr "%sий"
 
 #: src/humanize/number.py:97
+#, python-format
 msgctxt "0 (female)"
-msgid "th"
-msgstr "ий"
+msgid "%sth"
+msgstr "%sий"
 
 #: src/humanize/number.py:98
+#, python-format
 msgctxt "1 (female)"
-msgid "st"
-msgstr "ий"
+msgid "%sst"
+msgstr "%sий"
 
 #: src/humanize/number.py:99
+#, python-format
 msgctxt "2 (female)"
-msgid "nd"
-msgstr "ий"
+msgid "%snd"
+msgstr "%sий"
 
 #: src/humanize/number.py:100
+#, python-format
 msgctxt "3 (female)"
-msgid "rd"
-msgstr "ій"
+msgid "%srd"
+msgstr "%sій"
 
 #: src/humanize/number.py:101
+#, python-format
 msgctxt "4 (female)"
-msgid "th"
-msgstr "ий"
+msgid "%sth"
+msgstr "%sий"
 
 #: src/humanize/number.py:102
+#, python-format
 msgctxt "5 (female)"
-msgid "th"
-msgstr "ий"
+msgid "%sth"
+msgstr "%sий"
 
 #: src/humanize/number.py:103
+#, python-format
 msgctxt "6 (female)"
-msgid "th"
-msgstr "ий"
+msgid "%sth"
+msgstr "%sий"
 
 #: src/humanize/number.py:104
+#, python-format
 msgctxt "7 (female)"
-msgid "th"
-msgstr "ий"
+msgid "%sth"
+msgstr "%sий"
 
 #: src/humanize/number.py:105
+#, python-format
 msgctxt "8 (female)"
-msgid "th"
-msgstr "ий"
+msgid "%sth"
+msgstr "%sий"
 
 #: src/humanize/number.py:106
+#, python-format
 msgctxt "9 (female)"
-msgid "th"
-msgstr "ий"
+msgid "%sth"
+msgstr "%sий"
 
 #: src/humanize/number.py:178
-msgid "thousand"
-msgid_plural "thousand"
-msgstr[0] "тисяча"
-msgstr[1] "тисячі"
-msgstr[2] "тисяч"
+#, python-format
+msgid "%s thousand"
+msgid_plural "%s thousand"
+msgstr[0] "%s тисяча"
+msgstr[1] "%s тисячі"
+msgstr[2] "%s тисяч"
 
 #: src/humanize/number.py:179
-msgid "million"
-msgid_plural "million"
-msgstr[0] "мільйон"
-msgstr[1] "мільйона"
-msgstr[2] "мільйонів"
+#, python-format
+msgid "%s million"
+msgid_plural "%s million"
+msgstr[0] "%s мільйон"
+msgstr[1] "%s мільйона"
+msgstr[2] "%s мільйонів"
 
 #: src/humanize/number.py:180
-msgid "billion"
-msgid_plural "billion"
-msgstr[0] "мільярд"
-msgstr[1] "мільярда"
-msgstr[2] "мільярдів"
+#, python-format
+msgid "%s billion"
+msgid_plural "%s billion"
+msgstr[0] "%s мільярд"
+msgstr[1] "%s мільярда"
+msgstr[2] "%s мільярдів"
 
 #: src/humanize/number.py:181
-msgid "trillion"
-msgid_plural "trillion"
-msgstr[0] "трильйон"
-msgstr[1] "трильйона"
-msgstr[2] "трильйонів"
+#, python-format
+msgid "%s trillion"
+msgid_plural "%s trillion"
+msgstr[0] "%s трильйон"
+msgstr[1] "%s трильйона"
+msgstr[2] "%s трильйонів"
 
 #: src/humanize/number.py:182
-msgid "quadrillion"
-msgid_plural "quadrillion"
-msgstr[0] "квадрильйон"
-msgstr[1] "квадрильйона"
-msgstr[2] "квадрильйонів"
+#, python-format
+msgid "%s quadrillion"
+msgid_plural "%s quadrillion"
+msgstr[0] "%s квадрильйон"
+msgstr[1] "%s квадрильйона"
+msgstr[2] "%s квадрильйонів"
 
 #: src/humanize/number.py:183
-msgid "quintillion"
-msgid_plural "quintillion"
-msgstr[0] "квинтиліон"
-msgstr[1] "квинтиліона"
-msgstr[2] "квинтиліонів"
+#, python-format
+msgid "%s quintillion"
+msgid_plural "%s quintillion"
+msgstr[0] "%s квинтиліон"
+msgstr[1] "%s квинтиліона"
+msgstr[2] "%s квинтиліонів"
 
 #: src/humanize/number.py:184
-msgid "sextillion"
-msgid_plural "sextillion"
-msgstr[0] "сикстильйон"
-msgstr[1] "сикстильйона"
-msgstr[2] "сикстильйонів"
+#, python-format
+msgid "%s sextillion"
+msgid_plural "%s sextillion"
+msgstr[0] "%s сикстильйон"
+msgstr[1] "%s сикстильйона"
+msgstr[2] "%s сикстильйонів"
 
 #: src/humanize/number.py:185
-msgid "septillion"
-msgid_plural "septillion"
-msgstr[0] "септильйон"
-msgstr[1] "септильйона"
-msgstr[2] "септильйонів"
+#, python-format
+msgid "%s septillion"
+msgid_plural "%s septillion"
+msgstr[0] "%s септильйон"
+msgstr[1] "%s септильйона"
+msgstr[2] "%s септильйонів"
 
 #: src/humanize/number.py:186
-msgid "octillion"
-msgid_plural "octillion"
-msgstr[0] "октильйон"
-msgstr[1] "октильйона"
-msgstr[2] "октильйонів"
+#, python-format
+msgid "%s octillion"
+msgid_plural "%s octillion"
+msgstr[0] "%s октильйон"
+msgstr[1] "%s октильйона"
+msgstr[2] "%s октильйонів"
 
 #: src/humanize/number.py:187
-msgid "nonillion"
-msgid_plural "nonillion"
-msgstr[0] "нонильйон"
-msgstr[1] "нонильйона"
-msgstr[2] "нонильйонів"
+#, python-format
+msgid "%s nonillion"
+msgid_plural "%s nonillion"
+msgstr[0] "%s нонильйон"
+msgstr[1] "%s нонильйона"
+msgstr[2] "%s нонильйонів"
 
 #: src/humanize/number.py:188
-msgid "decillion"
-msgid_plural "decillion"
-msgstr[0] "децильйон"
-msgstr[1] "децильйона"
-msgstr[2] "децильйонів"
+#, python-format
+msgid "%s decillion"
+msgid_plural "%s decillion"
+msgstr[0] "%s децильйон"
+msgstr[1] "%s децильйона"
+msgstr[2] "%s децильйонів"
 
 #: src/humanize/number.py:189
-msgid "googol"
-msgid_plural "googol"
-msgstr[0] "гугол"
-msgstr[1] "гугла"
-msgstr[2] "гуглів"
+#, python-format
+msgid "%s googol"
+msgid_plural "%s googol"
+msgstr[0] "%s гугол"
+msgstr[1] "%s гугла"
+msgstr[2] "%s гуглів"
 
 #: src/humanize/number.py:301
 msgid "zero"
