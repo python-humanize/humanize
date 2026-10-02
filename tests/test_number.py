@@ -254,6 +254,8 @@ def test_apnumber(test_input: int | str, expected: str) -> None:
         (-(10**400), "-1" + "0" * 400),
         # Still genuinely infinite, because this is not an integer.
         ("1e400", "+Inf"),
+        (2**53 + 1, "9007199254740993"),
+        (-(2**53 + 1), "-9007199254740993"),
     ],
 )
 def test_fractional(test_input: float | str, expected: str) -> None:

@@ -395,6 +395,11 @@ def fractional(value: NumberOrString) -> str:
     """
     import math
 
+    if isinstance(value, int) and not isinstance(value, bool):
+        # An integer has no fractional part, and float() would silently round
+        # one beyond 2**53 (e.g. 2**53 + 1), so return it exactly.
+        return str(value)
+
     try:
         number = float(value)
         if not math.isfinite(number):
