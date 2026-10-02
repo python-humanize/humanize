@@ -291,6 +291,11 @@ def test_scientific(test_args: list[typing.Any], expected: str) -> None:
         ([math.nan], "NaN"),
         ([math.inf], "+Inf"),
         ([-math.inf], "-Inf"),
+        ([50, "{:}", 10, 100], "50"),
+        ([5, "{:}", 10, 100], "<10"),
+        ([150, "{:}", 10, 100], ">100"),
+        ([10, "{:}", 10, 100], "10"),
+        ([100, "{:}", 10, 100], "100"),
     ],
 )
 def test_clamp(test_args: list[typing.Any], expected: str) -> None:
