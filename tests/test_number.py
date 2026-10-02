@@ -256,6 +256,9 @@ def test_apnumber(test_input: int | str, expected: str) -> None:
         ("1e400", "+Inf"),
         (2**53 + 1, "9007199254740993"),
         (-(2**53 + 1), "-9007199254740993"),
+        # The same integer written as a string rounds through float() too.
+        (str(2**53 + 1), "9007199254740993"),
+        (str(-(2**53 + 1)), "-9007199254740993"),
     ],
 )
 def test_fractional(test_input: float | str, expected: str) -> None:

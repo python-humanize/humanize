@@ -400,6 +400,15 @@ def fractional(value: NumberOrString) -> str:
         # one beyond 2**53 (e.g. 2**53 + 1), so return it exactly.
         return str(value)
 
+    if isinstance(value, str):
+        # An integer written as a string rounds the same way, so take it
+        # through int() rather than float(). A non-integer string such as
+        # "1.5" falls through to the fraction logic below.
+        try:
+            return str(int(value))
+        except ValueError:
+            pass
+
     try:
         number = float(value)
         if not math.isfinite(number):
