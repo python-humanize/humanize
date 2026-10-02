@@ -196,6 +196,12 @@ def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
 
     if ndigits is not None:
         result = f"{value:,.{ndigits}f}"
+    elif isinstance(value, float) and "e" in str(value):
+        from decimal import Decimal
+
+        result = f"{Decimal(str(value)):,f}"
+        if "." not in result:
+            result += ".0"
     else:
         result = f"{value:,}"
     if thousands_sep != "," or decimal_sep != ".":
