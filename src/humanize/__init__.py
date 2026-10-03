@@ -32,7 +32,10 @@ from humanize.time import (
     precisedelta,
 )
 
-from ._version import __version__
+try:
+    from ._version import __version__
+except ModuleNotFoundError:
+    __version__ = "0.0.0"  # not built - suppress during editable install / fresh clone
 
 __all__ = [
     "__version__",
