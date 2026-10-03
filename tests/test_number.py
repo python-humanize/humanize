@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import math
 import typing
+from decimal import Decimal
 
 import pytest
 
@@ -209,6 +210,62 @@ def test_intword_rounding_rollover() -> None:
     ],
 )
 def test_apnumber(test_input: int | str, expected: str) -> None:
+    assert humanize.apnumber(test_input) == expected
+
+
+@pytest.mark.parametrize(
+    "value", [10**400 + 123, -(10**400 + 123)], ids=["positive", "negative"]
+)
+@pytest.mark.parametrize("convert", [int, str, Decimal])
+def test_apnumber_large_integer(value: int, convert: type[int | str | Decimal]) -> None:
+    assert humanize.apnumber(convert(value)) == str(value)  # type: ignore[arg-type]
+
+
+@pytest.mark.parametrize(
+    "value, expected", [(0, "zero"), (7, "seven"), (10, "10"), (-10, "-10")]
+)
+def test_apnumber_integer_protocol(value: int, expected: str) -> None:
+    class IntOnly:
+        def __int__(self) -> int:
+            return value
+
+        def __str__(self) -> str:
+            return "integer-like value"
+
+    assert humanize.apnumber(IntOnly()) == expected  # type: ignore[arg-type]
+
+
+@pytest.mark.parametrize("value, expected", [(7, "seven"), (-10, "-10")])
+def test_apnumber_uses_integer_conversion(value: int, expected: str) -> None:
+    class Numeric:
+        def __int__(self) -> int:
+            return value
+
+        def __float__(self) -> float:
+            return value + 0.5
+
+    assert humanize.apnumber(Numeric()) == expected  # type: ignore[arg-type]
+
+
+@pytest.mark.parametrize(
+    "test_input, expected",
+    [
+        (7.9, "seven"),
+        (-7.9, "-7"),
+        (True, "one"),
+        (False, "zero"),
+        ("7.9", "7.9"),
+        ("1e3", "1e3"),
+        ("+inf", "+Inf"),
+        ("foo", "foo"),
+        (Decimal("NaN"), "NaN"),
+        (Decimal("Infinity"), "+Inf"),
+        (Decimal("-Infinity"), "-Inf"),
+    ],
+)
+def test_apnumber_integer_conversion_compatibility(
+    test_input: typing.Any, expected: str
+) -> None:
     assert humanize.apnumber(test_input) == expected
 
 
