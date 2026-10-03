@@ -271,6 +271,11 @@ def test_fractional(test_input: float | str, expected: str) -> None:
         ([-math.inf], "-Inf"),
         (["nan"], "NaN"),
         (["-inf"], "-Inf"),
+        ([10**400], "1.00 x 10⁴⁰⁰"),
+        ([-(10**400)], "-1.00 x 10⁴⁰⁰"),
+        ([12345 * 10**400, 3], "1.234 x 10⁴⁰⁴"),
+        ([10**400, 0], "1 x 10⁴⁰⁰"),
+        ([0], "0.00 x 10⁰"),
     ],
 )
 def test_scientific(test_args: list[typing.Any], expected: str) -> None:
