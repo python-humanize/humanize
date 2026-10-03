@@ -589,12 +589,22 @@ def precisedelta(
     #       years, days = divmod(years, days)
     #
     # The same applies for months, hours, minutes and milliseconds below
-    years, days = _quotient_and_remainder(
-        days, 365, YEARS, min_unit, suppress_set, format
-    )
-    months, days = _quotient_and_remainder(
-        days, 30.5, MONTHS, min_unit, suppress_set, format
-    )
+    if min_unit == YEARS:
+        years = _rounding_by_fmt(format, (days * 24 * 3600 + secs) / (365 * 24 * 3600))
+        days = secs = usecs = 0
+    else:
+        years, days = _quotient_and_remainder(
+            days, 365, YEARS, min_unit, suppress_set, format
+        )
+    if min_unit == MONTHS:
+        months = _rounding_by_fmt(
+            format, (days * 24 * 3600 + secs) / (30.5 * 24 * 3600)
+        )
+        days = secs = usecs = 0
+    else:
+        months, days = _quotient_and_remainder(
+            days, 30.5, MONTHS, min_unit, suppress_set, format
+        )
 
     secs = days * 24 * 3600 + secs
     days, secs = _quotient_and_remainder(
