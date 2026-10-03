@@ -130,10 +130,14 @@ def ordinal(value: NumberOrString, gender: str = "male") -> str:
     import math
 
     try:
-        if not math.isfinite(float(value)):
-            return _format_not_finite(float(value))
         value = int(value)
-    except (TypeError, ValueError):
+    except (TypeError, ValueError, OverflowError):
+        try:
+            float_value = float(value)
+        except (TypeError, ValueError):
+            return str(value)
+        if not math.isfinite(float_value):
+            return _format_not_finite(float_value)
         return str(value)
     gender = "male" if gender == "male" else "female"
     digit = 0 if value % 100 in (11, 12, 13) else value % 10
