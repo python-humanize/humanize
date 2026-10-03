@@ -17,7 +17,7 @@ import humanize
 LOCALE_DIR = Path(humanize.i18n.__file__).parent / "locale"
 
 with freeze_time("2020-02-02"):
-    NOW = dt.datetime.now(tz=dt.timezone.utc)
+    NOW = dt.datetime.now(tz=dt.UTC)
 
 
 @pytest.mark.parametrize("locale, one", [("de_DE", "eins"), ("fr_FR", "un")])
