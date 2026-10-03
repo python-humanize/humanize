@@ -7,6 +7,8 @@ import gettext
 import importlib
 import shutil
 import subprocess
+import sys
+import zipfile
 from pathlib import Path
 
 import pytest
@@ -15,6 +17,42 @@ from freezegun import freeze_time
 import humanize
 
 LOCALE_DIR = Path(humanize.i18n.__file__).parent / "locale"
+
+
+@pytest.mark.skipif(
+    sys.version_info < (3, 12), reason="Directory resources require Python 3.12"
+)
+def test_activate_zipped_package(tmp_path: Path) -> None:
+    # A minimal GNU catalog translates "one" without requiring msgfmt.
+    catalog = bytes.fromhex(
+        "de120495 00000000 01000000 1c000000 24000000 00000000 00000000"
+        "03000000 2c000000 0b000000 30000000"
+        "6f6e6500 666978747572652d6f6e6500"
+    )
+    archive = tmp_path / "humanize.zip"
+    with zipfile.ZipFile(archive, "w") as output:
+        for source in Path(humanize.__file__).parent.glob("*.py"):
+            output.write(source, f"humanize/{source.name}")
+        output.writestr("humanize/locale/xx_XX/LC_MESSAGES/humanize.mo", catalog)
+    program = """
+import sys
+sys.path.insert(0, sys.argv[1])
+import humanize
+humanize.activate("xx_XX")
+print(humanize.apnumber(1))
+humanize.deactivate()
+print(humanize.apnumber(1))
+humanize.activate("xx_XX")
+print(humanize.apnumber(1))
+"""
+    result = subprocess.run(
+        [sys.executable, "-I", "-c", program, str(archive)],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    assert result.stdout.splitlines() == ["fixture-one", "one", "fixture-one"]
+
 
 with freeze_time("2020-02-02"):
     NOW = dt.datetime.now(tz=dt.timezone.utc)

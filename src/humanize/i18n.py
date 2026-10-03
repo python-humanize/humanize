@@ -9,6 +9,7 @@ TYPE_CHECKING = False
 if TYPE_CHECKING:
     import os
     import pathlib
+    from contextlib import AbstractContextManager
 
 __all__ = ["activate", "deactivate", "decimal_separator", "thousands_separator"]
 
@@ -39,15 +40,16 @@ _DECIMAL_SEPARATOR: dict[str | None, str] = {
 }
 
 
-def _get_default_locale_path() -> pathlib.Path | None:
+def _get_default_locale_path() -> AbstractContextManager[pathlib.Path] | None:
     package = __spec__ and __spec__.parent
     if not package:
         return None
 
     import importlib.resources
 
-    with importlib.resources.as_file(importlib.resources.files(package)) as pkg:
-        return pkg / "locale"
+    return importlib.resources.as_file(
+        importlib.resources.files(package).joinpath("locale")
+    )
 
 
 def get_translation() -> gettext_module.NullTranslations:
@@ -77,14 +79,16 @@ def activate(
         return _TRANSLATIONS[None]
 
     if path is None:
-        path = _get_default_locale_path()
-
-    if path is None:
-        msg = (
-            "Humanize cannot determinate the default location of the 'locale' folder. "
-            "You need to pass the path explicitly."
-        )
-        raise FileNotFoundError(msg)
+        locale_path = _get_default_locale_path()
+        if locale_path is None:
+            msg = (
+                "Humanize cannot determinate the default location of the "
+                "'locale' folder. "
+                "You need to pass the path explicitly."
+            )
+            raise FileNotFoundError(msg)
+        with locale_path as directory:
+            return activate(locale, directory)
     if locale not in _TRANSLATIONS:
         translation = gettext_module.translation("humanize", path, [locale])
         _TRANSLATIONS[locale] = translation
