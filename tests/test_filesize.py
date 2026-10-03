@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 """Tests for filesize humanizing."""
 
 from __future__ import annotations

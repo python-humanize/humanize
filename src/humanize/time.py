@@ -49,7 +49,7 @@ class Unit(Enum):
 def _now() -> dt.datetime:
     import datetime as dt
 
-    return dt.datetime.now()
+    return dt.datetime.now()  # noqa: DTZ005  # naive local time is intentional
 
 
 def _abs_timedelta(delta: dt.timedelta) -> dt.timedelta:
@@ -321,7 +321,7 @@ def _convert_aware_datetime(
     import datetime as dt
 
     if isinstance(value, dt.datetime) and value.tzinfo is not None:
-        value = dt.datetime.fromtimestamp(value.timestamp())
+        value = dt.datetime.fromtimestamp(value.timestamp())  # noqa: DTZ006
     return value
 
 
@@ -341,7 +341,7 @@ def naturalday(value: dt.date | dt.datetime, format: str = "%b %d") -> str:
         if isinstance(value, dt.datetime) and value.tzinfo is not None:
             today = dt.datetime.now(value.tzinfo).date()
         else:
-            today = dt.date.today()
+            today = dt.date.today()  # noqa: DTZ011
         value = dt.date(value.year, value.month, value.day)
     except AttributeError:
         # Passed value wasn't date-ish
@@ -372,7 +372,7 @@ def naturaldate(value: dt.date | dt.datetime) -> str:
         if isinstance(value, dt.datetime) and value.tzinfo is not None:
             today = dt.datetime.now(value.tzinfo).date()
         else:
-            today = dt.date.today()
+            today = dt.date.today()  # noqa: DTZ011
         value = dt.date(value.year, value.month, value.day)
     except AttributeError:
         # Passed value wasn't date-ish
