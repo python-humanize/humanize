@@ -9,8 +9,8 @@ python -m venv .venv
 ```
 
 Activate it with `source .venv/bin/activate` on Linux or macOS, or
-`.venv\Scripts\Activate.ps1` in Windows PowerShell. Then install the project and
-its test dependencies:
+`.venv\Scripts\Activate.ps1` in Windows PowerShell. Then install the project and its
+test dependencies:
 
 ```sh
 python -m pip install -e ".[tests]"
@@ -24,14 +24,13 @@ python -m pytest tests/test_number.py
 python -m pytest tests/test_number.py -k intcomma
 ```
 
-Some localisation tests are skipped when compiled `.mo` translation files are
-missing. Generate them with `scripts/generate-translation-binaries.sh`, which
-requires Bash and GNU gettext's `msgfmt`. Translation-update tests also require
-`xgettext` and `msgmerge`. Use `python -m pytest -rs` to see skip reasons.
+Some localisation tests are skipped when compiled `.mo` translation files are missing.
+Generate them with `scripts/generate-translation-binaries.sh`, which requires Bash and
+GNU gettext's `msgfmt`. Translation-update tests also require `xgettext` and `msgmerge`.
+Use `python -m pytest -rs` to see skip reasons.
 
-CI generates translation binaries and runs tests through [tox](../tox.ini).
-See the [test workflow](workflows/test.yml) for supported Python versions and
-platforms.
+CI generates translation binaries and runs tests through [tox](../tox.ini). See the
+[test workflow](workflows/test.yml) for supported Python versions and platforms.
 
 ## Linting
 
