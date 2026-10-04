@@ -101,6 +101,10 @@ def ordinal(value: NumberOrString, gender: str = "male") -> str:
         ```pycon
         >>> ordinal(1)
         '1st'
+        >>> ordinal(-1)
+        '-1st'
+        >>> ordinal(-11)
+        '-11th'
         >>> ordinal(1002)
         '1002nd'
         >>> ordinal(103)
