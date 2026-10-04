@@ -59,7 +59,8 @@ def activate(
 ) -> gettext_module.NullTranslations:
     """Activate internationalisation.
 
-    Set `locale` as current locale. Search for locale in directory `path`.
+    Set `locale` as the current locale for the calling thread. Search for locale
+    in directory `path`.
 
     Args:
         locale (str | None): Language name, e.g. `en_GB`. If `None`, defaults to no
@@ -67,7 +68,7 @@ def activate(
         path (str | pathlib.Path): Path to search for locales.
 
     Returns:
-        dict: Translations.
+        gettext.NullTranslations: Translation object for the selected locale.
 
     Raises:
         FileNotFoundError: If humanize cannot find the locale folder.
@@ -93,7 +94,7 @@ def activate(
 
 
 def deactivate() -> None:
-    """Deactivate internationalisation."""
+    """Deactivate internationalisation for the calling thread."""
     _CURRENT.locale = None
 
 
