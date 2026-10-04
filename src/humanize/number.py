@@ -136,7 +136,10 @@ def ordinal(value: NumberOrString, gender: str = "male") -> str:
     except (TypeError, ValueError):
         return str(value)
     gender = "male" if gender == "male" else "female"
-    digit = 0 if value % 100 in (11, 12, 13) else value % 10
+    # Suffixes follow the absolute value. Python's % on a negative number
+    # is not the last digit, so -21 used to render as "-21th".
+    suffix_value = abs(value)
+    digit = 0 if suffix_value % 100 in (11, 12, 13) else suffix_value % 10
     return f"{value}{P_(*_ORDINAL_SUFFIXES[gender][digit])}"
 
 
