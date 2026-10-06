@@ -12,6 +12,8 @@ from functools import total_ordering
 
 from .i18n import _gettext as _
 from .i18n import _ngettext
+from .i18n import _npgettext_with_fallback as NG_
+from .i18n import _pgettext_with_fallback as G_
 from .number import intcomma
 
 TYPE_CHECKING = False
@@ -137,6 +139,18 @@ def naturaldelta(
         ```
 
     """
+    result = _naturaldelta(value, months, minimum_unit)
+    return _("a moment") if result is None else result
+
+
+def _naturaldelta(
+    value: dt.timedelta | float,
+    months: bool,
+    minimum_unit: str,
+    *,
+    natural_time: bool = False,
+) -> str | None:
+    """Return a duration, or None for a moment."""
     import datetime as dt
 
     tmp = Unit[minimum_unit.upper()]
@@ -176,7 +190,13 @@ def naturaldelta(
         if delta.seconds == 0:
             if min_unit == Unit.MICROSECONDS and delta.microseconds < 1000:
                 return (
-                    _ngettext("%d microsecond", "%d microseconds", delta.microseconds)
+                    NG_(
+                        "naturaltime",
+                        "%d microsecond",
+                        "%d microseconds",
+                        delta.microseconds,
+                        natural_time,
+                    )
                     % delta.microseconds
                 )
 
@@ -185,79 +205,125 @@ def naturaldelta(
             ):
                 milliseconds = delta.microseconds / 1000
                 return (
-                    _ngettext("%d millisecond", "%d milliseconds", int(milliseconds))
+                    NG_(
+                        "naturaltime",
+                        "%d millisecond",
+                        "%d milliseconds",
+                        int(milliseconds),
+                        natural_time,
+                    )
                     % milliseconds
                 )
-            return _("a moment")
+            return None
 
         if delta.seconds == 1:
-            return _("a second")
+            return G_("naturaltime", "a second", natural_time)
 
         if delta.seconds < 60:
-            return _ngettext("%d second", "%d seconds", delta.seconds) % delta.seconds
+            return (
+                NG_(
+                    "naturaltime",
+                    "%d second",
+                    "%d seconds",
+                    delta.seconds,
+                    natural_time,
+                )
+                % delta.seconds
+            )
 
         if 60 <= delta.seconds < 3600:
             minutes = round(delta.seconds / 60)
             if minutes == 1:
-                return _("a minute")
+                return G_("naturaltime", "a minute", natural_time)
 
             if minutes == 60:
-                return _("an hour")
+                return G_("naturaltime", "an hour", natural_time)
 
-            return _ngettext("%d minute", "%d minutes", minutes) % minutes
+            return (
+                NG_("naturaltime", "%d minute", "%d minutes", minutes, natural_time)
+                % minutes
+            )
 
         if 3600 <= delta.seconds:
             hours = round(delta.seconds / 3600)
             if hours == 1:
-                return _("an hour")
+                return G_("naturaltime", "an hour", natural_time)
 
             if hours == 24:
-                return _("a day")
+                return G_("naturaltime", "a day", natural_time)
 
-            return _ngettext("%d hour", "%d hours", hours) % hours
+            return (
+                NG_("naturaltime", "%d hour", "%d hours", hours, natural_time) % hours
+            )
 
     elif years == 0:
         if days == 1:
-            return _("a day")
+            return G_("naturaltime", "a day", natural_time)
 
         if not use_months:
-            return _ngettext("%d day", "%d days", days) % days
+            return NG_("naturaltime", "%d day", "%d days", days, natural_time) % days
 
         if num_months == 0:
-            return _ngettext("%d day", "%d days", days) % days
+            return NG_("naturaltime", "%d day", "%d days", days, natural_time) % days
 
         if num_months == 1:
-            return _("a month")
+            return G_("naturaltime", "a month", natural_time)
 
         if num_months == 12:
-            return _("a year")
+            return G_("naturaltime", "a year", natural_time)
 
-        return _ngettext("%d month", "%d months", num_months) % num_months
+        return (
+            NG_("naturaltime", "%d month", "%d months", num_months, natural_time)
+            % num_months
+        )
 
     elif years == 1:
         if num_months == 0 and days == 0:
-            return _("a year")
+            return G_("naturaltime", "a year", natural_time)
 
         if num_months == 0:
-            return _ngettext("1 year, %d day", "1 year, %d days", days) % days
+            return (
+                NG_(
+                    "naturaltime",
+                    "1 year, %d day",
+                    "1 year, %d days",
+                    days,
+                    natural_time,
+                )
+                % days
+            )
 
         if use_months:
             if num_months == 1:
-                return _("1 year, 1 month")
+                return G_("naturaltime", "1 year, 1 month", natural_time)
 
             if num_months == 12:
                 years += 1
-                return _ngettext("%d year", "%d years", years) % years
+                return (
+                    NG_("naturaltime", "%d year", "%d years", years, natural_time)
+                    % years
+                )
 
             return (
-                _ngettext("1 year, %d month", "1 year, %d months", num_months)
+                NG_(
+                    "naturaltime",
+                    "1 year, %d month",
+                    "1 year, %d months",
+                    num_months,
+                    natural_time,
+                )
                 % num_months
             )
 
-        return _ngettext("1 year, %d day", "1 year, %d days", days) % days
+        return (
+            NG_("naturaltime", "1 year, %d day", "1 year, %d days", days, natural_time)
+            % days
+        )
 
     years = round(delta.days / 365)
-    return _ngettext("%d year", "%d years", years).replace("%d", "%s") % intcomma(years)
+    return NG_("naturaltime", "%d year", "%d years", years, natural_time).replace(
+        "%d", "%s"
+    ) % intcomma(years)
 
 
 def naturaltime(
@@ -303,9 +369,9 @@ def naturaltime(
         future = date > now
 
     ago = _("%s from now") if future else _("%s ago")
-    delta = naturaldelta(delta, months, minimum_unit)
+    delta = _naturaldelta(delta, months, minimum_unit, natural_time=True)
 
-    if delta == _("a moment"):
+    if delta is None:
         return _("now")
 
     return str(ago % delta)

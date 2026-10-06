@@ -20,6 +20,38 @@ with freeze_time("2020-02-02"):
     NOW = dt.datetime.now(tz=dt.UTC)
 
 
+GERMAN_DELTA_CASES = [
+    (dt.timedelta(seconds=1), "seconds", True, "einer Sekunde"),
+    (dt.timedelta(seconds=2), "seconds", True, "2 Sekunden"),
+    (dt.timedelta(minutes=1), "seconds", True, "einer Minute"),
+    (dt.timedelta(minutes=2), "seconds", True, "2 Minuten"),
+    (dt.timedelta(minutes=59, seconds=30), "seconds", True, "einer Stunde"),
+    (dt.timedelta(hours=1), "seconds", True, "einer Stunde"),
+    (dt.timedelta(hours=2), "seconds", True, "2 Stunden"),
+    (dt.timedelta(hours=23, minutes=59), "seconds", True, "einem Tag"),
+    (dt.timedelta(days=1), "seconds", True, "einem Tag"),
+    (dt.timedelta(days=2), "seconds", True, "2 Tagen"),
+    (dt.timedelta(days=65), "seconds", False, "65 Tagen"),
+    (dt.timedelta(days=31), "seconds", True, "einem Monat"),
+    (dt.timedelta(days=61), "seconds", True, "2 Monaten"),
+    (dt.timedelta(days=364), "seconds", True, "einem Jahr"),
+    (dt.timedelta(days=365), "seconds", True, "einem Jahr"),
+    (dt.timedelta(days=366), "seconds", True, "einem Jahr und 1 Tag"),
+    (dt.timedelta(days=369), "seconds", True, "einem Jahr und 4 Tagen"),
+    (dt.timedelta(days=400), "seconds", True, "einem Jahr und einem Monat"),
+    (dt.timedelta(days=426), "seconds", True, "einem Jahr und 2 Monaten"),
+    (dt.timedelta(days=400), "seconds", False, "einem Jahr und 35 Tagen"),
+    (dt.timedelta(days=729), "seconds", True, "2 Jahren"),
+    (dt.timedelta(days=730), "seconds", True, "2 Jahren"),
+    (dt.timedelta(days=365 * 1234), "seconds", True, "1.234 Jahren"),
+    (dt.timedelta(microseconds=1), "microseconds", True, "1 Mikrosekunde"),
+    (dt.timedelta(microseconds=4), "microseconds", True, "4 Mikrosekunden"),
+    (dt.timedelta(microseconds=4), "milliseconds", True, "0 Millisekunden"),
+    (dt.timedelta(milliseconds=1), "milliseconds", True, "1 Millisekunde"),
+    (dt.timedelta(milliseconds=4), "microseconds", True, "4 Millisekunden"),
+]
+
+
 @pytest.mark.parametrize("locale, one", [("de_DE", "eins"), ("fr_FR", "un")])
 def test_update_translations(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch, locale: str, one: str
@@ -61,6 +93,20 @@ def test_update_translations(
                     for gender in ("male", "female")
                     for value in range(10)
                 ]
+                + [
+                    result
+                    for value, minimum_unit, months, _ in GERMAN_DELTA_CASES
+                    for result in (
+                        humanize.naturaldelta(value, months, minimum_unit),
+                        humanize.naturaltime(
+                            value, months=months, minimum_unit=minimum_unit, when=NOW
+                        ),
+                        humanize.naturaltime(
+                            -value, months=months, minimum_unit=minimum_unit, when=NOW
+                        ),
+                    )
+                ]
+                + [humanize.naturaldelta(0), humanize.naturaltime(0)]
             )
     finally:
         humanize.deactivate()
@@ -149,6 +195,168 @@ def test_naturaldelta() -> None:
     finally:
         humanize.i18n.deactivate()
         assert humanize.naturaldelta(seconds) == "1,234 years"
+
+
+@pytest.mark.parametrize(
+    "future, expected",
+    [(False, "vor einer Stunde"), (True, "in einer Stunde")],
+)
+def test_naturaltime_german_grammatical_case(future: bool, expected: str) -> None:
+    try:
+        humanize.i18n.activate("de_DE")
+    except FileNotFoundError:
+        pytest.skip("Generate .mo with scripts/generate-translation-binaries.sh")
+    else:
+        assert humanize.naturaldelta(3600) == "eine Stunde"
+        assert humanize.naturaltime(3600, future=future, when=NOW) == expected
+    finally:
+        humanize.i18n.deactivate()
+
+
+@pytest.mark.parametrize("value, minimum_unit, months, expected", GERMAN_DELTA_CASES)
+@pytest.mark.parametrize("future", [False, True])
+@pytest.mark.parametrize("input_kind", ["timedelta", "datetime"])
+def test_naturaltime_german_units(
+    value: dt.timedelta,
+    minimum_unit: str,
+    months: bool,
+    expected: str,
+    future: bool,
+    input_kind: str,
+) -> None:
+    delta = -value if future else value
+    test_input = NOW - delta if input_kind == "datetime" else delta
+    prefix = "in" if future else "vor"
+    try:
+        humanize.i18n.activate("de_DE")
+    except FileNotFoundError:
+        pytest.skip("Generate .mo with scripts/generate-translation-binaries.sh")
+    else:
+        assert (
+            humanize.naturaltime(
+                test_input,
+                future=not future,
+                months=months,
+                minimum_unit=minimum_unit,
+                when=NOW,
+            )
+            == f"{prefix} {expected}"
+        )
+    finally:
+        humanize.i18n.deactivate()
+
+
+@pytest.mark.parametrize("future", [False, True])
+@pytest.mark.parametrize("value", [0, dt.timedelta(microseconds=1), NOW])
+def test_naturaltime_german_now(
+    future: bool, value: int | dt.timedelta | dt.datetime
+) -> None:
+    try:
+        humanize.i18n.activate("de_DE")
+    except FileNotFoundError:
+        pytest.skip("Generate .mo with scripts/generate-translation-binaries.sh")
+    else:
+        assert humanize.naturaltime(value, future=future, when=NOW) == "jetzt"
+    finally:
+        humanize.i18n.deactivate()
+
+
+@pytest.mark.parametrize(
+    "value, expected",
+    [(float("nan"), "nan"), (float("inf"), "inf"), (float("-inf"), "-inf")],
+)
+def test_naturaltime_german_non_finite(value: float, expected: str) -> None:
+    try:
+        humanize.i18n.activate("de_DE")
+    except FileNotFoundError:
+        pytest.skip("Generate .mo with scripts/generate-translation-binaries.sh")
+    else:
+        assert humanize.naturaldelta(value) == expected
+        if expected == "nan":
+            assert humanize.naturaltime(value, when=NOW) == expected
+        else:
+            with pytest.raises(OverflowError):
+                humanize.naturaltime(value, when=NOW)
+        with pytest.raises(OverflowError):
+            humanize.naturaldelta(1e30)
+        with pytest.raises(ValueError, match="Minimum unit 'years' not supported"):
+            humanize.naturaltime(1, minimum_unit="years", when=NOW)
+    finally:
+        humanize.i18n.deactivate()
+
+
+@pytest.mark.parametrize("contextual", [False, True])
+def test_naturaltime_context_fallback(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, contextual: bool
+) -> None:
+    if shutil.which("msgfmt") is None:
+        pytest.skip("Catalog compilation requires msgfmt")
+    catalog = tmp_path / "humanize.po"
+    contents = (LOCALE_DIR / "ru_RU" / "LC_MESSAGES" / "humanize.po").read_text()
+    if contextual:
+        # Explicit contextual translations may equal the English source messages.
+        contents += """
+msgctxt "naturaltime"
+msgid "an hour"
+msgstr "an hour"
+
+#, python-format
+msgctxt "naturaltime"
+msgid "%d hour"
+msgid_plural "%d hours"
+msgstr[0] "%d hour"
+msgstr[1] "%d hours"
+msgstr[2] "%d hours"
+"""
+    catalog.write_text(contents)
+    binary = catalog.with_suffix(".mo")
+    subprocess.run(["msgfmt", "--check", "-o", str(binary), str(catalog)], check=True)
+    with binary.open("rb") as stream:
+        translation = gettext.GNUTranslations(stream)
+    monkeypatch.setitem(humanize.i18n._TRANSLATIONS, "ru_RU", translation)
+    try:
+        humanize.activate("ru_RU")
+        for hours, ordinary, contextual_text in (
+            (1, "час", "an hour"),
+            (2, "2 часа", "2 hours"),
+            (21, "21 час", "21 hour"),
+        ):
+            value = dt.timedelta(hours=hours)
+            relative = contextual_text if contextual else ordinary
+            assert humanize.naturaldelta(value) == ordinary
+            assert humanize.naturaltime(value, when=NOW) == f"{relative} назад"
+            assert humanize.naturaltime(-value, when=NOW) == f"через {relative}"
+        assert humanize.naturaltime(0, when=NOW) == "сейчас"
+        humanize.activate("de_DE")
+        assert humanize.naturaltime(3600, when=NOW) == "vor einer Stunde"
+        humanize.deactivate()
+        assert humanize.naturaltime(3600, when=NOW) == "an hour ago"
+    finally:
+        humanize.deactivate()
+
+
+@pytest.mark.parametrize(
+    "value, expected",
+    [
+        (dt.timedelta(seconds=1), "bir saniye önce"),
+        (dt.timedelta(seconds=-1), "şu andan itibaren bir saniye"),
+        (0, "şimdi"),
+        (dt.timedelta(milliseconds=4), "şimdi"),
+        (dt.timedelta(milliseconds=-4), "şimdi"),
+    ],
+)
+def test_naturaltime_moment_translation_collision(
+    value: int | dt.timedelta, expected: str
+) -> None:
+    try:
+        humanize.activate("tr_TR")
+    except FileNotFoundError:
+        pytest.skip("Generate .mo with scripts/generate-translation-binaries.sh")
+    else:
+        assert humanize.naturaldelta(value) == "bir saniye"
+        assert humanize.naturaltime(value, when=NOW) == expected
+    finally:
+        humanize.deactivate()
 
 
 @pytest.mark.parametrize(
