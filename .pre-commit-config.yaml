@@ -14,7 +14,7 @@ repos:
         priority: fix
 
   - repo: https://github.com/psf/black-pre-commit-mirror
-    rev: 26.5.1
+    rev: 26.10.0
     hooks:
       - id: black
         priority: fix-py
@@ -67,7 +67,7 @@ repos:
         priority: check
 
   - repo: https://github.com/tox-dev/pyproject-fmt
-    rev: v2.30.0
+    rev: v2.30.1
     hooks:
       - id: pyproject-fmt
         priority: fix
