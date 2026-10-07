@@ -18,26 +18,24 @@ for docstrings.
 
 ## Testing
 
-When contributing bug fixes or new features, add unit tests to verify the
-behavior and prevent regressions.
+When contributing bug fixes or new features, add unit tests to verify the behavior and
+prevent regressions.
 
 ### 1. Locate the relevant test file
 
-Test files live in the `tests/` directory and mirror the modules in
-`src/humanize/`:
+Test files live in the `tests/` directory and mirror the modules in `src/humanize/`:
 
-- `tests/test_number.py` for number formatting (`intcomma`, `clamp`, `ordinal`,
+- `tests/test_number.py` for number formatting (`intcomma`, `clamp`, `ordinal`, etc.)
+- `tests/test_time.py` for time utilities (`naturaltime`, `naturaldelta`, `naturaldate`,
   etc.)
-- `tests/test_time.py` for time utilities (`naturaltime`, `naturaldelta`,
-  `naturaldate`, etc.)
 - `tests/test_filesize.py` for file size formatting (`naturalsize`)
 - `tests/test_lists.py` for list formatting (`natural_list`)
 - `tests/test_i18n.py` for internationalization and locale translations
 
 ### 2. Follow existing test patterns and use parameterization
 
-Follow `pytest` conventions and use `@pytest.mark.parametrize` when testing
-multiple inputs or boundary conditions.
+Follow `pytest` conventions and use `@pytest.mark.parametrize` when testing multiple
+inputs or boundary conditions.
 
 For example, when testing boundary behavior such as `humanize.clamp()`:
 
@@ -65,9 +63,9 @@ pytest tests/test_number.py -k test_clamp
 
 ### 4. Verify that the test catches regressions
 
-Before finalizing your changes, intentionally introduce a defect or temporarily
-revert your implementation to verify that the new test fails. This confirms that
-the test actively protects against regressions rather than passing vacuously.
+Before finalizing your changes, intentionally introduce a defect or temporarily revert
+your implementation to verify that the new test fails. This confirms that the test
+actively protects against regressions rather than passing vacuously.
 
 ### 5. Run the full test suite
 
