@@ -242,7 +242,8 @@ each locale's `.po` file and compiles the binary `.mo` catalogs.
 How to add a new locale:
 
 ```sh
-msginit -i humanize.pot -o humanize/locale/<locale name>/LC_MESSAGES/humanize.po --locale <locale name>
+mkdir -p src/humanize/locale/<locale name>/LC_MESSAGES
+msginit -i humanize.pot -o src/humanize/locale/<locale name>/LC_MESSAGES/humanize.po --locale <locale name>
 ```
 
 Where `<locale name>` is a locale abbreviation, eg. `en_GB`, `pt_BR` or just `ru`, `fr`
