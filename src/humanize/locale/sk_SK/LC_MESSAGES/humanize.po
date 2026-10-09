@@ -19,188 +19,220 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #: src/humanize/number.py:84
+#, python-format
 msgctxt "0 (male)"
-msgid "th"
-msgstr "."
+msgid "%sth"
+msgstr "%s."
 
 #: src/humanize/number.py:85
+#, python-format
 msgctxt "1 (male)"
-msgid "st"
-msgstr "."
+msgid "%sst"
+msgstr "%s."
 
 #: src/humanize/number.py:86
+#, python-format
 msgctxt "2 (male)"
-msgid "nd"
-msgstr "."
+msgid "%snd"
+msgstr "%s."
 
 #: src/humanize/number.py:87
+#, python-format
 msgctxt "3 (male)"
-msgid "rd"
-msgstr "."
+msgid "%srd"
+msgstr "%s."
 
 #: src/humanize/number.py:88
+#, python-format
 msgctxt "4 (male)"
-msgid "th"
-msgstr "."
+msgid "%sth"
+msgstr "%s."
 
 #: src/humanize/number.py:89
+#, python-format
 msgctxt "5 (male)"
-msgid "th"
-msgstr "."
+msgid "%sth"
+msgstr "%s."
 
 #: src/humanize/number.py:90
+#, python-format
 msgctxt "6 (male)"
-msgid "th"
-msgstr "."
+msgid "%sth"
+msgstr "%s."
 
 #: src/humanize/number.py:91
+#, python-format
 msgctxt "7 (male)"
-msgid "th"
-msgstr "."
+msgid "%sth"
+msgstr "%s."
 
 #: src/humanize/number.py:92
+#, python-format
 msgctxt "8 (male)"
-msgid "th"
-msgstr "."
+msgid "%sth"
+msgstr "%s."
 
 #: src/humanize/number.py:93
+#, python-format
 msgctxt "9 (male)"
-msgid "th"
-msgstr "."
+msgid "%sth"
+msgstr "%s."
 
 #: src/humanize/number.py:97
+#, python-format
 msgctxt "0 (female)"
-msgid "th"
-msgstr "."
+msgid "%sth"
+msgstr "%s."
 
 #: src/humanize/number.py:98
+#, python-format
 msgctxt "1 (female)"
-msgid "st"
-msgstr "."
+msgid "%sst"
+msgstr "%s."
 
 #: src/humanize/number.py:99
+#, python-format
 msgctxt "2 (female)"
-msgid "nd"
-msgstr "."
+msgid "%snd"
+msgstr "%s."
 
 #: src/humanize/number.py:100
+#, python-format
 msgctxt "3 (female)"
-msgid "rd"
-msgstr "."
+msgid "%srd"
+msgstr "%s."
 
 #: src/humanize/number.py:101
+#, python-format
 msgctxt "4 (female)"
-msgid "th"
-msgstr "."
+msgid "%sth"
+msgstr "%s."
 
 #: src/humanize/number.py:102
+#, python-format
 msgctxt "5 (female)"
-msgid "th"
-msgstr "."
+msgid "%sth"
+msgstr "%s."
 
 #: src/humanize/number.py:103
+#, python-format
 msgctxt "6 (female)"
-msgid "th"
-msgstr "."
+msgid "%sth"
+msgstr "%s."
 
 #: src/humanize/number.py:104
+#, python-format
 msgctxt "7 (female)"
-msgid "th"
-msgstr "."
+msgid "%sth"
+msgstr "%s."
 
 #: src/humanize/number.py:105
+#, python-format
 msgctxt "8 (female)"
-msgid "th"
-msgstr "."
+msgid "%sth"
+msgstr "%s."
 
 #: src/humanize/number.py:106
+#, python-format
 msgctxt "9 (female)"
-msgid "th"
-msgstr "."
+msgid "%sth"
+msgstr "%s."
 
 #: src/humanize/number.py:178
-msgid "thousand"
-msgid_plural "thousand"
+#, python-format
+msgid "%s thousand"
+msgid_plural "%s thousand"
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
 #: src/humanize/number.py:179
-msgid "million"
-msgid_plural "million"
-msgstr[0] "milióna/ov"
-msgstr[1] "milióna/ov"
-msgstr[2] "milióna/ov"
+#, python-format
+msgid "%s million"
+msgid_plural "%s million"
+msgstr[0] "%s milióna/ov"
+msgstr[1] "%s milióna/ov"
+msgstr[2] "%s milióna/ov"
 
 #: src/humanize/number.py:180
-msgid "billion"
-msgid_plural "billion"
-msgstr[0] "miliardy/árd"
-msgstr[1] "miliardy/árd"
-msgstr[2] "miliardy/árd"
+#, python-format
+msgid "%s billion"
+msgid_plural "%s billion"
+msgstr[0] "%s miliardy/árd"
+msgstr[1] "%s miliardy/árd"
+msgstr[2] "%s miliardy/árd"
 
 #: src/humanize/number.py:181
-msgid "trillion"
-msgid_plural "trillion"
-msgstr[0] "bilióna/ov"
-msgstr[1] "bilióna/ov"
-msgstr[2] "bilióna/ov"
+#, python-format
+msgid "%s trillion"
+msgid_plural "%s trillion"
+msgstr[0] "%s bilióna/ov"
+msgstr[1] "%s bilióna/ov"
+msgstr[2] "%s bilióna/ov"
 
 #: src/humanize/number.py:182
-msgid "quadrillion"
-msgid_plural "quadrillion"
-msgstr[0] "biliardy/árd"
-msgstr[1] "biliardy/árd"
-msgstr[2] "biliardy/árd"
+#, python-format
+msgid "%s quadrillion"
+msgid_plural "%s quadrillion"
+msgstr[0] "%s biliardy/árd"
+msgstr[1] "%s biliardy/árd"
+msgstr[2] "%s biliardy/árd"
 
 #: src/humanize/number.py:183
-msgid "quintillion"
-msgid_plural "quintillion"
-msgstr[0] "trilióna/árd"
-msgstr[1] "trilióna/árd"
-msgstr[2] "trilióna/árd"
+#, python-format
+msgid "%s quintillion"
+msgid_plural "%s quintillion"
+msgstr[0] "%s trilióna/árd"
+msgstr[1] "%s trilióna/árd"
+msgstr[2] "%s trilióna/árd"
 
 #: src/humanize/number.py:184
-msgid "sextillion"
-msgid_plural "sextillion"
-msgstr[0] "triliardy/árd"
-msgstr[1] "triliardy/árd"
-msgstr[2] "triliardy/árd"
+#, python-format
+msgid "%s sextillion"
+msgid_plural "%s sextillion"
+msgstr[0] "%s triliardy/árd"
+msgstr[1] "%s triliardy/árd"
+msgstr[2] "%s triliardy/árd"
 
 #: src/humanize/number.py:185
-msgid "septillion"
-msgid_plural "septillion"
-msgstr[0] "kvadrilióna/ov"
-msgstr[1] "kvadrilióna/ov"
-msgstr[2] "kvadrilióna/ov"
+#, python-format
+msgid "%s septillion"
+msgid_plural "%s septillion"
+msgstr[0] "%s kvadrilióna/ov"
+msgstr[1] "%s kvadrilióna/ov"
+msgstr[2] "%s kvadrilióna/ov"
 
 #: src/humanize/number.py:186
-msgid "octillion"
-msgid_plural "octillion"
-msgstr[0] "kvadriliardy/árd"
-msgstr[1] "kvadriliardy/árd"
-msgstr[2] "kvadriliardy/árd"
+#, python-format
+msgid "%s octillion"
+msgid_plural "%s octillion"
+msgstr[0] "%s kvadriliardy/árd"
+msgstr[1] "%s kvadriliardy/árd"
+msgstr[2] "%s kvadriliardy/árd"
 
 #: src/humanize/number.py:187
-msgid "nonillion"
-msgid_plural "nonillion"
-msgstr[0] "kvintilióna/ov"
-msgstr[1] "kvintilióna/ov"
-msgstr[2] "kvintilióna/ov"
+#, python-format
+msgid "%s nonillion"
+msgid_plural "%s nonillion"
+msgstr[0] "%s kvintilióna/ov"
+msgstr[1] "%s kvintilióna/ov"
+msgstr[2] "%s kvintilióna/ov"
 
 #: src/humanize/number.py:188
-msgid "decillion"
-msgid_plural "decillion"
-msgstr[0] "kvintiliardy/árd"
-msgstr[1] "kvintiliardy/árd"
-msgstr[2] "kvintiliardy/árd"
+#, python-format
+msgid "%s decillion"
+msgid_plural "%s decillion"
+msgstr[0] "%s kvintiliardy/árd"
+msgstr[1] "%s kvintiliardy/árd"
+msgstr[2] "%s kvintiliardy/árd"
 
 #: src/humanize/number.py:189
-msgid "googol"
-msgid_plural "googol"
-msgstr[0] "googola/ov"
-msgstr[1] "googola/ov"
-msgstr[2] "googola/ov"
+#, python-format
+msgid "%s googol"
+msgid_plural "%s googol"
+msgstr[0] "%s googola/ov"
+msgstr[1] "%s googola/ov"
+msgstr[2] "%s googola/ov"
 
 #: src/humanize/number.py:301
 msgid "zero"

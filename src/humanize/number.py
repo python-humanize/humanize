@@ -37,30 +37,30 @@ _SUPERSCRIPT_MAP = {
 }
 _SUPERSCRIPT_TRANS = str.maketrans(_SUPERSCRIPT_MAP)
 
-_ORDINAL_SUFFIXES = {
+_ORDINAL_FORMATS = {
     "male": (
-        PS_("0 (male)", "th"),
-        PS_("1 (male)", "st"),
-        PS_("2 (male)", "nd"),
-        PS_("3 (male)", "rd"),
-        PS_("4 (male)", "th"),
-        PS_("5 (male)", "th"),
-        PS_("6 (male)", "th"),
-        PS_("7 (male)", "th"),
-        PS_("8 (male)", "th"),
-        PS_("9 (male)", "th"),
+        PS_("0 (male)", "%sth"),
+        PS_("1 (male)", "%sst"),
+        PS_("2 (male)", "%snd"),
+        PS_("3 (male)", "%srd"),
+        PS_("4 (male)", "%sth"),
+        PS_("5 (male)", "%sth"),
+        PS_("6 (male)", "%sth"),
+        PS_("7 (male)", "%sth"),
+        PS_("8 (male)", "%sth"),
+        PS_("9 (male)", "%sth"),
     ),
     "female": (
-        PS_("0 (female)", "th"),
-        PS_("1 (female)", "st"),
-        PS_("2 (female)", "nd"),
-        PS_("3 (female)", "rd"),
-        PS_("4 (female)", "th"),
-        PS_("5 (female)", "th"),
-        PS_("6 (female)", "th"),
-        PS_("7 (female)", "th"),
-        PS_("8 (female)", "th"),
-        PS_("9 (female)", "th"),
+        PS_("0 (female)", "%sth"),
+        PS_("1 (female)", "%sst"),
+        PS_("2 (female)", "%snd"),
+        PS_("3 (female)", "%srd"),
+        PS_("4 (female)", "%sth"),
+        PS_("5 (female)", "%sth"),
+        PS_("6 (female)", "%sth"),
+        PS_("7 (female)", "%sth"),
+        PS_("8 (female)", "%sth"),
+        PS_("9 (female)", "%sth"),
     ),
 }
 _APNUMBER_WORDS = (
@@ -137,7 +137,7 @@ def ordinal(value: NumberOrString, gender: str = "male") -> str:
         return str(value)
     gender = "male" if gender == "male" else "female"
     digit = 0 if value % 100 in (11, 12, 13) else value % 10
-    return f"{value}{P_(*_ORDINAL_SUFFIXES[gender][digit])}"
+    return P_(*_ORDINAL_FORMATS[gender][digit]) % value
 
 
 def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
@@ -205,18 +205,18 @@ def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
 
 powers = [10**x for x in (3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 100)]
 human_powers = (
-    NS_("thousand", "thousand"),
-    NS_("million", "million"),
-    NS_("billion", "billion"),
-    NS_("trillion", "trillion"),
-    NS_("quadrillion", "quadrillion"),
-    NS_("quintillion", "quintillion"),
-    NS_("sextillion", "sextillion"),
-    NS_("septillion", "septillion"),
-    NS_("octillion", "octillion"),
-    NS_("nonillion", "nonillion"),
-    NS_("decillion", "decillion"),
-    NS_("googol", "googol"),
+    NS_("%s thousand", "%s thousand"),
+    NS_("%s million", "%s million"),
+    NS_("%s billion", "%s billion"),
+    NS_("%s trillion", "%s trillion"),
+    NS_("%s quadrillion", "%s quadrillion"),
+    NS_("%s quintillion", "%s quintillion"),
+    NS_("%s sextillion", "%s sextillion"),
+    NS_("%s septillion", "%s septillion"),
+    NS_("%s octillion", "%s octillion"),
+    NS_("%s nonillion", "%s nonillion"),
+    NS_("%s decillion", "%s decillion"),
+    NS_("%s googol", "%s googol"),
 )
 
 
@@ -292,10 +292,10 @@ def intword(value: NumberOrString, format: str = "%.1f") -> str:
         rounded_value = 1.0
 
     singular, plural = human_powers[ordinal]
-    unit = _ngettext(singular, plural, math.ceil(rounded_value))
+    template = _ngettext(singular, plural, math.ceil(rounded_value))
     decimal_sep = decimal_separator()
     number = (format % rounded_value).replace(".", decimal_sep)
-    return f"{negative_prefix}{number} {unit}"
+    return negative_prefix + template % number
 
 
 def apnumber(value: NumberOrString) -> str:

@@ -26,76 +26,88 @@ msgid "%d Bytes"
 msgstr "බයිට් %d"
 
 #: src/humanize/number.py:181
-msgid "thousand"
-msgid_plural "thousand"
-msgstr[0] "දහස"
-msgstr[1] "දහස"
+#, python-format
+msgid "%s thousand"
+msgid_plural "%s thousand"
+msgstr[0] "%s දහස"
+msgstr[1] "%s දහස"
 
 #: src/humanize/number.py:182
-msgid "million"
-msgid_plural "million"
-msgstr[0] "මිලියන"
-msgstr[1] "මිලියන"
+#, python-format
+msgid "%s million"
+msgid_plural "%s million"
+msgstr[0] "%s මිලියන"
+msgstr[1] "%s මිලියන"
 
 #: src/humanize/number.py:183
-msgid "billion"
-msgid_plural "billion"
-msgstr[0] "බිලියන"
-msgstr[1] "බිලියන"
+#, python-format
+msgid "%s billion"
+msgid_plural "%s billion"
+msgstr[0] "%s බිලියන"
+msgstr[1] "%s බිලියන"
 
 #: src/humanize/number.py:184
-msgid "trillion"
-msgid_plural "trillion"
-msgstr[0] "ට්‍රිලියන"
-msgstr[1] "ට්‍රිලියන"
+#, python-format
+msgid "%s trillion"
+msgid_plural "%s trillion"
+msgstr[0] "%s ට්‍රිලියන"
+msgstr[1] "%s ට්‍රිලියන"
 
 #: src/humanize/number.py:185
-msgid "quadrillion"
-msgid_plural "quadrillion"
-msgstr[0] "ක්වඩ්‍රිලියන"
-msgstr[1] "ක්වඩ්‍රිලියන"
+#, python-format
+msgid "%s quadrillion"
+msgid_plural "%s quadrillion"
+msgstr[0] "%s ක්වඩ්‍රිලියන"
+msgstr[1] "%s ක්වඩ්‍රිලියන"
 
 #: src/humanize/number.py:186
-msgid "quintillion"
-msgid_plural "quintillion"
-msgstr[0] "ක්වින්ටිලියන"
-msgstr[1] "ක්වින්ටිලියන"
+#, python-format
+msgid "%s quintillion"
+msgid_plural "%s quintillion"
+msgstr[0] "%s ක්වින්ටිලියන"
+msgstr[1] "%s ක්වින්ටිලියන"
 
 #: src/humanize/number.py:187
-msgid "sextillion"
-msgid_plural "sextillion"
-msgstr[0] "සෙක්ස්ටිලියන"
-msgstr[1] "සෙක්ස්ටිලියන"
+#, python-format
+msgid "%s sextillion"
+msgid_plural "%s sextillion"
+msgstr[0] "%s සෙක්ස්ටිලියන"
+msgstr[1] "%s සෙක්ස්ටිලියන"
 
 #: src/humanize/number.py:188
-msgid "septillion"
-msgid_plural "septillion"
-msgstr[0] "සෙප්ටිලියන"
-msgstr[1] "සෙප්ටිලියන"
+#, python-format
+msgid "%s septillion"
+msgid_plural "%s septillion"
+msgstr[0] "%s සෙප්ටිලියන"
+msgstr[1] "%s සෙප්ටිලියන"
 
 #: src/humanize/number.py:189
-msgid "octillion"
-msgid_plural "octillion"
-msgstr[0] "ඔක්ටිලියන"
-msgstr[1] "ඔක්ටිලියන"
+#, python-format
+msgid "%s octillion"
+msgid_plural "%s octillion"
+msgstr[0] "%s ඔක්ටිලියන"
+msgstr[1] "%s ඔක්ටිලියන"
 
 #: src/humanize/number.py:190
-msgid "nonillion"
-msgid_plural "nonillion"
-msgstr[0] "නොනිලියන"
-msgstr[1] "නොනිලියන"
+#, python-format
+msgid "%s nonillion"
+msgid_plural "%s nonillion"
+msgstr[0] "%s නොනිලියන"
+msgstr[1] "%s නොනිලියන"
 
 #: src/humanize/number.py:191
-msgid "decillion"
-msgid_plural "decillion"
-msgstr[0] "ඩෙසිලියන"
-msgstr[1] "ඩෙසිලියන"
+#, python-format
+msgid "%s decillion"
+msgid_plural "%s decillion"
+msgstr[0] "%s ඩෙසිලියන"
+msgstr[1] "%s ඩෙසිලියන"
 
 #: src/humanize/number.py:192
-msgid "googol"
-msgid_plural "googol"
-msgstr[0] "ගූගොල්"
-msgstr[1] "ගූගොල්"
+#, python-format
+msgid "%s googol"
+msgid_plural "%s googol"
+msgstr[0] "%s ගූගොල්"
+msgstr[1] "%s ගූගොල්"
 
 #: src/humanize/time.py:168
 #, python-format

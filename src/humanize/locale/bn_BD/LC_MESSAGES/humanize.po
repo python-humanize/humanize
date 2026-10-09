@@ -19,176 +19,206 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: src/humanize/number.py:84
+#, python-format
 msgctxt "0 (male)"
-msgid "th"
-msgstr "তম"
+msgid "%sth"
+msgstr "%sতম"
 
 #: src/humanize/number.py:85
+#, python-format
 msgctxt "1 (male)"
-msgid "st"
-msgstr "তম"
+msgid "%sst"
+msgstr "%sতম"
 
 #: src/humanize/number.py:86
+#, python-format
 msgctxt "2 (male)"
-msgid "nd"
-msgstr "তম"
+msgid "%snd"
+msgstr "%sতম"
 
 #: src/humanize/number.py:87
+#, python-format
 msgctxt "3 (male)"
-msgid "rd"
-msgstr "তম"
+msgid "%srd"
+msgstr "%sতম"
 
 #: src/humanize/number.py:88
+#, python-format
 msgctxt "4 (male)"
-msgid "th"
-msgstr "তম"
+msgid "%sth"
+msgstr "%sতম"
 
 #: src/humanize/number.py:89
+#, python-format
 msgctxt "5 (male)"
-msgid "th"
-msgstr "তম"
+msgid "%sth"
+msgstr "%sতম"
 
 #: src/humanize/number.py:90
+#, python-format
 msgctxt "6 (male)"
-msgid "th"
-msgstr "তম"
+msgid "%sth"
+msgstr "%sতম"
 
 #: src/humanize/number.py:91
+#, python-format
 msgctxt "7 (male)"
-msgid "th"
-msgstr "তম"
+msgid "%sth"
+msgstr "%sতম"
 
 #: src/humanize/number.py:92
+#, python-format
 msgctxt "8 (male)"
-msgid "th"
-msgstr "তম"
+msgid "%sth"
+msgstr "%sতম"
 
 #: src/humanize/number.py:93
+#, python-format
 msgctxt "9 (male)"
-msgid "th"
-msgstr "তম"
+msgid "%sth"
+msgstr "%sতম"
 
 #: src/humanize/number.py:97
+#, python-format
 msgctxt "0 (female)"
-msgid "th"
-msgstr "তম"
+msgid "%sth"
+msgstr "%sতম"
 
 #: src/humanize/number.py:98
+#, python-format
 msgctxt "1 (female)"
-msgid "st"
-msgstr "তম"
+msgid "%sst"
+msgstr "%sতম"
 
 #: src/humanize/number.py:99
+#, python-format
 msgctxt "2 (female)"
-msgid "nd"
-msgstr "তম"
+msgid "%snd"
+msgstr "%sতম"
 
 #: src/humanize/number.py:100
+#, python-format
 msgctxt "3 (female)"
-msgid "rd"
-msgstr "তম"
+msgid "%srd"
+msgstr "%sতম"
 
 #: src/humanize/number.py:101
+#, python-format
 msgctxt "4 (female)"
-msgid "th"
-msgstr "তম"
+msgid "%sth"
+msgstr "%sতম"
 
 #: src/humanize/number.py:102
+#, python-format
 msgctxt "5 (female)"
-msgid "th"
-msgstr "তম"
+msgid "%sth"
+msgstr "%sতম"
 
 #: src/humanize/number.py:103
+#, python-format
 msgctxt "6 (female)"
-msgid "th"
-msgstr "তম"
+msgid "%sth"
+msgstr "%sতম"
 
 #: src/humanize/number.py:104
+#, python-format
 msgctxt "7 (female)"
-msgid "th"
-msgstr "তম"
+msgid "%sth"
+msgstr "%sতম"
 
 #: src/humanize/number.py:105
+#, python-format
 msgctxt "8 (female)"
-msgid "th"
-msgstr "তম"
+msgid "%sth"
+msgstr "%sতম"
 
 #: src/humanize/number.py:106
+#, python-format
 msgctxt "9 (female)"
-msgid "th"
-msgstr "তম"
+msgid "%sth"
+msgstr "%sতম"
 
 #: src/humanize/number.py:178
-msgid "thousand"
-msgid_plural "thousand"
-msgstr[0] "হাজার"
-msgstr[1] "হাজার"
+#, python-format
+msgid "%s thousand"
+msgid_plural "%s thousand"
+msgstr[0] "%s হাজার"
+msgstr[1] "%s হাজার"
 
 #: src/humanize/number.py:179
-#, fuzzy
-msgid "million"
-msgid_plural "million"
-msgstr[0] "মিলিয়ন"
-msgstr[1] "মিলিয়ন"
+#, fuzzy, python-format
+msgid "%s million"
+msgid_plural "%s million"
+msgstr[0] "%s মিলিয়ন"
+msgstr[1] "%s মিলিয়ন"
 
 #: src/humanize/number.py:180
-msgid "billion"
-msgid_plural "billion"
-msgstr[0] "বিলিয়ন"
-msgstr[1] "বিলিয়ন"
+#, python-format
+msgid "%s billion"
+msgid_plural "%s billion"
+msgstr[0] "%s বিলিয়ন"
+msgstr[1] "%s বিলিয়ন"
 
 #: src/humanize/number.py:181
-msgid "trillion"
-msgid_plural "trillion"
-msgstr[0] "ট্রিলিয়ন"
-msgstr[1] "ট্রিলিয়ন"
+#, python-format
+msgid "%s trillion"
+msgid_plural "%s trillion"
+msgstr[0] "%s ট্রিলিয়ন"
+msgstr[1] "%s ট্রিলিয়ন"
 
 #: src/humanize/number.py:182
-msgid "quadrillion"
-msgid_plural "quadrillion"
-msgstr[0] "কোয়াড্রিলিয়ন"
-msgstr[1] "কোয়াড্রিলিয়ন"
+#, python-format
+msgid "%s quadrillion"
+msgid_plural "%s quadrillion"
+msgstr[0] "%s কোয়াড্রিলিয়ন"
+msgstr[1] "%s কোয়াড্রিলিয়ন"
 
 #: src/humanize/number.py:183
-msgid "quintillion"
-msgid_plural "quintillion"
-msgstr[0] "কুইন্টিলিয়ন"
-msgstr[1] "কুইন্টিলিয়ন"
+#, python-format
+msgid "%s quintillion"
+msgid_plural "%s quintillion"
+msgstr[0] "%s কুইন্টিলিয়ন"
+msgstr[1] "%s কুইন্টিলিয়ন"
 
 #: src/humanize/number.py:184
-msgid "sextillion"
-msgid_plural "sextillion"
-msgstr[0] "সেক্সটিলিয়ন"
-msgstr[1] "সেক্সটিলিয়ন"
+#, python-format
+msgid "%s sextillion"
+msgid_plural "%s sextillion"
+msgstr[0] "%s সেক্সটিলিয়ন"
+msgstr[1] "%s সেক্সটিলিয়ন"
 
 #: src/humanize/number.py:185
-msgid "septillion"
-msgid_plural "septillion"
-msgstr[0] "সেপটিলিয়ন"
-msgstr[1] "সেপটিলিয়ন"
+#, python-format
+msgid "%s septillion"
+msgid_plural "%s septillion"
+msgstr[0] "%s সেপটিলিয়ন"
+msgstr[1] "%s সেপটিলিয়ন"
 
 #: src/humanize/number.py:186
-msgid "octillion"
-msgid_plural "octillion"
-msgstr[0] "ওকটিলিয়ন"
-msgstr[1] "ওকটিলিয়ন"
+#, python-format
+msgid "%s octillion"
+msgid_plural "%s octillion"
+msgstr[0] "%s ওকটিলিয়ন"
+msgstr[1] "%s ওকটিলিয়ন"
 
 #: src/humanize/number.py:187
-msgid "nonillion"
-msgid_plural "nonillion"
+#, python-format
+msgid "%s nonillion"
+msgid_plural "%s nonillion"
 msgstr[0] ""
 msgstr[1] ""
 
 #: src/humanize/number.py:188
-#, fuzzy
-msgid "decillion"
-msgid_plural "decillion"
+#, fuzzy, python-format
+msgid "%s decillion"
+msgid_plural "%s decillion"
 msgstr[0] ""
 msgstr[1] ""
 
 #: src/humanize/number.py:189
-msgid "googol"
-msgid_plural "googol"
+#, python-format
+msgid "%s googol"
+msgid_plural "%s googol"
 msgstr[0] ""
 msgstr[1] ""
 

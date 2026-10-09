@@ -61,12 +61,75 @@ def test_update_translations(
                     for gender in ("male", "female")
                     for value in range(10)
                 ]
+                + [humanize.intword(value) for value in (1_000, 1_200_000)]
+                + [
+                    humanize.naturalsize(3_000, binary=binary)
+                    for binary in (False, True)
+                ]
             )
     finally:
         humanize.deactivate()
 
     assert results[0][1] == one
     assert results[1] == results[0]
+
+
+def test_translation_positions_number(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Translations decide where the number goes, e.g. Romanian "al 2-lea"."""
+    if shutil.which("msgfmt") is None:
+        pytest.skip("Compiling catalogs requires msgfmt")
+
+    catalog = tmp_path / "humanize.po"
+    catalog.write_text(
+        """\
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
+"20)) ? 1 : 2);\\n"
+
+#, python-format
+msgctxt "2 (male)"
+msgid "%snd"
+msgstr "al %s-lea"
+
+#, python-format
+msgctxt "2 (female)"
+msgid "%snd"
+msgstr "a %s-a"
+
+#, python-format
+msgid "%s million"
+msgid_plural "%s million"
+msgstr[0] "%s milion"
+msgstr[1] "%s milioane"
+msgstr[2] "%s de milioane"
+
+#, python-format
+msgid "%s MB"
+msgstr "MB %s"
+""",
+        encoding="utf-8",
+    )
+    binary = catalog.with_suffix(".mo")
+    subprocess.run(["msgfmt", "--check", "-o", str(binary), str(catalog)], check=True)
+    with binary.open("rb") as stream:
+        translation = gettext.GNUTranslations(stream)
+    monkeypatch.setitem(humanize.i18n._TRANSLATIONS, "xx", translation)
+
+    try:
+        humanize.activate("xx")
+        assert humanize.ordinal(22) == "al 22-lea"
+        assert humanize.ordinal(22, gender="female") == "a 22-a"
+        assert humanize.intword(20_000_000, "%d") == "20 de milioane"
+        # Not a real translation, but it proves the template,
+        # not the code, decides where the number goes.
+        assert humanize.naturalsize(3_000_000) == "MB 3.0"
+    finally:
+        humanize.deactivate()
 
 
 @freeze_time("2020-02-02")
