@@ -249,3 +249,39 @@ Where `<locale name>` is a locale abbreviation, eg. `en_GB`, `pt_BR` or just `ru
 etc.
 
 List the language at the top of this README.
+
+### Localized large-number scales
+
+By default, `intword()` uses the existing thousand/million/etc. translations. A locale
+can instead opt into its own named powers of ten through two JSON translations. For
+example, a catalog with two plural forms can contain:
+
+```po
+msgid "intword:scales:v1"
+msgstr "[4, 8]"
+
+msgid "intword:patterns:v1"
+msgid_plural "intword:patterns:v1"
+msgstr[0] "{\"exponents\": [4, 8], \"patterns\": [\"unit {number}\", \"large unit {number}\"]}"
+msgstr[1] "{\"exponents\": [4, 8], \"patterns\": [\"units {number}\", \"large units {number}\"]}"
+```
+
+Exponents must be strictly increasing positive integers, at most 308 (the finite float
+range accepted by `intword`). Each plural translation must repeat the exact exponent
+array and provide one pattern for every exponent. This binding prevents a regional
+catalog's scales from being combined with different scales inherited from a fallback
+catalog. Each pattern must contain exactly one literal `{number}` placeholder and no
+other braces. It controls the number's position and spacing; the caller's `format` and
+the locale's decimal separator still apply. Plural selection uses the same
+rounded-number rule as the existing unit messages.
+
+Values below the first named power remain integers. Larger values use the highest named
+power as a multiple, without inventing further units. Japanese uses the
+[modern four-digit scale](https://www-utap.phys.s.u-tokyo.ac.jp/~suto/myresearch/motomura-scafe-2018Oct26.pdf#page=29)
+from 万 (10⁴) through 無量大数 (10⁶⁸), so 234909023 and 2349090 examples become `2.3億`
+and `234.9万`.
+
+Missing, fuzzy, or malformed profile entries use the existing unit translations. All
+plural forms should supply a complete matching profile. The usual translation update
+script extracts these messages and preserves them during catalog merging; no changes are
+needed in other locales.
