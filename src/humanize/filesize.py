@@ -41,7 +41,7 @@ def naturalsize(
     gnu: bool = False,
     format: str = "%.1f",
 ) -> str:
-    """Format a number of bytes like a human-readble filesize (e.g. 10 kB).
+    """Format a number of bytes like a human-readable filesize (e.g. 10 kB).
 
     By default, decimal suffixes (kB, MB) are used.
 
