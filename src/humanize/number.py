@@ -136,7 +136,7 @@ def ordinal(value: NumberOrString, gender: str = "male") -> str:
     except (TypeError, ValueError):
         return str(value)
     gender = "male" if gender == "male" else "female"
-    digit = value % 10
+    digit = 0 if value % 100 in (11, 12, 13) else value % 10
     return f"{value}{P_(*_ORDINAL_SUFFIXES[gender][digit])}"
 
 
@@ -186,7 +186,7 @@ def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
             if "." in value:
                 value = float(value)
             else:
-                value = int(value.lstrip("+-"))
+                value = int(value)
         elif not isinstance(value, int):
             if not math.isfinite(float(value)):
                 return _format_not_finite(float(value))
@@ -197,7 +197,15 @@ def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
     if ndigits is not None:
         result = f"{value:,.{ndigits}f}"
     else:
-        result = f"{value:,}"
+        if isinstance(value, float):
+            # Use Decimal to preserve .0 for whole floats and handle
+            # scientific notation for very large/small floats correctly.
+            from decimal import Decimal
+
+            d = Decimal(str(value))
+            result = f"{d:,f}"
+        else:
+            result = f"{value:,}"
     if thousands_sep != "," or decimal_sep != ".":
         result = result.translate(str.maketrans(",.", thousands_sep + decimal_sep))
     return result
@@ -281,6 +289,15 @@ def intword(value: NumberOrString, format: str = "%.1f") -> str:
     power = powers[ordinal]
     chopped = value / power
     rounded_value = float(format % chopped)
+
+    if not largest_ordinal and rounded_value == powers[ordinal + 1] // power:
+        # After rounding, we end up just at the next power. Compare against the
+        # integer ratio between the two powers instead of ``rounded_value * power``:
+        # for values above ~10**22 the latter is evaluated in floating point and
+        # no longer equals the exact ``powers[ordinal + 1]``, so the carry was
+        # silently skipped (e.g. 10**24 - 1 rendered as "1000.0 sextillion").
+        ordinal += 1
+        rounded_value = 1.0
 
     singular, plural = human_powers[ordinal]
     unit = _ngettext(singular, plural, math.ceil(rounded_value))
