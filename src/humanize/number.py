@@ -196,6 +196,23 @@ def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
 
     if ndigits is not None:
         result = f"{value:,.{ndigits}f}"
+    elif isinstance(value, float):
+        # f"{value:,}" formats floats via repr(), which switches to scientific
+        # notation at 1e16 (and for tiny floats like 1e-5), so no thousands
+        # separators are added. Expand to fixed-point first (see #431).
+        import decimal
+
+        expanded = f"{decimal.Decimal(repr(value)):f}"
+        if "." in expanded:
+            integer_part, fraction_part = expanded.split(".")
+        else:
+            integer_part, fraction_part = expanded, "0"
+        if integer_part.startswith("-"):
+            sign, integer_part = "-", integer_part[1:]
+        else:
+            sign = ""
+        grouped = f"{int(integer_part):,}" if integer_part else "0"
+        result = f"{sign}{grouped}.{fraction_part}"
     else:
         result = f"{value:,}"
     if thousands_sep != "," or decimal_sep != ".":

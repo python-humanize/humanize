@@ -90,6 +90,27 @@ def test_intcomma_large_integer(sign: int) -> None:
     assert humanize.intcomma(value) == expected
 
 
+@pytest.mark.parametrize(
+    "test_args, expected",
+    [
+        ([1e15], "1,000,000,000,000,000.0"),
+        ([1e16], "10,000,000,000,000,000.0"),
+        ([1.5e20], "150,000,000,000,000,000,000.0"),
+        ([-1e16], "-10,000,000,000,000,000.0"),
+        ([0.00001], "0.00001"),
+        ([1e16, 0], "10,000,000,000,000,000"),
+    ],
+    ids=str,
+)
+def test_intcomma_large_float_no_scientific_notation(
+    test_args: list[typing.Any], expected: str
+) -> None:
+    # https://github.com/python-humanize/humanize/issues/431
+    # Floats at 1e16 and above (and tiny floats like 1e-5) were rendered in
+    # scientific notation with no thousands separators.
+    assert humanize.intcomma(*test_args) == expected
+
+
 def test_intword_powers() -> None:
     # make sure that powers & human_powers have the same number of items
     assert len(number.powers) == len(number.human_powers)
