@@ -377,3 +377,24 @@ def test_clamp(test_args: list[typing.Any], expected: str) -> None:
 )
 def test_metric(test_args: list[typing.Any], expected: str) -> None:
     assert humanize.metric(*test_args) == expected
+
+
+@pytest.mark.parametrize(
+    "test_args, expected",
+    [
+        ([9.996e30], "10.0 Q"),
+        ([9.996e31], "100 Q"),
+        ([9.996e32], "1.00 x 10³³"),
+        ([9.996e32, "W"], "1.00 x 10³³W"),
+        ([1e33], "1.00 x 10³³"),
+    ],
+    ids=str,
+)
+def test_metric_rounding_carry_at_quetta(
+    test_args: list[typing.Any], expected: str
+) -> None:
+    # https://github.com/python-humanize/humanize/issues/423
+    # The rounding carry stopped at exponent 30 (quetta): values rounding up
+    # kept too many digits, and values rounding past quetta were not moved to
+    # scientific notation.
+    assert humanize.metric(*test_args) == expected
