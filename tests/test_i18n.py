@@ -132,6 +132,26 @@ def test_intcomma() -> None:
         assert humanize.intcomma(number) == "10,000,000"
 
 
+@pytest.mark.parametrize(
+    "locale, value",
+    [
+        ("de_DE", "kein, Betrag."),
+        ("de_DE", "1.234,5oops"),
+        ("fr_FR", "pas un nombre, vraiment"),
+        ("fr_FR", "1 234,5oops"),
+    ],
+)
+@pytest.mark.parametrize("ndigits", [None, 0, 2])
+def test_intcomma_invalid_string(locale: str, value: str, ndigits: int | None) -> None:
+    try:
+        humanize.activate(locale)
+        assert humanize.intcomma(value, ndigits) == value
+    except FileNotFoundError:
+        pytest.skip("Generate .mo with scripts/generate-translation-binaries.sh")
+    finally:
+        humanize.deactivate()
+
+
 def test_naturaldelta() -> None:
     seconds = 1234 * 365 * 24 * 60 * 60
 
