@@ -111,3 +111,36 @@ def test_naturalsize(test_args: list[int] | list[int | bool], expected: str) -> 
         test_args[0] = f"-{test_args[0]}"
 
     assert humanize.naturalsize(*test_args) == "-" + expected
+
+
+@pytest.mark.parametrize(
+    "test_args, expected",
+    [
+        # Literal text around the conversion, even digits, must not hijack the
+        # rounding carry-over check: "v2000: " contains 2000, which a
+        # number-hunt in the rendered string misreads as the mantissa.
+        ([3000, False, False, "v2000: %.1f"], ("v2000: 3.0 kB", "v2000: -3.0 kB")),
+        # ... and a small literal must not suppress a real rounding carry.
+        ([999999, False, False, "v2: %.1f"], ("v2: 1.0 MB", "v2: -1.0 MB")),
+        ([1048575, True, False, "v2: %.1f"], ("v2: 1.0 MiB", "v2: -1.0 MiB")),
+        ([3000, False, True, "v2000: %.1f"], ("v2000: 2.9K", "v2000: -2.9K")),
+        # Escaped percents are literal text, not conversions.
+        (
+            [3000, False, False, "v2000: %%f %.1f"],
+            ("v2000: %f 3.0 kB", "v2000: %f -3.0 kB"),
+        ),
+        (
+            [999999, False, False, "v2: %% %.1f"],
+            ("v2: % 1.0 MB", "v2: % -1.0 MB"),
+        ),
+    ],
+)
+def test_naturalsize_literal_text_in_format(
+    test_args: list, expected: tuple[str, str]
+) -> None:
+    positive, negative = expected
+    assert humanize.naturalsize(*test_args) == positive
+
+    # Both signs: the "-" lands on the rendered number, after the literal text.
+    test_args[0] *= -1
+    assert humanize.naturalsize(*test_args) == negative

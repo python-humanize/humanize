@@ -39,7 +39,10 @@ suffixes = {
 
 # Matches the numeric part of a rendered mantissa, ignoring any surrounding
 # text a custom `format` may add (e.g. "%.1f~" renders "976.6~").
-_MANTISSA_RE = re.compile(r"[-+]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][-+]?\d+)?")
+# Matches a single printf-style conversion in a custom format string, or a
+# literal "%%" escape. Used to locate the numeric conversion whose rendering
+# drives the rounding carry-over check in naturalsize().
+_FORMAT_CONVERSION_RE = re.compile(r"%%|%[-+ #0]*\d*(?:\.\d*)?[hlL]?[diueEfFgGrsa]")
 
 
 def naturalsize(
@@ -108,14 +111,30 @@ def naturalsize(
     # mantissa afterward; rounding can push it up to `base` (e.g. 999999 is
     # 999.999 kB, which formats to "1000.0 kB"). When that happens and a larger
     # suffix is available, step up one suffix so the result reads "1.0 MB".
-    # `format` may contain text around the conversion, so extract the numeric
-    # mantissa from the rendered string before comparing it with `base`: parsing
-    # the whole string raises ValueError, and comparing rendered strings
-    # misjudges formats that do not round-trip through str -> float (e.g.
-    # "%.0e" % 1024 is "1e+03").
-    mantissa = _MANTISSA_RE.search(format % (abs_bytes / (base**exp)))
-    if exp < len(suffix) and mantissa and abs(float(mantissa.group())) >= base:
-        exp += 1
+    # `format` may contain literal text around the conversion, even digits
+    # (e.g. "v2000: %.1f"), so the conversion itself is located first and
+    # rendered alone for the numeric check: number-hunting in the rendered
+    # string would trip over the literal text instead of the mantissa.
+    # Parsing the whole rendered string raises ValueError, and comparing
+    # rendered strings misjudges formats that do not round-trip through
+    # str -> float (e.g. "%.0e" % 1024 is "1e+03").
+    conversion = next(
+        (
+            match.group()
+            for match in _FORMAT_CONVERSION_RE.finditer(format)
+            if match.group() != "%%"
+        ),
+        None,
+    )
+    if exp < len(suffix) and conversion is not None:
+        try:
+            rendered = abs(float(conversion % (abs_bytes / (base**exp))))
+        except (TypeError, ValueError):
+            # Exotic conversions (e.g. "%a") do not render a plain number;
+            # leave the suffix choice alone rather than guessing.
+            rendered = 0.0
+        if rendered >= base:
+            exp += 1
     space = "" if gnu else " "
     ret: str = format % (bytes_ / (base**exp)) + space + _(suffix[exp - 1])
     return ret
