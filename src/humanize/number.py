@@ -520,7 +520,11 @@ def scientific(value: NumberOrString, precision: int = 2) -> str:
     from decimal import Decimal
 
     precision = int(precision)
-    if isinstance(value, int) and not isinstance(value, bool) and abs(value) > sys.float_info.max:
+    if (
+        isinstance(value, int)
+        and not isinstance(value, bool)
+        and abs(value) > sys.float_info.max
+    ):
         n = format(Decimal(value), f".{precision}e")
     else:
         n = format(value, f".{precision}e")
