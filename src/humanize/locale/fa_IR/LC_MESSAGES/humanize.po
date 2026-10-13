@@ -363,3 +363,13 @@ msgstr "دیروز"
 #, python-format
 msgid "%s and %s"
 msgstr "%s و %s"
+
+# --- filesize units (naturalsize) ---
+
+#, python-format
+msgid "%d Byte"
+msgstr "%d بایت"
+
+#, python-format
+msgid "%d Bytes"
+msgstr "%d بایت"
