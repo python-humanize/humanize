@@ -4,8 +4,8 @@ from __future__ import annotations
 
 __lazy_modules__ = {"bisect"}
 
-import bisect
 import math
+
 from .i18n import _gettext as _
 from .i18n import _gettext_noop as N_
 from .i18n import _ngettext, decimal_separator, thousands_separator
@@ -243,15 +243,26 @@ def intword(value, format="%.1f"):
             if float(format % chopped) == float(powers[ordinal] // powers[ordinal - 1]):
                 singular, plural = human_powers[ordinal]
                 chopped_next = value / float(powers[ordinal])
-                result = " ".join([format, _ngettext(singular, plural, math.ceil(chopped_next))]) % chopped_next
+                result = (
+                    " ".join(
+                        [format, _ngettext(singular, plural, math.ceil(chopped_next))]
+                    )
+                    % chopped_next
+                )
                 return f"-{result}" if negative else result
             singular, plural = human_powers[ordinal - 1]
-            result = " ".join([format, _ngettext(singular, plural, math.ceil(chopped))]) % chopped
+            result = (
+                " ".join([format, _ngettext(singular, plural, math.ceil(chopped))])
+                % chopped
+            )
             return f"-{result}" if negative else result
     chopped = value / float(powers[-1])
     singular, plural = human_powers[-1]
-    result = " ".join([format, _ngettext(singular, plural, math.ceil(chopped))]) % chopped
+    result = (
+        " ".join([format, _ngettext(singular, plural, math.ceil(chopped))]) % chopped
+    )
     return f"-{result}" if negative else result
+
 
 def apnumber(value: NumberOrString) -> str:
     """Converts an integer to Associated Press style.
