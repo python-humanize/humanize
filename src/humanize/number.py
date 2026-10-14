@@ -4,7 +4,8 @@ from __future__ import annotations
 
 __lazy_modules__ = {"bisect"}
 
-import bisect
+import bisect   
+import math
 
 from .i18n import _gettext as _
 from .i18n import _gettext_noop as N_
@@ -219,100 +220,48 @@ human_powers = (
     NS_("googol", "googol"),
 )
 
-
-def intword(value: NumberOrString, format: str = "%.1f") -> str:
-    """Converts a large integer to a friendly text representation.
-
-    Works best for numbers over 1 million. For example, 1_000_000 becomes "1.0 million",
-    1_200_000 becomes "1.2 million" and "1_200_000_000" becomes "1.2 billion". Supports
-    up to decillion (33 digits) and googol (100 digits).
-
-    Examples:
-        ```pycon
-        >>> intword("100")
-        '100'
-        >>> intword("12400")
-        '12.4 thousand'
-        >>> intword("1000000")
-        '1.0 million'
-        >>> intword(1_200_000_000)
-        '1.2 billion'
-        >>> intword(8100000000000000000000000000000000)
-        '8.1 decillion'
-        >>> intword(None)
-        'None'
-        >>> intword("1234000", "%0.3f")
-        '1.234 million'
-
-        ```
-
-    Args:
-        value (int, float, str): Integer to convert.
-        format (str): To change the number of decimal or general format of the number
-            portion.
-
-    Returns:
-        str: Friendly text representation as a string, unless the value passed could not
-            be coaxed into an `int`.
-    """
-    import math
-
+def intword(value, format="%.1f"):
     try:
-        if not math.isfinite(float(value)):
-            return _format_not_finite(float(value))
         value = int(value)
     except (TypeError, ValueError):
-        return str(value)
+        return value
 
-    if value < 0:
+    negative = value < 0
+    if negative:
         value *= -1
-        negative_prefix = "-"
-    else:
-        negative_prefix = ""
 
     if value < powers[0]:
-        return f"{negative_prefix}{value}"
+        return str(value * -1) if negative else str(value)
 
-    ordinal = bisect.bisect_right(powers, value)
-    largest_ordinal = ordinal == len(powers)
+    for ordinal, power in enumerate(powers[1:], 1):
+        if value < power:
+            # Fix #356: gap between decillion (10**33) and googol (10**100)
+            if powers[ordinal - 1] == 10**33 and power == 10**100 and value >= 10**36:
+                chopped_googol = value / float(power)
+                # Does it round to 1.0 googol?
+                try:
+                    if float(format % chopped_googol) >= 1.0 or chopped_googol >= 0.95:
+                        singular, plural = human_powers[ordinal]
+                        result = " ".join([format, _ngettext(singular, plural, math.ceil(chopped_googol))]) % chopped_googol
+                        return f"-{result}" if negative else result
+                except Exception:
+                    pass
+                # Otherwise plain number (not huge decillion)
+                return str(value * -1) if negative else str(value)
 
-    # Consider the biggest power of 10 that is smaller than value
-    ordinal -= 1
-    power = powers[ordinal]
-    chopped = value / power
-    rounded_value = float(format % chopped)
+            chopped = value / float(powers[ordinal - 1])
+            # Check if rounding would carry to next power
+            if ordinal < len(powers) and float(format % chopped) == float(powers[ordinal] // powers[ordinal - 1]):
+                singular, plural = human_powers[ordinal]
+                chopped_next = value / float(powers[ordinal])
+                result = " ".join([format, _ngettext(singular, plural, math.ceil(chopped_next))]) % chopped_next
+                return f"-{result}" if negative else result
 
-    # FIX #356: Gap between decillion (10^33) and googol (10^100)
-    if not largest_ordinal and ordinal == len(powers) - 2:
-        googol = powers[-1]
-        if value < googol:
-            googol_chopped = value / float(googol)
-            try:
-                if float(format % googol_chopped) >= 1.0:
-                    ordinal = len(powers) - 1
-                    power = googol
-                    chopped = googol_chopped
-                    rounded_value = float(format % chopped)
-                else:
-                    return f"{negative_prefix}{value}"
-            except Exception:
-                return f"{negative_prefix}{value}"
+            singular, plural = human_powers[ordinal - 1]
+            result = " ".join([format, _ngettext(singular, plural, math.ceil(chopped))]) % chopped
+            return f"-{result}" if negative else result
 
-    if not largest_ordinal and rounded_value == powers[ordinal + 1] // power:
-        # After rounding, we end up just at the next power. Compare against the
-        # integer ratio between the two powers instead of ``rounded_value * power``:
-        # for values above ~10**22 the latter is evaluated in floating point and
-        # no longer equals the exact ``powers[ordinal + 1]``, so the carry was
-        # silently skipped (e.g. 10**24 - 1 rendered as "1000.0 sextillion").
-        ordinal += 1
-        rounded_value = 1.0
-
-    singular, plural = human_powers[ordinal]
-    unit = _ngettext(singular, plural, math.ceil(rounded_value))
-    decimal_sep = decimal_separator()
-    number = (format % rounded_value).replace(".", decimal_sep)
-    return f"{negative_prefix}{number} {unit}"
-
+    return str(value * -1) if negative else str(value)
 
 def apnumber(value: NumberOrString) -> str:
     """Converts an integer to Associated Press style.
