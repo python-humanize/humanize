@@ -4,9 +4,8 @@ from __future__ import annotations
 
 __lazy_modules__ = {"bisect"}
 
-import bisect   
+import bisect
 import math
-
 from .i18n import _gettext as _
 from .i18n import _gettext_noop as N_
 from .i18n import _ngettext, decimal_separator, thousands_separator
@@ -220,48 +219,39 @@ human_powers = (
     NS_("googol", "googol"),
 )
 
+
 def intword(value, format="%.1f"):
     try:
+        fv = float(value)
+        if not math.isfinite(fv):
+            return _format_not_finite(fv)
+    except (TypeError, ValueError, OverflowError):
+        pass
+    try:
         value = int(value)
-    except (TypeError, ValueError):
-        return value
-
+    except (TypeError, ValueError, OverflowError):
+        return str(value)
     negative = value < 0
     if negative:
-        value *= -1
-
+        value = -value
     if value < powers[0]:
-        return str(value * -1) if negative else str(value)
-
+        return str(-value) if negative else str(value)
     for ordinal, power in enumerate(powers[1:], 1):
         if value < power:
-            # Fix #356: gap between decillion (10**33) and googol (10**100)
-            if powers[ordinal - 1] == 10**33 and power == 10**100 and value >= 10**36:
-                chopped_googol = value / float(power)
-                # Does it round to 1.0 googol?
-                try:
-                    if float(format % chopped_googol) >= 1.0 or chopped_googol >= 0.95:
-                        singular, plural = human_powers[ordinal]
-                        result = " ".join([format, _ngettext(singular, plural, math.ceil(chopped_googol))]) % chopped_googol
-                        return f"-{result}" if negative else result
-                except Exception:
-                    pass
-                # Otherwise plain number (not huge decillion)
-                return str(value * -1) if negative else str(value)
-
             chopped = value / float(powers[ordinal - 1])
-            # Check if rounding would carry to next power
-            if ordinal < len(powers) and float(format % chopped) == float(powers[ordinal] // powers[ordinal - 1]):
+            # FIX #86: compare to actual gap, not fixed 1000
+            if float(format % chopped) == float(powers[ordinal] // powers[ordinal - 1]):
                 singular, plural = human_powers[ordinal]
                 chopped_next = value / float(powers[ordinal])
                 result = " ".join([format, _ngettext(singular, plural, math.ceil(chopped_next))]) % chopped_next
                 return f"-{result}" if negative else result
-
             singular, plural = human_powers[ordinal - 1]
             result = " ".join([format, _ngettext(singular, plural, math.ceil(chopped))]) % chopped
             return f"-{result}" if negative else result
-
-    return str(value * -1) if negative else str(value)
+    chopped = value / float(powers[-1])
+    singular, plural = human_powers[-1]
+    result = " ".join([format, _ngettext(singular, plural, math.ceil(chopped))]) % chopped
+    return f"-{result}" if negative else result
 
 def apnumber(value: NumberOrString) -> str:
     """Converts an integer to Associated Press style.
