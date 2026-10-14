@@ -282,6 +282,22 @@ def intword(value: NumberOrString, format: str = "%.1f") -> str:
     chopped = value / power
     rounded_value = float(format % chopped)
 
+    # FIX #356: Gap between decillion (10^33) and googol (10^100)
+    if not largest_ordinal and ordinal == len(powers) - 2:
+        googol = powers[-1]
+        if value < googol:
+            googol_chopped = value / float(googol)
+            try:
+                if float(format % googol_chopped) >= 1.0:
+                    ordinal = len(powers) - 1
+                    power = googol
+                    chopped = googol_chopped
+                    rounded_value = float(format % chopped)
+                else:
+                    return f"{negative_prefix}{value}"
+            except Exception:
+                return f"{negative_prefix}{value}"
+
     if not largest_ordinal and rounded_value == powers[ordinal + 1] // power:
         # After rounding, we end up just at the next power. Compare against the
         # integer ratio between the two powers instead of ``rounded_value * power``:
