@@ -196,6 +196,11 @@ def test_naturaldelta_too_large_value_raises() -> None:
         (NOW - dt.timedelta(days=365 + 35), "1 year, 1 month ago"),
         (dt.timedelta(days=-10000), "27 years from now"),
         (dt.timedelta(days=365 + 35), "1 year, 1 month ago"),
+        (dt.timedelta(days=4_000_000), "10,959 years ago"),
+        (dt.timedelta(days=-4_000_000), "10,959 years from now"),
+        (dt.timedelta.max, "2,739,726 years ago"),
+        (dt.timedelta.min, "2,739,726 years from now"),
+        (345_600_000_000, "10,959 years ago"),
         (22.5, "22 seconds ago"),
         (23.5, "24 seconds ago"),
         (23.9, "24 seconds ago"),
@@ -209,6 +214,17 @@ def test_naturaltime(
     test_input: dt.datetime | dt.timedelta | float, expected: str
 ) -> None:
     assert humanize.naturaltime(test_input) == expected
+
+
+@freeze_time(FROZEN_DATE)
+@pytest.mark.parametrize(
+    "future, expected",
+    [(False, "10,959 years ago"), (True, "10,959 years from now")],
+)
+def test_naturaltime_large_numeric_seconds_respects_future(
+    future: bool, expected: str
+) -> None:
+    assert humanize.naturaltime(-345_600_000_000, future=future) == expected
 
 
 @freeze_time(FROZEN_DATE)
