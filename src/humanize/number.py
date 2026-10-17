@@ -118,34 +118,6 @@ def _nonfinite_float(value: object) -> float | None:
     return None
 
 
-def _nonfinite_float(value: object) -> float | None:
-    """Return a non-finite float when ``value`` is non-finite, otherwise ``None``.
-
-    Whole numbers are finite even when they do not fit in a float.
-    ``float(10**400)`` raises ``OverflowError``, and ``float("1" + "0" * 400)``
-    returns infinity, so neither result can decide finiteness for an integer.
-    """
-    import math
-
-    if isinstance(value, str):
-        try:
-            int(value.strip())
-        except ValueError:
-            pass
-        else:
-            return None
-    elif isinstance(value, int) and not isinstance(value, bool):
-        return None
-
-    try:
-        number = float(value)  # type: ignore[arg-type]
-    except OverflowError:
-        return None
-    if not math.isfinite(number):
-        return number
-    return None
-
-
 def ordinal(value: NumberOrString, gender: str = "male") -> str:
     """Converts an integer to its ordinal as a string.
 
