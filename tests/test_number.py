@@ -297,6 +297,15 @@ def test_clamp(test_args: list[typing.Any], expected: str) -> None:
     assert humanize.clamp(*test_args) == expected
 
 
+def test_clamp_return_types() -> None:
+    assert typing.assert_type(humanize.clamp(1.0), str) == "1.0"
+    assert typing.assert_type(humanize.clamp(None), None) is None
+    assert (
+        typing.assert_type(humanize.clamp(1, format=humanize.intword, floor=1e6), str)
+        == "<1.0 million"
+    )
+
+
 @pytest.mark.parametrize(
     "test_args, expected",
     [
