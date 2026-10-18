@@ -5,6 +5,7 @@ from __future__ import annotations
 __lazy_modules__ = {"bisect"}
 
 import bisect
+from typing import overload
 
 from .i18n import _gettext as _
 from .i18n import _gettext_noop as N_
@@ -15,6 +16,7 @@ from .i18n import _pgettext_noop as PS_
 
 TYPE_CHECKING = False
 if TYPE_CHECKING:
+    from collections.abc import Callable
     from typing import TypeAlias
 
     # This type can be better defined by typing.SupportsFloat
@@ -457,14 +459,36 @@ def scientific(value: NumberOrString, precision: int = 2) -> str:
     return part1 + " x 10" + str(int(part2)).translate(_SUPERSCRIPT_TRANS)
 
 
+@overload
 def clamp(
-    value: float,
-    format: str = "{:}",
+    value: None,
+    format: str | Callable[[float], str] = "{:}",
     floor: float | None = None,
     ceil: float | None = None,
     floor_token: str = "<",
     ceil_token: str = ">",
-) -> str:
+) -> None: ...
+
+
+@overload
+def clamp(
+    value: float,
+    format: str | Callable[[float], str] = "{:}",
+    floor: float | None = None,
+    ceil: float | None = None,
+    floor_token: str = "<",
+    ceil_token: str = ">",
+) -> str: ...
+
+
+def clamp(
+    value: float | None,
+    format: str | Callable[[float], str] = "{:}",
+    floor: float | None = None,
+    ceil: float | None = None,
+    floor_token: str = "<",
+    ceil_token: str = ">",
+) -> str | None:
     """Returns number with the specified format, clamped between floor and ceil.
 
     If the number is larger than ceil or smaller than floor, then the respective limit
@@ -488,7 +512,7 @@ def clamp(
         ```
 
     Args:
-        value (int, float): Input number.
+        value (int, float, None): Input number, or `None` to return `None`.
         format (str OR callable): Can either be a formatting string, or a callable
             function that receives value and returns a string.
         floor (int, float): Smallest value before clamping.
@@ -499,7 +523,8 @@ def clamp(
             to output.
 
     Returns:
-        str: Formatted number. The output is clamped between the indicated floor and
+        str | None: Formatted number, or `None` when `value` is `None`.
+            The output is clamped between the indicated floor and
             ceil. If the number is larger than ceil or smaller than floor, the output
             will be prepended with a token indicating as such.
 
