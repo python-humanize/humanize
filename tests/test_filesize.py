@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import gettext
+
 import pytest
 
 import humanize
@@ -101,3 +103,19 @@ def test_naturalsize(test_args: list[int] | list[int | bool], expected: str) -> 
         test_args[0] = f"-{test_args[0]}"
 
     assert humanize.naturalsize(*test_args) == "-" + expected
+
+
+def test_naturalsize_uses_locale_decimal_separator() -> None:
+    """Locales with a comma radix should not keep a dotted mantissa.
+
+    Uses a NullTranslations catalog so this does not depend on compiled .mo files.
+    """
+    humanize.i18n._TRANSLATIONS["fr_FR"] = gettext.NullTranslations()
+    humanize.i18n._CURRENT.locale = "fr_FR"
+    try:
+        assert humanize.naturalsize(1_500_000) == "1,5 MB"
+        assert humanize.naturalsize(3000, gnu=True) == "2,9K"
+        assert humanize.naturalsize(3000, binary=True) == "2,9 KiB"
+    finally:
+        humanize.i18n.deactivate()
+        assert humanize.naturalsize(1_500_000) == "1.5 MB"

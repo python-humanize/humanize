@@ -241,10 +241,11 @@ def test_intword_i18n(locale: str, number: int, expected_result: str) -> None:
         ("fr_FR", 42, "42 octets"),
         ("si_LK", 1, "බයිට් 1"),
         ("si_LK", 42, "බයිට් 42"),
-        ("fr_FR", 42_000, "42.0 Ko"),
-        ("fr_FR", 42_000_000, "42.0 Mo"),
-        ("fr_FR", 42_000_000_000, "42.0 Go"),
-        ("fr_FR", -42_000, "-42.0 Ko"),
+        ("fr_FR", 42_000, "42,0 Ko"),
+        ("fr_FR", 42_000_000, "42,0 Mo"),
+        ("fr_FR", 42_000_000_000, "42,0 Go"),
+        ("fr_FR", -42_000, "-42,0 Ko"),
+        ("fr_FR", 1_500_000, "1,5 Mo"),
     ],
 )
 def test_naturalsize_i18n(locale: str, value: float, expected_result: str) -> None:
@@ -264,7 +265,7 @@ def test_naturalsize_i18n_binary() -> None:
     except FileNotFoundError:
         pytest.skip("Generate .mo with scripts/generate-translation-binaries.sh")
     else:
-        assert humanize.naturalsize(3000, binary=True) == "2.9 Kio"
+        assert humanize.naturalsize(3000, binary=True) == "2,9 Kio"
     finally:
         humanize.i18n.deactivate()
 
