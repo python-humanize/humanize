@@ -173,8 +173,15 @@ def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
 
     Returns:
         str: String containing commas every three digits.
+
+    Raises:
+        ValueError: If `ndigits` is negative.
     """
     import math
+
+    if ndigits is not None and ndigits < 0:
+        msg = f"ndigits must be >= 0, got {ndigits}"
+        raise ValueError(msg)
 
     thousands_sep = thousands_separator()
     decimal_sep = decimal_separator()

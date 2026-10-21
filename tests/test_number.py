@@ -83,6 +83,12 @@ def test_intcomma(
     assert humanize.intcomma(*test_args) == expected
 
 
+@pytest.mark.parametrize("value", [12345.111, 12345, "12345.111", None])
+def test_intcomma_negative_ndigits(value: float | str | None) -> None:
+    with pytest.raises(ValueError, match="ndigits must be >= 0"):
+        humanize.intcomma(value, -1)
+
+
 @pytest.mark.parametrize("sign", [1, -1])
 def test_intcomma_large_integer(sign: int) -> None:
     value = sign * (10**400 + 123)
