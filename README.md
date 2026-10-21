@@ -216,6 +216,17 @@ How to change locale at runtime:
 '3 seconds ago'
 ```
 
+Number formatting also uses the locale's configured numeric separators:
+
+```pycon
+>>> _t = humanize.i18n.activate("tr_TR")
+>>> humanize.intcomma(1_234_567.89)
+'1.234.567,89'
+>>> humanize.intword(1_200_000)
+'1,2 milyon'
+>>> humanize.i18n.deactivate()
+```
+
 You can pass additional parameter `path` to `activate` to specify a path to search
 locales in.
 
