@@ -127,6 +127,42 @@ def test_naturaltime_persian(seconds: int, expected: str) -> None:
         humanize.deactivate()
 
 
+@pytest.mark.parametrize(
+    "microseconds, minimum_unit, expected",
+    [
+        (1, "microseconds", "1微秒"),
+        (2, "microseconds", "2微秒"),
+        (1000, "milliseconds", "1毫秒"),
+        (2000, "milliseconds", "2毫秒"),
+    ],
+)
+def test_naturaldelta_chinese_subseconds(
+    microseconds: int, minimum_unit: str, expected: str
+) -> None:
+    try:
+        humanize.activate("zh_CN")
+        value = dt.timedelta(microseconds=microseconds)
+        assert humanize.naturaldelta(value, minimum_unit=minimum_unit) == expected
+    except FileNotFoundError:
+        pytest.skip("Generate .mo with scripts/generate-translation-binaries.sh")
+    finally:
+        humanize.deactivate()
+
+
+def test_chinese_zero_and_duration_conjunction() -> None:
+    try:
+        humanize.activate("zh_CN")
+        assert humanize.apnumber(0) == "零"
+        assert humanize.precisedelta(61) == "1分和1秒"
+        value = dt.timedelta(microseconds=1002)
+        result = humanize.precisedelta(value, minimum_unit="microseconds")
+        assert result == "1毫秒和2微秒"
+    except FileNotFoundError:
+        pytest.skip("Generate .mo with scripts/generate-translation-binaries.sh")
+    finally:
+        humanize.deactivate()
+
+
 def test_intcomma() -> None:
     number = 10_000_000
 
