@@ -106,6 +106,27 @@ def test_i18n() -> None:
         assert humanize.precisedelta(one_min_three_seconds) == "1 minute and 7 seconds"
 
 
+@pytest.mark.parametrize(
+    "seconds, expected",
+    [
+        (-60, "یک دقیقه پیش"),
+        (-3, "3 ثانیه پیش"),
+        (0, "اکنون"),
+        (3, "3 ثانیه دیگر"),
+        (60, "یک دقیقه دیگر"),
+    ],
+)
+def test_naturaltime_persian(seconds: int, expected: str) -> None:
+    try:
+        humanize.activate("fa_IR")
+        value = NOW + dt.timedelta(seconds=seconds)
+        assert humanize.naturaltime(value, when=NOW) == expected
+    except FileNotFoundError:
+        pytest.skip("Generate .mo with scripts/generate-translation-binaries.sh")
+    finally:
+        humanize.deactivate()
+
+
 def test_intcomma() -> None:
     number = 10_000_000
 
