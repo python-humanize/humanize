@@ -26,6 +26,7 @@ _THOUSANDS_SEPARATOR: dict[str | None, str] = {
     "pt_BR": ".",
     "hu_HU": " ",
     "lv": " ",
+    "tr_TR": ".",
 }
 
 # Mapping of locale to decimal separator
@@ -36,6 +37,7 @@ _DECIMAL_SEPARATOR: dict[str | None, str] = {
     "pt_BR": ",",
     "hu_HU": ",",
     "lv": ",",
+    "tr_TR": ",",
 }
 
 

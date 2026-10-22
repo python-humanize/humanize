@@ -149,6 +149,12 @@ def test_intcomma() -> None:
         humanize.i18n.activate("pt_BR")
         assert humanize.intcomma(number) == "10.000.000"
 
+        humanize.i18n.activate("tr_TR")
+        assert humanize.intcomma(number) == "10.000.000"
+        assert humanize.intcomma(1_234_567.89) == "1.234.567,89"
+        assert humanize.intcomma("1234567,89") == "1.234.567,89"
+        assert humanize.intcomma("1.234.567,89") == "1.234.567,89"
+
     except FileNotFoundError:
         pytest.skip("Generate .mo with scripts/generate-translation-binaries.sh")
 
@@ -184,6 +190,9 @@ def test_naturaldelta() -> None:
         ("it_IT", 1_200_000, "1,2 milioni"),
         ("it_IT", 1_000_000_000, "1,0 miliardo"),
         ("it_IT", 3_500_000_000, "3,5 miliardi"),
+        # Turkish uses comma as decimal separator
+        ("tr_TR", 1_000_000, "1,0 milyon"),
+        ("tr_TR", 1_200_000, "1,2 milyon"),
         # Sinhala uses borrowed scale words with a dot decimal separator
         ("si_LK", 1_000_000, "1.0 මිලියන"),
         ("si_LK", 1_200_000, "1.2 මිලියන"),
