@@ -247,6 +247,11 @@ def test_intword_i18n(locale: str, number: int, expected_result: str) -> None:
     [
         ("fr_FR", 1, "1 octet"),
         ("fr_FR", 42, "42 octets"),
+        ("fa_IR", 0, "0 بایت"),
+        ("fa_IR", 1, "1 بایت"),
+        ("fa_IR", -1, "-1 بایت"),
+        ("fa_IR", 42, "42 بایت"),
+        ("fa_IR", -42, "-42 بایت"),
         ("si_LK", 1, "බයිට් 1"),
         ("si_LK", 42, "බයිට් 42"),
         ("bn_BD", 1, "1 বাইট"),
