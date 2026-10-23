@@ -295,7 +295,9 @@ def naturaltime(
 
     now = when or _now()
 
-    date, delta = _date_and_delta(value, now=now)
+    date, delta = _date_and_delta(
+        value, now=now, precise=minimum_unit.upper() != "SECONDS"
+    )
     if date is None:
         return str(value)
     # determine tense by value only if datetime/timedelta were passed
