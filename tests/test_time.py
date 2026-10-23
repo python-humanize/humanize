@@ -875,3 +875,21 @@ def test_time_unit() -> None:
 )
 def test_rounding_by_fmt(fmt: str, value: float, expected: float) -> None:
     assert time._rounding_by_fmt(fmt, value) == pytest.approx(expected)
+
+
+@pytest.mark.parametrize(
+    "val, min_unit, expected",
+    [
+        (dt.timedelta(seconds=-3661), "seconds", "-1 hour, 1 minute and 1 second"),
+        (dt.timedelta(days=-1), "seconds", "-1 day"),
+        (-90, "seconds", "-1 minute and 30 seconds"),
+        (dt.timedelta(seconds=-3661), "minutes", "-1 hour and 1.02 minutes"),
+        (dt.timedelta(seconds=3661), "seconds", "1 hour, 1 minute and 1 second"),
+        (dt.timedelta(0), "seconds", "0 seconds"),
+    ],
+)
+def test_precisedelta_negative_keeps_sign(
+    val: dt.timedelta | int, min_unit: str, expected: str
+) -> None:
+    """Regression for #379: negative deltas must not look like positive ones."""
+    assert humanize.precisedelta(val, minimum_unit=min_unit) == expected
