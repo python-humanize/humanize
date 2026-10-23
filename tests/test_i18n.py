@@ -185,6 +185,19 @@ def test_naturaldelta() -> None:
 @pytest.mark.parametrize(
     "locale, number, expected_result",
     [
+        # Quadrillion is 10**15, or a thousand times a trillion.
+        ("zh_CN", 10**12, "1.0 兆"),
+        ("zh_CN", 10**15 - 1, "1.0 千万亿"),
+        ("zh_CN", 10**15, "1.0 千万亿"),
+        ("zh_CN", 2 * 10**15, "2.0 千万亿"),
+        ("zh_CN", -(10**15), "-1.0 千万亿"),
+        ("zh_CN", 10**18, "1.0 百京"),
+        ("zh_HK", 10**12, "1.0 兆"),
+        ("zh_HK", 10**15 - 1, "1.0 千萬億"),
+        ("zh_HK", 10**15, "1.0 千萬億"),
+        ("zh_HK", 2 * 10**15, "2.0 千萬億"),
+        ("zh_HK", -(10**15), "-1.0 千萬億"),
+        ("zh_HK", 10**18, "1.0 百京"),
         # Italian uses comma as decimal separator
         ("it_IT", 1_000_000, "1,0 milione"),
         ("it_IT", 1_200_000, "1,2 milioni"),
