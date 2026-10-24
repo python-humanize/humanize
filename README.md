@@ -169,7 +169,7 @@ If seconds are too large, set `minimum_unit` to milliseconds or microseconds:
 
 ```pycon
 >>> import humanize
->>> humanize.fractional(1/3)
+>>> humanize.fractional(1 / 3)
 '1/3'
 >>> humanize.fractional(1.5)
 '1 1/2'
@@ -197,6 +197,18 @@ If seconds are too large, set `minimum_unit` to milliseconds or microseconds:
 '1.0 x 10⁰'
 >>> humanize.scientific(1**10, precision=0)
 '1 x 10⁰'
+```
+
+### Percentages and ratios
+
+```pycon
+>>> import humanize
+>>> humanize.percentage(50)
+'50%'
+>>> humanize.percentage(0.125, is_ratio=True, precision=1)
+'12.5%'
+>>> humanize.percentage(12.5, precision=2)
+'12.50%'
 ```
 
 ## Localization

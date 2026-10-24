@@ -377,3 +377,28 @@ def test_clamp(test_args: list[typing.Any], expected: str) -> None:
 )
 def test_metric(test_args: list[typing.Any], expected: str) -> None:
     assert humanize.metric(*test_args) == expected
+
+
+@pytest.mark.parametrize(
+    "value, kwargs, expected",
+    [
+        (50, {}, "50%"),
+        (0, {}, "0%"),
+        (100, {}, "100%"),
+        (0.5, {"is_ratio": True}, "50%"),
+        (1, {"is_ratio": True}, "100%"),
+        (12.5, {"precision": 1}, "12.5%"),
+        (12.5, {"precision": 0}, "12%"),
+        (0.125, {"is_ratio": True, "precision": 1}, "12.5%"),
+        (-10, {}, "-10%"),
+        (-0.125, {"is_ratio": True, "precision": 1}, "-12.5%"),
+        ("75", {}, "75%"),
+        ("foo", {}, "foo"),
+        (None, {}, "None"),
+        (math.nan, {}, "NaN"),
+        (math.inf, {}, "+Inf"),
+        (-math.inf, {}, "-Inf"),
+    ],
+)
+def test_percentage(value, kwargs, expected):
+    assert humanize.percentage(value, **kwargs) == expected
