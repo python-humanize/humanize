@@ -53,7 +53,7 @@ def _get_default_locale_path() -> pathlib.Path | None:
 
 
 def get_translation() -> gettext_module.NullTranslations:
-    return _TRANSLATIONS.get(getattr(_CURRENT, "locale", None), _TRANSLATIONS[None])
+    return getattr(_CURRENT, "translation", _TRANSLATIONS[None])
 
 
 def activate(
@@ -76,8 +76,10 @@ def activate(
     """
     if locale is None or locale.startswith("en"):
         _CURRENT.locale = None
+        _CURRENT.translation = _TRANSLATIONS[None]
         return _TRANSLATIONS[None]
 
+    default_path = path is None
     if path is None:
         path = _get_default_locale_path()
 
@@ -87,16 +89,21 @@ def activate(
             "You need to pass the path explicitly."
         )
         raise FileNotFoundError(msg)
-    if locale not in _TRANSLATIONS:
+    if default_path and locale in _TRANSLATIONS:
+        translation = _TRANSLATIONS[locale]
+    else:
         translation = gettext_module.translation("humanize", path, [locale])
-        _TRANSLATIONS[locale] = translation
+        if default_path:
+            _TRANSLATIONS[locale] = translation
     _CURRENT.locale = locale
-    return _TRANSLATIONS[locale]
+    _CURRENT.translation = translation
+    return translation
 
 
 def deactivate() -> None:
     """Deactivate internationalisation."""
     _CURRENT.locale = None
+    _CURRENT.translation = _TRANSLATIONS[None]
 
 
 def _gettext(message: str) -> str:
