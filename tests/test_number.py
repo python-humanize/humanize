@@ -123,9 +123,9 @@ def test_intword_powers() -> None:
         (["3500000000000000000000"], "3.5 sextillion"),
         (["8100000000000000000000000000000000"], "8.1 decillion"),
         (["-8100000000000000000000000000000000"], "-8.1 decillion"),
-        ([1_000_000_000_000_000_000_000_000_000_000_000_000], "1000.0 decillion"),
-        ([1_100_000_000_000_000_000_000_000_000_000_000_000], "1100.0 decillion"),
-        ([2_100_000_000_000_000_000_000_000_000_000_000_000], "2100.0 decillion"),
+        ([1_000_000_000_000_000_000_000_000_000_000_000_000], "1.0 undecillion"),
+        ([1_100_000_000_000_000_000_000_000_000_000_000_000], "1.1 undecillion"),
+        ([2_100_000_000_000_000_000_000_000_000_000_000_000], "2.1 undecillion"),
         ([2e100], "2.0 googol"),
         ([None], "None"),
         (["1230000", "%0.2f"], "1.23 million"),
@@ -184,8 +184,8 @@ def test_intword_rounding_rollover() -> None:
         mantissa = float(rendered.split(" ", 1)[0])
         assert mantissa < 1000
 
-    # The documented decillion..googol gap must be left untouched.
-    assert humanize.intword(10**36) == "1000.0 decillion"
+    # Extended number names now cover undecillion through vigintillion.
+    assert humanize.intword(10**36) == "1.0 undecillion"
     assert humanize.intword(2 * 10**100) == "2.0 googol"
 
 
@@ -377,3 +377,22 @@ def test_clamp(test_args: list[typing.Any], expected: str) -> None:
 )
 def test_metric(test_args: list[typing.Any], expected: str) -> None:
     assert humanize.metric(*test_args) == expected
+
+
+def test_intword_extended_number_names() -> None:
+    assert humanize.intword(10**36) == "1.0 undecillion"
+    assert humanize.intword(10**39) == "1.0 duodecillion"
+    assert humanize.intword(-(10**36)) == "-1.0 undecillion"
+    assert humanize.intword(10**36, "%.2f") == "1.00 undecillion"
+    assert humanize.intword(10**66) == "1.0 unvigintillion"
+    assert humanize.intword(10**69) == "1.0 duovigintillion"
+    assert humanize.intword(10**72) == "1.0 trevigintillion"
+    assert humanize.intword(10**75) == "1.0 quattuorvigintillion"
+    assert humanize.intword(10**78) == "1.0 quinvigintillion"
+    assert humanize.intword(10**81) == "1.0 sexvigintillion"
+    assert humanize.intword(10**84) == "1.0 septenvigintillion"
+    assert humanize.intword(10**87) == "1.0 octovigintillion"
+    assert humanize.intword(10**90) == "1.0 novemvigintillion"
+    assert humanize.intword(10**93) == "1.0 trigintillion"
+    assert humanize.intword(10**96) == "1.0 untrigintillion"
+    assert humanize.intword(10**100) == "1.0 googol"
