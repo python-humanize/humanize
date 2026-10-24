@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import math
 import typing
+from decimal import Decimal
 
 import pytest
 
@@ -25,6 +26,12 @@ from humanize import number
         ("102", "102nd"),
         ("103", "103rd"),
         ("111", "111th"),
+        (21.9, "21st"),
+        (Decimal("21.9"), "21st"),
+        (True, "1st"),
+        (False, "0th"),
+        ("21.9", "21.9"),
+        ("1e3", "1e3"),
         ("something else", "something else"),
         (None, "None"),
         (math.nan, "NaN"),
@@ -36,6 +43,26 @@ from humanize import number
 )
 def test_ordinal(test_input: str, expected: str) -> None:
     assert humanize.ordinal(test_input) == expected
+
+
+@pytest.mark.parametrize("convert", [int, str, Decimal])
+@pytest.mark.parametrize(
+    "last_digits, suffix",
+    [(1, "st"), (2, "nd"), (3, "rd"), (11, "th"), (12, "th"), (13, "th")],
+)
+def test_ordinal_large_integers(
+    convert: typing.Callable[[int], typing.Any], last_digits: int, suffix: str
+) -> None:
+    value = 10**400 + last_digits
+    assert humanize.ordinal(convert(value)) == f"{value}{suffix}"
+
+
+def test_ordinal_int_only_object() -> None:
+    class IntOnly:
+        def __int__(self) -> int:
+            return 21
+
+    assert humanize.ordinal(typing.cast("typing.Any", IntOnly())) == "21st"
 
 
 @pytest.mark.parametrize(
