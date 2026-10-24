@@ -203,7 +203,7 @@ def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
     return result
 
 
-powers = [10**x for x in (3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 100)]
+powers = [10**x for x in (3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39, 42, 45, 48, 51, 54, 57, 60, 63, 100)]
 human_powers = (
     NS_("thousand", "thousand"),
     NS_("million", "million"),
@@ -216,6 +216,16 @@ human_powers = (
     NS_("octillion", "octillion"),
     NS_("nonillion", "nonillion"),
     NS_("decillion", "decillion"),
+    NS_("undecillion", "undecillion"),
+    NS_("duodecillion", "duodecillion"),
+    NS_("tredecillion", "tredecillion"),
+    NS_("quattuordecillion", "quattuordecillion"),
+    NS_("quindecillion", "quindecillion"),
+    NS_("sexdecillion", "sexdecillion"),
+    NS_("septendecillion", "septendecillion"),
+    NS_("octodecillion", "octodecillion"),
+    NS_("novemdecillion", "novemdecillion"),
+    NS_("vigintillion", "vigintillion"),
     NS_("googol", "googol"),
 )
 
@@ -225,7 +235,7 @@ def intword(value: NumberOrString, format: str = "%.1f") -> str:
 
     Works best for numbers over 1 million. For example, 1_000_000 becomes "1.0 million",
     1_200_000 becomes "1.2 million" and "1_200_000_000" becomes "1.2 billion". Supports
-    up to decillion (33 digits) and googol (100 digits).
+    up to vigintillion (63 digits) and googol (100 digits).
 
     Examples:
         ```pycon
