@@ -96,7 +96,7 @@ python3 -m pip install -e .
 >>> humanize.naturalday(dt.datetime.now())
 'today'
 >>> humanize.naturaldelta(dt.timedelta(seconds=1001))
-'16 minutes'
+'17 minutes'
 >>> humanize.naturalday(dt.datetime.now() - dt.timedelta(days=1))
 'yesterday'
 >>> humanize.naturalday(dt.date(2007, 6, 5))
