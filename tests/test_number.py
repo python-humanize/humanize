@@ -75,6 +75,14 @@ def test_ordinal(test_input: str, expected: str) -> None:
         ([-math.inf], "-Inf"),
         (["nan"], "NaN"),
         (["-inf"], "-Inf"),
+        (["inf"], "+Inf"),
+        (["1e400"], "+Inf"),
+        (["1.0e400"], "+Inf"),
+        (["1e3"], "1e3"),
+        (["1.0e3"], "1,000.0"),
+        (["not a number"], "not a number"),
+        ([str(10**400 + 123), 2], "+Inf"),
+        ([str(-(10**400 + 123)), 2], "-Inf"),
     ],
 )
 def test_intcomma(
@@ -84,10 +92,16 @@ def test_intcomma(
 
 
 @pytest.mark.parametrize("sign", [1, -1])
-def test_intcomma_large_integer(sign: int) -> None:
+@pytest.mark.parametrize("representation", ["integer", "string", "grouped_string"])
+def test_intcomma_large_integer(sign: int, representation: str) -> None:
     value = sign * (10**400 + 123)
     expected = ("-" if sign < 0 else "") + "10" + ",000" * 132 + ",123"
-    assert humanize.intcomma(value) == expected
+    argument = (
+        str(value)
+        if representation == "string"
+        else expected if representation == "grouped_string" else value
+    )
+    assert humanize.intcomma(argument) == expected
 
 
 def test_intword_powers() -> None:
