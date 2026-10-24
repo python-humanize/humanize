@@ -378,10 +378,11 @@ def test_clamp(test_args: list[typing.Any], expected: str) -> None:
 def test_metric(test_args: list[typing.Any], expected: str) -> None:
     assert humanize.metric(*test_args) == expected
 
+
 def test_intword_extended_number_names() -> None:
     assert humanize.intword(10**36) == "1.0 undecillion"
     assert humanize.intword(10**39) == "1.0 duodecillion"
-    assert humanize.intword(-10**36) == "-1.0 undecillion"
+    assert humanize.intword(-(10**36)) == "-1.0 undecillion"
     assert humanize.intword(10**36, "%.2f") == "1.00 undecillion"
     assert humanize.intword(10**66) == "1.0 unvigintillion"
     assert humanize.intword(10**69) == "1.0 duovigintillion"
