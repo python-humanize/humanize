@@ -101,3 +101,14 @@ def test_naturalsize(test_args: list[int] | list[int | bool], expected: str) -> 
         test_args[0] = f"-{test_args[0]}"
 
     assert humanize.naturalsize(*test_args) == "-" + expected
+
+
+@pytest.mark.parametrize(
+    "fmt, expected",
+    [
+        ("Size: %.1f", "Size: 976.6K"),
+        ("%.1f (approx)", "976.6 (approx)K"),
+    ],
+)
+def test_naturalsize_format_with_text(fmt: str, expected: str) -> None:
+    assert humanize.naturalsize(999_999, gnu=True, format=fmt) == expected
