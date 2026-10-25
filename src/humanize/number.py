@@ -5,6 +5,7 @@ from __future__ import annotations
 __lazy_modules__ = {"bisect"}
 
 import bisect
+from decimal import Decimal
 
 from .i18n import _gettext as _
 from .i18n import _gettext_noop as N_
@@ -198,6 +199,12 @@ def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
         result = f"{value:,.{ndigits}f}"
     else:
         result = f"{value:,}"
+        if isinstance(value, float) and ("e" in result or "E" in result):
+            # repr-style float formatting switches to scientific notation
+            # (>= 1e16, < 1e-4); expand it so digits are still grouped.
+            result = format(Decimal(repr(value)), ",f")
+            if value.is_integer():
+                result += ".0"
     if thousands_sep != "," or decimal_sep != ".":
         result = result.translate(str.maketrans(",.", thousands_sep + decimal_sep))
     return result
