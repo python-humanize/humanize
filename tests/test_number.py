@@ -75,6 +75,14 @@ def test_ordinal(test_input: str, expected: str) -> None:
         ([-math.inf], "-Inf"),
         (["nan"], "NaN"),
         (["-inf"], "-Inf"),
+        # Floats whose repr uses scientific notation stay expanded (issue #431)
+        ([1e16], "10,000,000,000,000,000.0"),
+        ([1.5e20], "150,000,000,000,000,000,000.0"),
+        ([-1e16], "-10,000,000,000,000,000.0"),
+        ([1e16, 0], "10,000,000,000,000,000"),
+        ([0.00001], "0.00001"),
+        ([1.23e-5], "0.0000123"),
+        ([1234.5e15], "1,234,500,000,000,000,000.0"),
     ],
 )
 def test_intcomma(
