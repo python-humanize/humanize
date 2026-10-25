@@ -220,6 +220,90 @@ human_powers = (
 )
 
 
+# Catalogs opt in without changing the existing unit translations.
+_INTWORD_SCALES = N_("intword:scales:v1")
+_INTWORD_PATTERNS = NS_("intword:patterns:v1", "intword:patterns:v1")
+
+
+def _valid_intword_exponents(exponents: object) -> bool:
+    """Check named powers against the finite float domain accepted by intword."""
+    import sys
+
+    return (
+        isinstance(exponents, list)
+        and bool(exponents)
+        and all(
+            type(exponent) is int and 0 < exponent <= sys.float_info.max_10_exp
+            for exponent in exponents
+        )
+        and all(left < right for left, right in zip(exponents, exponents[1:]))
+    )
+
+
+def _intword_patterns(exponents: list[int], count: int) -> list[str] | None:
+    """Read a plural pattern table bound to the same catalog scale vector."""
+    import json
+
+    try:
+        payload = json.loads(_ngettext(*_INTWORD_PATTERNS, count))
+    except ValueError:
+        return None
+    if not isinstance(payload, dict):
+        return None
+    bound_exponents = payload.get("exponents")
+    patterns = payload.get("patterns")
+    if (
+        not _valid_intword_exponents(bound_exponents)
+        or bound_exponents != exponents
+        or not isinstance(patterns, list)
+        or len(patterns) != len(exponents)
+        or not all(
+            isinstance(pattern, str)
+            and pattern.count("{number}") == 1
+            and "{" not in pattern.replace("{number}", "")
+            and "}" not in pattern.replace("{number}", "")
+            for pattern in patterns
+        )
+    ):
+        return None
+    return patterns
+
+
+def _translated_intword(value: int, format: str, negative_prefix: str) -> str | None:
+    """Format with an optional translation-defined scale, or use the legacy path."""
+    translated_scales = _(_INTWORD_SCALES)
+    if translated_scales == _INTWORD_SCALES:
+        return None
+
+    import json
+    import math
+
+    try:
+        exponents = json.loads(translated_scales)
+    except ValueError:
+        return None
+    if (
+        not _valid_intword_exponents(exponents)
+        or _intword_patterns(exponents, 1) is None
+    ):
+        return None
+    localized_powers = tuple(10**exponent for exponent in exponents)
+    if value < localized_powers[0]:
+        return f"{negative_prefix}{value}"
+    ordinal = bisect.bisect_right(localized_powers, value) - 1
+    rounded = float(format % (value / localized_powers[ordinal]))
+    if ordinal + 1 < len(localized_powers) and rounded == float(
+        localized_powers[ordinal + 1] // localized_powers[ordinal]
+    ):
+        ordinal += 1
+        rounded = 1.0
+    patterns = _intword_patterns(exponents, math.ceil(rounded))
+    if patterns is None:
+        return None
+    number = negative_prefix + (format % rounded).replace(".", decimal_separator())
+    return patterns[ordinal].replace("{number}", number)
+
+
 def intword(value: NumberOrString, format: str = "%.1f") -> str:
     """Converts a large integer to a friendly text representation.
 
@@ -269,6 +353,10 @@ def intword(value: NumberOrString, format: str = "%.1f") -> str:
         negative_prefix = "-"
     else:
         negative_prefix = ""
+
+    translated = _translated_intword(value, format, negative_prefix)
+    if translated is not None:
+        return translated
 
     if value < powers[0]:
         return f"{negative_prefix}{value}"
