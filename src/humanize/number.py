@@ -113,6 +113,8 @@ def ordinal(value: NumberOrString, gender: str = "male") -> str:
         '101st'
         >>> ordinal(111)
         '111th'
+        >>> ordinal(-1)
+        '-1st'
         >>> ordinal("something else")
         'something else'
         >>> ordinal([1, 2, 3]) == "[1, 2, 3]"
@@ -136,7 +138,8 @@ def ordinal(value: NumberOrString, gender: str = "male") -> str:
     except (TypeError, ValueError):
         return str(value)
     gender = "male" if gender == "male" else "female"
-    digit = 0 if value % 100 in (11, 12, 13) else value % 10
+    n = abs(value)
+    digit = 0 if n % 100 in (11, 12, 13) else n % 10
     return f"{value}{P_(*_ORDINAL_SUFFIXES[gender][digit])}"
 
 
