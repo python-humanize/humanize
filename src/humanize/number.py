@@ -578,12 +578,16 @@ def metric(value: float, unit: str = "", precision: int = 3) -> str:
     if exponent >= 33 or exponent < -30:
         return scientific(value, precision - 1) + unit
 
+    original = value
     old_bucket = exponent // 3 * 3
     value /= 10**old_bucket
     digits = int(max(0, precision - exponent % 3 - 1))
     # Absorb a rounding carry (9.999 -> 10.0) by bumping the exponent.
-    if exponent < 30 and round(abs(value), digits) >= 10 ** (exponent % 3 + 1):
+    if round(abs(value), digits) >= 10 ** (exponent % 3 + 1):
         exponent += 1
+        if exponent >= 33:
+            # Rounded past quetta: no larger prefix exists.
+            return scientific(original, precision - 1) + unit
         new_bucket = exponent // 3 * 3
         value /= 10 ** (new_bucket - old_bucket)
         digits = int(max(0, precision - exponent % 3 - 1))
