@@ -129,6 +129,7 @@ def test_naturaltime_persian(seconds: int, expected: str) -> None:
 
 def test_intcomma() -> None:
     number = 10_000_000
+    large_number = str(10**400 + 123)
 
     assert humanize.intcomma(number) == "10,000,000"
 
@@ -140,11 +141,17 @@ def test_intcomma() -> None:
         assert humanize.intcomma("1234567,89") == "1.234.567,89"
         assert humanize.intcomma("1.234.567,89") == "1.234.567,89"
         assert humanize.intcomma("1.234.567,8") == "1.234.567,8"
+        large_expected = "10" + ".000" * 132 + ".123"
+        assert humanize.intcomma(large_number) == large_expected
+        assert humanize.intcomma(large_expected) == large_expected
 
         humanize.i18n.activate("fr_FR")
         assert humanize.intcomma(number) == "10 000 000"
         assert humanize.intcomma(1_234_567.89) == "1 234 567,89"
         assert humanize.intcomma("1 234 567,89") == "1 234 567,89"
+        large_expected = "10" + " 000" * 132 + " 123"
+        assert humanize.intcomma(large_number) == large_expected
+        assert humanize.intcomma(large_expected) == large_expected
 
         humanize.i18n.activate("pt_BR")
         assert humanize.intcomma(number) == "10.000.000"
