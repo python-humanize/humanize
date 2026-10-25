@@ -332,6 +332,12 @@ def test_clamp(test_args: list[typing.Any], expected: str) -> None:
         ([1.235e29, "A"], "124 RA"),
         ([2.56e-30, "V"], "2.56 qV"),
         ([2.596e32, "F"], "260 QF"),
+        # Rounding carry at the quetta boundary (issue #423)
+        ([9.996e30], "10.0 Q"),
+        ([9.996e31], "100 Q"),
+        ([9.996e32], "1.00 x 10\u00b3\u00b3"),
+        ([9.999e-30], "10.0 q"),
+        ([-9.996e31], "-100 Q"),
         ([1e50], "1.00 x 10⁵⁰"),
         ([1e-50], "1.00 x 10⁻⁵⁰"),
         ([-1500, "V"], "-1.50 kV"),
