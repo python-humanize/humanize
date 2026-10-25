@@ -573,6 +573,7 @@ def metric(value: float, unit: str = "", precision: int = 3) -> str:
 
     if not math.isfinite(value):
         return _format_not_finite(value)
+    original = value
     exponent = math.floor(math.log10(abs(value))) if value != 0 else 0
 
     if exponent >= 33 or exponent < -30:
@@ -582,8 +583,11 @@ def metric(value: float, unit: str = "", precision: int = 3) -> str:
     value /= 10**old_bucket
     digits = int(max(0, precision - exponent % 3 - 1))
     # Absorb a rounding carry (9.999 -> 10.0) by bumping the exponent.
-    if exponent < 30 and round(abs(value), digits) >= 10 ** (exponent % 3 + 1):
+    # Quetta still has a prefix for exponents 30 and 31. Exponent 33 does not.
+    if round(abs(value), digits) >= 10 ** (exponent % 3 + 1):
         exponent += 1
+        if exponent >= 33:
+            return scientific(original, precision - 1) + unit
         new_bucket = exponent // 3 * 3
         value /= 10 ** (new_bucket - old_bucket)
         digits = int(max(0, precision - exponent % 3 - 1))
