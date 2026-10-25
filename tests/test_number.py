@@ -377,3 +377,19 @@ def test_clamp(test_args: list[typing.Any], expected: str) -> None:
 )
 def test_metric(test_args: list[typing.Any], expected: str) -> None:
     assert humanize.metric(*test_args) == expected
+
+
+@pytest.mark.parametrize(
+    "function",
+    [
+        humanize.apnumber,
+        humanize.intword,
+        humanize.ordinal,
+        humanize.metric,
+        humanize.scientific,
+        humanize.fractional,
+    ],
+)
+def test_large_int_does_not_overflow(function: typing.Callable[[int], str]) -> None:
+    value = 10**400
+    assert function(value) == str(value)

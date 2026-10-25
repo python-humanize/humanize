@@ -133,7 +133,7 @@ def ordinal(value: NumberOrString, gender: str = "male") -> str:
         if not math.isfinite(float(value)):
             return _format_not_finite(float(value))
         value = int(value)
-    except (TypeError, ValueError):
+    except (TypeError, ValueError, OverflowError):
         return str(value)
     gender = "male" if gender == "male" else "female"
     digit = 0 if value % 100 in (11, 12, 13) else value % 10
@@ -261,7 +261,7 @@ def intword(value: NumberOrString, format: str = "%.1f") -> str:
         if not math.isfinite(float(value)):
             return _format_not_finite(float(value))
         value = int(value)
-    except (TypeError, ValueError):
+    except (TypeError, ValueError, OverflowError):
         return str(value)
 
     if value < 0:
@@ -332,7 +332,7 @@ def apnumber(value: NumberOrString) -> str:
         if not math.isfinite(float(value)):
             return _format_not_finite(float(value))
         value = int(value)
-    except (TypeError, ValueError):
+    except (TypeError, ValueError, OverflowError):
         return str(value)
     if not 0 <= value < 10:
         return str(value)
@@ -384,7 +384,7 @@ def fractional(value: NumberOrString) -> str:
         number = float(value)
         if not math.isfinite(number):
             return _format_not_finite(number)
-    except (TypeError, ValueError):
+    except (TypeError, ValueError, OverflowError):
         return str(value)
     from fractions import Fraction
 
@@ -447,7 +447,7 @@ def scientific(value: NumberOrString, precision: int = 2) -> str:
         value = float(value)
         if not math.isfinite(value):
             return _format_not_finite(value)
-    except (ValueError, TypeError):
+    except (ValueError, TypeError, OverflowError):
         return str(value)
     fmt = f"{{:.{int(precision)}e}}"
     n = fmt.format(value)
@@ -571,8 +571,12 @@ def metric(value: float, unit: str = "", precision: int = 3) -> str:
     """
     import math
 
-    if not math.isfinite(value):
-        return _format_not_finite(value)
+    try:
+        if not math.isfinite(value):
+            return _format_not_finite(value)
+    except OverflowError:
+        # An int too large for float() is still a valid number.
+        return str(value)
     exponent = math.floor(math.log10(abs(value))) if value != 0 else 0
 
     if exponent >= 33 or exponent < -30:
