@@ -17,7 +17,7 @@ import humanize
 LOCALE_DIR = Path(humanize.i18n.__file__).parent / "locale"
 
 with freeze_time("2020-02-02"):
-    NOW = dt.datetime.now(tz=dt.timezone.utc)
+    NOW = dt.datetime.now(tz=dt.UTC)
 
 
 GERMAN_DELTA_CASES = [
@@ -138,6 +138,10 @@ def test_i18n() -> None:
         assert humanize.naturaltime(three_seconds) == "තත්පර 3කට පෙර"
         assert humanize.precisedelta(one_min_three_seconds) == "විනාඩි 1යි තත්පර 7ක්"
 
+        humanize.i18n.activate("bn_BD")
+        assert humanize.naturaltime(three_seconds) == "3 সেকেন্ড সময় আগে"
+        assert humanize.precisedelta(one_min_three_seconds) == "1 মিনিট আর 7 সেকেন্ড"
+
     except FileNotFoundError:
         pytest.skip("Generate .mo with scripts/generate-translation-binaries.sh")
 
@@ -146,6 +150,27 @@ def test_i18n() -> None:
         assert humanize.naturaltime(three_seconds) == "3 seconds ago"
         assert humanize.ordinal(5) == "5th"
         assert humanize.precisedelta(one_min_three_seconds) == "1 minute and 7 seconds"
+
+
+@pytest.mark.parametrize(
+    "seconds, expected",
+    [
+        (-60, "یک دقیقه پیش"),
+        (-3, "3 ثانیه پیش"),
+        (0, "اکنون"),
+        (3, "3 ثانیه دیگر"),
+        (60, "یک دقیقه دیگر"),
+    ],
+)
+def test_naturaltime_persian(seconds: int, expected: str) -> None:
+    try:
+        humanize.activate("fa_IR")
+        value = NOW + dt.timedelta(seconds=seconds)
+        assert humanize.naturaltime(value, when=NOW) == expected
+    except FileNotFoundError:
+        pytest.skip("Generate .mo with scripts/generate-translation-binaries.sh")
+    finally:
+        humanize.deactivate()
 
 
 def test_intcomma() -> None:
@@ -169,6 +194,12 @@ def test_intcomma() -> None:
 
         humanize.i18n.activate("pt_BR")
         assert humanize.intcomma(number) == "10.000.000"
+
+        humanize.i18n.activate("tr_TR")
+        assert humanize.intcomma(number) == "10.000.000"
+        assert humanize.intcomma(1_234_567.89) == "1.234.567,89"
+        assert humanize.intcomma("1234567,89") == "1.234.567,89"
+        assert humanize.intcomma("1.234.567,89") == "1.234.567,89"
 
     except FileNotFoundError:
         pytest.skip("Generate .mo with scripts/generate-translation-binaries.sh")
@@ -367,6 +398,9 @@ def test_naturaltime_moment_translation_collision(
         ("it_IT", 1_200_000, "1,2 milioni"),
         ("it_IT", 1_000_000_000, "1,0 miliardo"),
         ("it_IT", 3_500_000_000, "3,5 miliardi"),
+        # Turkish uses comma as decimal separator
+        ("tr_TR", 1_000_000, "1,0 milyon"),
+        ("tr_TR", 1_200_000, "1,2 milyon"),
         # Sinhala uses borrowed scale words with a dot decimal separator
         ("si_LK", 1_000_000, "1.0 මිලියන"),
         ("si_LK", 1_200_000, "1.2 මිලියන"),
@@ -388,6 +422,10 @@ def test_naturaltime_moment_translation_collision(
         ("lv", 2_000_000, "2,0 miljoni"),
         ("lv", 11_000_000, "11,0 miljoni"),
         ("lv", 21_000_000, "21,0 miljons"),
+        ("bn_BD", 2_000_000, "2.0 মিলিয়ন"),
+        ("bn_BD", 1_000_000_000_000_000_000_000_000_000_000, "1.0 ননিলিয়ন"),
+        ("bn_BD", 1_000_000_000_000_000_000_000_000_000_000_000, "1.0 ডেসিলিয়ন"),
+        ("bn_BD", 10**100, "1.0 গুগল"),
         ("fr_FR", "1_000", "1,0 mille"),
         ("fr_FR", "12_400", "12,4 milles"),
         ("fr_FR", "12_490", "12,5 milles"),
@@ -447,8 +485,15 @@ def test_intword_i18n(locale: str, number: int, expected_result: str) -> None:
     [
         ("fr_FR", 1, "1 octet"),
         ("fr_FR", 42, "42 octets"),
+        ("fa_IR", 0, "0 بایت"),
+        ("fa_IR", 1, "1 بایت"),
+        ("fa_IR", -1, "-1 بایت"),
+        ("fa_IR", 42, "42 بایت"),
+        ("fa_IR", -42, "-42 بایت"),
         ("si_LK", 1, "බයිට් 1"),
         ("si_LK", 42, "බයිට් 42"),
+        ("bn_BD", 1, "1 বাইট"),
+        ("bn_BD", 42, "42 বাইট"),
         ("fr_FR", 42_000, "42.0 Ko"),
         ("fr_FR", 42_000_000, "42.0 Mo"),
         ("fr_FR", 42_000_000_000, "42.0 Go"),
@@ -473,6 +518,28 @@ def test_naturalsize_i18n_binary() -> None:
         pytest.skip("Generate .mo with scripts/generate-translation-binaries.sh")
     else:
         assert humanize.naturalsize(3000, binary=True) == "2.9 Kio"
+    finally:
+        humanize.i18n.deactivate()
+
+
+@pytest.mark.parametrize(
+    "locale, days, expected_result",
+    [
+        ("bn_BD", 365, "এক বছর"),
+        ("bn_BD", 370, "1 বছর, 5 দিন"),
+        ("bn_BD", 396, "1 বছর, 1 মাস"),
+        ("bn_BD", 425, "1 বছর, 2 মাস"),
+    ],
+)
+def test_naturaldelta_one_year_i18n(
+    locale: str, days: int, expected_result: str
+) -> None:
+    try:
+        humanize.i18n.activate(locale)
+    except FileNotFoundError:
+        pytest.skip("Generate .mo with scripts/generate-translation-binaries.sh")
+    else:
+        assert humanize.naturaldelta(dt.timedelta(days=days)) == expected_result
     finally:
         humanize.i18n.deactivate()
 

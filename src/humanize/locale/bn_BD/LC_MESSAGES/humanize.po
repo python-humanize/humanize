@@ -125,7 +125,6 @@ msgstr[0] "হাজার"
 msgstr[1] "হাজার"
 
 #: src/humanize/number.py:179
-#, fuzzy
 msgid "million"
 msgid_plural "million"
 msgstr[0] "মিলিয়ন"
@@ -176,25 +175,24 @@ msgstr[1] "ওকটিলিয়ন"
 #: src/humanize/number.py:187
 msgid "nonillion"
 msgid_plural "nonillion"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "ননিলিয়ন"
+msgstr[1] "ননিলিয়ন"
 
 #: src/humanize/number.py:188
-#, fuzzy
 msgid "decillion"
 msgid_plural "decillion"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "ডেসিলিয়ন"
+msgstr[1] "ডেসিলিয়ন"
 
 #: src/humanize/number.py:189
 msgid "googol"
 msgid_plural "googol"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "গুগল"
+msgstr[1] "গুগল"
 
 #: src/humanize/number.py:301
 msgid "zero"
-msgstr "শুন্য"
+msgstr "শূন্য"
 
 #: src/humanize/number.py:302
 msgid "one"
@@ -248,7 +246,7 @@ msgstr[1] "%d মিলিসেকেন্ড"
 
 #: src/humanize/time.py:164 src/humanize/time.py:259
 msgid "a moment"
-msgstr "এক মুহুর্ত"
+msgstr "এক মুহূর্ত"
 
 #: src/humanize/time.py:167
 msgid "a second"
@@ -274,14 +272,14 @@ msgstr[1] "%d মিনিট"
 
 #: src/humanize/time.py:180
 msgid "an hour"
-msgstr "এক ঘন্টা"
+msgstr "এক ঘণ্টা"
 
 #: src/humanize/time.py:184
 #, python-format
 msgid "%d hour"
 msgid_plural "%d hours"
-msgstr[0] "%d ঘন্টা"
-msgstr[1] "%d ঘন্টা"
+msgstr[0] "%d ঘণ্টা"
+msgstr[1] "%d ঘণ্টা"
 
 #: src/humanize/time.py:188
 msgid "a day"
@@ -313,19 +311,19 @@ msgstr "এক বছর"
 #, python-format
 msgid "1 year, %d day"
 msgid_plural "1 year, %d days"
-msgstr[0] "%d বছর"
-msgstr[1] "%d বছর"
+msgstr[0] "1 বছর, %d দিন"
+msgstr[1] "1 বছর, %d দিন"
 
 #: src/humanize/time.py:210
 msgid "1 year, 1 month"
-msgstr "১ বছর, ১ মাস"
+msgstr "1 বছর, 1 মাস"
 
 #: src/humanize/time.py:213
 #, python-format
 msgid "1 year, %d month"
 msgid_plural "1 year, %d months"
-msgstr[0] "১ বছর, %d মাস"
-msgstr[1] "১ বছর, %d মাস"
+msgstr[0] "1 বছর, %d মাস"
+msgstr[1] "1 বছর, %d মাস"
 
 #: src/humanize/time.py:219
 #, python-format
@@ -363,4 +361,13 @@ msgstr "গতকাল"
 #: src/humanize/time.py:600
 #, python-format
 msgid "%s and %s"
-msgstr "%s আর  %s"
+msgstr "%s আর %s"
+
+# --- filesize units (naturalsize) ---
+#, python-format
+msgid "%d Byte"
+msgstr "%d বাইট"
+
+#, python-format
+msgid "%d Bytes"
+msgstr "%d বাইট"

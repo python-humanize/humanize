@@ -96,7 +96,7 @@ python3 -m pip install -e .
 >>> humanize.naturalday(dt.datetime.now())
 'today'
 >>> humanize.naturaldelta(dt.timedelta(seconds=1001))
-'16 minutes'
+'17 minutes'
 >>> humanize.naturalday(dt.datetime.now() - dt.timedelta(days=1))
 'yesterday'
 >>> humanize.naturalday(dt.date(2007, 6, 5))
@@ -214,6 +214,17 @@ How to change locale at runtime:
 >>> humanize.i18n.deactivate()
 >>> humanize.naturaltime(dt.timedelta(seconds=3))
 '3 seconds ago'
+```
+
+Number formatting also uses the locale's configured numeric separators:
+
+```pycon
+>>> _t = humanize.i18n.activate("tr_TR")
+>>> humanize.intcomma(1_234_567.89)
+'1.234.567,89'
+>>> humanize.intword(1_200_000)
+'1,2 milyon'
+>>> humanize.i18n.deactivate()
 ```
 
 You can pass additional parameter `path` to `activate` to specify a path to search

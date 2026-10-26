@@ -1,5 +1,31 @@
 # Contributing
 
+## Running tests
+
+Use [tox](https://tox.wiki/) from the repository root. It creates an isolated
+environment and installs the project and its test dependencies:
+
+```sh
+python -m pip install tox
+tox -e py
+```
+
+Pass pytest arguments after `--` to run a single file or tests matching a name:
+
+```sh
+tox -e py -- tests/test_number.py
+tox -e py -- tests/test_number.py -k intcomma
+```
+
+Some localisation tests are skipped when compiled `.mo` translation files are missing.
+Generate them with `scripts/generate-translation-binaries.sh`, which requires Bash and
+GNU gettext's `msgfmt`. Translation-update tests also require `xgettext` and `msgmerge`.
+Use `tox -e py -- -rs` to see skip reasons.
+
+CI generates translation binaries and runs the
+[configured tox environments](../tox.ini). See the [test workflow](workflows/test.yml)
+for supported Python versions and platforms.
+
 ## Linting
 
 Linting is run on the CI using [prek](https://prek.j178.dev//), and can be run locally:
