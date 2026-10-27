@@ -90,6 +90,19 @@ def test_intcomma_large_integer(sign: int) -> None:
     assert humanize.intcomma(value) == expected
 
 
+@pytest.mark.parametrize(
+    "test_args",
+    [
+        [12345.111, -1],
+        ["12345.111", -1],
+        [1000, -10],
+    ],
+)
+def test_intcomma_negative_ndigits(test_args: list) -> None:
+    with pytest.raises(ValueError, match="ndigits must be"):
+        humanize.intcomma(*test_args)
+
+
 def test_intword_powers() -> None:
     # make sure that powers & human_powers have the same number of items
     assert len(number.powers) == len(number.human_powers)
