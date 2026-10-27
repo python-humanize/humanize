@@ -579,10 +579,15 @@ def metric(value: float, unit: str = "", precision: int = 3) -> str:
         return scientific(value, precision - 1) + unit
 
     old_bucket = exponent // 3 * 3
+    original = value
     value /= 10**old_bucket
     digits = int(max(0, precision - exponent % 3 - 1))
     # Absorb a rounding carry (9.999 -> 10.0) by bumping the exponent.
-    if exponent < 30 and round(abs(value), digits) >= 10 ** (exponent % 3 + 1):
+    if round(abs(value), digits) >= 10 ** (exponent % 3 + 1):
+        if exponent + 1 >= 33:
+            # Quetta is the largest prefix; a carry past it falls back to
+            # scientific notation instead of adding a digit ("1000 Q").
+            return scientific(original, precision - 1) + unit
         exponent += 1
         new_bucket = exponent // 3 * 3
         value /= 10 ** (new_bucket - old_bucket)
