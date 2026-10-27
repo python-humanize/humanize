@@ -170,9 +170,13 @@ def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
     Args:
         value (int, float, str): Integer or float to convert.
         ndigits (int, None): Digits of precision for rounding after the decimal point.
+            Must be a non-negative integer or `None`.
 
     Returns:
         str: String containing commas every three digits.
+
+    Raises:
+        ValueError: If `ndigits` is a negative number.
     """
     import math
 
@@ -195,6 +199,9 @@ def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
         return str(value)
 
     if ndigits is not None:
+        if ndigits < 0:
+            msg = f"ndigits must be a non-negative integer or None, got {ndigits!r}."
+            raise ValueError(msg)
         result = f"{value:,.{ndigits}f}"
     else:
         result = f"{value:,}"
