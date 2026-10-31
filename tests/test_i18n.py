@@ -7,7 +7,9 @@ import gettext
 import importlib
 import shutil
 import subprocess
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
+from threading import Event
 
 import pytest
 from freezegun import freeze_time
@@ -456,6 +458,46 @@ class TestActivate:
             humanize.i18n.deactivate()
 
         assert test_str == humanize.naturaltime(three_seconds)
+
+
+def test_locale_is_thread_local(monkeypatch: pytest.MonkeyPatch) -> None:
+    german = gettext.NullTranslations()
+    french = gettext.NullTranslations()
+    monkeypatch.setitem(humanize.i18n._TRANSLATIONS, "de_DE", german)
+    monkeypatch.setitem(humanize.i18n._TRANSLATIONS, "fr_FR", french)
+    ready = Event()
+    proceed = Event()
+
+    def worker() -> None:
+        try:
+            # A new thread starts with the default locale, not its parent's locale.
+            assert humanize.i18n.get_translation() is humanize.i18n._TRANSLATIONS[None]
+            assert humanize.intcomma(1234.5) == "1,234.5"
+            humanize.activate("fr_FR")
+            ready.set()
+            assert proceed.wait(timeout=5)
+            # Deactivation in the main thread must not reset this thread.
+            assert humanize.i18n.get_translation() is french
+            assert humanize.intcomma(1234.5) == "1 234,5"
+        finally:
+            humanize.deactivate()
+        assert humanize.intcomma(1234.5) == "1,234.5"
+
+    try:
+        humanize.activate("de_DE")
+        with ThreadPoolExecutor(max_workers=1) as executor:
+            future = executor.submit(worker)
+            try:
+                assert ready.wait(timeout=5)
+                assert humanize.i18n.get_translation() is german
+                assert humanize.intcomma(1234.5) == "1.234,5"
+                humanize.deactivate()
+            finally:
+                proceed.set()
+            future.result(timeout=5)
+        assert humanize.intcomma(1234.5) == "1,234.5"
+    finally:
+        humanize.deactivate()
 
 
 @pytest.mark.parametrize(
