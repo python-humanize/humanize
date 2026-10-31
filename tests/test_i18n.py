@@ -472,7 +472,6 @@ def test_intword_unit_has_no_format_placeholder(locale: str) -> None:
         humanize.i18n.deactivate()
 
 
-
 def test_activate_populates_translation_cache(monkeypatch: pytest.MonkeyPatch) -> None:
     """activate() caches translation on first call (cache-miss branch)."""
     import gettext

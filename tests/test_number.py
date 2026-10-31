@@ -386,7 +386,6 @@ def test_format_not_finite_returns_empty_for_finite() -> None:
     assert number._format_not_finite(-1.5) == ""
 
 
-
 def test_intcomma_with_custom_separators(monkeypatch: pytest.MonkeyPatch) -> None:
     """intcomma uses thousands_separator/decimal_separator helpers."""
     monkeypatch.setattr(number, "thousands_separator", lambda: ".")
@@ -394,8 +393,9 @@ def test_intcomma_with_custom_separators(monkeypatch: pytest.MonkeyPatch) -> Non
     assert humanize.intcomma(1234) == "1.234"
     assert humanize.intcomma(1234.5, ndigits=2) == "1.234,50"
     assert humanize.intcomma("14308,40", ndigits=1) == "14.308,4"
+
+
 def test_clamp_invalid_format_raises() -> None:
     """clamp raises ValueError for non-string, non-callable format."""
     with pytest.raises(ValueError, match="Invalid format"):
         humanize.clamp(42, format=123)  # type: ignore[arg-type]
-
