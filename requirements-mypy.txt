@@ -1,4 +1,4 @@
-mypy==2.3.1
+mypy==2.4.0
 pytest
 types-freezegun
 types-setuptools
