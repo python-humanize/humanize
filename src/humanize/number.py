@@ -4,7 +4,8 @@ from __future__ import annotations
 
 __lazy_modules__ = {"bisect"}
 
-import bisect\nfrom decimal import Decimal
+import bisect
+from decimal import Decimal
 
 from .i18n import _gettext as _
 from .i18n import _gettext_noop as N_
