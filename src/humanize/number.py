@@ -4,7 +4,7 @@ from __future__ import annotations
 
 __lazy_modules__ = {"bisect"}
 
-import bisect
+import bisect\nfrom decimal import Decimal
 
 from .i18n import _gettext as _
 from .i18n import _gettext_noop as N_
@@ -184,7 +184,10 @@ def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
             if not math.isfinite(float(value)):
                 return _format_not_finite(float(value))
             if "." in value:
-                value = float(value)
+                # float() rounds the value before it is formatted, which drops
+                # digits of a long decimal string ("...456.78" came out as
+                # "...456.8"). Decimal keeps every digit the caller wrote.
+                value = Decimal(value)
             else:
                 value = int(value)
         elif not isinstance(value, int):
