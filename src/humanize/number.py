@@ -145,6 +145,8 @@ def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
 
     For example, 3000 becomes "3,000" and 45000 becomes "45,000". To maintain some
     compatibility with Django's `intcomma`, this function also accepts floats.
+    Decimal strings without exponent notation retain their precision when
+    `ndigits` is not specified.
 
     Examples:
         ```pycon
@@ -176,6 +178,7 @@ def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
     """
     import math
 
+    decimal_value = None
     thousands_sep = thousands_separator()
     decimal_sep = decimal_separator()
     try:
@@ -184,7 +187,12 @@ def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
             if not math.isfinite(float(value)):
                 return _format_not_finite(float(value))
             if "." in value:
-                value = float(value)
+                if ndigits is None and "e" not in value.lower():
+                    from decimal import Decimal
+
+                    decimal_value = Decimal(value)
+                else:
+                    value = float(value)
             else:
                 value = int(value)
         elif not isinstance(value, int):
@@ -196,6 +204,8 @@ def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
 
     if ndigits is not None:
         result = f"{value:,.{ndigits}f}"
+    elif decimal_value is not None:
+        result = f"{decimal_value:,f}"
     else:
         result = f"{value:,}"
     if thousands_sep != "," or decimal_sep != ".":
