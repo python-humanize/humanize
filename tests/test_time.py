@@ -838,6 +838,25 @@ def test_precisedelta_suppress_units(
     )
 
 
+@pytest.mark.parametrize("microseconds", [2**53 - 1, 2**53 + 1, 2**53 + 3])
+@pytest.mark.parametrize("sign", [1, -1])
+def test_precisedelta_large_microsecond_count(microseconds: int, sign: int) -> None:
+    value = dt.timedelta(microseconds=sign * microseconds)
+    suppress = [
+        "years",
+        "months",
+        "days",
+        "hours",
+        "minutes",
+        "seconds",
+        "milliseconds",
+    ]
+    assert (
+        humanize.precisedelta(value, minimum_unit="microseconds", suppress=suppress)
+        == f"{microseconds} microseconds"
+    )
+
+
 def test_precisedelta_bogus_call() -> None:
     assert humanize.precisedelta(None) == "None"
 
