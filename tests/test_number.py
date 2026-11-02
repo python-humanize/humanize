@@ -83,6 +83,41 @@ def test_intcomma(
     assert humanize.intcomma(*test_args) == expected
 
 
+@pytest.mark.parametrize(
+    "value, expected",
+    [
+        ("1234567890123456.78", "1,234,567,890,123,456.78"),
+        ("-1234567890123456.78", "-1,234,567,890,123,456.78"),
+        ("0.1234567890123456789", "0.1234567890123456789"),
+        ("0.000000000000000000123456789", "0.000000000000000000123456789"),
+        ("1234.1200", "1,234.1200"),
+        ("+001234.1200", "1,234.1200"),
+    ],
+)
+def test_intcomma_decimal_string_precision(value: str, expected: str) -> None:
+    assert humanize.intcomma(value) == expected
+
+
+@pytest.mark.parametrize(
+    "value, ndigits, expected",
+    [
+        ("1234.545", 2, "1,234.55"),
+        ("1234.1200", 3, "1,234.120"),
+        ("1.0e3", None, "1,000.0"),
+        ("1e3", None, "1e3"),
+        ("bad.12", None, "bad.12"),
+        ("1.2.3", None, "1.2.3"),
+        ("nan", None, "NaN"),
+        ("-inf", None, "-Inf"),
+        ("1.0e400", None, "+Inf"),
+    ],
+)
+def test_intcomma_decimal_string_controls(
+    value: str, ndigits: int | None, expected: str
+) -> None:
+    assert humanize.intcomma(value, ndigits) == expected
+
+
 @pytest.mark.parametrize("sign", [1, -1])
 def test_intcomma_large_integer(sign: int) -> None:
     value = sign * (10**400 + 123)

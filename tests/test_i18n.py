@@ -145,11 +145,19 @@ def test_intcomma() -> None:
         assert humanize.intcomma("1234567,89") == "1.234.567,89"
         assert humanize.intcomma("1.234.567,89") == "1.234.567,89"
         assert humanize.intcomma("1.234.567,8") == "1.234.567,8"
+        assert (
+            humanize.intcomma("1.234.567.890.123.456,78") == "1.234.567.890.123.456,78"
+        )
+        assert humanize.intcomma("-1234567890123456,78") == "-1.234.567.890.123.456,78"
+        assert humanize.intcomma("1234,1200") == "1.234,1200"
 
         humanize.i18n.activate("fr_FR")
         assert humanize.intcomma(number) == "10 000 000"
         assert humanize.intcomma(1_234_567.89) == "1 234 567,89"
         assert humanize.intcomma("1 234 567,89") == "1 234 567,89"
+        assert (
+            humanize.intcomma("1 234 567 890 123 456,78") == "1 234 567 890 123 456,78"
+        )
 
         humanize.i18n.activate("pt_BR")
         assert humanize.intcomma(number) == "10.000.000"
