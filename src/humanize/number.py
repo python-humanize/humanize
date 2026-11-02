@@ -443,14 +443,20 @@ def scientific(value: NumberOrString, precision: int = 2) -> str:
     """
     import math
 
+    fmt = f"{{:.{int(precision)}e}}"
     try:
-        value = float(value)
-        if not math.isfinite(value):
-            return _format_not_finite(value)
+        number = float(value)
+    except OverflowError:
+        # An integer beyond float's range: Decimal has no such limit.
+        from decimal import Decimal
+
+        n = fmt.format(Decimal(value))
     except (ValueError, TypeError):
         return str(value)
-    fmt = f"{{:.{int(precision)}e}}"
-    n = fmt.format(value)
+    else:
+        if not math.isfinite(number):
+            return _format_not_finite(number)
+        n = fmt.format(number)
     part1, part2 = n.split("e")
     # Normalise exponent: int() strips the "+" sign and leading zeros,
     # while preserving "-" and a single "0" for 10⁰.
