@@ -193,20 +193,20 @@ def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
                 parts = value.lstrip("+-").split(".")
                 digits = "0123456789"
                 if (
-                                    ndigits is None
+                    ndigits is None
                     and len(parts) == 2
                     and all(c in digits for c in parts[0])
-                                and parts[0]
-                                and all(c in digits for c in parts[1])
-                                and parts[1]
-                                        ):
-                                from decimal import Decimal
+                    and parts[0]
+                    and all(c in digits for c in parts[1])
+                    and parts[1]
+                ):
+                    from decimal import Decimal
 
-                                value = Decimal(value)
-                                    else:
-                            value = float(value)
+                    value = Decimal(value)
                 else:
-                        value = int(value)
+                    value = float(value)
+            else:
+                value = int(value)
         elif not isinstance(value, int):
             if not math.isfinite(float(value)):
                 return _format_not_finite(float(value))
