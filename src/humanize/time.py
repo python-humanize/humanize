@@ -548,9 +548,21 @@ def precisedelta(
 
     ```
     """
-    date, delta = _date_and_delta(value, precise=True)
-    if date is None:
+    import datetime as dt
+
+    if value is None:
         return str(value)
+    if isinstance(value, dt.datetime):
+        _date, delta = _date_and_delta(value, precise=True)
+    else:
+        try:
+            delta = abs(
+                value
+                if isinstance(value, dt.timedelta)
+                else dt.timedelta(seconds=value)
+            )
+        except (ValueError, TypeError):
+            return str(value)
 
     suppress_set = {Unit[s.upper()] for s in suppress}
 
@@ -565,9 +577,9 @@ def precisedelta(
     suppress_set = _suppress_lower_units(min_unit, suppress_set)
 
     # handy aliases
-    days = delta.days
-    secs = delta.seconds
-    usecs = delta.microseconds
+    days: float = delta.days
+    secs: float = delta.seconds
+    usecs: float = delta.microseconds
 
     MILLISECONDS = Unit.MILLISECONDS
     SECONDS = Unit.SECONDS

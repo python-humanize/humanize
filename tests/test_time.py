@@ -838,6 +838,26 @@ def test_precisedelta_suppress_units(
     )
 
 
+@pytest.mark.parametrize(
+    "value, expected",
+    [
+        (dt.timedelta(days=4_000_000), "4000000 days"),
+        (dt.timedelta(days=-4_000_000), "4000000 days"),
+        (4_000_000 * ONE_DAY, "4000000 days"),
+        (-4_000_000 * ONE_DAY, "4000000 days"),
+        (dt.timedelta.min, "999999999 days"),
+        (dt.timedelta.max, "1000000000 days"),
+    ],
+)
+def test_precisedelta_beyond_datetime_range(
+    value: dt.timedelta | float, expected: str
+) -> None:
+    assert (
+        humanize.precisedelta(value, minimum_unit="days", suppress=["years", "months"])
+        == expected
+    )
+
+
 def test_precisedelta_bogus_call() -> None:
     assert humanize.precisedelta(None) == "None"
 
