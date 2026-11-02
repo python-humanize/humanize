@@ -6,6 +6,7 @@ import datetime as dt
 import gettext
 import importlib
 import shutil
+import struct
 import subprocess
 from pathlib import Path
 
@@ -18,6 +19,34 @@ LOCALE_DIR = Path(humanize.i18n.__file__).parent / "locale"
 
 with freeze_time("2020-02-02"):
     NOW = dt.datetime.now(tz=dt.UTC)
+
+
+def test_activate_uses_catalog_from_requested_path(tmp_path: Path) -> None:
+    def write_catalog(root: Path, translated: str) -> None:
+        directory = root / "zz" / "LC_MESSAGES"
+        directory.mkdir(parents=True)
+        original = b"one"
+        translation = translated.encode("utf-8")
+        data = struct.pack("<7I", 0x950412DE, 0, 1, 28, 36, 0, 0)
+        data += struct.pack("<2I", len(original), 44)
+        data += struct.pack("<2I", len(translation), 48)
+        data += original + b"\0" + translation + b"\0"
+        (directory / "humanize.mo").write_bytes(data)
+
+    first = tmp_path / "first"
+    second = tmp_path / "second"
+    write_catalog(first, "first")
+    write_catalog(second, "second")
+    try:
+        first_translation = humanize.activate("zz", first)
+        assert humanize.apnumber(1) == "first"
+        second_translation = humanize.activate("zz", second)
+        assert humanize.apnumber(1) == "second"
+        assert first_translation is not second_translation
+        humanize.activate("zz", first)
+        assert humanize.apnumber(1) == "first"
+    finally:
+        humanize.deactivate()
 
 
 @pytest.mark.parametrize("locale, one", [("de_DE", "eins"), ("fr_FR", "un")])
