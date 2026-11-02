@@ -336,7 +336,7 @@ msgstr[1] "%d Jahre"
 #: src/humanize/time.py:256
 #, python-format
 msgid "%s from now"
-msgstr "%s ab jetzt"
+msgstr "in %s"
 
 #: src/humanize/time.py:256
 #, python-format
@@ -363,3 +363,119 @@ msgstr "gestern"
 #, python-format
 msgid "%s and %s"
 msgstr "%s und %s"
+
+# Relative time uses the dative after "vor" and "in".
+#: src/humanize/time.py
+msgctxt "naturaltime"
+msgid "a second"
+msgstr "einer Sekunde"
+
+#: src/humanize/time.py
+msgctxt "naturaltime"
+msgid "a minute"
+msgstr "einer Minute"
+
+#: src/humanize/time.py
+msgctxt "naturaltime"
+msgid "an hour"
+msgstr "einer Stunde"
+
+#: src/humanize/time.py
+msgctxt "naturaltime"
+msgid "a day"
+msgstr "einem Tag"
+
+#: src/humanize/time.py
+msgctxt "naturaltime"
+msgid "a month"
+msgstr "einem Monat"
+
+#: src/humanize/time.py
+msgctxt "naturaltime"
+msgid "a year"
+msgstr "einem Jahr"
+
+#: src/humanize/time.py
+msgctxt "naturaltime"
+msgid "1 year, 1 month"
+msgstr "einem Jahr und einem Monat"
+
+#: src/humanize/time.py
+#, python-format
+msgctxt "naturaltime"
+msgid "%d microsecond"
+msgid_plural "%d microseconds"
+msgstr[0] "%d Mikrosekunde"
+msgstr[1] "%d Mikrosekunden"
+
+#: src/humanize/time.py
+#, python-format
+msgctxt "naturaltime"
+msgid "%d millisecond"
+msgid_plural "%d milliseconds"
+msgstr[0] "%d Millisekunde"
+msgstr[1] "%d Millisekunden"
+
+#: src/humanize/time.py
+#, python-format
+msgctxt "naturaltime"
+msgid "%d second"
+msgid_plural "%d seconds"
+msgstr[0] "%d Sekunde"
+msgstr[1] "%d Sekunden"
+
+#: src/humanize/time.py
+#, python-format
+msgctxt "naturaltime"
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] "%d Minute"
+msgstr[1] "%d Minuten"
+
+#: src/humanize/time.py
+#, python-format
+msgctxt "naturaltime"
+msgid "%d hour"
+msgid_plural "%d hours"
+msgstr[0] "%d Stunde"
+msgstr[1] "%d Stunden"
+
+#: src/humanize/time.py
+#, python-format
+msgctxt "naturaltime"
+msgid "%d day"
+msgid_plural "%d days"
+msgstr[0] "%d Tag"
+msgstr[1] "%d Tagen"
+
+#: src/humanize/time.py
+#, python-format
+msgctxt "naturaltime"
+msgid "%d month"
+msgid_plural "%d months"
+msgstr[0] "%d Monat"
+msgstr[1] "%d Monaten"
+
+#: src/humanize/time.py
+#, python-format
+msgctxt "naturaltime"
+msgid "%d year"
+msgid_plural "%d years"
+msgstr[0] "%d Jahr"
+msgstr[1] "%d Jahren"
+
+#: src/humanize/time.py
+#, python-format
+msgctxt "naturaltime"
+msgid "1 year, %d day"
+msgid_plural "1 year, %d days"
+msgstr[0] "einem Jahr und %d Tag"
+msgstr[1] "einem Jahr und %d Tagen"
+
+#: src/humanize/time.py
+#, python-format
+msgctxt "naturaltime"
+msgid "1 year, %d month"
+msgid_plural "1 year, %d months"
+msgstr[0] "einem Jahr und %d Monat"
+msgstr[1] "einem Jahr und %d Monaten"
