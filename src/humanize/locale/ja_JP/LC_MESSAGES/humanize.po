@@ -352,3 +352,11 @@ msgstr "昨日"
 #, python-format
 msgid "%s and %s"
 msgstr ""
+
+#. Named powers of ten and matching number/unit patterns for intword.
+msgid "intword:scales:v1"
+msgstr "[4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56, 60, 64, 68]"
+
+msgid "intword:patterns:v1"
+msgid_plural "intword:patterns:v1"
+msgstr[0] "{\"exponents\": [4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56, 60, 64, 68], \"patterns\": [\"{number}万\", \"{number}億\", \"{number}兆\", \"{number}京\", \"{number}垓\", \"{number}秭\", \"{number}穣\", \"{number}溝\", \"{number}澗\", \"{number}正\", \"{number}載\", \"{number}極\", \"{number}恒河沙\", \"{number}阿僧祇\", \"{number}那由他\", \"{number}不可思議\", \"{number}無量大数\"]}"
