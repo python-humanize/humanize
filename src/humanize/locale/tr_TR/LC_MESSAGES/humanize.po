@@ -338,7 +338,7 @@ msgstr[1] "%d yıl"
 #: src/humanize/time.py:256
 #, python-format
 msgid "%s from now"
-msgstr "şu andan itibaren %s"
+msgstr "%s sonra"
 
 #: src/humanize/time.py:256
 #, python-format
