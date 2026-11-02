@@ -184,7 +184,27 @@ def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
             if not math.isfinite(float(value)):
                 return _format_not_finite(float(value))
             if "." in value:
-                value = float(value)
+                                # Without an explicit rounding request, grouping a decimal
+                                # string must not lose digits to binary float rounding
+                                # (issue #496: '1234567890123456.78' became '...456.8').
+                                # Parse plain decimal strings exactly, as the Decimal input
+                                # path already does; anything else (exponents, trailing
+                                # dots) keeps the previous float behaviour.
+                                parts = value.lstrip("+-").split(".")
+                                digits = "0123456789"
+                                if (
+                                    ndigits is None
+                    and len(parts) == 2
+                    and all(c in digits for c in parts[0])
+                    and parts[0]
+                    and all(c in digits for c in parts[1])
+                    and parts[1]
+                                ):
+                    from decimal import Decimal
+
+                    value = Decimal(value)
+                                    else:
+                    value = float(value)
             else:
                 value = int(value)
         elif not isinstance(value, int):
