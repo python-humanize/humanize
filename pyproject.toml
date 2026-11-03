@@ -48,6 +48,9 @@ urls.Funding = "https://tidelift.com/subscription/pkg/pypi-humanize?utm_source=p
 urls.Homepage = "https://github.com/python-humanize/humanize"
 urls.Source = "https://github.com/python-humanize/humanize"
 
+[project.scripts]
+humanize = "humanize.cli:main"
+
 [tool.hatch]
 version.source = "vcs"
 version.raw-options.local_scheme = "no-local-version"
