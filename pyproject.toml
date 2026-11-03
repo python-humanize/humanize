@@ -47,9 +47,7 @@ urls.Documentation = "https://humanize.readthedocs.io/"
 urls.Funding = "https://tidelift.com/subscription/pkg/pypi-humanize?utm_source=pypi-humanize&utm_medium=pypi"
 urls.Homepage = "https://github.com/python-humanize/humanize"
 urls.Source = "https://github.com/python-humanize/humanize"
-
-[project.scripts]
-humanize = "humanize.cli:main"
+scripts.humanize = "humanize.cli:main"
 
 [tool.hatch]
 version.source = "vcs"

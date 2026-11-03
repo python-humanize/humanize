@@ -23,5 +23,4 @@ $ printf '1000\n2048\n' | humanize naturalsize
 2.0 kB
 ```
 
-Invalid values produce an error identifying the input line and a nonzero exit
-status.
+Invalid values produce an error identifying the input line and a nonzero exit status.
