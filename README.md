@@ -165,6 +165,26 @@ If seconds are too large, set `minimum_unit` to milliseconds or microseconds:
 '976.6K'
 ```
 
+The same formatter is available from the command line:
+
+```console
+$ humanize naturalsize 8589934592
+8.6 GB
+$ python -m humanize naturalsize --binary 8589934592
+8.0 GiB
+$ humanize naturalsize --gnu --format "%.2f" 8589934592
+8.00G
+```
+
+When the value is omitted, the command reads one byte count per line from standard
+input. It stops at the first invalid line and reports its line number:
+
+```console
+$ printf '1000\n2048\n' | humanize naturalsize
+1.0 kB
+2.0 kB
+```
+
 ### Human-readable floating point numbers
 
 ```pycon
