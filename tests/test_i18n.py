@@ -96,6 +96,11 @@ def test_i18n() -> None:
         assert humanize.naturaltime(three_seconds) == "3 সেকেন্ড সময় আগে"
         assert humanize.precisedelta(one_min_three_seconds) == "1 মিনিট আর 7 সেকেন্ড"
 
+        humanize.i18n.activate("tr_TR")
+        assert humanize.naturaltime(three_seconds) == "3 saniye önce"
+        in_three_days = NOW + dt.timedelta(days=3)
+        assert humanize.naturaltime(in_three_days, when=NOW) == "3 gün sonra"
+
     except FileNotFoundError:
         pytest.skip("Generate .mo with scripts/generate-translation-binaries.sh")
 
