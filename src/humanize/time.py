@@ -295,12 +295,29 @@ def naturaltime(
 
     now = when or _now()
 
-    date, delta = _date_and_delta(value, now=now)
-    if date is None:
-        return str(value)
-    # determine tense by value only if datetime/timedelta were passed
-    if isinstance(value, (dt.datetime, dt.timedelta)):
+    if isinstance(value, dt.datetime):
+        date, delta = _date_and_delta(value, now=now)
+        if date is None:
+            return str(value)
         future = date > now
+    elif isinstance(value, dt.timedelta):
+        # A timedelta has no calendar date of its own. Avoid constructing one:
+        # valid large durations can extend beyond datetime's supported range.
+        delta = abs(value)
+        future = value < dt.timedelta(0)
+    elif isinstance(value, (int, float)):
+        # Numeric inputs are interpreted as seconds and use `future` as given.
+        # Converting to a timedelta retains the existing rounding and overflow
+        # behavior without requiring an otherwise unused calendar date.
+        try:
+            delta = dt.timedelta(seconds=round(value))
+        except (ValueError, TypeError):
+            return str(value)
+        delta = abs(delta)
+    else:
+        date, delta = _date_and_delta(value, now=now)
+        if date is None:
+            return str(value)
 
     ago = _("%s from now") if future else _("%s ago")
     delta = naturaldelta(delta, months, minimum_unit)
