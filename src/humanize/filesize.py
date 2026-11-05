@@ -90,10 +90,12 @@ def naturalsize(
     bytes_ = float(value)
     abs_bytes = abs(bytes_)
 
-    if abs_bytes == 1 and not gnu:
+    if abs_bytes == 1 and not gnu and float(bytes_).is_integer():
         return _("%d Byte") % int(bytes_)
 
     if abs_bytes < base:
+        if not float(bytes_).is_integer():
+            return f"{format % bytes_}B" if gnu else _("%s Bytes") % (format % bytes_)
         return f"{int(bytes_)}B" if gnu else _("%d Bytes") % int(bytes_)
 
     from math import log
