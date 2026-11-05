@@ -42,6 +42,17 @@ class FakeDate:
         return f"{self.year}-{self.month}-{self.day}"
 
 
+class NaiveTimezone(dt.tzinfo):
+    def utcoffset(self, value: dt.datetime | None) -> None:
+        return None
+
+    def dst(self, value: dt.datetime | None) -> None:
+        return None
+
+    def tzname(self, value: dt.datetime | None) -> None:
+        return None
+
+
 VALUE_ERROR_TEST = FakeDate(290149024, 2, 2)
 OVERFLOW_ERROR_TEST = FakeDate(120390192341, 2, 2)
 
@@ -278,6 +289,36 @@ def test_naturaltime_nomonths(
 )
 def test_naturalday(test_args: list[typing.Any], expected: str) -> None:
     assert humanize.naturalday(*test_args) == expected
+
+
+@freeze_time(FROZEN_DATE)
+@pytest.mark.parametrize("formatter", ["naturalday", "naturaldate", "naturaltime"])
+@pytest.mark.parametrize("tzinfo", [None, NaiveTimezone(), dt.UTC])
+def test_datetime_awareness(formatter: str, tzinfo: dt.tzinfo | None) -> None:
+    value = dt.datetime(2010, 2, 2, tzinfo=tzinfo)
+    format_time = getattr(humanize, formatter)
+    expected = "now" if formatter == "naturaltime" else "today"
+    assert format_time(value) == expected
+    if value.utcoffset() is None:
+        assert format_time(value) == format_time(value.replace(tzinfo=None))
+
+
+@pytest.mark.parametrize(
+    "value_tzinfo, when_tzinfo",
+    [
+        (None, None),
+        (NaiveTimezone(), None),
+        (None, NaiveTimezone()),
+        (NaiveTimezone(), NaiveTimezone()),
+        (dt.UTC, dt.UTC),
+    ],
+)
+def test_naturaltime_when_datetime_awareness(
+    value_tzinfo: dt.tzinfo | None, when_tzinfo: dt.tzinfo | None
+) -> None:
+    value = dt.datetime(2010, 2, 2, 12, tzinfo=value_tzinfo)
+    when = dt.datetime(2010, 2, 2, 11, tzinfo=when_tzinfo)
+    assert humanize.naturaltime(value, when=when) == "an hour from now"
 
 
 @freeze_time(FROZEN_DATE)
