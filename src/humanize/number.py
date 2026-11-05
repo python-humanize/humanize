@@ -175,16 +175,20 @@ def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
         str: String containing commas every three digits.
     """
     import math
+    from decimal import Decimal
 
     thousands_sep = thousands_separator()
     decimal_sep = decimal_separator()
+    is_str_decimal = False
     try:
         if isinstance(value, str):
             value = value.replace(thousands_sep, "").replace(decimal_sep, ".")
             if not math.isfinite(float(value)):
                 return _format_not_finite(float(value))
             if "." in value:
-                value = float(value)
+                # Keep the exact decimal string to avoid float() rounding
+                # large values, e.g. '1234567890123456.78'.
+                is_str_decimal = True
             else:
                 value = int(value)
         elif not isinstance(value, int):
@@ -195,9 +199,21 @@ def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
         return str(value)
 
     if ndigits is not None:
+        if is_str_decimal:
+            value = Decimal(value)
         result = f"{value:,.{ndigits}f}"
     else:
-        result = f"{value:,}"
+        if is_str_decimal:
+            # Format the original digit string directly so no precision is lost.
+            int_part, _, frac_part = value.partition(".")
+            sign = ""
+            if int_part.startswith(("-", "+")):
+                sign, int_part = int_part[0], int_part[1:]
+            int_part = int_part.lstrip("0") or "0"
+            grouped = f"{int(int_part):,}" if int_part else "0"
+            result = f"{sign}{grouped}.{frac_part}" if frac_part else f"{sign}{grouped}"
+        else:
+            result = f"{value:,}"
     if thousands_sep != "," or decimal_sep != ".":
         result = result.translate(str.maketrans(",.", thousands_sep + decimal_sep))
     return result
