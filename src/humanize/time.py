@@ -552,6 +552,16 @@ def precisedelta(
     if date is None:
         return str(value)
 
+    import datetime as dt
+
+    # _date_and_delta() returns an absolute delta; remember the original sign so
+    # negative inputs are not rendered identically to positive ones (#379).
+    is_negative = (
+        value < dt.timedelta(0)
+        if isinstance(value, dt.timedelta)
+        else isinstance(value, (int, float)) and value < 0
+    )
+
     suppress_set = {Unit[s.upper()] for s in suppress}
 
     # Find a suitable minimum unit (it can be greater than the one that the
@@ -652,6 +662,8 @@ def precisedelta(
         ("%d microsecond", "%d microseconds", usecs),
     ]
 
+    sign = "-" if is_negative and any(f[2] for f in fmts) else ""
+
     import math
 
     texts: list[str] = []
@@ -675,12 +687,12 @@ def precisedelta(
             break
 
     if len(texts) == 1:
-        return texts[0]
+        return sign + texts[0]
 
     head = ", ".join(texts[:-1])
     tail = texts[-1]
 
-    return _("%s and %s") % (head, tail)
+    return sign + _("%s and %s") % (head, tail)
 
 
 def _rounding_by_fmt(format: str, value: float) -> float | int:
