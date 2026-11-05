@@ -103,8 +103,13 @@ def naturalsize(
     # mantissa afterward; rounding can push it up to `base` (e.g. 999999 is
     # 999.999 kB, which formats to "1000.0 kB"). When that happens and a larger
     # suffix is available, step up one suffix so the result reads "1.0 MB".
-    if exp < len(suffix) and abs(float(format % (abs_bytes / (base**exp)))) >= base:
-        exp += 1
+    if exp < len(suffix):
+        try:
+            if abs(float(format % (abs_bytes / (base**exp)))) >= base:
+                exp += 1
+        except ValueError:
+            # Format has text around the number, so skip the rollover check.
+            pass
     space = "" if gnu else " "
     ret: str = format % (bytes_ / (base**exp)) + space + _(suffix[exp - 1])
     return ret
