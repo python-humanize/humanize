@@ -181,12 +181,18 @@ def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
     try:
         if isinstance(value, str):
             value = value.replace(thousands_sep, "").replace(decimal_sep, ".")
-            if not math.isfinite(float(value)):
+            if ndigits is not None and not math.isfinite(float(value)):
                 return _format_not_finite(float(value))
-            if "." in value:
+            try:
+                integer_value = int(value)
+            except ValueError:
+                if not math.isfinite(float(value)):
+                    return _format_not_finite(float(value))
+                if "." not in value:
+                    raise
                 value = float(value)
             else:
-                value = int(value)
+                value = integer_value
         elif not isinstance(value, int):
             if not math.isfinite(float(value)):
                 return _format_not_finite(float(value))
