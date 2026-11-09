@@ -28,7 +28,7 @@ jobs:
     uses: gigaverse-app/ci-esta/.github/workflows/report.yml@b69484796b301a90c73bd7c7f26f8e542c8bb8a3 # v1.14.0
     with:
       run-id: ${{ github.event.workflow_run.id || fromJSON(inputs.run-id) }}
-      run-attempt:
+      run-attempt: >-
         ${{ github.event.workflow_run.run_attempt || fromJSON(inputs.run-attempt) }}
       head-sha: ${{ github.event.workflow_run.head_sha || inputs.head-sha }}
       required-gates-json: '[{"kind":"actions_job","job_name":"Test successful"}]'
