@@ -1,4 +1,6 @@
 mypy==2.4.0
 pytest
+pytest-selective==1.4.0
 types-freezegun
+types-pyyaml
 types-setuptools

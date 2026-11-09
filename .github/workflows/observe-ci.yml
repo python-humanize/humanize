@@ -1,0 +1,36 @@
+name: CI report
+on: # zizmor: ignore[dangerous-triggers] -- read-only reporter; never executes source PR code
+  workflow_run:
+    workflows: [Test]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      run-id:
+        description: Completed test workflow run to report
+        required: true
+        type: string
+      head-sha:
+        description: Exact head SHA of the source run
+        required: true
+        type: string
+      run-attempt:
+        description: Source run attempt
+        type: string
+        default: "1"
+permissions:
+  actions: read
+  checks: read
+  contents: read
+  pull-requests: read
+jobs:
+  report:
+    # The trusted reporter reads source workflow data without executing PR code.
+    uses: gigaverse-app/ci-esta/.github/workflows/report.yml@b69484796b301a90c73bd7c7f26f8e542c8bb8a3 # v1.14.0
+    with:
+      run-id: ${{ github.event.workflow_run.id || fromJSON(inputs.run-id) }}
+      run-attempt:
+        ${{ github.event.workflow_run.run_attempt || fromJSON(inputs.run-attempt) }}
+      head-sha: ${{ github.event.workflow_run.head_sha || inputs.head-sha }}
+      required-gates-json: '[{"kind":"actions_job","job_name":"Test successful"}]'
+      analyze-critical-path: true
+      post-sticky: false

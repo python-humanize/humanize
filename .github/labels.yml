@@ -72,3 +72,6 @@
 - color: fbca04
   description: "Unit tests, linting, CI, etc."
   name: testing
+- color: fbca04
+  description: "Run every CI lane on this PR (applies from the next push or reopen)"
+  name: "test:full"

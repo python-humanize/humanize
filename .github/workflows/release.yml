@@ -17,7 +17,9 @@ env:
   FORCE_COLOR: 1
 
 jobs:
-  # Always build & lint package.
+  # Build & lint the package on every push, tag, release and dispatch.
+  # On pull requests, skip the build when the package lane's inputs are unchanged.
+  # The plan runs inside this job, so the publishing jobs keep their single dependency.
   build-package:
     name: Build & verify package
     runs-on: ubuntu-latest
@@ -28,15 +30,41 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
+      - id: plan
+        if: github.event_name == 'pull_request'
+        # A failed planner builds the package; only a successful plan can skip it.
+        continue-on-error: true
+        uses: gigaverse-app/pytest-selective/actions/plan-lanes@286d0aeb75991d35f2ffafc7dda0517b7250b5c3 # v1.4.0
+        with:
+          config: .github/test-lanes.json
+
+      - id: admit
+        name: Package lane admission
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          PLAN_OUTCOME: ${{ steps.plan.outcome }}
+          LANES: ${{ steps.plan.outputs.lanes }}
+        run: |
+          package_lane="$(python3 -c 'import json, os; print(json.loads(os.environ["LANES"] or "{}").get("package"))')"
+          if [ "$EVENT_NAME" = pull_request ] && [ "$PLAN_OUTCOME" = success ] && [ "$package_lane" = False ]; then
+            echo "build=false" >> "$GITHUB_OUTPUT"
+            echo "Package lane unaffected; skipping the build."
+          else
+            echo "build=true" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Install gettext
+        if: steps.admit.outputs.build == 'true'
         run: |
           sudo apt install gettext
 
       - name: Generate translation binaries
+        if: steps.admit.outputs.build == 'true'
         run: |
           scripts/generate-translation-binaries.sh
 
-      - uses: hynek/build-and-inspect-python-package@67230f7b8410ae0052b39c1efc89d89fff43ff10 # v3.0.2
+      - if: steps.admit.outputs.build == 'true'
+        uses: hynek/build-and-inspect-python-package@67230f7b8410ae0052b39c1efc89d89fff43ff10 # v3.0.2
 
   # Upload to Test PyPI on every commit on main.
   release-test-pypi:

@@ -1,0 +1,40 @@
+{
+  "graph": {
+    "module_roots": ["src", "."],
+    "test_roots": ["tests", "ci/tests"],
+    "global_inputs": ["pyproject.toml", "tox.ini"],
+    "pytest_policy": {
+      "pyproject.toml": "8c6a5fd2043787c01e67a463fc6bb2494764f55c2d2c5d358ebe9f46dad0829c",
+      "tox.ini": "751ee0be550f8a9de9dea8d6f74b0178cc17c099cc18086106bb9b397016076c"
+    }
+  },
+  "global_inputs": ["pyproject.toml", "tox.ini", ".github/test-lanes.json"],
+  "lanes": {
+    "tests": {
+      "roots": ["tests"],
+      "inputs": ["src/**", "scripts/**", ".github/workflows/test.yml#test"]
+    },
+    "benchmark": {
+      "inputs": [
+        "tests/test_benchmarks.py",
+        "src/**",
+        "scripts/generate-translation-binaries.sh",
+        ".github/workflows/benchmark.yml#benchmarks"
+      ]
+    },
+    "package": {
+      "inputs": [
+        "src/**",
+        "README.md",
+        "LICENCE",
+        ".gitignore",
+        "scripts/generate-translation-binaries.sh",
+        ".github/workflows/release.yml#build-package"
+      ]
+    },
+    "routing": {
+      "roots": ["ci/tests"],
+      "inputs": [".github/workflows/test.yml#routing"]
+    }
+  }
+}

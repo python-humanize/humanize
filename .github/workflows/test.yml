@@ -1,6 +1,12 @@
 name: Test
 
-on: [push, pull_request, workflow_dispatch]
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    # Weekly full checkpoint: scheduled runs execute every lane.
+    - cron: "17 4 * * 1"
 
 permissions: {}
 
@@ -9,7 +15,26 @@ env:
   PIP_DISABLE_PIP_VERSION_CHECK: 1
 
 jobs:
+  select-tests:
+    runs-on: ubuntu-latest
+    outputs:
+      lanes: ${{ steps.plan.outputs.lanes }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - id: plan
+        uses: gigaverse-app/pytest-selective/actions/plan-lanes@286d0aeb75991d35f2ffafc7dda0517b7250b5c3 # v1.4.0
+        with:
+          config: .github/test-lanes.json
+
   test:
+    needs: select-tests
+    # A failed planner runs the matrix; only a successful plan can skip it.
+    if: >-
+      ${{ always() && !cancelled() && (needs.select-tests.result != 'success' ||
+          fromJSON(needs.select-tests.outputs.lanes).tests) }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -69,13 +94,52 @@ jobs:
           flags: ${{ matrix.os }}
           name: ${{ matrix.os }} Python ${{ matrix.python-version }}
 
+  routing:
+    needs: select-tests
+    if: >-
+      ${{ always() && !cancelled() && (needs.select-tests.result != 'success' ||
+          fromJSON(needs.select-tests.outputs.lanes).routing) }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@07a047e608db84b3d8c06cd9a7c7dcc9c355c18e # v10.3.2
+
+      - name: Lane routing regressions
+        run: |
+          uv run --no-project --python 3.14 --with "pytest>=9" --with "pytest-selective==1.4.0" \
+            python -m pytest ci/tests
+
   success:
     if: always()
-    needs: test
+    needs: [select-tests, test, routing]
     runs-on: ubuntu-latest
     name: Test successful
     steps:
       - name: Success
         env:
+          PLAN_RESULT: ${{ needs.select-tests.result }}
+          LANES: ${{ needs.select-tests.outputs.lanes }}
           TEST_RESULT: ${{ needs.test.result }}
-        run: test "$TEST_RESULT" = "success"
+          ROUTING_RESULT: ${{ needs.routing.result }}
+        # Accept a skipped lane only when a successful plan explicitly returned false for it.
+        run: |
+          python3 - <<'PY'
+          import json, os, sys
+
+          if os.environ["PLAN_RESULT"] != "success":
+              sys.exit(f"Lane planner result: {os.environ['PLAN_RESULT']}")
+          lanes = json.loads(os.environ["LANES"])
+          # Every required lane must have an explicit boolean decision.
+          if not isinstance(lanes, dict) or any(type(lanes.get(lane)) is not bool for lane in ("tests", "routing")):
+              sys.exit("Invalid lane plan")
+          failed = False
+          for lane, result in (("tests", os.environ["TEST_RESULT"]), ("routing", os.environ["ROUTING_RESULT"])):
+              accepted = result == "success" or (result == "skipped" and lanes.get(lane) is False)
+              print(f"{lane}: lane={lanes.get(lane)} result={result} accepted={accepted}")
+              failed |= not accepted
+          sys.exit(1 if failed else 0)
+          PY
