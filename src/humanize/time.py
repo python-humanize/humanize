@@ -524,8 +524,8 @@ def precisedelta(
 
     ```
 
-    Note that microseconds precision is lost if the seconds and all
-    the units below are suppressed:
+    When rounding to minutes, hours or days, suppressed subsecond units contribute
+    to the result. The `format` controls the displayed precision:
 
     ```pycon
     >>> delta = dt.timedelta(seconds=90, microseconds=100)
@@ -596,16 +596,32 @@ def precisedelta(
         days, 30.5, MONTHS, min_unit, suppress_set, format
     )
 
+    # Include subsecond time when rounding the chosen minimum unit.
     secs = days * 24 * 3600 + secs
     days, secs = _quotient_and_remainder(
-        secs, 24 * 3600, DAYS, min_unit, suppress_set, format
+        secs + usecs / 1_000_000 if min_unit == DAYS else secs,
+        24 * 3600,
+        DAYS,
+        min_unit,
+        suppress_set,
+        format,
     )
 
     hours, secs = _quotient_and_remainder(
-        secs, 3600, HOURS, min_unit, suppress_set, format
+        secs + usecs / 1_000_000 if min_unit == HOURS else secs,
+        3600,
+        HOURS,
+        min_unit,
+        suppress_set,
+        format,
     )
     minutes, secs = _quotient_and_remainder(
-        secs, 60, MINUTES, min_unit, suppress_set, format
+        secs + usecs / 1_000_000 if min_unit == MINUTES else secs,
+        60,
+        MINUTES,
+        min_unit,
+        suppress_set,
+        format,
     )
 
     usecs = secs * 1e6 + usecs
