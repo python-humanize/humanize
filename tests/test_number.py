@@ -82,6 +82,7 @@ def test_intcomma(
 ) -> None:
     assert humanize.intcomma(*test_args) == expected
 
+
 @pytest.mark.parametrize(
     "thousands_sep, decimal_sep, expected",
     [
@@ -99,6 +100,7 @@ def test_intcomma_localized_separators(
     monkeypatch.setattr(number, "decimal_separator", lambda: decimal_sep)
 
     assert humanize.intcomma(1234567.89) == expected
+
 
 @pytest.mark.parametrize("sign", [1, -1])
 def test_intcomma_large_integer(sign: int) -> None:
@@ -313,9 +315,11 @@ def test_scientific(test_args: list[typing.Any], expected: str) -> None:
 def test_clamp(test_args: list[typing.Any], expected: str) -> None:
     assert humanize.clamp(*test_args) == expected
 
+
 def test_clamp_invalid_format() -> None:
     with pytest.raises(ValueError, match="Invalid format"):
         humanize.clamp(10, format=123)
+
 
 @pytest.mark.parametrize(
     "test_args, expected",
