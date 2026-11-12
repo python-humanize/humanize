@@ -196,7 +196,6 @@ def test_naturaldelta_too_large_value_raises() -> None:
         (NOW - dt.timedelta(days=365 + 35), "1 year, 1 month ago"),
         (dt.timedelta(days=-10000), "27 years from now"),
         (dt.timedelta(days=365 + 35), "1 year, 1 month ago"),
-        # far-future values used to raise OverflowError in _abs_timedelta
         (dt.datetime(9999, 12, 31), "7,995 years from now"),
         (dt.timedelta(days=-800_000), "2,192 years from now"),
         (22.5, "22 seconds ago"),
@@ -648,7 +647,6 @@ def test_precisedelta_one_unit_enough(
         (dt.timedelta(days=32), "seconds", "1 month and 1 day"),
         (dt.timedelta(days=62), "seconds", "2 months and 1 day"),
         (dt.timedelta(days=92), "seconds", "3 months"),
-        # a negative delta reaching back past year 1 used to raise OverflowError
         (
             dt.timedelta(days=-800_000),
             "seconds",

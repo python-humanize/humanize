@@ -61,9 +61,6 @@ def _abs_timedelta(delta: dt.timedelta) -> dt.timedelta:
     Returns:
         datetime.timedelta: Absolute timedelta.
     """
-    # Use abs() rather than round-tripping through the current datetime:
-    # `now + delta` overflows (OverflowError) when a negative delta reaches back
-    # past year 1, e.g. for naturaltime(dt.datetime(9999, 12, 31)).
     return abs(delta)
 
 
