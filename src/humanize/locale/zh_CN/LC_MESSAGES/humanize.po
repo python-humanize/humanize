@@ -275,8 +275,8 @@ msgstr[1] "兆"
 #: src/humanize/number.py:212
 msgid "quadrillion"
 msgid_plural "quadrillion"
-msgstr[0] "万亿"
-msgstr[1] "万亿"
+msgstr[0] "千万亿"
+msgstr[1] "千万亿"
 
 #: src/humanize/number.py:213
 msgid "quintillion"
