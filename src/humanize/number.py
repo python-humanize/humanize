@@ -5,7 +5,6 @@ from __future__ import annotations
 __lazy_modules__ = {"bisect"}
 
 import bisect
-from typing import overload
 
 from .i18n import _gettext as _
 from .i18n import _gettext_noop as N_
@@ -457,28 +456,6 @@ def scientific(value: NumberOrString, precision: int = 2) -> str:
     # Normalise exponent: int() strips the "+" sign and leading zeros,
     # while preserving "-" and a single "0" for 10⁰.
     return part1 + " x 10" + str(int(part2)).translate(_SUPERSCRIPT_TRANS)
-
-
-@overload
-def clamp(
-    value: None,
-    format: str | Callable[[float], str] = "{:}",
-    floor: float | None = None,
-    ceil: float | None = None,
-    floor_token: str = "<",
-    ceil_token: str = ">",
-) -> None: ...
-
-
-@overload
-def clamp(
-    value: float,
-    format: str | Callable[[float], str] = "{:}",
-    floor: float | None = None,
-    ceil: float | None = None,
-    floor_token: str = "<",
-    ceil_token: str = ">",
-) -> str: ...
 
 
 def clamp(
