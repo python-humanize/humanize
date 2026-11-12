@@ -28,6 +28,7 @@ classifiers = [
   "Programming Language :: Python :: 3.13",
   "Programming Language :: Python :: 3.14",
   "Programming Language :: Python :: 3.15",
+  "Programming Language :: Python :: 3.16",
   "Programming Language :: Python :: Implementation :: CPython",
   "Programming Language :: Python :: Implementation :: PyPy",
   "Topic :: Text Processing",
@@ -101,7 +102,7 @@ lint.pydocstyle.convention = "google"
 lint.future-annotations = true
 
 [tool.pyproject-fmt]
-max_supported_python = "3.15"
+max_supported_python = "3.16"
 
 [tool.mypy]
 strict = true
@@ -110,10 +111,14 @@ num_workers = 4
 show_error_codes = true
 
 [tool.pytest]
-addopts = [ "--color=yes" ]
-filterwarnings = [ "error" ]
+addopts = [ "--doctest-modules" ]
+filterwarnings = [
+  "error",
+  # pytest-codspeed 5.0.4 supports up to 3.15
+  "ignore:Python 3.16 is not officially supported by pytest-codspeed:RuntimeWarning",
+]
 minversion = "9.0"
-testpaths = [ "tests" ]
+testpaths = [ "src", "tests" ]
 
 [tool.coverage]
 run.disable_warnings = [ "no-sysmon" ]  # 3.11
