@@ -61,10 +61,7 @@ def _abs_timedelta(delta: dt.timedelta) -> dt.timedelta:
     Returns:
         datetime.timedelta: Absolute timedelta.
     """
-    if delta.days < 0:
-        now = _now()
-        return now - (now + delta)
-    return delta
+    return abs(delta)
 
 
 def _date_and_delta(
