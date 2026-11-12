@@ -550,11 +550,20 @@ def metric(value: float, unit: str = "", precision: int = 3) -> str:
 
         ```
 
-    The unit prefix is always chosen so that non-significant zero digits are required.
-    i.e. `123,000` will become `123k` instead of `0.123M` and `1,230,000` will become
-    `1.23M` instead of `1230K`. For numbers that are either too huge or too tiny to
-    represent without resorting to either leading or trailing zeroes, it falls back to
-    `scientific()`.
+    The unit prefix keeps the scaled value compact, avoiding unnecessary leading or
+    trailing zeroes. For example, `123_000` uses kilo (`k`) rather than `0.123 M`,
+    and `1_230_000` uses mega (`M`) rather than `1230 k`:
+
+    ```pycon
+    >>> metric(123_000)
+    '123 k'
+    >>> metric(1_230_000)
+    '1.23 M'
+
+    ```
+
+    For numbers that are either too huge or too tiny to represent without resorting
+    to either leading or trailing zeroes, it falls back to `scientific()`.
     ```pycon
     >>> metric(1e40)
     '1.00 x 10⁴⁰'
