@@ -329,10 +329,14 @@ def apnumber(value: NumberOrString) -> str:
     import math
 
     try:
-        if not math.isfinite(float(value)):
-            return _format_not_finite(float(value))
         value = int(value)
-    except (TypeError, ValueError):
+    except (TypeError, ValueError, OverflowError):
+        try:
+            float_value = float(value)
+        except (TypeError, ValueError, OverflowError):
+            return str(value)
+        if not math.isfinite(float_value):
+            return _format_not_finite(float_value)
         return str(value)
     if not 0 <= value < 10:
         return str(value)
