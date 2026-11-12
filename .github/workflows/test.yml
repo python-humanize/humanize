@@ -42,22 +42,8 @@ jobs:
         run: |
           echo "PYTHON_GIL=0" >> "$GITHUB_ENV"
 
-      - name: Install Linux dependencies
-        if: startsWith(matrix.os, 'ubuntu')
-        run: |
-          sudo apt install gettext
-
-      - name: Install macOS dependencies
-        if: startsWith(matrix.os, 'macos')
-        run: |
-          brew install gettext
-
       - name: Install uv
         uses: astral-sh/setup-uv@v10.3.2
-
-      - name: Generate translation binaries
-        run: |
-          scripts/generate-translation-binaries.sh
 
       - name: Tox tests
         run: |

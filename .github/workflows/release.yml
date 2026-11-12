@@ -28,13 +28,12 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      - name: Install gettext
-        run: |
-          sudo apt install gettext
+      - name: Install uv
+        uses: astral-sh/setup-uv@v10.3.2
 
-      - name: Generate translation binaries
+      - name: Compile translations
         run: |
-          scripts/generate-translation-binaries.sh
+          uvx --with tox-uv tox -e compile-translations
 
       - uses: hynek/build-and-inspect-python-package@v3.0.2
 
