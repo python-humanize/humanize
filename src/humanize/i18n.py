@@ -20,23 +20,33 @@ _CURRENT = local()
 
 # Mapping of locale to thousands separator
 _THOUSANDS_SEPARATOR: dict[str | None, str] = {
+    "de": ".",
     "de_DE": ".",
+    "fr": " ",
     "fr_FR": " ",
+    "it": ".",
     "it_IT": ".",
     "pt_BR": ".",
+    "hu": " ",
     "hu_HU": " ",
     "lv": " ",
+    "tr": ".",
     "tr_TR": ".",
 }
 
 # Mapping of locale to decimal separator
 _DECIMAL_SEPARATOR: dict[str | None, str] = {
+    "de": ",",
     "de_DE": ",",
+    "fr": ",",
     "fr_FR": ",",
+    "it": ",",
     "it_IT": ",",
     "pt_BR": ",",
+    "hu": ",",
     "hu_HU": ",",
     "lv": ",",
+    "tr": ",",
     "tr_TR": ",",
 }
 
