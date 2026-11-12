@@ -83,6 +83,12 @@ def test_intcomma(
     assert humanize.intcomma(*test_args) == expected
 
 
+@pytest.mark.parametrize("value", ["hello, world", "1,234oops", "1,234e3", "1,2.3.4"])
+@pytest.mark.parametrize("ndigits", [None, 0, 2])
+def test_intcomma_invalid_string(value: str, ndigits: int | None) -> None:
+    assert humanize.intcomma(value, ndigits) == value
+
+
 @pytest.mark.parametrize("sign", [1, -1])
 def test_intcomma_large_integer(sign: int) -> None:
     value = sign * (10**400 + 123)

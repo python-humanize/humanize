@@ -180,13 +180,13 @@ def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
     decimal_sep = decimal_separator()
     try:
         if isinstance(value, str):
-            value = value.replace(thousands_sep, "").replace(decimal_sep, ".")
-            if not math.isfinite(float(value)):
-                return _format_not_finite(float(value))
-            if "." in value:
-                value = float(value)
+            normalized = value.replace(thousands_sep, "").replace(decimal_sep, ".")
+            if not math.isfinite(float(normalized)):
+                return _format_not_finite(float(normalized))
+            if "." in normalized:
+                value = float(normalized)
             else:
-                value = int(value)
+                value = int(normalized)
         elif not isinstance(value, int):
             if not math.isfinite(float(value)):
                 return _format_not_finite(float(value))
