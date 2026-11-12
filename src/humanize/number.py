@@ -601,3 +601,53 @@ def metric(value: float, unit: str = "", precision: int = 3) -> str:
         space = " "
 
     return f"{value_}{space}{ordinal_}{unit}"
+
+
+def percentage(
+    value: NumberOrString, *, is_ratio: bool = False, precision: int = 0
+) -> str:
+    """Return a human-readable percentage representation of a number.
+
+    Examples:
+        ```pycon
+        >>> percentage(50)
+        '50%'
+        >>> percentage(12.5, precision=1)
+        '12.5%'
+        >>> percentage(0.125, is_ratio=True, precision=1)
+        '12.5%'
+        >>> percentage(1)
+        '1%'
+        >>> percentage(1, is_ratio=True)
+        '100%'
+        >>> percentage(-1.25, is_ratio=True, precision=1)
+        '-125.0%'
+        >>> percentage("foo")
+        'foo'
+        >>> percentage(None)
+        'None'
+
+        ```
+
+    Args:
+        value (int, float, str): Number or string to format as percentage.
+        is_ratio (bool): If True, value is treated as a ratio between 0 and 1
+            and multiplied by 100. Defaults to False.
+        precision (int): Number of decimal places. Defaults to 0.
+
+    Returns:
+        str: Formatted percentage string.
+    """
+    import math
+
+    # checking whether value is a number
+    try:
+        value = float(value)
+        if not math.isfinite(value):
+            return _format_not_finite(value)
+    except (ValueError, TypeError):
+        return str(value)
+
+    if is_ratio:
+        value *= 100
+    return f"{value:.{precision}f}%"
