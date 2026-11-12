@@ -90,6 +90,34 @@ def _format_not_finite(value: float) -> str:
     return ""
 
 
+def _nonfinite_float(value: object) -> float | None:
+    """Return a non-finite float when ``value`` is non-finite, otherwise ``None``.
+
+    Whole numbers are finite even when they do not fit in a float.
+    ``float(10**400)`` raises ``OverflowError``, and ``float("1" + "0" * 400)``
+    returns infinity, so neither result can decide finiteness for an integer.
+    """
+    import math
+
+    if isinstance(value, str):
+        try:
+            int(value.strip())
+        except ValueError:
+            pass
+        else:
+            return None
+    elif isinstance(value, int) and not isinstance(value, bool):
+        return None
+
+    try:
+        number = float(value)  # type: ignore[arg-type]
+    except OverflowError:
+        return None
+    if not math.isfinite(number):
+        return number
+    return None
+
+
 def ordinal(value: NumberOrString, gender: str = "male") -> str:
     """Converts an integer to its ordinal as a string.
 
@@ -127,11 +155,10 @@ def ordinal(value: NumberOrString, gender: str = "male") -> str:
     Returns:
         str: Ordinal string.
     """
-    import math
-
     try:
-        if not math.isfinite(float(value)):
-            return _format_not_finite(float(value))
+        nonfinite = _nonfinite_float(value)
+        if nonfinite is not None:
+            return _format_not_finite(nonfinite)
         value = int(value)
     except (TypeError, ValueError):
         return str(value)
@@ -174,22 +201,22 @@ def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
     Returns:
         str: String containing commas every three digits.
     """
-    import math
-
     thousands_sep = thousands_separator()
     decimal_sep = decimal_separator()
     try:
         if isinstance(value, str):
             value = value.replace(thousands_sep, "").replace(decimal_sep, ".")
-            if not math.isfinite(float(value)):
-                return _format_not_finite(float(value))
+            nonfinite = _nonfinite_float(value)
+            if nonfinite is not None:
+                return _format_not_finite(nonfinite)
             if "." in value:
                 value = float(value)
             else:
                 value = int(value)
-        elif not isinstance(value, int):
-            if not math.isfinite(float(value)):
-                return _format_not_finite(float(value))
+        elif not isinstance(value, int) or isinstance(value, bool):
+            nonfinite = _nonfinite_float(value)
+            if nonfinite is not None:
+                return _format_not_finite(nonfinite)
             float(value)
     except (TypeError, ValueError):
         return str(value)
@@ -258,8 +285,9 @@ def intword(value: NumberOrString, format: str = "%.1f") -> str:
     import math
 
     try:
-        if not math.isfinite(float(value)):
-            return _format_not_finite(float(value))
+        nonfinite = _nonfinite_float(value)
+        if nonfinite is not None:
+            return _format_not_finite(nonfinite)
         value = int(value)
     except (TypeError, ValueError):
         return str(value)
@@ -326,11 +354,10 @@ def apnumber(value: NumberOrString) -> str:
             returns a string unless the value was not `int`-able, then `str(value)`
             is returned.
     """
-    import math
-
     try:
-        if not math.isfinite(float(value)):
-            return _format_not_finite(float(value))
+        nonfinite = _nonfinite_float(value)
+        if nonfinite is not None:
+            return _format_not_finite(nonfinite)
         value = int(value)
     except (TypeError, ValueError):
         return str(value)
@@ -378,12 +405,18 @@ def fractional(value: NumberOrString) -> str:
     Returns:
         str: Fractional number as a string.
     """
-    import math
-
     try:
+        nonfinite = _nonfinite_float(value)
+        if nonfinite is not None:
+            return _format_not_finite(nonfinite)
+        if isinstance(value, int) and not isinstance(value, bool):
+            return str(value)
+        if isinstance(value, str):
+            try:
+                return str(int(value.strip()))
+            except ValueError:
+                pass
         number = float(value)
-        if not math.isfinite(number):
-            return _format_not_finite(number)
     except (TypeError, ValueError):
         return str(value)
     from fractions import Fraction
@@ -441,16 +474,32 @@ def scientific(value: NumberOrString, precision: int = 2) -> str:
     Returns:
         str: Number in scientific notation z.wq x 10ⁿ.
     """
-    import math
-
     try:
-        value = float(value)
-        if not math.isfinite(value):
-            return _format_not_finite(value)
+        nonfinite = _nonfinite_float(value)
+        if nonfinite is not None:
+            return _format_not_finite(nonfinite)
+        if isinstance(value, str):
+            text = value.strip()
+            try:
+                value = int(text)
+            except ValueError:
+                value = float(text)
+        elif isinstance(value, bool) or not isinstance(value, int):
+            value = float(value)
     except (ValueError, TypeError):
         return str(value)
-    fmt = f"{{:.{int(precision)}e}}"
-    n = fmt.format(value)
+    import sys
+    from decimal import Decimal
+
+    precision = int(precision)
+    if (
+        isinstance(value, int)
+        and not isinstance(value, bool)
+        and abs(value) > sys.float_info.max
+    ):
+        n = format(Decimal(value), f".{precision}e")
+    else:
+        n = format(value, f".{precision}e")
     part1, part2 = n.split("e")
     # Normalise exponent: int() strips the "+" sign and leading zeros,
     # while preserving "-" and a single "0" for 10⁰.
@@ -509,8 +558,11 @@ def clamp(
     if value is None:
         return None
 
-    if not math.isfinite(value):
-        return _format_not_finite(value)
+    try:
+        if not math.isfinite(value):
+            return _format_not_finite(value)
+    except OverflowError:
+        pass
 
     if floor is not None and value < floor:
         value = floor
@@ -571,9 +623,15 @@ def metric(value: float, unit: str = "", precision: int = 3) -> str:
     """
     import math
 
-    if not math.isfinite(value):
-        return _format_not_finite(value)
-    exponent = math.floor(math.log10(abs(value))) if value != 0 else 0
+    try:
+        if not math.isfinite(value):
+            return _format_not_finite(value)
+    except OverflowError:
+        return scientific(value, precision - 1) + unit
+    try:
+        exponent = math.floor(math.log10(abs(value))) if value != 0 else 0
+    except OverflowError:
+        return scientific(value, precision - 1) + unit
 
     if exponent >= 33 or exponent < -30:
         return scientific(value, precision - 1) + unit

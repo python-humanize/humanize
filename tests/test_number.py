@@ -377,3 +377,22 @@ def test_clamp(test_args: list[typing.Any], expected: str) -> None:
 )
 def test_metric(test_args: list[typing.Any], expected: str) -> None:
     assert humanize.metric(*test_args) == expected
+
+
+def test_whole_numbers_outside_float_range():
+    """Integers bigger than a float stay finite instead of raising or becoming Inf."""
+    huge = 10**400
+    huge_text = "1" + "0" * 400
+    assert humanize.ordinal(huge) == f"{huge}th"
+    assert humanize.ordinal(huge_text) == f"{huge}th"
+    assert humanize.apnumber(huge) == str(huge)
+    assert humanize.apnumber(huge_text) == str(huge)
+    assert humanize.intcomma(huge_text) == f"{huge:,}"
+    assert humanize.fractional(huge) == str(huge)
+    assert humanize.fractional(huge_text) == str(huge)
+    assert humanize.scientific(huge) == "1.00 x 10⁴⁰⁰"
+    assert humanize.scientific(huge_text) == "1.00 x 10⁴⁰⁰"
+    assert humanize.intword(huge) == humanize.intword(huge_text)
+    assert "Inf" not in humanize.intword(huge)
+    assert humanize.clamp(huge) == str(huge)
+    assert "10" in humanize.metric(huge)
