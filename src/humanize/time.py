@@ -605,7 +605,7 @@ def precisedelta(
         secs, 60, MINUTES, min_unit, suppress_set, format
     )
 
-    usecs = secs * 1e6 + usecs
+    usecs = secs * 1_000_000 + usecs
     secs, usecs = _quotient_and_remainder(
         usecs, 1e6, SECONDS, min_unit, suppress_set, format
     )
