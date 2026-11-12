@@ -110,10 +110,10 @@ num_workers = 4
 show_error_codes = true
 
 [tool.pytest]
-addopts = [ "--color=yes" ]
+addopts = [ "--color=yes", "--doctest-modules", "--pyargs" ]
 filterwarnings = [ "error" ]
 minversion = "9.0"
-testpaths = [ "tests" ]
+testpaths = [ "tests", "humanize" ]
 
 [tool.coverage]
 run.disable_warnings = [ "no-sysmon" ]  # 3.11
