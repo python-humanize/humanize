@@ -722,10 +722,11 @@ def test_precisedelta_multiple_units(
         (60 + 29.99, "minutes", "%d", "1 minute"),
         (60 + 29.99, "minutes", "%.0f", "1 minute"),
         (60 + 30, "minutes", "%d", "1 minute"),
-        # 30 sec is 0.5 minutes. Round to nearest, ties away from zero.
-        # See https://en.wikipedia.org/wiki/IEEE_754#Rounding_rules
+        # 90 seconds is 1.5 minutes, rounded to 2 by the requested format.
         (60 + 30, "minutes", "%.0f", "2 minutes"),
-        (60 * 60 + 30.99, "minutes", "%.0f", "1 hour"),
+        (60 * 60 + 30, "minutes", "%.0f", "1 hour"),
+        # Fractional seconds put the remainder above the half-minute tie.
+        (60 * 60 + 30.99, "minutes", "%.0f", "1 hour and 1 minute"),
         (60 * 60 + 31, "minutes", "%.0f", "1 hour and 1 minute"),
         (
             ONE_DAY - MILLISECONDS_1_337,
@@ -842,6 +843,45 @@ def test_precisedelta_suppress_units(
 ) -> None:
     assert (
         humanize.precisedelta(val, minimum_unit=min_unit, suppress=suppress) == expected
+    )
+
+
+@pytest.mark.parametrize("numeric", [False, True])
+@pytest.mark.parametrize("sign", [1, -1])
+@pytest.mark.parametrize(
+    "microseconds,minimum_unit,fmt,suppress,expected",
+    [
+        (30_600_000, "minutes", "%0.2f", (), "0.51 minutes"),
+        (59_999_999, "minutes", "%0.2f", (), "1 minute"),
+        (54_600_000, "hours", "%0.2f", (), "0.02 hours"),
+        (4_600_000, "days", "%0.4f", (), "0.0001 days"),
+        (30_600_000, "minutes", "%d", (), "0 minutes"),
+        (30_600_000, "minutes", "%0.0f", (), "1 minute"),
+        (30_600_000, "seconds", "%0.2f", ("seconds",), "0.51 minutes"),
+        (54_600_000, "minutes", "%0.2f", ("minutes",), "0.02 hours"),
+        (3_630_600_000, "minutes", "%0.2f", (), "1 hour and 0.51 minutes"),
+        (86_454_600_000, "hours", "%0.2f", (), "1 day and 0.02 hours"),
+    ],
+)
+def test_precisedelta_subsecond_coarse_unit(
+    microseconds: int,
+    minimum_unit: str,
+    fmt: str,
+    suppress: tuple[str, ...],
+    expected: str,
+    sign: int,
+    numeric: bool,
+) -> None:
+    value = (
+        sign * microseconds / 1_000_000
+        if numeric
+        else dt.timedelta(microseconds=sign * microseconds)
+    )
+    assert (
+        humanize.precisedelta(
+            value, minimum_unit=minimum_unit, format=fmt, suppress=suppress
+        )
+        == expected
     )
 
 
