@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import datetime as dt
 import typing
+from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
 import pytest
 from freezegun import freeze_time
@@ -566,6 +567,102 @@ def test_naturaltime_timezone(test_input: dt.datetime, expected: str) -> None:
 )
 def test_naturaltime_timezone_when(test_input: dt.datetime, expected: str) -> None:
     assert humanize.naturaltime(test_input, when=NOW_UTC) == expected
+
+
+@freeze_time("2026-11-01 06:30:00")
+@pytest.mark.parametrize(
+    "value, when, expected",
+    [
+        (
+            dt.datetime(2026, 11, 1, 1, 30, tzinfo=dt.timezone(dt.timedelta(hours=-4))),
+            dt.datetime(2026, 11, 1, 1, 30, tzinfo=dt.timezone(dt.timedelta(hours=-5))),
+            "an hour ago",
+        ),
+        (
+            dt.datetime(2026, 11, 1, 1, 30, tzinfo=dt.timezone(dt.timedelta(hours=-5))),
+            dt.datetime(2026, 11, 1, 1, 30, tzinfo=dt.timezone(dt.timedelta(hours=-4))),
+            "an hour from now",
+        ),
+        (
+            dt.datetime(2026, 3, 8, 1, 30, tzinfo=dt.timezone(dt.timedelta(hours=-5))),
+            dt.datetime(2026, 3, 8, 3, 30, tzinfo=dt.timezone(dt.timedelta(hours=-4))),
+            "an hour ago",
+        ),
+        (
+            dt.datetime(2026, 11, 1, 1, 30, tzinfo=dt.timezone(dt.timedelta(hours=-4))),
+            dt.datetime(2026, 11, 1, 1, 30, fold=1),
+            "an hour ago",
+        ),
+        (
+            dt.datetime(2026, 11, 1, 1, 30),
+            dt.datetime(2026, 11, 1, 1, 30, tzinfo=dt.timezone(dt.timedelta(hours=-5))),
+            "an hour ago",
+        ),
+        (
+            dt.datetime(2026, 11, 1, 1, 30, tzinfo=dt.timezone(dt.timedelta(hours=-4))),
+            None,
+            "an hour ago",
+        ),
+    ],
+)
+def test_naturaltime_daylight_saving(
+    value: dt.datetime,
+    when: dt.datetime | None,
+    expected: str,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    import time as system_time
+
+    if not hasattr(system_time, "tzset"):
+        pytest.skip("Changing the local timezone requires time.tzset")
+    try:
+        with monkeypatch.context() as timezone:
+            timezone.setenv("TZ", "EST5EDT,M3.2.0,M11.1.0")
+            system_time.tzset()
+            assert humanize.naturaltime(value, when=when) == expected
+    finally:
+        system_time.tzset()
+
+
+@pytest.mark.parametrize(
+    "value, when",
+    [
+        (
+            dt.datetime(2026, 11, 1, 1, 30, fold=0),
+            dt.datetime(2026, 11, 1, 1, 30, fold=1),
+        ),
+        (
+            dt.datetime(2026, 3, 8, 1, 30),
+            dt.datetime(2026, 3, 8, 3, 30),
+        ),
+    ],
+)
+def test_naturaltime_daylight_saving_same_zone(
+    value: dt.datetime, when: dt.datetime, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    import time as system_time
+
+    if not hasattr(system_time, "tzset"):
+        pytest.skip("Changing the local timezone requires time.tzset")
+
+    try:
+        eastern = ZoneInfo("America/New_York")
+    except ZoneInfoNotFoundError:
+        pytest.skip("IANA timezone database is unavailable")
+
+    value = value.replace(tzinfo=eastern)
+    when = when.replace(tzinfo=eastern)
+
+    try:
+        with monkeypatch.context() as timezone:
+            timezone.setenv("TZ", "EST5EDT,M3.2.0,M11.1.0")
+            system_time.tzset()
+            assert value.tzinfo is when.tzinfo
+            assert abs(value.timestamp() - when.timestamp()) == ONE_HOUR
+            assert humanize.naturaltime(value, when=when) == "an hour ago"
+            assert humanize.naturaltime(when, when=value) == "an hour from now"
+    finally:
+        system_time.tzset()
 
 
 @pytest.mark.parametrize(
