@@ -42,22 +42,8 @@ jobs:
         run: |
           echo "PYTHON_GIL=0" >> "$GITHUB_ENV"
 
-      - name: Install Linux dependencies
-        if: startsWith(matrix.os, 'ubuntu')
-        run: |
-          sudo apt install gettext
-
-      - name: Install macOS dependencies
-        if: startsWith(matrix.os, 'macos')
-        run: |
-          brew install gettext
-
       - name: Install uv
         uses: astral-sh/setup-uv@v10.3.2
-
-      - name: Generate translation binaries
-        run: |
-          scripts/generate-translation-binaries.sh
 
       - name: Tox tests
         run: |
@@ -69,13 +55,40 @@ jobs:
           flags: ${{ matrix.os }}
           name: ${{ matrix.os }} Python ${{ matrix.python-version }}
 
+  translations:
+    name: Translation catalogs up to date
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Install gettext
+        run: |
+          sudo apt install gettext
+
+      - name: Update translations
+        run: |
+          scripts/update-translations.sh
+
+      - name: Check catalogs are up to date
+        run: |
+          if ! git diff --exit-code -I '^"POT-Creation-Date: ' -- src/humanize/locale; then
+            echo "::error::Translation catalogs are out of date." \
+              "Run scripts/update-translations.sh and commit the .po changes."
+            exit 1
+          fi
+
   success:
     if: always()
-    needs: test
+    needs: [test, translations]
     runs-on: ubuntu-latest
     name: Test successful
     steps:
       - name: Success
         env:
           TEST_RESULT: ${{ needs.test.result }}
-        run: test "$TEST_RESULT" = "success"
+          TRANSLATIONS_RESULT: ${{ needs.translations.result }}
+        run: |
+          test "$TEST_RESULT" = "success"
+          test "$TRANSLATIONS_RESULT" = "success"

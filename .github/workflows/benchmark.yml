@@ -22,13 +22,12 @@ jobs:
           python-version: "3.15"
           allow-prereleases: true
 
-      - name: Install gettext
-        run: |
-          sudo apt install gettext
+      - name: Install uv
+        uses: astral-sh/setup-uv@v10.3.2
 
-      - name: Generate translation binaries
+      - name: Compile translations
         run: |
-          scripts/generate-translation-binaries.sh
+          uvx --with tox-uv tox -e compile-translations
 
       - name: Install dependencies
         run: pip install -e ".[tests]"

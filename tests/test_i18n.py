@@ -102,7 +102,7 @@ def test_i18n() -> None:
         assert humanize.naturaltime(in_three_days, when=NOW) == "3 gün sonra"
 
     except FileNotFoundError:
-        pytest.skip("Generate .mo with scripts/generate-translation-binaries.sh")
+        pytest.skip("Generate .mo with tox -e compile-translations")
 
     finally:
         humanize.i18n.deactivate()
@@ -127,7 +127,7 @@ def test_naturaltime_persian(seconds: int, expected: str) -> None:
         value = NOW + dt.timedelta(seconds=seconds)
         assert humanize.naturaltime(value, when=NOW) == expected
     except FileNotFoundError:
-        pytest.skip("Generate .mo with scripts/generate-translation-binaries.sh")
+        pytest.skip("Generate .mo with tox -e compile-translations")
     finally:
         humanize.deactivate()
 
@@ -161,7 +161,7 @@ def test_intcomma() -> None:
         assert humanize.intcomma("1.234.567,89") == "1.234.567,89"
 
     except FileNotFoundError:
-        pytest.skip("Generate .mo with scripts/generate-translation-binaries.sh")
+        pytest.skip("Generate .mo with tox -e compile-translations")
 
     finally:
         humanize.i18n.deactivate()
@@ -180,7 +180,7 @@ def test_naturaldelta() -> None:
         assert humanize.naturaldelta(seconds) == "1,234 años"
 
     except FileNotFoundError:
-        pytest.skip("Generate .mo with scripts/generate-translation-binaries.sh")
+        pytest.skip("Generate .mo with tox -e compile-translations")
 
     finally:
         humanize.i18n.deactivate()
@@ -270,7 +270,7 @@ def test_intword_i18n(locale: str, number: int, expected_result: str) -> None:
     try:
         humanize.i18n.activate(locale)
     except FileNotFoundError:
-        pytest.skip("Generate .mo with scripts/generate-translation-binaries.sh")
+        pytest.skip("Generate .mo with tox -e compile-translations")
     else:
         assert humanize.intword(number) == expected_result
     finally:
@@ -301,7 +301,7 @@ def test_naturalsize_i18n(locale: str, value: float, expected_result: str) -> No
     try:
         humanize.i18n.activate(locale)
     except FileNotFoundError:
-        pytest.skip("Generate .mo with scripts/generate-translation-binaries.sh")
+        pytest.skip("Generate .mo with tox -e compile-translations")
     else:
         assert humanize.naturalsize(value) == expected_result
     finally:
@@ -312,7 +312,7 @@ def test_naturalsize_i18n_binary() -> None:
     try:
         humanize.i18n.activate("fr_FR")
     except FileNotFoundError:
-        pytest.skip("Generate .mo with scripts/generate-translation-binaries.sh")
+        pytest.skip("Generate .mo with tox -e compile-translations")
     else:
         assert humanize.naturalsize(3000, binary=True) == "2.9 Kio"
     finally:
@@ -334,7 +334,7 @@ def test_naturaldelta_one_year_i18n(
     try:
         humanize.i18n.activate(locale)
     except FileNotFoundError:
-        pytest.skip("Generate .mo with scripts/generate-translation-binaries.sh")
+        pytest.skip("Generate .mo with tox -e compile-translations")
     else:
         assert humanize.naturaldelta(dt.timedelta(days=days)) == expected_result
     finally:
@@ -357,7 +357,7 @@ def test_langauge_codes(locale: str, expected_result: str) -> None:
     try:
         humanize.i18n.activate(locale)
     except FileNotFoundError:
-        pytest.skip("Generate .mo with scripts/generate-translation-binaries.sh")
+        pytest.skip("Generate .mo with tox -e compile-translations")
     else:
         assert humanize.ordinal(5) == expected_result
     finally:
@@ -382,7 +382,7 @@ def test_ordinal_genders(
     try:
         humanize.i18n.activate(locale)
     except FileNotFoundError:
-        pytest.skip("Generate .mo with scripts/generate-translation-binaries.sh")
+        pytest.skip("Generate .mo with tox -e compile-translations")
     else:
         assert humanize.ordinal(number, gender=gender) == expected_result
     finally:
@@ -455,7 +455,7 @@ class TestActivate:
             test_str = humanize.naturaltime(three_seconds)
             assert test_str == "3 seconds ago"
         except FileNotFoundError:
-            pytest.skip("Generate .mo with scripts/generate-translation-binaries.sh")
+            pytest.skip("Generate .mo with tox -e compile-translations")
 
         finally:
             humanize.i18n.deactivate()
@@ -472,6 +472,6 @@ def test_intword_unit_has_no_format_placeholder(locale: str) -> None:
         for value in (1_000, 1_000_000, 1_000_000_000, 10**12, 10**15, 10**100):
             assert "%" not in humanize.intword(value)
     except FileNotFoundError:
-        pytest.skip("Generate .mo with scripts/generate-translation-binaries.sh")
+        pytest.skip("Generate .mo with tox -e compile-translations")
     finally:
         humanize.i18n.deactivate()

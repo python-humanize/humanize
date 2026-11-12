@@ -6,6 +6,7 @@ workflows:
     '.github/workflows/benchmark.yml':
         - 'actions/checkout@v7.0.1'
         - 'actions/setup-python@v7.1.0'
+        - 'astral-sh/setup-uv@v10.3.2'
         - 'codspeedhq/action@v5.6.0'
     '.github/workflows/docs.yml':
         - 'actions/checkout@v7.0.1'
@@ -28,6 +29,7 @@ workflows:
     '.github/workflows/release.yml':
         - 'actions/checkout@v7.0.1'
         - 'actions/download-artifact@v8.0.2'
+        - 'astral-sh/setup-uv@v10.3.2'
         - 'hynek/build-and-inspect-python-package@v3.0.2'
         - 'pypa/gh-action-pypi-publish@v1.14.3'
     '.github/workflows/require-pr-label.yml':
