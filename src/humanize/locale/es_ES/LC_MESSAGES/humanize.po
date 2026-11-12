@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-12 12:11+0200\n"
+"POT-Creation-Date: 2026-11-12 13:58+0200\n"
 "PO-Revision-Date: 2020-03-31 21:08+0200\n"
 "Last-Translator: Álvaro Mondéjar <mondejar1994@gmail.com>\n"
 "Language-Team: \n"
@@ -18,437 +18,437 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.3\n"
 
-#: src/humanize/filesize.py:12
+#: src/humanize/filesize.py
 msgid "kB"
 msgstr ""
 
-#: src/humanize/filesize.py:13
+#: src/humanize/filesize.py
 msgid "MB"
 msgstr ""
 
-#: src/humanize/filesize.py:14
+#: src/humanize/filesize.py
 msgid "GB"
 msgstr ""
 
-#: src/humanize/filesize.py:15
+#: src/humanize/filesize.py
 msgid "TB"
 msgstr ""
 
-#: src/humanize/filesize.py:16
+#: src/humanize/filesize.py
 msgid "PB"
 msgstr ""
 
-#: src/humanize/filesize.py:17
+#: src/humanize/filesize.py
 msgid "EB"
 msgstr ""
 
-#: src/humanize/filesize.py:18
+#: src/humanize/filesize.py
 msgid "ZB"
 msgstr ""
 
-#: src/humanize/filesize.py:19
+#: src/humanize/filesize.py
 msgid "YB"
 msgstr ""
 
-#: src/humanize/filesize.py:20
+#: src/humanize/filesize.py
 msgid "RB"
 msgstr ""
 
-#: src/humanize/filesize.py:21
+#: src/humanize/filesize.py
 msgid "QB"
 msgstr ""
 
-#: src/humanize/filesize.py:24
+#: src/humanize/filesize.py
 msgid "KiB"
 msgstr ""
 
-#: src/humanize/filesize.py:25
+#: src/humanize/filesize.py
 msgid "MiB"
 msgstr ""
 
-#: src/humanize/filesize.py:26
+#: src/humanize/filesize.py
 msgid "GiB"
 msgstr ""
 
-#: src/humanize/filesize.py:27
+#: src/humanize/filesize.py
 msgid "TiB"
 msgstr ""
 
-#: src/humanize/filesize.py:28
+#: src/humanize/filesize.py
 msgid "PiB"
 msgstr ""
 
-#: src/humanize/filesize.py:29
+#: src/humanize/filesize.py
 msgid "EiB"
 msgstr ""
 
-#: src/humanize/filesize.py:30
+#: src/humanize/filesize.py
 msgid "ZiB"
 msgstr ""
 
-#: src/humanize/filesize.py:31
+#: src/humanize/filesize.py
 msgid "YiB"
 msgstr ""
 
-#: src/humanize/filesize.py:32
+#: src/humanize/filesize.py
 msgid "RiB"
 msgstr ""
 
-#: src/humanize/filesize.py:33
+#: src/humanize/filesize.py
 msgid "QiB"
 msgstr ""
 
-#: src/humanize/filesize.py:95
+#: src/humanize/filesize.py
 #, python-format
 msgid "%d Byte"
 msgstr ""
 
-#: src/humanize/filesize.py:98
+#: src/humanize/filesize.py
 #, python-format
 msgid "%d Bytes"
 msgstr ""
 
-#: src/humanize/number.py:42
+#: src/humanize/number.py
 msgctxt "0 (male)"
 msgid "th"
 msgstr "º"
 
-#: src/humanize/number.py:43
+#: src/humanize/number.py
 msgctxt "1 (male)"
 msgid "st"
 msgstr "º"
 
-#: src/humanize/number.py:44
+#: src/humanize/number.py
 msgctxt "2 (male)"
 msgid "nd"
 msgstr "º"
 
-#: src/humanize/number.py:45
+#: src/humanize/number.py
 msgctxt "3 (male)"
 msgid "rd"
 msgstr "º"
 
-#: src/humanize/number.py:46
+#: src/humanize/number.py
 msgctxt "4 (male)"
 msgid "th"
 msgstr "º"
 
-#: src/humanize/number.py:47
+#: src/humanize/number.py
 msgctxt "5 (male)"
 msgid "th"
 msgstr "º"
 
-#: src/humanize/number.py:48
+#: src/humanize/number.py
 msgctxt "6 (male)"
 msgid "th"
 msgstr "º"
 
-#: src/humanize/number.py:49
+#: src/humanize/number.py
 msgctxt "7 (male)"
 msgid "th"
 msgstr "º"
 
-#: src/humanize/number.py:50
+#: src/humanize/number.py
 msgctxt "8 (male)"
 msgid "th"
 msgstr "º"
 
-#: src/humanize/number.py:51
+#: src/humanize/number.py
 msgctxt "9 (male)"
 msgid "th"
 msgstr "º"
 
-#: src/humanize/number.py:54
+#: src/humanize/number.py
 msgctxt "0 (female)"
 msgid "th"
 msgstr "ª"
 
-#: src/humanize/number.py:55
+#: src/humanize/number.py
 msgctxt "1 (female)"
 msgid "st"
 msgstr "ª"
 
-#: src/humanize/number.py:56
+#: src/humanize/number.py
 msgctxt "2 (female)"
 msgid "nd"
 msgstr "ª"
 
-#: src/humanize/number.py:57
+#: src/humanize/number.py
 msgctxt "3 (female)"
 msgid "rd"
 msgstr "ª"
 
-#: src/humanize/number.py:58
+#: src/humanize/number.py
 msgctxt "4 (female)"
 msgid "th"
 msgstr "ª"
 
-#: src/humanize/number.py:59
+#: src/humanize/number.py
 msgctxt "5 (female)"
 msgid "th"
 msgstr "ª"
 
-#: src/humanize/number.py:60
+#: src/humanize/number.py
 msgctxt "6 (female)"
 msgid "th"
 msgstr "ª"
 
-#: src/humanize/number.py:61
+#: src/humanize/number.py
 msgctxt "7 (female)"
 msgid "th"
 msgstr "ª"
 
-#: src/humanize/number.py:62
+#: src/humanize/number.py
 msgctxt "8 (female)"
 msgid "th"
 msgstr "ª"
 
-#: src/humanize/number.py:63
+#: src/humanize/number.py
 msgctxt "9 (female)"
 msgid "th"
 msgstr "ª"
 
-#: src/humanize/number.py:67
+#: src/humanize/number.py
 msgid "zero"
 msgstr "cero"
 
-#: src/humanize/number.py:68
+#: src/humanize/number.py
 msgid "one"
 msgstr "uno"
 
-#: src/humanize/number.py:69
+#: src/humanize/number.py
 msgid "two"
 msgstr "dos"
 
-#: src/humanize/number.py:70
+#: src/humanize/number.py
 msgid "three"
 msgstr "tres"
 
-#: src/humanize/number.py:71
+#: src/humanize/number.py
 msgid "four"
 msgstr "cuatro"
 
-#: src/humanize/number.py:72
+#: src/humanize/number.py
 msgid "five"
 msgstr "cinco"
 
-#: src/humanize/number.py:73
+#: src/humanize/number.py
 msgid "six"
 msgstr "seis"
 
-#: src/humanize/number.py:74
+#: src/humanize/number.py
 msgid "seven"
 msgstr "siete"
 
-#: src/humanize/number.py:75
+#: src/humanize/number.py
 msgid "eight"
 msgstr "ocho"
 
-#: src/humanize/number.py:76
+#: src/humanize/number.py
 msgid "nine"
 msgstr "nueve"
 
-#: src/humanize/number.py:208
+#: src/humanize/number.py
 msgid "thousand"
 msgid_plural "thousand"
 msgstr[0] "mil"
 msgstr[1] "mil"
 
-#: src/humanize/number.py:209
+#: src/humanize/number.py
 msgid "million"
 msgid_plural "million"
 msgstr[0] "millón"
 msgstr[1] "millones"
 
-#: src/humanize/number.py:210
+#: src/humanize/number.py
 msgid "billion"
 msgid_plural "billion"
 msgstr[0] "mil millones"
 msgstr[1] "miles de millones"
 
-#: src/humanize/number.py:211
+#: src/humanize/number.py
 msgid "trillion"
 msgid_plural "trillion"
 msgstr[0] "billón"
 msgstr[1] "billones"
 
-#: src/humanize/number.py:212
+#: src/humanize/number.py
 msgid "quadrillion"
 msgid_plural "quadrillion"
 msgstr[0] "mil billones"
 msgstr[1] "miles de billones"
 
-#: src/humanize/number.py:213
+#: src/humanize/number.py
 msgid "quintillion"
 msgid_plural "quintillion"
 msgstr[0] "trillón"
 msgstr[1] "trillones"
 
-#: src/humanize/number.py:214
+#: src/humanize/number.py
 msgid "sextillion"
 msgid_plural "sextillion"
 msgstr[0] "mil trillones"
 msgstr[1] "miles de trillones"
 
-#: src/humanize/number.py:215
+#: src/humanize/number.py
 msgid "septillion"
 msgid_plural "septillion"
 msgstr[0] "cuatrillón"
 msgstr[1] "cuatrillones"
 
-#: src/humanize/number.py:216
+#: src/humanize/number.py
 msgid "octillion"
 msgid_plural "octillion"
 msgstr[0] "mil cuatrillones"
 msgstr[1] "miles de cuatrillones"
 
-#: src/humanize/number.py:217
+#: src/humanize/number.py
 msgid "nonillion"
 msgid_plural "nonillion"
 msgstr[0] "quintillón"
 msgstr[1] "quintillones"
 
-#: src/humanize/number.py:218
+#: src/humanize/number.py
 msgid "decillion"
 msgid_plural "decillion"
 msgstr[0] "mil quintillones"
 msgstr[1] "miles de quintillones"
 
-#: src/humanize/number.py:219
+#: src/humanize/number.py
 msgid "googol"
 msgid_plural "googol"
 msgstr[0] "gúgol"
 msgstr[1] "gúgol"
 
-#: src/humanize/time.py:176
+#: src/humanize/time.py
 #, python-format
 msgid "%d microsecond"
 msgid_plural "%d microseconds"
 msgstr[0] "%d microsegundo"
 msgstr[1] "%d microsegundos"
 
-#: src/humanize/time.py:185
+#: src/humanize/time.py
 #, python-format
 msgid "%d millisecond"
 msgid_plural "%d milliseconds"
 msgstr[0] "%d milisegundo"
 msgstr[1] "%d milisegundos"
 
-#: src/humanize/time.py:188 src/humanize/time.py:305
+#: src/humanize/time.py
 msgid "a moment"
 msgstr "un momento"
 
-#: src/humanize/time.py:191
+#: src/humanize/time.py
 msgid "a second"
 msgstr "un segundo"
 
-#: src/humanize/time.py:194
+#: src/humanize/time.py
 #, python-format
 msgid "%d second"
 msgid_plural "%d seconds"
 msgstr[0] "%d segundo"
 msgstr[1] "%d segundos"
 
-#: src/humanize/time.py:199
+#: src/humanize/time.py
 msgid "a minute"
 msgstr "un minuto"
 
-#: src/humanize/time.py:202 src/humanize/time.py:209
+#: src/humanize/time.py
 msgid "an hour"
 msgstr "una hora"
 
-#: src/humanize/time.py:204
+#: src/humanize/time.py
 #, python-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d minuto"
 msgstr[1] "%d minutos"
 
-#: src/humanize/time.py:212 src/humanize/time.py:218
+#: src/humanize/time.py
 msgid "a day"
 msgstr "un día"
 
-#: src/humanize/time.py:214
+#: src/humanize/time.py
 #, python-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d hora"
 msgstr[1] "%d horas"
 
-#: src/humanize/time.py:221 src/humanize/time.py:224
+#: src/humanize/time.py
 #, python-format
 msgid "%d day"
 msgid_plural "%d days"
 msgstr[0] "%d día"
 msgstr[1] "%d días"
 
-#: src/humanize/time.py:227
+#: src/humanize/time.py
 msgid "a month"
 msgstr "un mes"
 
-#: src/humanize/time.py:230 src/humanize/time.py:236
+#: src/humanize/time.py
 msgid "a year"
 msgstr "un año"
 
-#: src/humanize/time.py:232
+#: src/humanize/time.py
 #, python-format
 msgid "%d month"
 msgid_plural "%d months"
 msgstr[0] "%d mes"
 msgstr[1] "%d meses"
 
-#: src/humanize/time.py:239 src/humanize/time.py:254
+#: src/humanize/time.py
 #, python-format
 msgid "1 year, %d day"
 msgid_plural "1 year, %d days"
 msgstr[0] "1 año y %d día"
 msgstr[1] "1 año y %d días"
 
-#: src/humanize/time.py:243
+#: src/humanize/time.py
 msgid "1 year, 1 month"
 msgstr "1 año y 1 mes"
 
-#: src/humanize/time.py:247 src/humanize/time.py:257
+#: src/humanize/time.py
 #, python-format
 msgid "%d year"
 msgid_plural "%d years"
 msgstr[0] "%d año"
 msgstr[1] "%d años"
 
-#: src/humanize/time.py:250
+#: src/humanize/time.py
 #, python-format
 msgid "1 year, %d month"
 msgid_plural "1 year, %d months"
 msgstr[0] "1 año y %d mes"
 msgstr[1] "1 año y %d meses"
 
-#: src/humanize/time.py:302
+#: src/humanize/time.py
 #, python-format
 msgid "%s from now"
 msgstr "en %s"
 
-#: src/humanize/time.py:302
+#: src/humanize/time.py
 #, python-format
 msgid "%s ago"
 msgstr "hace %s"
 
-#: src/humanize/time.py:306
+#: src/humanize/time.py
 msgid "now"
 msgstr "ahora"
 
-#: src/humanize/time.py:352
+#: src/humanize/time.py
 msgid "today"
 msgstr "hoy"
 
-#: src/humanize/time.py:355
+#: src/humanize/time.py
 msgid "tomorrow"
 msgstr "mañana"
 
-#: src/humanize/time.py:358
+#: src/humanize/time.py
 msgid "yesterday"
 msgstr "ayer"
 
-#: src/humanize/time.py:680
+#: src/humanize/time.py
 #, python-format
 msgid "%s and %s"
 msgstr "%s y %s"
