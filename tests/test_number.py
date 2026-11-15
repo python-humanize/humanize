@@ -377,3 +377,39 @@ def test_clamp(test_args: list[typing.Any], expected: str) -> None:
 )
 def test_metric(test_args: list[typing.Any], expected: str) -> None:
     assert humanize.metric(*test_args) == expected
+
+
+def test_number_functions_large_integers() -> None:
+    large_int = 10**400
+    large_str = "1" + "0" * 400
+
+    # ordinal
+    assert humanize.ordinal(large_int) == f"{large_int}th"
+    assert humanize.ordinal(large_int + 1) == f"{large_int + 1}st"
+    assert humanize.ordinal(large_int + 2) == f"{large_int + 2}nd"
+    assert humanize.ordinal(large_int + 3) == f"{large_int + 3}rd"
+    assert humanize.ordinal(large_int + 11) == f"{large_int + 11}th"
+    assert humanize.ordinal(large_str) == f"{large_str}th"
+
+    # intcomma with large integer string
+    assert humanize.intcomma(large_str) == humanize.intcomma(large_int)
+
+    # apnumber
+    assert humanize.apnumber(large_int) == str(large_int)
+    assert humanize.apnumber(large_str) == large_str
+
+    # fractional
+    assert humanize.fractional(large_int) == str(large_int)
+    assert humanize.fractional(large_str) == large_str
+
+    # scientific
+    assert humanize.scientific(large_int) == "1.00 x 10⁴⁰⁰"
+    assert humanize.scientific(large_str) == "1.00 x 10⁴⁰⁰"
+
+    # clamp
+    assert humanize.clamp(large_int) == str(large_int)
+    assert humanize.clamp(large_int, ceil=100) == ">100"
+
+    # intword
+    assert humanize.intword(large_int).endswith("googol")
+    assert humanize.intword(10**500).endswith("googol")

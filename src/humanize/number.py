@@ -131,11 +131,15 @@ def ordinal(value: NumberOrString, gender: str = "male") -> str:
     import math
 
     try:
-        if not math.isfinite(float(value)):
-            return _format_not_finite(float(value))
         value = int(value)
-    except (TypeError, ValueError):
-        return str(value)
+    except (TypeError, ValueError, OverflowError):
+        try:
+            f = float(value)
+            if not math.isfinite(f):
+                return _format_not_finite(f)
+            value = int(f)
+        except (TypeError, ValueError):
+            return str(value)
     gender = "male" if gender == "male" else "female"
     digit = 0 if value % 100 in (11, 12, 13) else value % 10
     return f"{value}{P_(*_ORDINAL_SUFFIXES[gender][digit])}"
@@ -182,17 +186,24 @@ def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
     try:
         if isinstance(value, str):
             value = value.replace(thousands_sep, "").replace(decimal_sep, ".")
-            if not math.isfinite(float(value)):
-                return _format_not_finite(float(value))
             if "." in value:
-                value = float(value)
+                f = float(value)
+                if not math.isfinite(f):
+                    return _format_not_finite(f)
+                value = f
             else:
-                value = int(value)
+                try:
+                    value = int(value)
+                except ValueError:
+                    f = float(value)
+                    if not math.isfinite(f):
+                        return _format_not_finite(f)
+                    value = f
         elif not isinstance(value, int):
             if not math.isfinite(float(value)):
                 return _format_not_finite(float(value))
             float(value)
-    except (TypeError, ValueError):
+    except (TypeError, ValueError, OverflowError):
         return str(value)
 
     if ndigits is not None:
@@ -259,11 +270,15 @@ def intword(value: NumberOrString, format: str = "%.1f") -> str:
     import math
 
     try:
-        if not math.isfinite(float(value)):
-            return _format_not_finite(float(value))
         value = int(value)
-    except (TypeError, ValueError):
-        return str(value)
+    except (TypeError, ValueError, OverflowError):
+        try:
+            f = float(value)
+            if not math.isfinite(f):
+                return _format_not_finite(f)
+            value = int(f)
+        except (TypeError, ValueError):
+            return str(value)
 
     if value < 0:
         value *= -1
@@ -280,22 +295,31 @@ def intword(value: NumberOrString, format: str = "%.1f") -> str:
     # Consider the biggest power of 10 that is smaller than value
     ordinal -= 1
     power = powers[ordinal]
-    chopped = value / power
-    rounded_value = float(format % chopped)
+    try:
+        chopped = value / power
+        rounded_value = float(format % chopped)
 
-    if not largest_ordinal and rounded_value == powers[ordinal + 1] // power:
-        # After rounding, we end up just at the next power. Compare against the
-        # integer ratio between the two powers instead of ``rounded_value * power``:
-        # for values above ~10**22 the latter is evaluated in floating point and
-        # no longer equals the exact ``powers[ordinal + 1]``, so the carry was
-        # silently skipped (e.g. 10**24 - 1 rendered as "1000.0 sextillion").
-        ordinal += 1
-        rounded_value = 1.0
+        if not largest_ordinal and rounded_value == powers[ordinal + 1] // power:
+            # After rounding, we end up just at the next power. Compare against the
+            # integer ratio between the two powers instead of ``rounded_value * power``:
+            # for values above ~10**22 the latter is evaluated in floating point and
+            # no longer equals the exact ``powers[ordinal + 1]``, so the carry was
+            # silently skipped (e.g. 10**24 - 1 rendered as "1000.0 sextillion").
+            ordinal += 1
+            rounded_value = 1.0
 
-    singular, plural = human_powers[ordinal]
-    unit = _ngettext(singular, plural, math.ceil(rounded_value))
-    decimal_sep = decimal_separator()
-    number = (format % rounded_value).replace(".", decimal_sep)
+        singular, plural = human_powers[ordinal]
+        unit = _ngettext(singular, plural, math.ceil(rounded_value))
+        decimal_sep = decimal_separator()
+        number = (format % rounded_value).replace(".", decimal_sep)
+    except OverflowError:
+        import decimal
+
+        chopped_dec = decimal.Decimal(value) / decimal.Decimal(power)
+        decimal_sep = decimal_separator()
+        number = (f"{chopped_dec:.1f}").replace(".", decimal_sep)
+        singular, plural = human_powers[ordinal]
+        unit = plural
     return f"{negative_prefix}{number} {unit}"
 
 
@@ -330,11 +354,15 @@ def apnumber(value: NumberOrString) -> str:
     import math
 
     try:
-        if not math.isfinite(float(value)):
-            return _format_not_finite(float(value))
         value = int(value)
-    except (TypeError, ValueError):
-        return str(value)
+    except (TypeError, ValueError, OverflowError):
+        try:
+            f = float(value)
+            if not math.isfinite(f):
+                return _format_not_finite(f)
+            value = int(f)
+        except (TypeError, ValueError):
+            return str(value)
     if not 0 <= value < 10:
         return str(value)
     return _(_APNUMBER_WORDS[value])
@@ -381,6 +409,13 @@ def fractional(value: NumberOrString) -> str:
     """
     import math
 
+    if isinstance(value, int):
+        return str(value)
+    if isinstance(value, str) and "." not in value:
+        try:
+            return str(int(value))
+        except (ValueError, OverflowError):
+            pass
     try:
         number = float(value)
         if not math.isfinite(number):
@@ -445,13 +480,24 @@ def scientific(value: NumberOrString, precision: int = 2) -> str:
     import math
 
     try:
-        value = float(value)
-        if not math.isfinite(value):
-            return _format_not_finite(value)
-    except (ValueError, TypeError):
+        if isinstance(value, float):
+            if not math.isfinite(value):
+                return _format_not_finite(value)
+            import decimal
+
+            d = decimal.Decimal(str(value))
+        elif isinstance(value, (int, str)):
+            import decimal
+
+            d = decimal.Decimal(value)
+            if not d.is_finite():
+                return _format_not_finite(float(value))
+        else:
+            return str(value)
+    except (ValueError, TypeError, decimal.InvalidOperation, OverflowError):
         return str(value)
     fmt = f"{{:.{int(precision)}e}}"
-    n = fmt.format(value)
+    n = fmt.format(d)
     part1, part2 = n.split("e")
     # Normalise exponent: int() strips the "+" sign and leading zeros,
     # while preserving "-" and a single "0" for 10⁰.
@@ -511,7 +557,7 @@ def clamp(
     if value is None:
         return None
 
-    if not math.isfinite(value):
+    if not isinstance(value, int) and not math.isfinite(value):
         return _format_not_finite(value)
 
     if floor is not None and value < floor:
@@ -582,7 +628,7 @@ def metric(value: float, unit: str = "", precision: int = 3) -> str:
     """
     import math
 
-    if not math.isfinite(value):
+    if not isinstance(value, int) and not math.isfinite(value):
         return _format_not_finite(value)
     exponent = math.floor(math.log10(abs(value))) if value != 0 else 0
 
