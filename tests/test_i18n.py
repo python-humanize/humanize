@@ -140,7 +140,9 @@ def test_intcomma() -> None:
     try:
         humanize.i18n.activate("de_DE")
         assert humanize.intcomma(number) == "10.000.000"
+        assert humanize.intcomma(number, separator="_") == "10_000_000"
         assert humanize.intcomma(1_234_567.8901) == "1.234.567,8901"
+        assert humanize.intcomma(1_234_567.89, separator="_") == "1_234_567,89"
         assert humanize.intcomma(1_234_567.89) == "1.234.567,89"
         assert humanize.intcomma("1234567,89") == "1.234.567,89"
         assert humanize.intcomma("1.234.567,89") == "1.234.567,89"
