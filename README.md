@@ -78,6 +78,8 @@ python3 -m pip install -e .
 >>> import humanize
 >>> humanize.intcomma(12345)
 '12,345'
+>>> humanize.intcomma(12345, separator="_")
+'12_345'
 >>> humanize.intword(123455913)
 '123.5 million'
 >>> humanize.intword(12345591313)
