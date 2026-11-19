@@ -197,6 +197,10 @@ def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
 
     if ndigits is not None:
         result = f"{value:,.{ndigits}f}"
+    elif isinstance(value, float) and abs(value) >= 1e16:
+        # ``f"{value:,}"`` switches to exponential notation for large
+        # floats, dropping the comma grouping; format them in full instead.
+        result = f"{value:,.1f}"
     else:
         result = f"{value:,}"
     if thousands_sep != "," or decimal_sep != ".":

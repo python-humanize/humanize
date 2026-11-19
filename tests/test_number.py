@@ -90,6 +90,13 @@ def test_intcomma_large_integer(sign: int) -> None:
     assert humanize.intcomma(value) == expected
 
 
+def test_intcomma_large_float() -> None:
+    # Formatting a float with "," switches to exponential notation at 1e16,
+    # which drops the comma grouping entirely.
+    assert humanize.intcomma(1e16) == "10,000,000,000,000,000.0"
+    assert humanize.intcomma(-1e16) == "-10,000,000,000,000,000.0"
+
+
 def test_intword_powers() -> None:
     # make sure that powers & human_powers have the same number of items
     assert len(number.powers) == len(number.human_powers)
