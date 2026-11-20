@@ -381,6 +381,9 @@ def fractional(value: NumberOrString) -> str:
     """
     import math
 
+    if isinstance(value, int):
+        return int.__repr__(value)
+
     try:
         number = float(value)
         if not math.isfinite(number):

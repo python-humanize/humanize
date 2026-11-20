@@ -216,6 +216,12 @@ def test_apnumber(test_input: int | str, expected: str) -> None:
     "test_input, expected",
     [
         (1, "1"),
+        (True, "1"),
+        (False, "0"),
+        (2**53 + 1, "9007199254740993"),
+        (-(2**53 + 1), "-9007199254740993"),
+        (10**400, "1" + "0" * 400),
+        (-(10**400), "-1" + "0" * 400),
         (2.0, "2"),
         (4.0 / 3.0, "1 1/3"),
         (5.0 / 6.0, "5/6"),
@@ -244,6 +250,21 @@ def test_apnumber(test_input: int | str, expected: str) -> None:
 )
 def test_fractional(test_input: float | str, expected: str) -> None:
     assert humanize.fractional(test_input) == expected
+
+
+@pytest.mark.parametrize("value", [7, -7, 2**53 + 1, -(2**53 + 1), 10**400])
+def test_fractional_int_subclass_preserves_stored_value(value: int) -> None:
+    class TaggedInt(int):
+        def __int__(self) -> int:
+            return 42
+
+        def __str__(self) -> str:
+            return "custom string"
+
+        def __repr__(self) -> str:
+            return "custom representation"
+
+    assert humanize.fractional(TaggedInt(value)) == str(value)
 
 
 @pytest.mark.parametrize(
