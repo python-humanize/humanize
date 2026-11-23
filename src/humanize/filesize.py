@@ -6,6 +6,7 @@ __lazy_modules__ = {"humanize.i18n"}
 
 from humanize.i18n import _gettext as _
 from humanize.i18n import _gettext_noop as N_
+from humanize.i18n import decimal_separator
 
 suffixes = {
     "decimal": (
@@ -107,5 +108,10 @@ def naturalsize(
     if exp < len(suffix) and abs(float(format % (abs_bytes / (base**exp)))) >= base:
         exp += 1
     space = "" if gnu else " "
-    ret: str = format % (bytes_ / (base**exp)) + space + _(suffix[exp - 1])
-    return ret
+    formatted: str = format % (bytes_ / (base**exp))
+    # Default locales keep ".". Only rewrite when a locale uses another
+    # decimal separator so the common path stays a single format + concat.
+    sep = decimal_separator()
+    if sep != ".":
+        formatted = formatted.replace(".", sep, 1)
+    return formatted + space + _(suffix[exp - 1])
