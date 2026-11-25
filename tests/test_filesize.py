@@ -101,3 +101,13 @@ def test_naturalsize(test_args: list[int] | list[int | bool], expected: str) -> 
         test_args[0] = f"-{test_args[0]}"
 
     assert humanize.naturalsize(*test_args) == "-" + expected
+
+
+def test_naturalsize_uses_locale_decimal_separator() -> None:
+    humanize.i18n.activate("fr_FR")
+    try:
+        assert humanize.naturalsize(1_500_000) == "1,5 Mo"
+    finally:
+        humanize.i18n.deactivate()
+
+    assert humanize.naturalsize(1_500_000) == "1.5 MB"
