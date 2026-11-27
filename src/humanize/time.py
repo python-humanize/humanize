@@ -88,6 +88,17 @@ def _date_and_delta(
             date = now - delta
         except (ValueError, TypeError):
             return None, value
+        except OverflowError:
+            # `round(value)` raises OverflowError for non-finite floats
+            # (inf/-inf), which, like NaN, are returned unchanged.
+            # A too-large *finite* value (whose OverflowError comes from
+            # `timedelta`) is still raised, per the documented
+            # `OverflowError` contract (mirrors naturaldelta, #334).
+            import math
+
+            if not math.isfinite(value):
+                return None, value
+            raise
     return date, _abs_timedelta(delta)
 
 
@@ -284,6 +295,8 @@ def naturaltime(
 
     Returns:
         str: A natural representation of the input in a resolution that makes sense.
+            Non-finite floats ('inf', '-inf', 'nan') are returned unchanged
+            as their string, like in `naturaldelta`.
     """
     import datetime as dt
 
@@ -544,6 +557,9 @@ def precisedelta(
     '0 minutes'
 
     ```
+
+    Non-finite floats ('inf', '-inf', 'nan') are returned unchanged as their
+    string, like in `naturaldelta`.
     """
     date, delta = _date_and_delta(value, precise=True)
     if date is None:
