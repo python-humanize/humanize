@@ -71,6 +71,8 @@ def test_date_and_delta() -> None:
             assert_equal_datetime(date, result[0])
             assert_equal_timedelta(d, result[1])
     assert time._date_and_delta("NaN") == (None, "NaN")
+    assert time._date_and_delta(float("inf")) == (None, float("inf"))
+    assert time._date_and_delta(float("inf"), precise=True) == (None, float("inf"))
 
 
 # Tests for the public interface of humanize.time
@@ -160,6 +162,25 @@ def test_naturaldelta_too_large_value_raises() -> None:
     """A too-large *finite* value still raises OverflowError (unlike inf)."""
     with pytest.raises(OverflowError):
         humanize.naturaldelta(1e30)
+
+
+@pytest.mark.parametrize(
+    "value, expected",
+    [
+        (float("nan"), "nan"),
+        (float("inf"), "inf"),
+        (float("-inf"), "-inf"),
+    ],
+)
+def test_naturaltime_non_finite(value: float, expected: str) -> None:
+    """Non-finite floats are returned unchanged instead of raising."""
+    assert humanize.naturaltime(value) == expected
+
+
+def test_naturaltime_too_large_value_raises() -> None:
+    """A too-large *finite* value still raises OverflowError (unlike inf)."""
+    with pytest.raises(OverflowError):
+        humanize.naturaltime(1e30)
 
 
 @freeze_time(FROZEN_DATE)
@@ -566,6 +587,25 @@ def test_naturaltime_timezone(test_input: dt.datetime, expected: str) -> None:
 )
 def test_naturaltime_timezone_when(test_input: dt.datetime, expected: str) -> None:
     assert humanize.naturaltime(test_input, when=NOW_UTC) == expected
+
+
+@pytest.mark.parametrize(
+    "value, expected",
+    [
+        (float("nan"), "nan"),
+        (float("inf"), "inf"),
+        (float("-inf"), "-inf"),
+    ],
+)
+def test_precisedelta_non_finite(value: float, expected: str) -> None:
+    """Non-finite floats are returned unchanged instead of raising."""
+    assert humanize.precisedelta(value) == expected
+
+
+def test_precisedelta_too_large_value_raises() -> None:
+    """A too-large *finite* value still raises OverflowError (unlike inf)."""
+    with pytest.raises(OverflowError):
+        humanize.precisedelta(1e30)
 
 
 @pytest.mark.parametrize(
