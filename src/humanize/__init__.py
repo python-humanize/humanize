@@ -56,3 +56,8 @@ __all__ = [
     "scientific",
     "thousands_separator",
 ]
+
+# Custom extension (Arda-06 fork): reading-time estimate
+from humanize.reading import reading_time  # noqa: E402
+
+__all__ = [*__all__, "reading_time"]
